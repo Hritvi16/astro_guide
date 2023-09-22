@@ -12,4 +12,9 @@ class TestimonialRepository {
     return testimonials;
   }
 
+  Future<JSON> manage(String token, String endpoint, Map<String, dynamic> data) async {
+    var testimonials = await apiService.post(endpoint: ApiConstants.testimonialAPI+endpoint, token: token, body: data);
+    return testimonials;
+  }
+
 }

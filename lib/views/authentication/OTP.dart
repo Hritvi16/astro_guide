@@ -32,7 +32,7 @@ class OTP extends StatelessWidget {
             decoration: const BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage(
-                        "assets/essential/upper_bg.png"
+                        "assets/essential/upper_bg_s.png"
                     )
                 )
             ),
@@ -54,7 +54,7 @@ class OTP extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.only(top: 25.0, bottom: 8),
                             child: Text(
-                              'Verify Mobile No.',
+                              'Verify Mobile No.'.tr,
                               style: GoogleFonts.playfairDisplay(
                                 fontSize: 32.0,
                                 color: MyColors.black,
@@ -64,7 +64,7 @@ class OTP extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            'Verify your phone number\n${otpController.code} ${otpController.mobile}',
+                            '${'Verify your phone number'.tr}\n${otpController.code} ${otpController.mobile}',
                             style: GoogleFonts.manrope(
                               fontSize: 18.0,
                               color: MyColors.black11,
@@ -140,7 +140,7 @@ class OTP extends StatelessWidget {
                               child: RichText(
                                 textAlign: TextAlign.center,
                                 text: TextSpan(
-                                  text: "Didn't receive code?\n",
+                                  text: "${"Didn't receive code?".tr}\n",
                                   style: GoogleFonts.manrope(
                                     fontSize: 12.0,
                                     color: MyColors.black,
@@ -149,7 +149,7 @@ class OTP extends StatelessWidget {
                                   ),
                                   children: [
                                     TextSpan(
-                                      text: otpController.start_time==0 ? "Resend" : "Resend in ${otpController.start_time} secs",
+                                      text: otpController.start_time==0 ? "Resend".tr : "${"Resend".tr} in ${otpController.start_time} secs",
                                       style: TextStyle(
                                         decoration: TextDecoration.underline,
                                         color: otpController.start_time==0 ? MyColors.black : MyColors.colorGrey
@@ -177,7 +177,7 @@ class OTP extends StatelessWidget {
                                   Padding(
                                     padding: EdgeInsets.only(right: standardHTIS),
                                     child: Text(
-                                      'VERIFY OTP',
+                                      'VERIFY OTP'.tr,
                                       style: GoogleFonts.manrope(
                                         fontSize: 16.0,
                                         color: MyColors.white,

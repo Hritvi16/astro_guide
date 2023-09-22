@@ -48,6 +48,8 @@ mixin _$AstrologerModel {
   int? get total_call_sec => throw _privateConstructorUsedError;
   double? get total_chat_rating => throw _privateConstructorUsedError;
   double? get total_call_rating => throw _privateConstructorUsedError;
+  String? get types => throw _privateConstructorUsedError;
+  String? get languages => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -89,7 +91,9 @@ abstract class $AstrologerModelCopyWith<$Res> {
       int? total_chat_sec,
       int? total_call_sec,
       double? total_chat_rating,
-      double? total_call_rating});
+      double? total_call_rating,
+      String? types,
+      String? languages});
 }
 
 /// @nodoc
@@ -133,6 +137,8 @@ class _$AstrologerModelCopyWithImpl<$Res, $Val extends AstrologerModel>
     Object? total_call_sec = freezed,
     Object? total_chat_rating = freezed,
     Object? total_call_rating = freezed,
+    Object? types = freezed,
+    Object? languages = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -247,6 +253,14 @@ class _$AstrologerModelCopyWithImpl<$Res, $Val extends AstrologerModel>
           ? _value.total_call_rating
           : total_call_rating // ignore: cast_nullable_to_non_nullable
               as double?,
+      types: freezed == types
+          ? _value.types
+          : types // ignore: cast_nullable_to_non_nullable
+              as String?,
+      languages: freezed == languages
+          ? _value.languages
+          : languages // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -287,7 +301,9 @@ abstract class _$$_AstrologerModelCopyWith<$Res>
       int? total_chat_sec,
       int? total_call_sec,
       double? total_chat_rating,
-      double? total_call_rating});
+      double? total_call_rating,
+      String? types,
+      String? languages});
 }
 
 /// @nodoc
@@ -329,6 +345,8 @@ class __$$_AstrologerModelCopyWithImpl<$Res>
     Object? total_call_sec = freezed,
     Object? total_chat_rating = freezed,
     Object? total_call_rating = freezed,
+    Object? types = freezed,
+    Object? languages = freezed,
   }) {
     return _then(_$_AstrologerModel(
       id: null == id
@@ -443,6 +461,14 @@ class __$$_AstrologerModelCopyWithImpl<$Res>
           ? _value.total_call_rating
           : total_call_rating // ignore: cast_nullable_to_non_nullable
               as double?,
+      types: freezed == types
+          ? _value.types
+          : types // ignore: cast_nullable_to_non_nullable
+              as String?,
+      languages: freezed == languages
+          ? _value.languages
+          : languages // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -478,7 +504,9 @@ class _$_AstrologerModel implements _AstrologerModel {
       this.total_chat_sec,
       this.total_call_sec,
       this.total_chat_rating,
-      this.total_call_rating});
+      this.total_call_rating,
+      this.types,
+      this.languages});
 
   factory _$_AstrologerModel.fromJson(Map<String, dynamic> json) =>
       _$$_AstrologerModelFromJson(json);
@@ -539,10 +567,14 @@ class _$_AstrologerModel implements _AstrologerModel {
   final double? total_chat_rating;
   @override
   final double? total_call_rating;
+  @override
+  final String? types;
+  @override
+  final String? languages;
 
   @override
   String toString() {
-    return 'AstrologerModel(id: $id, name: $name, mobile: $mobile, email: $email, experience: $experience, profile: $profile, about: $about, fav: $fav, follow: $follow, followers: $followers, favourite: $favourite, p_call: $p_call, p_chat: $p_chat, f_call: $f_call, f_chat: $f_chat, offer: $offer, free: $free, online: $online, rating: $rating, total_rating: $total_rating, reviews: $reviews, country: $country, state: $state, city: $city, total_chat_sec: $total_chat_sec, total_call_sec: $total_call_sec, total_chat_rating: $total_chat_rating, total_call_rating: $total_call_rating)';
+    return 'AstrologerModel(id: $id, name: $name, mobile: $mobile, email: $email, experience: $experience, profile: $profile, about: $about, fav: $fav, follow: $follow, followers: $followers, favourite: $favourite, p_call: $p_call, p_chat: $p_chat, f_call: $f_call, f_chat: $f_chat, offer: $offer, free: $free, online: $online, rating: $rating, total_rating: $total_rating, reviews: $reviews, country: $country, state: $state, city: $city, total_chat_sec: $total_chat_sec, total_call_sec: $total_call_sec, total_chat_rating: $total_chat_rating, total_call_rating: $total_call_rating, types: $types, languages: $languages)';
   }
 
   @override
@@ -585,7 +617,10 @@ class _$_AstrologerModel implements _AstrologerModel {
             (identical(other.total_chat_rating, total_chat_rating) ||
                 other.total_chat_rating == total_chat_rating) &&
             (identical(other.total_call_rating, total_call_rating) ||
-                other.total_call_rating == total_call_rating));
+                other.total_call_rating == total_call_rating) &&
+            (identical(other.types, types) || other.types == types) &&
+            (identical(other.languages, languages) ||
+                other.languages == languages));
   }
 
   @JsonKey(ignore: true)
@@ -619,7 +654,9 @@ class _$_AstrologerModel implements _AstrologerModel {
         total_chat_sec,
         total_call_sec,
         total_chat_rating,
-        total_call_rating
+        total_call_rating,
+        types,
+        languages
       ]);
 
   @JsonKey(ignore: true)
@@ -665,7 +702,9 @@ abstract class _AstrologerModel implements AstrologerModel {
       final int? total_chat_sec,
       final int? total_call_sec,
       final double? total_chat_rating,
-      final double? total_call_rating}) = _$_AstrologerModel;
+      final double? total_call_rating,
+      final String? types,
+      final String? languages}) = _$_AstrologerModel;
 
   factory _AstrologerModel.fromJson(Map<String, dynamic> json) =
       _$_AstrologerModel.fromJson;
@@ -726,6 +765,10 @@ abstract class _AstrologerModel implements AstrologerModel {
   double? get total_chat_rating;
   @override
   double? get total_call_rating;
+  @override
+  String? get types;
+  @override
+  String? get languages;
   @override
   @JsonKey(ignore: true)
   _$$_AstrologerModelCopyWith<_$_AstrologerModel> get copyWith =>

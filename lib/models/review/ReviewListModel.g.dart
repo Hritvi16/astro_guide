@@ -14,6 +14,9 @@ _$_ReviewListModel _$$_ReviewListModelFromJson(Map<String, dynamic> json) =>
       data: (json['data'] as List<dynamic>?)
           ?.map((e) => ReviewModel.fromJson(e as Map<String, dynamic>))
           .toList(),
+      rating: json['rating'] == null
+          ? null
+          : RatingModel.fromJson(json['rating'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$_ReviewListModelToJson(_$_ReviewListModel instance) =>
@@ -22,4 +25,5 @@ Map<String, dynamic> _$$_ReviewListModelToJson(_$_ReviewListModel instance) =>
       'code': instance.code,
       'message': instance.message,
       'data': instance.data,
+      'rating': instance.rating,
     };

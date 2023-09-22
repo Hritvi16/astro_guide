@@ -59,8 +59,7 @@ class _LoadingScreenState extends State<LoadingScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: MyColors.white,
+    return SizedBox(
       width: MySize.size100(context),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

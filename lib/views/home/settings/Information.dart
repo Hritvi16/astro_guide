@@ -20,7 +20,6 @@ class Information extends StatelessWidget {
     return GetBuilder<InformationController>(
       builder: (controller) {
         return Scaffold(
-          backgroundColor: MyColors.white,
           body: getBody(context),
         );
       },
@@ -32,6 +31,7 @@ class Information extends StatelessWidget {
       children: [
         SizedBox(
           width: MySize.size100(context),
+          height: standardUpperFixedDesignHeight,
           child: ClipPath(
             clipper: CustomClipPath(),
             child: Container(
@@ -39,12 +39,12 @@ class Information extends StatelessWidget {
                   color: MyColors.colorPrimary,
                   image: const DecorationImage(
                       image: AssetImage(
-                          "assets/essential/upper_bg.png"
+                          "assets/essential/upper_bg_s.png"
                       )
                   )
               ),
               child: SafeArea(
-                child: CustomAppBar(Get.arguments['title']),
+                child: CustomAppBar("${Get.arguments['title']}".tr),
               ),
             ),
           ),

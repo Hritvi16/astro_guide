@@ -30,7 +30,6 @@ class Custom extends StatelessWidget {
     return GetBuilder<CustomController>(
       builder: (controller) {
         return Scaffold(
-          backgroundColor: MyColors.white,
           body: getBody(context),
         );
       },
@@ -52,7 +51,7 @@ class Custom extends StatelessWidget {
                   color: MyColors.colorPrimary,
                   image: const DecorationImage(
                       image: AssetImage(
-                          "assets/essential/upper_bg.png"
+                          "assets/essential/upper_bg_s.png"
                       )
                   )
               ),
@@ -128,14 +127,13 @@ class Custom extends StatelessWidget {
                           controller: customController.search,
                           style: GoogleFonts.manrope(
                             fontSize: 16.0,
-                            color: MyColors.black,
                             letterSpacing: 0,
                             fontWeight: FontWeight.w400,
                           ),
                           // controller: customController.name,
                           decoration: InputDecoration(
                             filled: true,
-                            fillColor: MyColors.white,
+                            fillColor: MyColors.cardColor(),
                             hintText: "Search Astrologer".tr,
                             contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                             prefixIcon: Padding(
@@ -248,7 +246,7 @@ class Custom extends StatelessWidget {
         margin: EdgeInsets.only(left: ind==0 ? 20 : 0, right: ind==customController.specs.length-1 ? 20 : 0),
         padding: const EdgeInsets.symmetric(horizontal: 12),
         decoration: BoxDecoration(
-            color: customController.spec==spec ? MyColors.colorLightPrimary : MyColors.white,
+            color: customController.spec==spec ? MyColors.colorLightPrimary : MyColors.cardColor(),
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
                 color: customController.spec==spec ? MyColors.colorButton : MyColors.colorGrey
@@ -317,7 +315,7 @@ class Custom extends StatelessWidget {
       child: RatingBar.builder(
         initialRating: rating,
         direction: Axis.horizontal,
-        unratedColor: MyColors.colorGrey,
+        unratedColor: MyColors.colorUnrated,
         allowHalfRating: true,
         itemCount: 5,
         itemPadding: EdgeInsets.symmetric(horizontal: 1.0),
@@ -432,7 +430,6 @@ class Custom extends StatelessWidget {
                         astrologer.name,
                         style: GoogleFonts.playfairDisplay(
                           fontSize: 18.0,
-                          color: MyColors.black,
                           fontWeight: FontWeight.w700,
                         ),
                       ),
@@ -563,7 +560,6 @@ class Custom extends StatelessWidget {
                         maxLines: 1,
                         style: GoogleFonts.manrope(
                           fontSize: 12.0,
-                          color: MyColors.black,
                           fontWeight: customController.free && astrologer.free==1 ? FontWeight.w600 : FontWeight.w500,
                         ),
                       ),
@@ -625,7 +621,6 @@ class Custom extends StatelessWidget {
                         maxLines: 1,
                         style: GoogleFonts.manrope(
                           fontSize: 12.0,
-                          color: MyColors.black,
                           fontWeight: customController.free && astrologer.free==1 ? FontWeight.w600 : FontWeight.w500,
                         ),
                       ),
@@ -638,56 +633,5 @@ class Custom extends StatelessWidget {
       ],
     );
   }
-}
-
-
-getOldBottom(AstrologerModel astrologer) {
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    children: [
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "${CommonConstants.rupee} 50000/${'min'.tr}",
-            // "${CommonConstants.rupee} ${astrologer.chat_rate}/${'min'.tr}",
-            style: GoogleFonts.playfairDisplay(
-              fontSize: 16.0,
-              color: MyColors.black,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-          Text(
-            "First 5 minutes free",
-            style: GoogleFonts.manrope(
-              fontSize: 12.0,
-              color: MyColors.colorButton,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-        ],
-      ),
-      Container(
-        padding: EdgeInsets.symmetric(horizontal: 16),
-        alignment: Alignment.center,
-        height: standardShortButtonHeight,
-        decoration: BoxDecoration(
-            color: MyColors.colorLightPrimary,
-            border: Border.all(
-                color: MyColors.colorButton
-            ),
-            borderRadius: BorderRadius.circular(standardShortButtonRadius)
-        ),
-        child: Text(
-          "Chat",
-          style: GoogleFonts.manrope(
-            fontSize: 12.0,
-            color: MyColors.black,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-      )
-    ],
-  );
 }
 

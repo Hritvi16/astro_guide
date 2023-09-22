@@ -46,7 +46,7 @@ class AstrologerDetail extends StatelessWidget {
         Container(
           width: MySize.size100(context),
           height: standardUpperFixedDesignHeight,
-          color: MyColors.colorAstroBG,
+          // color: MyColors.colorAstroBG,
           child: ClipPath(
             clipper: CustomClipPath(),
             child: Container(
@@ -55,7 +55,7 @@ class AstrologerDetail extends StatelessWidget {
                   color: MyColors.colorPrimary,
                   image: const DecorationImage(
                       image: AssetImage(
-                          "assets/essential/upper_bg.png"
+                          "assets/essential/upper_bg_s.png"
                       )
                   )
               ),
@@ -94,7 +94,6 @@ class AstrologerDetail extends StatelessWidget {
                             ),
                           ),
                           Container(
-                            color: MyColors.white,
                             width: MySize.size100(context),
                             padding: EdgeInsets.symmetric(horizontal: standardHorizontalPagePadding, vertical: 4),
                             child: Column(
@@ -106,7 +105,7 @@ class AstrologerDetail extends StatelessWidget {
                                   padding: EdgeInsets.symmetric(vertical: 16),
                                   child: Divider(
                                     thickness: 1.5,
-                                    color: MyColors.colorBG,
+                                    color: MyColors.dividerColor(),
                                   ),
                                 ),
                                 getAbout(),
@@ -114,7 +113,7 @@ class AstrologerDetail extends StatelessWidget {
                                   padding: EdgeInsets.symmetric(vertical: 16),
                                   child: Divider(
                                     thickness: 1.5,
-                                    color: MyColors.colorBG,
+                                    color: MyColors.dividerColor(),
                                   ),
                                 ),
                                 getLanguages(),
@@ -122,7 +121,7 @@ class AstrologerDetail extends StatelessWidget {
                                   padding: EdgeInsets.symmetric(vertical: 16),
                                   child: Divider(
                                     thickness: 1.5,
-                                    color: MyColors.colorBG,
+                                    color: MyColors.dividerColor(),
                                   ),
                                 ),
                                 getExpertise(),
@@ -130,7 +129,7 @@ class AstrologerDetail extends StatelessWidget {
                                   padding: EdgeInsets.symmetric(vertical: 16),
                                   child: Divider(
                                     thickness: 1.5,
-                                    color: MyColors.colorBG,
+                                    color: MyColors.dividerColor(),
                                   ),
                                 ),
                                 getReviews(),
@@ -138,7 +137,7 @@ class AstrologerDetail extends StatelessWidget {
                                   padding: EdgeInsets.symmetric(vertical: 16),
                                   child: Divider(
                                     thickness: 1.5,
-                                    color: MyColors.colorBG,
+                                    color: MyColors.dividerColor(),
                                   ),
                                 ),
                                 getRatings(),
@@ -146,7 +145,7 @@ class AstrologerDetail extends StatelessWidget {
                                   padding: EdgeInsets.symmetric(vertical: 16),
                                   child: Divider(
                                     thickness: 1.5,
-                                    color: MyColors.colorBG,
+                                    color: MyColors.dividerColor(),
                                   ),
                                 ),
                                 getLocation(),
@@ -154,7 +153,7 @@ class AstrologerDetail extends StatelessWidget {
                                   padding: EdgeInsets.symmetric(vertical: 16),
                                   child: Divider(
                                     thickness: 1.5,
-                                    color: MyColors.colorBG,
+                                    color: MyColors.dividerColor(),
                                   ),
                                 ),
                                 getSimilarAstrologers(context),
@@ -290,13 +289,13 @@ class AstrologerDetail extends StatelessWidget {
           "assets/common/share.png",
           height: 22,
         ),
-        const SizedBox(
-          width: 23,
-        ),
-        Image.asset(
-          "assets/common/more.png",
-          height: 18,
-        )
+        // const SizedBox(
+        //   width: 23,
+        // ),
+        // Image.asset(
+        //   "assets/common/more.png",
+        //   height: 18,
+        // )
       ],
     );
   }
@@ -392,20 +391,15 @@ class AstrologerDetail extends StatelessWidget {
                     Column(
                       children: [
                         Text(
-                          astrologerDetailController.astrologer.name,
+                          review.user??"",
                           style: GoogleFonts.manrope(
                             fontSize: 18.0,
-                            color: MyColors.black,
                             letterSpacing: 0,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
                       ],
                     ),
-                    Image.asset(
-                      "assets/common/more.png",
-                      height: 14,
-                    )
                   ],
                 ),
                 // SizedBox(
@@ -419,7 +413,6 @@ class AstrologerDetail extends StatelessWidget {
                       review.review??"",
                       style: GoogleFonts.manrope(
                         fontSize: 14.0,
-                        color: MyColors.black,
                         letterSpacing: 0,
                         fontWeight: FontWeight.w400,
                       ),
@@ -443,7 +436,6 @@ class AstrologerDetail extends StatelessWidget {
                       review.reply??"",
                       style: GoogleFonts.manrope(
                         fontSize: 14.0,
-                        color: MyColors.black,
                         letterSpacing: 0,
                         fontWeight: FontWeight.w400,
                       ),
@@ -465,27 +457,32 @@ class AstrologerDetail extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  astrologerDetailController.astrologer.name,
-                  style: GoogleFonts.playfairDisplay(
-                    fontSize: 20.0,
-                    color: MyColors.black,
-                    fontWeight: FontWeight.w700,
+                Flexible(
+                  child: Text(
+                    astrologerDetailController.astrologer.name,
+                    style: GoogleFonts.playfairDisplay(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
                 ),
                 if((astrologerDetailController.astrologer.online??0)==1)
-                  Row(
-                    children: [
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      Image.asset(
-                        "assets/common/online.png",
-                        height: 11,
-                        width: 11,
-                      )
-                    ],
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10.0),
+                    child: Row(
+                      children: [
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        Image.asset(
+                          "assets/common/online.png",
+                          height: 11,
+                          width: 11,
+                        )
+                      ],
+                    ),
                   )
               ],
             ),
@@ -494,8 +491,6 @@ class AstrologerDetail extends StatelessWidget {
             ),
             Text(
               astrologerDetailController.getTypes(),
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
               style: GoogleFonts.manrope(
                 fontSize: 14.0,
                 color: MyColors.colorGrey,
@@ -507,7 +502,7 @@ class AstrologerDetail extends StatelessWidget {
             ),
             RichText(
               text: TextSpan(
-                  text: astrologerDetailController.astrologer.experience.toStringAsFixed(1)+" Years",
+                  text: astrologerDetailController.astrologer.experience.toStringAsFixed(1)+" ${'Years'.tr}",
                   style: GoogleFonts.manrope(
                     fontSize: 14.0,
                     color: MyColors.colorButton,
@@ -612,7 +607,6 @@ class AstrologerDetail extends StatelessWidget {
             "About Astrologer".tr,
             style: GoogleFonts.manrope(
               fontSize: 18.0,
-              color: MyColors.black,
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -666,7 +660,6 @@ class AstrologerDetail extends StatelessWidget {
             "Languages Spoken".tr,
             style: GoogleFonts.manrope(
               fontSize: 18.0,
-              color: MyColors.black,
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -698,7 +691,6 @@ class AstrologerDetail extends StatelessWidget {
             "Expertise".tr,
             style: GoogleFonts.manrope(
               fontSize: 18.0,
-              color: MyColors.black,
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -734,27 +726,31 @@ class AstrologerDetail extends StatelessWidget {
                   text: "User Reviews".tr,
                   style: GoogleFonts.manrope(
                     fontSize: 18.0,
-                    color: MyColors.black,
                     fontWeight: FontWeight.w600,
+                    color: MyColors.labelColor()
                   ),
                   children: [
                     TextSpan(
                       text: " (${astrologerDetailController.reviews.length})",
                       style: GoogleFonts.manrope(
                         fontSize: 18.0,
-                        color: MyColors.black,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
                   ]
               ),
             ),
-            Text(
-              "View All Reviews".tr,
-              style: GoogleFonts.manrope(
-                fontSize: 14.0,
-                color: MyColors.colorInfoBlue,
-                fontWeight: FontWeight.w600,
+            GestureDetector(
+              onTap: () {
+                astrologerDetailController.goto("/review", arguments: astrologerDetailController.astrologer);
+              },
+              child: Text(
+                "View All Reviews".tr,
+                style: GoogleFonts.manrope(
+                  fontSize: 14.0,
+                  color: MyColors.colorInfoBlue,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
           ],
@@ -763,7 +759,7 @@ class AstrologerDetail extends StatelessWidget {
             scrollDirection: Axis.vertical,
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
-            itemCount: astrologerDetailController.reviews.length,
+            itemCount: astrologerDetailController.reviews.length>5 ? 5 : astrologerDetailController.reviews.length,
             padding: EdgeInsets.only(top: 20),
             separatorBuilder: (BuildContext buildContext, index) {
               return SizedBox(
@@ -786,7 +782,6 @@ class AstrologerDetail extends StatelessWidget {
           "Ratings".tr,
           style: GoogleFonts.manrope(
             fontSize: 18.0,
-            color: MyColors.black,
             fontWeight: FontWeight.w600,
           )
         ),
@@ -820,7 +815,6 @@ class AstrologerDetail extends StatelessWidget {
           "Location".tr,
           style: GoogleFonts.manrope(
             fontSize: 18.0,
-            color: MyColors.black,
             fontWeight: FontWeight.w600,
           )
         ),
@@ -849,7 +843,6 @@ class AstrologerDetail extends StatelessWidget {
                 "${(astrologerDetailController.astrologer.state ?? "").toTitleCase()}, ${(astrologerDetailController.astrologer.country ?? "").toTitleCase()}",
                 style: GoogleFonts.manrope(
                   fontSize: 16.0,
-                  color: MyColors.black,
                   letterSpacing: 0,
                 ),
               ),
@@ -879,7 +872,6 @@ class AstrologerDetail extends StatelessWidget {
               astrologerDetailController.getAvgRating().toStringAsFixed(2),
               style: GoogleFonts.manrope(
                 fontSize: 32.0,
-                color: MyColors.black,
                 letterSpacing: 0,
                 fontWeight: FontWeight.w600,
               ),
@@ -900,10 +892,9 @@ class AstrologerDetail extends StatelessWidget {
                   width: 5,
                 ),
                 Text(
-                  "${astrologerDetailController.reviews.length} Reviews",
+                  "${astrologerDetailController.reviews.length} ${'Reviews'.tr}",
                   style: GoogleFonts.manrope(
                     fontSize: 16.0,
-                    color: MyColors.black,
                     letterSpacing: 0,
                   ),
                 ),
@@ -941,7 +932,6 @@ class AstrologerDetail extends StatelessWidget {
             star.toString().tr,
             style: GoogleFonts.manrope(
               fontSize: 14.0,
-              color: MyColors.black,
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -951,7 +941,7 @@ class AstrologerDetail extends StatelessWidget {
           child: LinearPercentIndicator(
             lineHeight: 12.0,
             percent: astrologerDetailController.getPercentage(total),
-            backgroundColor: MyColors.colorBG,
+            backgroundColor: MyColors.dividerColor(),
             progressColor: progressColor,
             barRadius: Radius.circular(10),
           ),
@@ -965,7 +955,6 @@ class AstrologerDetail extends StatelessWidget {
               total.toString().tr,
               style: GoogleFonts.manrope(
                 fontSize: 14.0,
-                color: MyColors.black,
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -1004,12 +993,11 @@ class AstrologerDetail extends StatelessWidget {
               "Similar Astrologers".tr,
               style: GoogleFonts.manrope(
                 fontSize: 18.0,
-                color: MyColors.black,
                 fontWeight: FontWeight.w600,
               ),
             ),
             Text(
-              "View All".tr,
+              "View all".tr,
               style: GoogleFonts.manrope(
                 fontSize: 14.0,
                 color: MyColors.colorInfoBlue,
@@ -1018,20 +1006,23 @@ class AstrologerDetail extends StatelessWidget {
             ),
           ],
         ),
-        Container(
-          height: standardListCardHeight,
-          margin: EdgeInsets.symmetric(vertical: 20),
-          child: ListView.separated(
-              scrollDirection: Axis.horizontal,
-              itemCount: astrologerDetailController.similar.length,
-              separatorBuilder: (BuildContext buildContext, index) {
-                return SizedBox(
-                  width: standardHorizontalGap,
-                );
-              },
-              itemBuilder: (BuildContext buildContext, index) {
-                return getAstrologerDesign(index, astrologerDetailController.similar[index], context);
-              }
+        Padding(
+          padding: const EdgeInsets.only(bottom: 20.0),
+          child: Container(
+            height: standardListCardHeight,
+            margin: EdgeInsets.symmetric(vertical: 20),
+            child: ListView.separated(
+                scrollDirection: Axis.horizontal,
+                itemCount: astrologerDetailController.similar.length,
+                separatorBuilder: (BuildContext buildContext, index) {
+                  return SizedBox(
+                    width: standardHorizontalGap,
+                  );
+                },
+                itemBuilder: (BuildContext buildContext, index) {
+                  return getAstrologerDesign(index, astrologerDetailController.similar[index], context);
+                }
+            ),
           ),
         ),
       ],
@@ -1073,7 +1064,7 @@ class AstrologerDetail extends StatelessWidget {
       child: RatingBar.builder(
         initialRating: rating,
         direction: Axis.horizontal,
-        unratedColor: MyColors.colorGrey,
+        unratedColor: MyColors.colorUnrated,
         allowHalfRating: true,
         itemCount: 5,
         itemPadding: EdgeInsets.symmetric(horizontal: 1.0),
@@ -1177,46 +1168,54 @@ class AstrologerDetail extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        astrologer.name,
-                        style: GoogleFonts.playfairDisplay(
-                          fontSize: 18.0,
-                          color: MyColors.black,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                      if(astrologer.online==1)
-                        Row(
-                          children: [
-                            SizedBox(
-                              width: 5,
+              Flexible(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Flexible(
+                          child: Text(
+                            astrologer.name,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: GoogleFonts.playfairDisplay(
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.w700,
                             ),
-                            Image.asset(
-                              "assets/common/online.png",
-                              height: 11,
-                              width: 11,
-                            )
-                          ],
-                        )
-                    ],
-                  ),
-                  SizedBox(
-                    height: 2,
-                  ),
-                  Text(
-                    "Vedic Astrologer",
-                    style: GoogleFonts.manrope(
-                      fontSize: 12.0,
-                      color: MyColors.colorGrey,
-                      fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        if(astrologer.online==1)
+                          Row(
+                            children: [
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Image.asset(
+                                "assets/common/online.png",
+                                height: 11,
+                                width: 11,
+                              )
+                            ],
+                          )
+                      ],
                     ),
-                  ),
-                ],
+                    SizedBox(
+                      height: 2,
+                    ),
+                    Text(
+                      astrologer.types??"-",
+                      // "Vedic Astrologer",
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: GoogleFonts.manrope(
+                        fontSize: 12.0,
+                        color: MyColors.colorGrey,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
               ),
               GestureDetector(
                 onTap: () {
@@ -1244,7 +1243,7 @@ class AstrologerDetail extends StatelessWidget {
                 width: 6,
               ),
               Text(
-                "Hindi, English, Telegu",
+                astrologer.languages??"-",
                 style: GoogleFonts.manrope(
                   fontSize: 12.0,
                   color: MyColors.colorGrey,
@@ -1272,21 +1271,32 @@ class AstrologerDetail extends StatelessWidget {
           fit: FlexFit.tight,
           child: GestureDetector(
             onTap: () {
-              double min = Essential.getCalculatedAmount(astrologer.p_call??0, minutes: 5);
-              if((astrologerDetailController.free && astrologer.free==1) || (astrologerDetailController.wallet>=min)) {
-                astrologerDetailController.goto("/checkSession", arguments: {
-                  "astrologer": astrologer,
-                  "free": astrologerDetailController.free && astrologer.free == 1,
-                  "controller" : astrologerDetailController,
-                  "category" : "CALL"
-                });
+              if(astrologer.online==1) {
+                double min = Essential.getCalculatedAmount(
+                    astrologer.p_call ?? 0, minutes: 5);
+                if ((astrologerDetailController.free && astrologer.free == 1) ||
+                    (astrologerDetailController.wallet >= min)) {
+                  astrologerDetailController.goto("/checkSession", arguments: {
+                    "astrologer": astrologer,
+                    "free": astrologerDetailController.free &&
+                        astrologer.free == 1,
+                    "controller": astrologerDetailController,
+                    "category": "CALL"
+                  });
+                }
+                else {
+                  Essential.showBasicDialog(
+                      "You must have minimum of ${CommonConstants.rupee}${min
+                          .ceil()} balance in your wallet. Do you want to recharge?",
+                      "Recharge Now", "No, Thanks").then((value) {
+                    if (value == "Recharge Now") {
+                      astrologerDetailController.goto("/wallet");
+                    }
+                  });
+                }
               }
               else {
-                Essential.showBasicDialog("You must have minimum of ${CommonConstants.rupee}${min.ceil()} balance in your wallet. Do you want to recharge?", "Recharge Now", "No, Thanks").then((value) {
-                  if(value=="Recharge Now") {
-                    astrologerDetailController.goto("/wallet");
-                  }
-                });
+                Essential.showInfoDialog("${astrologer.name} is currently offline." , btn: "OK");
               }
               // astrologerDetailController.goto("/call", arguments: {"astrologer" : astrologer, "type" : "REQUESTED", "action" : });
             },
@@ -1317,7 +1327,6 @@ class AstrologerDetail extends StatelessWidget {
                         maxLines: 1,
                         style: GoogleFonts.manrope(
                           fontSize: 12.0,
-                          color: MyColors.black,
                           fontWeight: astrologerDetailController.free && astrologer.free==1 ? FontWeight.w600 : FontWeight.w500,
                         ),
                       ),
@@ -1335,21 +1344,32 @@ class AstrologerDetail extends StatelessWidget {
           fit: FlexFit.tight,
           child: GestureDetector(
             onTap: () {
-              double min = Essential.getCalculatedAmount(astrologer.p_chat??0, minutes: 5);
-              if((astrologerDetailController.free && astrologer.free==1) || (astrologerDetailController.wallet>=min)) {
-                astrologerDetailController.goto("/checkSession", arguments: {
-                  "astrologer": astrologer,
-                  "free": astrologerDetailController.free && astrologer.free == 1,
-                  "controller" : astrologerDetailController,
-                  "category" : "CHAT"
-                });
+              if(astrologer.online==1) {
+                double min = Essential.getCalculatedAmount(
+                    astrologer.p_chat ?? 0, minutes: 5);
+                if ((astrologerDetailController.free && astrologer.free == 1) ||
+                    (astrologerDetailController.wallet >= min)) {
+                  astrologerDetailController.goto("/checkSession", arguments: {
+                    "astrologer": astrologer,
+                    "free": astrologerDetailController.free &&
+                        astrologer.free == 1,
+                    "controller": astrologerDetailController,
+                    "category": "CHAT"
+                  });
+                }
+                else {
+                  Essential.showBasicDialog(
+                      "You must have minimum of ${CommonConstants.rupee}${min
+                          .ceil()} balance in your wallet. Do you want to recharge?",
+                      "Recharge Now", "No, Thanks").then((value) {
+                    if (value == "Recharge Now") {
+                      astrologerDetailController.goto("/wallet");
+                    }
+                  });
+                }
               }
               else {
-                Essential.showBasicDialog("You must have minimum of ${CommonConstants.rupee}${min.ceil()} balance in your wallet. Do you want to recharge?", "Recharge Now", "No, Thanks").then((value) {
-                  if(value=="Recharge Now") {
-                    astrologerDetailController.goto("/wallet");
-                  }
-                });
+                Essential.showInfoDialog("${astrologer.name} is currently offline." , btn: "OK");
               }
             },
             child: Container(
@@ -1379,7 +1399,6 @@ class AstrologerDetail extends StatelessWidget {
                         maxLines: 1,
                         style: GoogleFonts.manrope(
                           fontSize: 12.0,
-                          color: MyColors.black,
                           fontWeight: astrologerDetailController.free && astrologer.free==1 ? FontWeight.w600 : FontWeight.w500,
                         ),
                       ),
@@ -1399,6 +1418,7 @@ class AstrologerDetail extends StatelessWidget {
       allowHalfRating: true,
       direction: Axis.horizontal,
       itemCount: 5,
+      unratedColor: MyColors.colorUnrated,
       itemPadding: EdgeInsets.symmetric(horizontal: 2.0),
       ignoreGestures: true,
       itemSize: itemSize??16,
@@ -1419,7 +1439,7 @@ class AstrologerDetail extends StatelessWidget {
         astrologerDetailController.changeShow();
       },
       child: Container(
-        color: MyColors.colorBackground(),
+        color: MyColors.backgroundColor(),
         child: SafeArea(
           top: false,
           child: Image.asset(
@@ -1436,7 +1456,7 @@ class AstrologerDetail extends StatelessWidget {
     return Stack(
       children: [
         Container(
-          color: MyColors.colorBackground(),
+          color: MyColors.backgroundColor(),
           margin: EdgeInsets.only(top: 30),
           width: MySize.size100(context),
           child: SafeArea(
@@ -1476,21 +1496,35 @@ class AstrologerDetail extends StatelessWidget {
             fit: FlexFit.tight,
             child: GestureDetector(
               onTap: () {
-                double min = Essential.getCalculatedAmount(astrologerDetailController.astrologer.p_call??0, minutes: 5);
-                if((astrologerDetailController.free && astrologerDetailController.astrologer.free==1) || (astrologerDetailController.wallet>=min)) {
-                  astrologerDetailController.goto("/checkSession", arguments: {
-                    "astrologer": astrologerDetailController.astrologer,
-                    "free": astrologerDetailController.free && astrologerDetailController.astrologer.free == 1,
-                    "controller" : astrologerDetailController,
-                    "category" : "CALL"
-                  });
+                if(astrologerDetailController.astrologer.online==1) {
+                  double min = Essential.getCalculatedAmount(
+                      astrologerDetailController.astrologer.p_call ?? 0,
+                      minutes: 5);
+                  if ((astrologerDetailController.free &&
+                      astrologerDetailController.astrologer.free == 1) ||
+                      (astrologerDetailController.wallet >= min)) {
+                    astrologerDetailController.goto(
+                        "/checkSession", arguments: {
+                      "astrologer": astrologerDetailController.astrologer,
+                      "free": astrologerDetailController.free &&
+                          astrologerDetailController.astrologer.free == 1,
+                      "controller": astrologerDetailController,
+                      "category": "CALL"
+                    });
+                  }
+                  else {
+                    Essential.showBasicDialog(
+                        "You must have minimum of ${CommonConstants.rupee}${min
+                            .ceil()} balance in your wallet. Do you want to recharge?",
+                        "Recharge Now", "No, Thanks").then((value) {
+                      if (value == "Recharge Now") {
+                        astrologerDetailController.goto("/wallet");
+                      }
+                    });
+                  }
                 }
                 else {
-                  Essential.showBasicDialog("You must have minimum of ${CommonConstants.rupee}${min.ceil()} balance in your wallet. Do you want to recharge?", "Recharge Now", "No, Thanks").then((value) {
-                    if(value=="Recharge Now") {
-                      astrologerDetailController.goto("/wallet");
-                    }
-                  });
+                  Essential.showInfoDialog("${astrologerDetailController.astrologer.name} is currently offline." , btn: "OK");
                 }
                 // astrologerDetailController.goto("/call", arguments: {"astrologer" : astrologer, "type" : "REQUESTED", "action" : });
               },
@@ -1551,21 +1585,35 @@ class AstrologerDetail extends StatelessWidget {
             fit: FlexFit.tight,
             child: GestureDetector(
               onTap: () {
-                double min = Essential.getCalculatedAmount(astrologerDetailController.astrologer.p_chat??0, minutes: 5);
-                if((astrologerDetailController.free && astrologerDetailController.astrologer.free==1) || (astrologerDetailController.wallet>=min)) {
-                  astrologerDetailController.goto("/checkSession", arguments: {
-                    "astrologer": astrologerDetailController.astrologer,
-                    "free": astrologerDetailController.free && astrologerDetailController.astrologer.free == 1,
-                    "controller" : astrologerDetailController,
-                    "category" : "CHAT"
-                  });
+                if(astrologerDetailController.astrologer.online==1) {
+                  double min = Essential.getCalculatedAmount(
+                      astrologerDetailController.astrologer.p_chat ?? 0,
+                      minutes: 5);
+                  if ((astrologerDetailController.free &&
+                      astrologerDetailController.astrologer.free == 1) ||
+                      (astrologerDetailController.wallet >= min)) {
+                    astrologerDetailController.goto(
+                        "/checkSession", arguments: {
+                      "astrologer": astrologerDetailController.astrologer,
+                      "free": astrologerDetailController.free &&
+                          astrologerDetailController.astrologer.free == 1,
+                      "controller": astrologerDetailController,
+                      "category": "CHAT"
+                    });
+                  }
+                  else {
+                    Essential.showBasicDialog(
+                        "You must have minimum of ${CommonConstants.rupee}${min
+                            .ceil()} balance in your wallet. Do you want to recharge?",
+                        "Recharge Now", "No, Thanks").then((value) {
+                      if (value == "Recharge Now") {
+                        astrologerDetailController.goto("/wallet");
+                      }
+                    });
+                  }
                 }
                 else {
-                  Essential.showBasicDialog("You must have minimum of ${CommonConstants.rupee}${min.ceil()} balance in your wallet. Do you want to recharge?", "Recharge Now", "No, Thanks").then((value) {
-                    if(value=="Recharge Now") {
-                      astrologerDetailController.goto("/wallet");
-                    }
-                  });
+                  Essential.showInfoDialog("${astrologerDetailController.astrologer.name} is currently offline." , btn: "OK");
                 }
               },
               child: Container(

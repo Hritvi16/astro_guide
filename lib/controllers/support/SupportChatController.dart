@@ -74,7 +74,7 @@ class SupportChatController extends GetxController {
           {
             SupportConstants.username : storage.read("access"),
             SupportConstants.sup_id : sup_id,
-            SupportConstants.sender : "A",
+            SupportConstants.sender : "U",
           }).build(),
     );
     connectSocket();
@@ -130,7 +130,6 @@ class SupportChatController extends GetxController {
           (data) {
         print(data);
             SupportChatResponseModel supportChatResponseModel = SupportChatResponseModel.fromJson(json.decode(data));
-
 
             for (int i=0; i<chats.length; i++) {
               if(chats[i].id==supportChatResponseModel.m_id) {
@@ -188,14 +187,14 @@ class SupportChatController extends GetxController {
     Map <String, dynamic> data = {
       SupportConstants.username : storage.read("access"),
       SupportConstants.sup_id : sup_id,
-      SupportConstants.sender : SupportConstants.A,
+      SupportConstants.sender : SupportConstants.U,
       SupportConstants.message : message.text,
       SupportConstants.m_id : id,
     };
     int temp_id = id;
 
     List<SupportChatModel> temp = [
-      SupportChatModel(id: id--, message: message.text, sender: SupportConstants.A, sent_at: DateTime.now().toString(), sup_id: sup_id)
+      SupportChatModel(id: id--, message: message.text, sender: SupportConstants.U, sent_at: DateTime.now().toString(), sup_id: sup_id)
     ];
     temp.addAll(chats);
     chats = temp;
@@ -255,7 +254,7 @@ class SupportChatController extends GetxController {
     Map <String, dynamic> data = {
       SupportConstants.username : storage.read("access"),
       SupportConstants.sup_id : sup_id,
-      SupportConstants.sender : SupportConstants.A,
+      SupportConstants.sender : SupportConstants.U,
     };
     socket.emit('end_support', data);
   }

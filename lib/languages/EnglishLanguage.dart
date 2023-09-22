@@ -1,4 +1,10 @@
 Map<String, String> english = {
+  //Sign Up
+  'Name' : 'Name',
+  'Mobile No.' : 'Mobile No.',
+
+
+
   //Languages
   'English' : 'English',
   'Hindi' : 'Hindi',
@@ -8,16 +14,22 @@ Map<String, String> english = {
 
   //Common
   'Search Astrologer' : 'Search Astrologer',
+  'Astrologer' : 'Astrologer',
   'Read More' : 'Read More',
   'Read Less' : 'Read Less',
+  'Add' : 'Add',
+  'Update' : 'Update',
+  'New' : 'New',
+  'Old' : 'Old',
+  'GET OTP' : 'GET OTP',
 
   //Dashboard
   'Dashboard': 'Dashboard',
   'Free Kundali' : 'Free Kundli',
   'Match Kundali' : 'Match Kundli',
   'Daily Horoscope' : 'Daily Horoscope',
-  'Currently Live Astrologer' : 'Currently Live Astrologer',
-  'New Arrival Astrologer' : 'New Arrival Astrologer',
+  'Currently Live Astrologers' : 'Currently Live Astrologers',
+  'New Arrival Astrologers' : 'New Arrival Astrologers',
   'New Updates and Blogs' : 'New Updates and Blogs',
   'User Testimonials' : 'User Testimonials',
   'New Videos' : 'New Videos',
@@ -51,14 +63,29 @@ Map<String, String> english = {
   'Session Type' : 'Session Type',
   'Rate' : 'Rate',
   'SHOW CHAT' : 'SHOW CHAT',
+  'RESUME CALL' : 'RESUME CALL',
+  'SHOW DETAILS' : 'SHOW DETAILS',
+  'Copy' : 'Copy',
+  'Success' : 'Success',
+  'Failed' : 'Failed',
+  'Download Invoice' : 'Download Invoice',
+  'Status' : 'Status',
+  'Amount' : 'Amount',
+  "You've not done any money transaction yet!" : "You've not done any money transaction yet!",
+  "You've not recharged yet!"  : "You've not recharged yet!",
+  "You've not taken any call consultations yet!" : "You've not taken any call consultations yet!",
+  "You've not taken any chat consultations yet!" : "You've not taken any chat consultations yet!",
 
   //Settings
   'Settings' : 'Settings',
   'Wishlist' : 'Wishlist',
   'Following' : 'Following',
+  'My Testimonials' : 'My Testimonials',
   'Notification' : 'Notification',
   'Appearance' : 'Appearance',
   'Change App Language' : 'Change App Language',
+  'Change Mobile No.' : 'Change Mobile No.',
+  'Support' : 'Support',
   'Terms and Condition' : 'Terms and Condition',
   'Privacy Policy' : 'Privacy Policy',
   'About Us' : 'About Us',
@@ -67,6 +94,8 @@ Map<String, String> english = {
 
   //Astrologer
   'Astrologer Profile' : 'Astrologer Profile',
+  'Years' : 'Years',
+  'of Exp' : 'of Exp',
   'About Astrologer' : 'About Astrologer',
   'Languages Spoken' : 'Languages Spoken',
   'Expertise' : 'Expertise',
@@ -74,6 +103,11 @@ Map<String, String> english = {
   'View All Reviews' : 'View All Reviews',
   'Total min chat' : 'Total min chat',
   'Total min call' : 'Total min call',
+  'Location' : 'Location',
+  'Similar Astrologers' : 'Similar Astrologers',
+
+  'You have not wishlisted any astrologers' : 'You have not wishlisted any astrologers',
+  'You have not followed any astrologers' : 'You have not followed any astrologers',
 
   //Wallet
   'My Wallet' : 'My Wallet',
@@ -90,4 +124,80 @@ Map<String, String> english = {
 
   //Horoscope
   "Today's Horoscope" : "Today's Horoscope",
+
+  //Rating and Reviews
+  "Rating and Reviews" : "Rating and Reviews",
+  "Ratings" : "Ratings",
+
+  //Filter
+  "Sort & Filter" : "Sort & Filter",
+  "Sort by" : "Sort by",
+  "Language" : "Language",
+  "Gender" : "Gender",
+  "Country" : "Country",
+
+  //Sort by
+  'Popularity' : 'Popularity',
+  'Experience: High to Low' : 'Experience: High to Low',
+  'Experience: Low to High' : 'Experience: Low to High',
+  'Sessions: High to Low' : 'Sessions: High to Low',
+  'Sessions: Low to High' : 'Sessions: Low to High',
+  'Chat Price: High to Low' : 'Chat Price: High to Low',
+  'Chat Price: Low to High' : 'Chat Price: Low to High',
+  'Call Price: High to Low' : 'Call Price: High to Low',
+  'Call Price: Low to High' : 'Call Price: Low to High',
+  'Rating: High to Low' : 'Rating: High to Low',
+  'Rating: Low to High' : 'Rating: Low to High',
+
+  //Gender
+  "MALE" : "MALE",
+  "FEMALE" : "FEMALE",
+  "OTHER" : "OTHER",
+
+  //Chat
+  "Your Review" : "Your Review",
+  "Duration" : "Duration",
+  "Please let us know your genuine and honest feedback about the astrologer. So we can serve you the best." : "Please let us know your genuine and honest feedback about the astrologer. So we can serve you the best.",
+  "Anonymous" : "Anonymous",
+
+  //Call
+  'Call Detail' : 'Call Detail',
+
+  //Review Dialog
+  "Reviews are public if you are not anonymous" : "Reviews are public if you are not anonymous",
+  "Hide my name from all public reviews" : "Hide my name from all public reviews",
+  "Describe your experience" : "Describe your experience",
+
+  "Review" : "Review",
+  "Optional" : "Optional",
+  "SUBMIT" : "SUBMIT",
+
+  //Testimonials
+  'Testimonial' : 'Testimonial',
+  'Testimonial Description' : 'Testimonial Description',
+  'Write your testimonial description' : 'Write your testimonial description',
+  'Post' : 'Post',
+
+  //Change Mobile No.
+  'Verify your old mobile number' : 'Verify your old mobile number',
+  'Verify your new mobile number' : 'Verify your new mobile number',
+  'Enter New Mobile No.' : 'Enter New Mobile No.',
+  'Enter Mobile No.' : 'Enter Mobile No.',
+
+  //OTP
+  'Verify Mobile No.' : 'Verify Mobile No.',
+  'Verify your phone number' : 'Verify your phone number',
+  "Didn't receive code?" : "Didn't receive code?",
+  'Resend' : 'Resend',
+  'VERIFY OTP' : 'VERIFY OTP',
+
+  //Support
+  "Support" : "Support",
+  "Request" : "Request",
+  "Request Support" : "Request Support",
+  "Reason" : "Reason",
+  "Select Reason" : "Select Reason",
+  "Message" : "Message",
+  "Write your query" : "Write your query",
+  "You have not asked for any support yet!" : "You have not asked for any support yet!",
 };

@@ -23,7 +23,7 @@ mixin _$CountryListModel {
   String get status => throw _privateConstructorUsedError;
   int get code => throw _privateConstructorUsedError;
   String get message => throw _privateConstructorUsedError;
-  List<CountryModel> get data => throw _privateConstructorUsedError;
+  List<CountryModel>? get data => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -37,7 +37,8 @@ abstract class $CountryListModelCopyWith<$Res> {
           CountryListModel value, $Res Function(CountryListModel) then) =
       _$CountryListModelCopyWithImpl<$Res, CountryListModel>;
   @useResult
-  $Res call({String status, int code, String message, List<CountryModel> data});
+  $Res call(
+      {String status, int code, String message, List<CountryModel>? data});
 }
 
 /// @nodoc
@@ -56,7 +57,7 @@ class _$CountryListModelCopyWithImpl<$Res, $Val extends CountryListModel>
     Object? status = null,
     Object? code = null,
     Object? message = null,
-    Object? data = null,
+    Object? data = freezed,
   }) {
     return _then(_value.copyWith(
       status: null == status
@@ -71,10 +72,10 @@ class _$CountryListModelCopyWithImpl<$Res, $Val extends CountryListModel>
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
-      data: null == data
+      data: freezed == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
-              as List<CountryModel>,
+              as List<CountryModel>?,
     ) as $Val);
   }
 }
@@ -87,7 +88,8 @@ abstract class _$$_CountryListModelCopyWith<$Res>
       __$$_CountryListModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String status, int code, String message, List<CountryModel> data});
+  $Res call(
+      {String status, int code, String message, List<CountryModel>? data});
 }
 
 /// @nodoc
@@ -104,7 +106,7 @@ class __$$_CountryListModelCopyWithImpl<$Res>
     Object? status = null,
     Object? code = null,
     Object? message = null,
-    Object? data = null,
+    Object? data = freezed,
   }) {
     return _then(_$_CountryListModel(
       status: null == status
@@ -119,10 +121,10 @@ class __$$_CountryListModelCopyWithImpl<$Res>
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
-      data: null == data
+      data: freezed == data
           ? _value._data
           : data // ignore: cast_nullable_to_non_nullable
-              as List<CountryModel>,
+              as List<CountryModel>?,
     ));
   }
 }
@@ -134,7 +136,7 @@ class _$_CountryListModel implements _CountryListModel {
       {required this.status,
       required this.code,
       required this.message,
-      required final List<CountryModel> data})
+      final List<CountryModel>? data})
       : _data = data;
 
   factory _$_CountryListModel.fromJson(Map<String, dynamic> json) =>
@@ -146,12 +148,14 @@ class _$_CountryListModel implements _CountryListModel {
   final int code;
   @override
   final String message;
-  final List<CountryModel> _data;
+  final List<CountryModel>? _data;
   @override
-  List<CountryModel> get data {
+  List<CountryModel>? get data {
+    final value = _data;
+    if (value == null) return null;
     if (_data is EqualUnmodifiableListView) return _data;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_data);
+    return EqualUnmodifiableListView(value);
   }
 
   @override
@@ -194,7 +198,7 @@ abstract class _CountryListModel implements CountryListModel {
       {required final String status,
       required final int code,
       required final String message,
-      required final List<CountryModel> data}) = _$_CountryListModel;
+      final List<CountryModel>? data}) = _$_CountryListModel;
 
   factory _CountryListModel.fromJson(Map<String, dynamic> json) =
       _$_CountryListModel.fromJson;
@@ -206,7 +210,7 @@ abstract class _CountryListModel implements CountryListModel {
   @override
   String get message;
   @override
-  List<CountryModel> get data;
+  List<CountryModel>? get data;
   @override
   @JsonKey(ignore: true)
   _$$_CountryListModelCopyWith<_$_CountryListModel> get copyWith =>

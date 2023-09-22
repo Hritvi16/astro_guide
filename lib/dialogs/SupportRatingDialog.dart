@@ -150,6 +150,7 @@ class SupportRatingDialog extends StatelessWidget {
     return RatingBar.builder(
       initialRating: supportRatingController.support.rating??0,
       direction: Axis.horizontal,
+      unratedColor: MyColors.colorUnrated,
       allowHalfRating: true,
       itemCount: 5,
       itemPadding: EdgeInsets.symmetric(horizontal: 6.0),

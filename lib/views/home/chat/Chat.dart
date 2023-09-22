@@ -1,6 +1,9 @@
 import 'package:astro_guide/chat_ui/received_message_screen.dart';
+import 'package:astro_guide/chat_ui/received_voice_screen.dart';
+import 'package:astro_guide/chat_ui/send_doc_screen.dart';
 import 'package:astro_guide/chat_ui/send_image_screen.dart';
 import 'package:astro_guide/chat_ui/send_message_screen.dart';
+import 'package:astro_guide/chat_ui/send_voice_screen.dart';
 import 'package:astro_guide/colors/MyColors.dart';
 import 'package:astro_guide/constants/SessionConstants.dart';
 import 'package:astro_guide/controllers/chat/ChatController.dart';
@@ -8,9 +11,7 @@ import 'package:astro_guide/essential/Essential.dart';
 import 'package:astro_guide/models/chat/ChatModel.dart';
 import 'package:astro_guide/services/networking/ApiConstants.dart';
 import 'package:astro_guide/size/MySize.dart';
-import 'package:astro_guide/size/WidgetSize.dart';
 import 'package:astro_guide/views/home/chat/Waiting.dart';
-import 'package:astro_guide/views/home/talk/Talk.dart';
 import 'package:astro_guide/views/loadingScreen/LoadingScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -36,6 +37,7 @@ class Chat extends StatelessWidget {
           appBar: AppBar(
             backgroundColor: MyColors.colorButton,
             centerTitle: false,
+            iconTheme: IconThemeData(color: MyColors.black),
             title: Row(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -62,14 +64,17 @@ class Chat extends StatelessWidget {
                         Text(
                           chatController.astrologer.name,
                           style: GoogleFonts.manrope(
-                            fontSize: 16
+                            fontSize: 16,
+                            color: MyColors.black
                           ),
                         ),
                         if(chatController.type=="ACTIVE")
                           Text(
                             chatController.getChatTime(),
                             style: GoogleFonts.manrope(
-                              fontSize: 12
+                              fontSize: 12,
+
+                                color: MyColors.black
                             ),
                           ),
                       ],
@@ -101,7 +106,6 @@ class Chat extends StatelessWidget {
             ),
           ),
           // bottomNavigationBar: getBottomPage(),
-          backgroundColor: MyColors.white,
           body: getBody(context, theme),
         ) : LoadingScreen();
       },
@@ -109,33 +113,40 @@ class Chat extends StatelessWidget {
   }
 
   Widget getBody(BuildContext context, ThemeData theme) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Flexible(
-          child: chatController.chats.isNotEmpty ?
-          ListView.separated(
-            controller: chatController.controller,
-            reverse: true,
-            itemCount: chatController.chats.length,
-            separatorBuilder: (buildContext, index) {
-              return chatController.getDateDifference(chatController.chats[index].sent_at, chatController.chats[index+1].sent_at) ?
-              getNewDateDesign(chatController.chats[index].sent_at)
-              : SizedBox(
-                height: 0,
-              );
-            },
-            itemBuilder: (buildContext, index) {
-              return getChatDesign(index, chatController.chats[index]);
-            },
+    return Container(
+      decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage("assets/essential/bg.png")
           )
-          : SizedBox(
-            height: 100,
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Flexible(
+            child: chatController.chats.isNotEmpty ?
+            ListView.separated(
+              controller: chatController.controller,
+              reverse: true,
+              itemCount: chatController.chats.length,
+              separatorBuilder: (buildContext, index) {
+                return chatController.getDateDifference(chatController.chats[index].sent_at, chatController.chats[index+1].sent_at) ?
+                getNewDateDesign(chatController.chats[index].sent_at)
+                : SizedBox(
+                  height: 0,
+                );
+              },
+              itemBuilder: (buildContext, index) {
+                return getChatDesign(index, chatController.chats[index]);
+              },
+            )
+            : SizedBox(
+              height: 100,
+            ),
           ),
-        ),
-        chatController.type=="ACTIVE" ? getBottomPage(theme)
-        : getBottom(context)
-      ],
+          chatController.type=="ACTIVE" ? getBottomPage(theme)
+          : getBottom(context)
+        ],
+      ),
     );
   }
 
@@ -154,8 +165,8 @@ class Chat extends StatelessWidget {
               SentMessageScreen(chat: chat.copyWith(message: SessionConstants.autoMessage), color: MyColors.red),
           ],
         )
-        : SendImageScreen(chat: chat, color: MyColors.black,)
-        : ReceivedMessageScreen(chat: chat),
+        : chat.m_type=="V" ? SentVoiceScreen(chat: chat, color: MyColors.black,) : chat.m_type=="I" ? SendImageScreen(chat: chat, color: MyColors.black,) : SendDocScreen(chat: chat, color: MyColors.black,)
+        : chat.m_type=="T" ? ReceivedMessageScreen(chat: chat) : ReceivedVoiceScreen(chat: chat),
       ],
     );
   }
@@ -173,49 +184,27 @@ class Chat extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
         child: Row(
           children: [
-            GestureDetector(
-              onTap: () {
-                chatController.chooseOption(theme);
-              },
-              child: Icon(
-                Icons.add,
-                size: 30,
-                color: MyColors.black,
-              ),
-            ),
-            SizedBox(
-              width: 5,
-            ),
-            Flexible(
-              child: TextFormField(
-                onChanged: (value) {
-                  chatController.changeSend();
-                },
-                style: GoogleFonts.manrope(
-                  fontSize: 16.0,
-                  color: MyColors.black,
-                  letterSpacing: 0,
-                  fontWeight: FontWeight.w400,
-                ),
-                controller: chatController.message,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: MyColors.colorButton,
+            if((chatController.recordTimer?.isActive??false)==false)
+              Row(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      chatController.chooseOption(theme);
+                    },
+                    child: Icon(
+                      Icons.add,
+                      size: 30,
+                      color: MyColors.iconColor(),
                     ),
-                    borderRadius: BorderRadius.circular(25),
                   ),
-                  hintText: "Type your message...",
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 16,),
-                ),
-                validator: (value) {
-                  if ((value??"").isEmpty) {
-                    return "* Required";
-                  }  else {
-                    return null;
-                  }
-                },
+                  SizedBox(
+                    width: 5,
+                  ),
+                ],
               ),
+            Flexible(
+              child: chatController.recordTimer?.isActive==true ?
+              getRecordView() : getMessageBox(),
             ),
             SizedBox(
               width: 10,
@@ -239,7 +228,7 @@ class Chat extends StatelessWidget {
                 chatController.startRecording();
               },
               onLongPressEnd: (details) {
-                chatController.stopRecording();
+                chatController.stopRecording(true);
               },
               child: CircleAvatar(
                 backgroundColor: MyColors.colorButton,
@@ -252,6 +241,62 @@ class Chat extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  Widget getMessageBox () {
+    return TextFormField(
+      onChanged: (value) {
+        chatController.changeSend();
+      },
+      textInputAction: TextInputAction.newline,
+      style: GoogleFonts.manrope(
+        fontSize: 16.0,
+        letterSpacing: 0,
+        fontWeight: FontWeight.w400,
+      ),
+      controller: chatController.message,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: MyColors.colorButton,
+          ),
+          borderRadius: BorderRadius.circular(25),
+        ),
+        hintText: "Type your message...",
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16,),
+      ),
+      validator: (value) {
+        if ((value??"").isEmpty) {
+          return "* Required";
+        }  else {
+          return null;
+        }
+      },
+    );
+  }
+  Widget getRecordView() {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        CircleAvatar(
+          backgroundColor: chatController.recordDuration%2==0 ? MyColors.colorPSigns : MyColors.colorInactive,
+          child: Icon(
+            Icons.mic,
+            color: chatController.recordDuration%2==0 ? MyColors.black : MyColors.white,
+          ),
+        ),
+        SizedBox(
+          width: 10,
+        ),
+        Text(
+          chatController.getTime(chatController.recordDuration),
+          style: GoogleFonts.manrope(
+              fontSize: 18,
+              color: MyColors.black
+          ),
+        )
+      ],
     );
   }
 
@@ -283,7 +328,7 @@ class Chat extends StatelessWidget {
                 child: Align(
                   alignment: Alignment.center,
                   child: Text(
-                    "Your Review",
+                    "Your Review".tr,
                     style: GoogleFonts.manrope(
                       fontSize: 18,
                       color: MyColors.black,
@@ -332,7 +377,7 @@ class Chat extends StatelessWidget {
         child: Column(
           children: [
             Text(
-              "Chat Duration: ${Essential.getChatDuration(chatController.action=="VIEW" ? null : chatController.seconds, chatController.sessionHistory.started_at??"", chatController.sessionHistory.ended_at??"", )}",
+              "${'Chat'.tr} ${'Duration'.tr}: ${Essential.getChatDuration(chatController.action=="VIEW" ? null : chatController.seconds, chatController.sessionHistory.started_at??"", chatController.sessionHistory.ended_at??"", )}",
               style: GoogleFonts.manrope(
                 fontSize: 14,
                 color: MyColors.black,
@@ -343,7 +388,7 @@ class Chat extends StatelessWidget {
               height: 5,
             ),
             Text(
-              "Please let us know your genuine and honest feedback about the astrologer. So we can serve you the best.",
+              "Please let us know your genuine and honest feedback about the astrologer. So we can serve you the best.".tr,
               textAlign: TextAlign.center,
               style: GoogleFonts.manrope(
                   fontSize: 12,
@@ -388,6 +433,7 @@ class Chat extends StatelessWidget {
         initialRating: 5,
         direction: Axis.horizontal,
         itemCount: 5,
+        unratedColor: MyColors.colorUnrated,
         itemPadding: EdgeInsets.symmetric(horizontal: 6.0),
         ignoreGestures: true,
         itemSize: 30,
@@ -441,7 +487,7 @@ class Chat extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(top: 2.0, bottom: 5),
                         child: Text(
-                          chatController.sessionHistory.anonymous==1 ? "Anonymous" : chatController.sessionHistory.user??"",
+                          chatController.sessionHistory.anonymous==1 ? "Anonymous".tr : chatController.sessionHistory.user??"",
                           style: GoogleFonts.manrope(
                               fontSize: 14,
                               color: MyColors.black,
@@ -508,6 +554,7 @@ class Chat extends StatelessWidget {
       allowHalfRating: true,
       direction: Axis.horizontal,
       itemCount: 5,
+      unratedColor: MyColors.colorUnrated,
       itemPadding: EdgeInsets.symmetric(horizontal: 2.0),
       ignoreGestures: true,
       itemSize: 16,

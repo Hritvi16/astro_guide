@@ -30,7 +30,6 @@ class Following extends StatelessWidget {
     return GetBuilder<FollowingController>(
       builder: (controller) {
         return Scaffold(
-          backgroundColor: MyColors.white,
           body: getBody(context),
         );
       },
@@ -50,7 +49,7 @@ class Following extends StatelessWidget {
                   color: MyColors.colorPrimary,
                   image: const DecorationImage(
                       image: AssetImage(
-                          "assets/essential/upper_bg.png"
+                          "assets/essential/upper_bg_s.png"
                       )
                   )
               ),
@@ -107,7 +106,7 @@ class Following extends StatelessWidget {
     int rate = 0;
     return GestureDetector(
       onTap: () {
-        // followingController.goto("/astrologerDetail", arguments: astrologer.id.toString());
+        followingController.goto("/astrologerDetail", arguments: astrologer.id.toString());
       },
       child: Container(
         padding: const EdgeInsets.all(8),
@@ -237,41 +236,46 @@ class Following extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        astrologer.name,
-                        style: GoogleFonts.playfairDisplay(
-                          fontSize: 18.0,
-                          color: MyColors.black,
-                          fontWeight: FontWeight.w700,
+              Flexible(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Flexible(
+                          child: Text(
+                            astrologer.name,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: GoogleFonts.playfairDisplay(
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Image.asset(
-                        "assets/common/online.png",
-                        height: 11,
-                        width: 11,
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    height: 2,
-                  ),
-                  Text(
-                    "Vedic Astrologer",
-                    style: GoogleFonts.manrope(
-                      fontSize: 12.0,
-                      color: MyColors.colorGrey,
-                      fontWeight: FontWeight.w500,
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Image.asset(
+                          "assets/common/online.png",
+                          height: 11,
+                          width: 11,
+                        )
+                      ],
                     ),
-                  ),
-                ],
+                    SizedBox(
+                      height: 2,
+                    ),
+                    Text(
+                      "Vedic Astrologer",
+                      style: GoogleFonts.manrope(
+                        fontSize: 12.0,
+                        color: MyColors.colorGrey,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
               ),
               Flexible(
                 child: GestureDetector(
@@ -395,7 +399,6 @@ class Following extends StatelessWidget {
                         maxLines: 1,
                         style: GoogleFonts.manrope(
                           fontSize: 12.0,
-                          color: MyColors.black,
                           fontWeight: followingController.free && astrologer.free==1 ? FontWeight.w600 : FontWeight.w500,
                         ),
                       ),
@@ -458,7 +461,6 @@ class Following extends StatelessWidget {
                         maxLines: 1,
                         style: GoogleFonts.manrope(
                           fontSize: 12.0,
-                          color: MyColors.black,
                           fontWeight: followingController.free && astrologer.free==1 ? FontWeight.w600 : FontWeight.w500,
                         ),
                       ),
@@ -474,53 +476,4 @@ class Following extends StatelessWidget {
 }
 
 
-getOldBottom(AstrologerModel astrologer) {
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    children: [
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "${CommonConstants.rupee} 50000/${'min'.tr}",
-            // "${CommonConstants.rupee} ${astrologer.chat_rate}/${'min'.tr}",
-            style: GoogleFonts.playfairDisplay(
-              fontSize: 16.0,
-              color: MyColors.black,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-          Text(
-            "First 5 minutes free",
-            style: GoogleFonts.manrope(
-              fontSize: 12.0,
-              color: MyColors.colorButton,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-        ],
-      ),
-      Container(
-        padding: EdgeInsets.symmetric(horizontal: 16),
-        alignment: Alignment.center,
-        height: standardShortButtonHeight,
-        decoration: BoxDecoration(
-          color: MyColors.colorLightPrimary,
-          border: Border.all(
-            color: MyColors.colorButton
-          ),
-          borderRadius: BorderRadius.circular(standardShortButtonRadius)
-        ),
-        child: Text(
-          "Chat",
-          style: GoogleFonts.manrope(
-            fontSize: 12.0,
-            color: MyColors.black,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-      )
-    ],
-  );
-}
 

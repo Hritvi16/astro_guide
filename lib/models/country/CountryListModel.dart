@@ -12,7 +12,7 @@ class CountryListModel with _$CountryListModel {
     required String status,
     required int code,
     required String message,
-    required List<CountryModel> data,
+    List<CountryModel>? data,
   }) = _CountryListModel;
 
   factory CountryListModel.fromJson(JSON json) => _$CountryListModelFromJson(json);

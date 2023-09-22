@@ -36,6 +36,8 @@ _$_AstrologerModel _$$_AstrologerModelFromJson(Map<String, dynamic> json) =>
       total_call_sec: json['total_call_sec'] as int?,
       total_chat_rating: (json['total_chat_rating'] as num?)?.toDouble(),
       total_call_rating: (json['total_call_rating'] as num?)?.toDouble(),
+      types: json['types'] as String?,
+      languages: json['languages'] as String?,
     );
 
 Map<String, dynamic> _$$_AstrologerModelToJson(_$_AstrologerModel instance) =>
@@ -68,4 +70,6 @@ Map<String, dynamic> _$$_AstrologerModelToJson(_$_AstrologerModel instance) =>
       'total_call_sec': instance.total_call_sec,
       'total_chat_rating': instance.total_chat_rating,
       'total_call_rating': instance.total_call_rating,
+      'types': instance.types,
+      'languages': instance.languages,
     };

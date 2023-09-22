@@ -182,6 +182,7 @@ class CheckSessionController extends GetxController {
             "ch_id": response.ch_id,
             "type": "REQUESTED",
             "action": "REQUESTING",
+            "wallet" : wallet,
             SessionConstants.chat_type : free ? "FREE" : "PAID",
             "session_history" : response.session_history?.copyWith(token: response.token)
           });

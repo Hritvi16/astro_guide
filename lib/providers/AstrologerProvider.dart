@@ -2,6 +2,7 @@ import 'package:astro_guide/models/astrologer/AstrologerListModel.dart';
 import 'package:astro_guide/models/astrologer/AstrologerResponseModel.dart';
 import 'package:astro_guide/models/response/ResponseModel.dart';
 import 'package:astro_guide/models/astrologer/AstrologerModel.dart';
+import 'package:astro_guide/models/review/ReviewListModel.dart';
 import 'package:astro_guide/models/values/ValuesModel.dart';
 import 'package:astro_guide/repositories/AstrologerRepository.dart';
 
@@ -39,4 +40,11 @@ class AstrologerProvider {
 
     return AstrologerResponseModel.fromJson(astrologerResponseModel);
   }
+
+  Future<ReviewListModel> fetchReviews(String token, String endpoint) async {
+    var reviewListModel = await astrologerRepository.fetch(token, endpoint);
+
+    return ReviewListModel.fromJson(reviewListModel);
+  }
+
 }

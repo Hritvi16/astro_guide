@@ -13,6 +13,7 @@ class SupportConstants {
   static String username = "username";
   static String sender = "sender";
   static String A = "A";
+  static String U = "U";
   static String rating = "rating";
   static String review = "review";
 }

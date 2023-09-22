@@ -22,14 +22,14 @@ class UserProvider {
     return LoginModel.fromJson(loginResponse);
   }
 
-  Future<ResponseModel> update(Map<String, dynamic> data, String token) async {
-    var response = await userRepository.update(data, token);
+  Future<ResponseModel> update(Map<String, dynamic> data, String token, String endpoint) async {
+    var response = await userRepository.update(data, token, endpoint);
 
     return ResponseModel.fromJson(response);
   }
 
-  Future<LoginModel> add(FormData formData, String token) async {
-    var loginResponse = await userRepository.add(formData, token);
+  Future<LoginModel> add(FormData formData, String endpoint, String token) async {
+    var loginResponse = await userRepository.add(formData, endpoint, token);
 
     return LoginModel.fromJson(loginResponse);
   }

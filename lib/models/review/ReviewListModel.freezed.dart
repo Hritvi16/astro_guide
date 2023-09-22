@@ -24,6 +24,7 @@ mixin _$ReviewListModel {
   int get code => throw _privateConstructorUsedError;
   String get message => throw _privateConstructorUsedError;
   List<ReviewModel>? get data => throw _privateConstructorUsedError;
+  RatingModel? get rating => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -37,7 +38,14 @@ abstract class $ReviewListModelCopyWith<$Res> {
           ReviewListModel value, $Res Function(ReviewListModel) then) =
       _$ReviewListModelCopyWithImpl<$Res, ReviewListModel>;
   @useResult
-  $Res call({String status, int code, String message, List<ReviewModel>? data});
+  $Res call(
+      {String status,
+      int code,
+      String message,
+      List<ReviewModel>? data,
+      RatingModel? rating});
+
+  $RatingModelCopyWith<$Res>? get rating;
 }
 
 /// @nodoc
@@ -57,6 +65,7 @@ class _$ReviewListModelCopyWithImpl<$Res, $Val extends ReviewListModel>
     Object? code = null,
     Object? message = null,
     Object? data = freezed,
+    Object? rating = freezed,
   }) {
     return _then(_value.copyWith(
       status: null == status
@@ -75,7 +84,23 @@ class _$ReviewListModelCopyWithImpl<$Res, $Val extends ReviewListModel>
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
               as List<ReviewModel>?,
+      rating: freezed == rating
+          ? _value.rating
+          : rating // ignore: cast_nullable_to_non_nullable
+              as RatingModel?,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $RatingModelCopyWith<$Res>? get rating {
+    if (_value.rating == null) {
+      return null;
+    }
+
+    return $RatingModelCopyWith<$Res>(_value.rating!, (value) {
+      return _then(_value.copyWith(rating: value) as $Val);
+    });
   }
 }
 
@@ -87,7 +112,15 @@ abstract class _$$_ReviewListModelCopyWith<$Res>
       __$$_ReviewListModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String status, int code, String message, List<ReviewModel>? data});
+  $Res call(
+      {String status,
+      int code,
+      String message,
+      List<ReviewModel>? data,
+      RatingModel? rating});
+
+  @override
+  $RatingModelCopyWith<$Res>? get rating;
 }
 
 /// @nodoc
@@ -105,6 +138,7 @@ class __$$_ReviewListModelCopyWithImpl<$Res>
     Object? code = null,
     Object? message = null,
     Object? data = freezed,
+    Object? rating = freezed,
   }) {
     return _then(_$_ReviewListModel(
       status: null == status
@@ -123,6 +157,10 @@ class __$$_ReviewListModelCopyWithImpl<$Res>
           ? _value._data
           : data // ignore: cast_nullable_to_non_nullable
               as List<ReviewModel>?,
+      rating: freezed == rating
+          ? _value.rating
+          : rating // ignore: cast_nullable_to_non_nullable
+              as RatingModel?,
     ));
   }
 }
@@ -134,7 +172,8 @@ class _$_ReviewListModel implements _ReviewListModel {
       {required this.status,
       required this.code,
       required this.message,
-      final List<ReviewModel>? data})
+      final List<ReviewModel>? data,
+      this.rating})
       : _data = data;
 
   factory _$_ReviewListModel.fromJson(Map<String, dynamic> json) =>
@@ -157,8 +196,11 @@ class _$_ReviewListModel implements _ReviewListModel {
   }
 
   @override
+  final RatingModel? rating;
+
+  @override
   String toString() {
-    return 'ReviewListModel(status: $status, code: $code, message: $message, data: $data)';
+    return 'ReviewListModel(status: $status, code: $code, message: $message, data: $data, rating: $rating)';
   }
 
   @override
@@ -169,13 +211,14 @@ class _$_ReviewListModel implements _ReviewListModel {
             (identical(other.status, status) || other.status == status) &&
             (identical(other.code, code) || other.code == code) &&
             (identical(other.message, message) || other.message == message) &&
-            const DeepCollectionEquality().equals(other._data, _data));
+            const DeepCollectionEquality().equals(other._data, _data) &&
+            (identical(other.rating, rating) || other.rating == rating));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, status, code, message,
-      const DeepCollectionEquality().hash(_data));
+      const DeepCollectionEquality().hash(_data), rating);
 
   @JsonKey(ignore: true)
   @override
@@ -196,7 +239,8 @@ abstract class _ReviewListModel implements ReviewListModel {
       {required final String status,
       required final int code,
       required final String message,
-      final List<ReviewModel>? data}) = _$_ReviewListModel;
+      final List<ReviewModel>? data,
+      final RatingModel? rating}) = _$_ReviewListModel;
 
   factory _ReviewListModel.fromJson(Map<String, dynamic> json) =
       _$_ReviewListModel.fromJson;
@@ -209,6 +253,8 @@ abstract class _ReviewListModel implements ReviewListModel {
   String get message;
   @override
   List<ReviewModel>? get data;
+  @override
+  RatingModel? get rating;
   @override
   @JsonKey(ignore: true)
   _$$_ReviewListModelCopyWith<_$_ReviewListModel> get copyWith =>

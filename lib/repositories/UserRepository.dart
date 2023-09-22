@@ -21,14 +21,14 @@ class UserRepository {
     return login;
   }
 
-  Future<JSON> update(Map<String, dynamic> data, String token) async {
-    var update = await apiService.post(endpoint: ApiConstants.userAPI+ApiConstants.update, body: data, token: token);
+  Future<JSON> update(Map<String, dynamic> data, String token, String endpoint) async {
+    var update = await apiService.post(endpoint: ApiConstants.userAPI+endpoint, body: data, token: token);
 
     return update;
   }
 
-  Future<JSON> add(FormData formData, String token) async {
-    var image = await apiService.file(endpoint: ApiConstants.userAPI+ApiConstants.add, body: formData, token: token);
+  Future<JSON> add(FormData formData, String endpoint, String token) async {
+    var image = await apiService.file(endpoint: ApiConstants.userAPI+endpoint, body: formData, token: token);
     return image;
   }
 

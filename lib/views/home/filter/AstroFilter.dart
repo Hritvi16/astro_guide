@@ -44,28 +44,23 @@ class AstroFilter extends StatelessWidget {
   Widget getBody(BuildContext context) {
     return Container(
       height: MySize.sizeh80(context),
-      color: MyColors.white,
+      color: MyColors.backgroundColor(),
       child: Column(
         children: [
-          SizedBox(
-            width: MySize.size100(context),
-            height: standardBottomBarFixedDesignHeight,
-            child: ClipPath(
-              clipper: CustomClipPath(),
-              child: Container(
-                height: standardUpperFixedDesignHeight,
-                padding: EdgeInsets.symmetric(horizontal: standardHorizontalPagePadding),
-                decoration: BoxDecoration(
-                    color: MyColors.colorPrimary,
-                    image: const DecorationImage(
-                        image: AssetImage(
-                            "assets/essential/upper_bg.png"
-                        )
-                    )
-                ),
-                child: SafeArea(
-                  child: CustomAppBar('Sort & Filter'),
-                ),
+          ClipPath(
+            clipper: CustomClipPath(),
+            child: Container(
+              height: 80,
+              decoration: BoxDecoration(
+                  color: MyColors.colorPrimary,
+                  image: const DecorationImage(
+                      image: AssetImage(
+                          "assets/essential/upper_bg_s.png"
+                      )
+                  )
+              ),
+              child: SafeArea(
+                child: CustomAppBar('Sort & Filter'.tr),
               ),
             ),
           ),
@@ -122,11 +117,11 @@ class AstroFilter extends StatelessWidget {
           ) : null
         ),
         child: Text(
-          filter,
+          filter.tr,
           style: GoogleFonts.manrope(
             fontWeight: FontWeight.w500,
             fontSize: 14,
-            color: MyColors.black
+            color: MyColors.labelColor()
           ),
         ),
       ),
@@ -160,6 +155,7 @@ class AstroFilter extends StatelessWidget {
           Radio(
             value: option,
             groupValue: astroFilterController.ssort,
+            activeColor: MyColors.colorButton,
             materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
             visualDensity: VisualDensity.compact,
             onChanged: (value) {
@@ -167,11 +163,11 @@ class AstroFilter extends StatelessWidget {
             },
           ),
           Text(
-            option,
+            option.tr,
             style: GoogleFonts.manrope(
                 fontWeight: FontWeight.w500,
                 fontSize: 14,
-                color: MyColors.black
+                color: MyColors.labelColor()
             ),
           ),
         ],
@@ -197,7 +193,7 @@ class AstroFilter extends StatelessWidget {
   Widget getExpertiseDesign(TypeModel option) {
     return getCheckboxDesign(astroFilterController.stypes.contains(option), option.type, (value) {
       astroFilterController.changeType(value, option);
-    });
+    }, false);
   }
 
   Widget getLanguage() {
@@ -218,7 +214,7 @@ class AstroFilter extends StatelessWidget {
   Widget getLanguageDesign(LanguageModel option) {
     return getCheckboxDesign(astroFilterController.slangs.contains(option), option.lang, (value) {
       astroFilterController.changeLanguage(value, option);
-    });
+    }, false);
   }
 
   Widget getGender() {
@@ -236,10 +232,10 @@ class AstroFilter extends StatelessWidget {
     );
   }
 
-  Widget getGenderDesign(String option) {
+  Widget getGenderDesign(String option, ) {
     return getCheckboxDesign(astroFilterController.sgender.contains(option), option, (value) {
       astroFilterController.changeGender(value, option);
-    });
+    }, true);
   }
 
   Widget getCountry() {
@@ -260,10 +256,10 @@ class AstroFilter extends StatelessWidget {
   Widget getCountryDesign(CountryModel option) {
     return getCheckboxDesign(astroFilterController.scountries.contains(option), option.name, (value) {
       astroFilterController.changeCountry(value, option);
-    });
+    }, false);
   }
 
-  Widget getCheckboxDesign(bool val, String option, void Function(dynamic value) onChanged) {
+  Widget getCheckboxDesign(bool val, String option, void Function(dynamic value) onChanged, bool convert) {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 0.5, horizontal: 5),
       child: Row(
@@ -276,11 +272,11 @@ class AstroFilter extends StatelessWidget {
             onChanged: onChanged,
           ),
           Text(
-            option,
+            convert ? option.tr : option,
             style: GoogleFonts.manrope(
                 fontWeight: FontWeight.w500,
                 fontSize: 14,
-                color: MyColors.black
+                color: MyColors.labelColor()
             ),
           ),
         ],
@@ -322,7 +318,7 @@ class AstroFilter extends StatelessWidget {
                   style: GoogleFonts.manrope(
                     fontWeight: FontWeight.w600,
                     fontSize: 16,
-                    color: MyColors.black
+                    color: MyColors.labelColor()
                   )
                 ),
               ),

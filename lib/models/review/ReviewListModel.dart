@@ -1,3 +1,4 @@
+import 'package:astro_guide/models/rating/RatingModel.dart';
 import 'package:astro_guide/models/review/ReviewModel.dart';
 import 'package:astro_guide/shared/typedef.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -13,6 +14,7 @@ class ReviewListModel with _$ReviewListModel {
     required int code,
     required String message,
     List<ReviewModel>? data,
+    RatingModel? rating,
   }) = _ReviewListModel;
 
   factory ReviewListModel.fromJson(JSON json) => _$ReviewListModelFromJson(json);

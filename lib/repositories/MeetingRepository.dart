@@ -28,6 +28,11 @@ class MeetingRepository {
     return update;
   }
 
+  Future<JSON> missed(Map<String, dynamic> data, String token) async {
+    var update = await apiService.post(endpoint: ApiConstants.meetingAPI+ApiConstants.missed, body: data, token: token);
+    return update;
+  }
+
   Future<JSON> cancel(Map<String, dynamic> data, String token) async {
     var update = await apiService.post(endpoint: ApiConstants.meetingAPI+ApiConstants.cancel, body: data, token: token);
     return update;
@@ -41,5 +46,10 @@ class MeetingRepository {
   Future<JSON> fetchByID(String token, String endpoint, Map<String, dynamic> data) async {
     var calls = await apiService.post(endpoint: ApiConstants.meetingAPI+endpoint, body: data, token: token);
     return calls;
+  }
+
+  Future<JSON> reject(Map<String, dynamic> data, String token) async {
+    var update = await apiService.post(endpoint: ApiConstants.meetingAPI+ApiConstants.reject, body: data, token: token);
+    return update;
   }
 }

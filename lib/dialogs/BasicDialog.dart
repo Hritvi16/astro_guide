@@ -9,7 +9,7 @@ class BasicDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      backgroundColor: Colors.white,
+      backgroundColor: MyColors.cardColor(),
       child: Container(
         padding: EdgeInsets.only(left: 15, right: 10, top: 15),
         child: Column(

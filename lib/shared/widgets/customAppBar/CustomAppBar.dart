@@ -5,39 +5,48 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-Widget CustomAppBar(String title, {Widget? options}) {
+Widget CustomAppBar(String title, {Widget? options, bool? arrow, CrossAxisAlignment? crossAxisAlignment}) {
   return Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
+    padding:  EdgeInsets.symmetric(horizontal: standardHorizontalPagePadding,),
     child: Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: crossAxisAlignment??CrossAxisAlignment.center,
+              // crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                GestureDetector(
-                  onTap: () {
-                    Get.back();
-                  },
-                  child: Image.asset(
-                    "assets/controls/arrow_previous.png",
-                    color: MyColors.black,
-                    height: standardBackPressButtonHeight,
-                    width: standardBackPressButtonWidth,
+                if(arrow??true)
+                  Row(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Get.back();
+                        },
+                        child: Image.asset(
+                          "assets/controls/arrow_previous.png",
+                          color: MyColors.black,
+                          height: standardBackPressButtonHeight,
+                          width: standardBackPressButtonWidth,
+                        ),
+                      ),
+                      SizedBox(
+                        width: standardBackPressGap,
+                      ),
+                    ],
                   ),
-                ),
-                SizedBox(
-                  width: standardBackPressGap,
-                ),
-                Text(
-                  title,
-                  style: GoogleFonts.playfairDisplay(
-                    fontSize: 22.0,
-                    color: MyColors.black,
-                    letterSpacing: 0,
-                    fontWeight: FontWeight.w700,
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Text(
+                    title,
+                    style: GoogleFonts.playfairDisplay(
+                      fontSize: 22.0,
+                      color: MyColors.black,
+                      letterSpacing: 0,
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
                 ),
               ],

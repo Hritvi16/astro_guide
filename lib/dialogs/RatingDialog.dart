@@ -30,7 +30,7 @@ class RatingDialog extends StatelessWidget {
     return GetBuilder<RatingController>(
       builder: (controller) {
         return Dialog(
-          backgroundColor: Colors.white,
+          backgroundColor: MyColors.cardColor(),
           insetPadding: EdgeInsets.symmetric(horizontal: 15),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
@@ -62,7 +62,6 @@ class RatingDialog extends StatelessWidget {
                     ratingController.sessionHistory.astrologer??"",
                     style: GoogleFonts.manrope(
                         fontSize: 16,
-                        color: MyColors.black,
                         fontWeight: FontWeight.w500
                     ),
                   ),
@@ -117,19 +116,17 @@ class RatingDialog extends StatelessWidget {
                                 Padding(
                                   padding: const EdgeInsets.only(top: 2.0, bottom: 5),
                                   child: Text(
-                                    ratingController.sessionHistory.anonymous==1 ? "Anonymous" : ratingController.sessionHistory.user??"",
+                                    ratingController.sessionHistory.anonymous==1 ? "Anonymous".tr : ratingController.sessionHistory.user??"",
                                     style: GoogleFonts.manrope(
                                         fontSize: 14,
-                                        color: MyColors.black,
                                         fontWeight: FontWeight.w600
                                     ),
                                   ),
                                 ),
                                 Text(
-                                  "Reviews are public if you are not anonymous",
+                                  "Reviews are public if you are not anonymous".tr,
                                   style: GoogleFonts.manrope(
                                     fontSize: 10,
-                                    color: MyColors.black,
                                   ),
                                 ),
                               ],
@@ -144,10 +141,9 @@ class RatingDialog extends StatelessWidget {
                                 },
                               ),
                               Text(
-                                "Hide my name from all public reviews",
+                                "Hide my name from all public reviews".tr,
                                 style: GoogleFonts.manrope(
                                   fontSize: 12,
-                                  color: MyColors.black,
                                 ),
                               ),
                             ],
@@ -160,14 +156,14 @@ class RatingDialog extends StatelessWidget {
                     height: 10,
                   ),
                   ratingBar(),
-                  standardTFLabel(text: 'Review', optional: '\t(Optional)', optionalFontSize: 11,),
+                  standardTFLabel(text: 'Review'.tr, optional: '\t(${'Optional'.tr})', optionalFontSize: 11,),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 5),
                     child: TextFormField(
                       style: GoogleFonts.manrope(
                         fontSize: 16.0,
-                        color: MyColors.black,
                         letterSpacing: 0,
+                        color: MyColors.labelColor(),
                         fontWeight: FontWeight.w400,
                       ),
                       controller: ratingController.review,
@@ -180,7 +176,7 @@ class RatingDialog extends StatelessWidget {
                           ),
                           borderRadius: BorderRadius.circular(16),
                         ),
-                        hintText: "Describe your experience",
+                        hintText: "Describe your experience".tr,
                         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                       ),
                     ),
@@ -200,7 +196,7 @@ class RatingDialog extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            'SUBMIT',
+                            'SUBMIT'.tr,
                             style: GoogleFonts.manrope(
                               fontSize: 16.0,
                               color: ratingController.validate() ? MyColors.white : MyColors.black,
@@ -226,6 +222,7 @@ class RatingDialog extends StatelessWidget {
       initialRating: ratingController.sessionHistory.rating??0,
       direction: Axis.horizontal,
       allowHalfRating: true,
+      unratedColor: MyColors.colorUnrated,
       itemCount: 5,
       itemPadding: EdgeInsets.symmetric(horizontal: 6.0),
       itemSize: 30,

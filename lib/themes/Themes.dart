@@ -56,12 +56,12 @@ class Themes {
                 fontWeight: FontWeight.w500
             ),
             bodyText1: TextStyle(
-                color: Colors.grey.shade700,
+                color: Colors.black,
                 fontSize: 16,
                 fontWeight: FontWeight.w400
             ),
             bodyText2: TextStyle(
-                color: Colors.grey.shade600,
+                color: Colors.black,
                 fontSize: 14,
                 fontWeight: FontWeight.w400
             ),
@@ -71,12 +71,12 @@ class Themes {
                 fontWeight: FontWeight.w600
             ),
             caption: TextStyle(
-                color: Colors.grey.shade800,
+                color: Colors.black,
                 fontSize: 12,
                 fontWeight: FontWeight.w400
             ),
             overline: TextStyle(
-                color: Colors.grey.shade700,
+                color: Colors.black,
                 fontSize: 10,
                 fontWeight: FontWeight.w400,
                 letterSpacing: -0.5

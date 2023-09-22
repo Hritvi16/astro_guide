@@ -40,6 +40,12 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+
+    print("Get.arguments");
+    print(Get.arguments);
+    if(Get.arguments!=null) {
+      changeTab(Get.arguments["index"], title: Get.arguments["title"]);
+    }
   }
 
   @override
@@ -47,7 +53,7 @@ class HomeController extends GetxController {
     super.dispose();
   }
 
-  void changeTab(int index) {
+  void changeTab(int index, {String? title}) {
     current = index;
     update();
     if(current==0) {
@@ -55,8 +61,8 @@ class HomeController extends GetxController {
       Dashboard().dashboardController.onInit();
     }
     else if(current==1) {
-      screens[index] = Talk();
-      Talk().talkController.onInit();
+      screens[index] = Talk(title);
+      Talk(title).talkController.onInit();
     }
     else if(current==2) {
       screens[index] = History();

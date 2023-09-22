@@ -2,10 +2,12 @@ import 'dart:io';
 
 import 'package:astro_guide/chat_ui/CustomShape.dart';
 import 'package:astro_guide/colors/MyColors.dart';
+import 'package:astro_guide/essential/Essential.dart';
 import 'package:astro_guide/models/chat/ChatModel.dart';
 import 'package:astro_guide/services/networking/ApiConstants.dart';
 import 'package:astro_guide/size/MySize.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class SendImageScreen extends StatelessWidget {
@@ -55,27 +57,41 @@ class SendImageScreen extends StatelessWidget {
                     ClipRRect(
                       borderRadius: BorderRadius.circular(10),
                       child: getSeenStatus()>=0 ?
-                      Image.network(
-                        ApiConstants.chatUrl+chat.message,
-                        height: MySize.size65(context),
-                        width: MySize.size50(context),
-                        fit: BoxFit.fill,
-                        errorBuilder: (context, object, stackTrace) {
-                          return Container(
-                            height: MySize.size65(context),
-                            width: MySize.size50(context),
-                            child: Icon(
-                              Icons.broken_image_outlined,
-                              size: 50,
-                            ),
-                          );
+                      GestureDetector(
+                        onTap: () {
+                          goto("/photoView", arguments: [ApiConstants.chatUrl+chat.message]);
                         },
+                        child: Image.network(
+                          ApiConstants.chatUrl+chat.message,
+                          height: MySize.size65(context),
+                          width: MySize.size50(context),
+                          fit: BoxFit.fill,
+                          errorBuilder: (context, object, stackTrace) {
+                            return GestureDetector(
+                              onTap: () {
+                              },
+                              child: SizedBox(
+                                height: MySize.size65(context),
+                                width: MySize.size50(context),
+                                child: Icon(
+                                  Icons.broken_image_outlined,
+                                  size: 50,
+                                ),
+                              ),
+                            );
+                          },
+                        ),
                       )
-                      : Image.file(
-                        File(chat.message),
-                        height: MySize.size65(context),
-                        width: MySize.size50(context),
-                        fit: BoxFit.fill,
+                      : GestureDetector(
+                        onTap: () {
+                          goto("/photoView", arguments: [chat.message]);
+                        },
+                        child: Image.file(
+                          File(chat.message),
+                          height: MySize.size65(context),
+                          width: MySize.size50(context),
+                          fit: BoxFit.fill,
+                        ),
                       ),
                     ),
                     SizedBox(
@@ -86,7 +102,7 @@ class SendImageScreen extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          DateFormat("dd MMM, yyyy  hh:mm a").format(DateTime.parse(chat.sent_at)),
+                          Essential.getDateTime(chat.sent_at),
                           style: TextStyle(
                               fontSize: 10
                           ),
@@ -127,5 +143,10 @@ class SendImageScreen extends StatelessWidget {
       }
       return 0;
     }
+  }
+
+  void goto(String page, {dynamic arguments}) {
+    Get.toNamed(page, arguments: arguments)?.then((value) {
+    });
   }
 }

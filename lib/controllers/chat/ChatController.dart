@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'package:astro_guide/constants/AstrologerConstants.dart';
 import 'package:astro_guide/constants/SessionConstants.dart';
 import 'package:astro_guide/constants/CommonConstants.dart';
 import 'package:astro_guide/dialogs/BasicDialog.dart';
@@ -14,23 +13,25 @@ import 'package:astro_guide/models/chat/ChatResponseModel.dart';
 import 'package:astro_guide/models/session/CheckSessionResponseModel.dart';
 import 'package:astro_guide/models/session/EndSessionResponseModel.dart';
 import 'package:astro_guide/models/response/ResponseModel.dart';
-import 'package:astro_guide/models/spec/SpecModel.dart';
 import 'package:astro_guide/providers/ChatProvider.dart';
-import 'package:astro_guide/repositories/ChatRepository.dart';
 import 'package:astro_guide/services/networking/ApiConstants.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:intl/intl.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
-import 'package:record/record.dart';
 import 'package:path/path.dart';
+import 'package:audioplayers/audioplayers.dart' as ap;
+import 'package:audioplayers/audioplayers.dart';
+import 'package:record/record.dart' as r;
+import 'package:just_audio/just_audio.dart' as p;
 
 class ChatController extends GetxController {
   ChatController();
@@ -40,7 +41,22 @@ class ChatController extends GetxController {
   final ChatProvider chatProvider = Get.find();
   ScrollController controller = ScrollController();
 
-  final record = Record();
+
+  int recordDuration = 0;
+  Timer? recordTimer;
+  late final r.Record audioRecorder;
+  StreamSubscription<r.RecordState>? recordSub;
+  r.RecordState recordState = r.RecordState.stop;
+  StreamSubscription<r.Amplitude>? amplitudeSub;
+  r.Amplitude? amplitude;
+
+  final audioPlayer = ap.AudioPlayer()..setReleaseMode(ReleaseMode.stop);
+  late StreamSubscription<void> playerStateChangedSubscription;
+  late StreamSubscription<Duration?> durationChangedSubscription;
+  late StreamSubscription<Duration> positionChangedSubscription;
+  Duration? position;
+  Duration? duration;
+
 
   late AstrologerModel astrologer;
 
@@ -76,9 +92,13 @@ class ChatController extends GetxController {
   late Directory directory;
   late int ring;
 
+  final player = p.AudioPlayer();
+
   @override
   void onInit() {
     super.onInit();
+    initAudio();
+
     cancel = false;
     reject = false;
     load = true;
@@ -107,11 +127,46 @@ class ChatController extends GetxController {
     else {
       ch_id = Get.arguments['ch_id'];
       chat_type = Get.arguments['chat_type'];
-      sessionHistory = SessionHistoryModel(id: ch_id, sess_id: 0, status: type, rate: 0, commission: 0, type: chat_type, requested_at: DateTime.now().toString(), updated_at: DateTime.now().toString());
+      sessionHistory = SessionHistoryModel(id: ch_id, sess_id: 0, status: type, rate: 0, commission: 0, category: "CHAT", type: chat_type, requested_at: DateTime.now().toString(), updated_at: DateTime.now().toString());
       astrologer = Get.arguments['astrologer'];
     }
     start();
   }
+
+  void initAudio() {
+    audioRecorder = r.Record();
+
+    recordSub = audioRecorder.onStateChanged().listen((recordState) {
+      updateRecordState(recordState);
+    });
+
+    amplitudeSub = audioRecorder
+        .onAmplitudeChanged(const Duration(milliseconds: 300))
+        .listen((amp) {
+      amplitude = amp;
+      update();
+    });
+
+    playerStateChangedSubscription =
+        audioPlayer.onPlayerComplete.listen((state) async {
+          await stop();
+          update();
+        });
+    positionChangedSubscription = audioPlayer.onPositionChanged.listen(
+            (position) {
+
+          this.position = position;
+          update();
+        }
+    );
+    durationChangedSubscription = audioPlayer.onDurationChanged.listen(
+            (duration) {
+          this.duration = duration;
+          update();
+        }
+    );
+  }
+
 
   start() async {
     directory = await getTemporaryDirectory();
@@ -153,6 +208,9 @@ class ChatController extends GetxController {
     else if(type=="RECONNECT"){
       if(action=="NOT DECIDED") {
         startRing(60);
+      }
+      else if(action=="ACCEPT") {
+        initiateChat();
       }
     }
   }
@@ -256,7 +314,7 @@ class ChatController extends GetxController {
         CheckSessionResponseModel checkSessionResponse = CheckSessionResponseModel.fromJson(json.decode(data));
 
         if(checkSessionResponse.code==1) {
-          stopTimer();
+          stopTimer(false);
           type = "ACTIVE";
           if(storage.read("free")??false) {
             storage.write("free", false);
@@ -314,7 +372,7 @@ class ChatController extends GetxController {
       ResponseModel response = ResponseModel.fromJson(json.decode(data));
 
       if(timer!=null) {
-        stopTimer();
+        stopTimer(true);
       }
 
       if(response.code==1) {
@@ -339,14 +397,14 @@ class ChatController extends GetxController {
       print(response.toJson());
 
       if(timer!=null) {
-        stopTimer();
+        stopTimer(true);
       }
 
       if(response.code==1) {
         cnt = 0;
         type = "MISSED";
         update();
-        Get.back();
+        back();
       }
       else if(response.code!=-1) {
         cnt = 0;
@@ -378,7 +436,7 @@ class ChatController extends GetxController {
       EndSessionResponseModel endSessionResponse = EndSessionResponseModel.fromJson(json.decode(data));
 
       if(timer!=null) {
-        stopTimer();
+        stopTimer(true);
       }
 
       print("endSessionResponse.toJson()");
@@ -389,7 +447,7 @@ class ChatController extends GetxController {
         type = "CANCELLED";
         if(cancel==false) {
           // stopTimer();
-          Get.back();
+          back();
         }
         else {
           update();
@@ -426,7 +484,7 @@ class ChatController extends GetxController {
       print(response.toJson());
 
       if(timer!=null) {
-        stopTimer();
+        stopTimer(true);
       }
 
       if(response.code==1) {
@@ -472,7 +530,7 @@ class ChatController extends GetxController {
           amount = endSessionResponse.amount??0;
           storage.write("wallet", endSessionResponse.wallet??storage.read(("wallet")));
 
-          stopTimer();
+          stopTimer(true);
         }
         else if(endSessionResponse.code!=-1) {
           cnt = 0;
@@ -585,8 +643,33 @@ class ChatController extends GetxController {
     }
   }
 
+  Future<void> sendVoice(String path) async {
+    Map <String, dynamic> data = {
+      SessionConstants.username : storage.read("access"),
+      SessionConstants.astro_id : astrologer.id.toString(),
+      SessionConstants.ch_id : ch_id,
+      SessionConstants.sender : SessionConstants.U,
+      SessionConstants.type : SessionConstants.M,
+      SessionConstants.m_id : id.toString(),
+      SessionConstants.m_type : "V",
+    };
+
+
+    if (path.isNotEmpty) {
+      File file = File(path);
+      // List<int> fileBytes = await file.readAsBytes();
+
+      data.addAll({SessionConstants.message : MultipartFile(File(file!.path), filename: basename(path)), SessionConstants.ext : basename(path).substring(basename(path).lastIndexOf(".")+1)});
+      // data.addAll({SessionConstants.message : fileBytes, SessionConstants.ext : image.name.substring(image.name.lastIndexOf(".")+1)});
+      print("dataaaaaa");
+      print(basename(path));
+      sendMessage(data, file.path);
+    }
+  }
+
   Future<void> sendDocument() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(type: FileType.any);
+    FilePickerResult? result = await FilePicker.platform.pickFiles(type: FileType.custom,
+      allowedExtensions: ['pdf']);
 
     Map <String, dynamic> data = {
       SessionConstants.username : storage.read("access"),
@@ -635,7 +718,7 @@ class ChatController extends GetxController {
   }
   @override
   void dispose() {
-    message.dispose();
+    disposeObjects();
     super.dispose();
   }
 
@@ -688,7 +771,7 @@ class ChatController extends GetxController {
   }
 
   Future<void> initiateChat() async {
-    stopTimer();
+    stopTimer(false);
     action = "ACCEPT";
     update();
 
@@ -715,7 +798,7 @@ class ChatController extends GetxController {
 
 
     socket.emit('cancel', data);
-    Get.back();
+    back();
   }
 
   void rejectChat() async {
@@ -732,10 +815,11 @@ class ChatController extends GetxController {
 
 
     socket.emit('reject', data);
-    Get.back();
+    back();
   }
 
   void back() {
+    disposeObjects();
     Get.back();
   }
 
@@ -770,7 +854,9 @@ class ChatController extends GetxController {
   void setCountDown() {
     seconds+=1;
     update();
+    print("max");
     print(max);
+    print("total");
     print(seconds);
     if(max<=seconds) {
       endChat(true);
@@ -801,8 +887,16 @@ class ChatController extends GetxController {
     return '$hoursStr:$minutesStr:$secondsStr';
   }
 
-  void stopTimer() {
-    timer!.cancel();
+  void stopTimer(bool dispose) {
+    if(player.playing) {
+      player.stop();
+    }
+    if(timer!=null) {
+      timer!.cancel();
+    }
+    if(dispose) {
+      disposeObjects();
+    }
     update();
   }
 
@@ -826,6 +920,18 @@ class ChatController extends GetxController {
 
   void startRing(int time) {
     ring = time;
+    if(type=="RECONNECT") {
+      player.setAsset("assets/audio/notification.mp3");
+      player.play();
+      player.processingStateStream.listen((processingState) {
+        if (processingState == ProcessingState.completed && type == "RECONNECT") {
+          player.seek(Duration.zero);
+          player.play();
+          update();
+          print("completed");
+        }
+      });
+    }
     update();
     timer = Timer.periodic(const Duration(seconds: 1), (_) {
       setRing();
@@ -838,7 +944,7 @@ class ChatController extends GetxController {
     ring-=1;
     update();
     if(ring<=0) {
-      stopTimer();
+      stopTimer(false);
       if(type=="REQUESTED") {
         waitlistChat();
       }
@@ -924,47 +1030,6 @@ class ChatController extends GetxController {
     });
   }
 
-
-  Future<void> startRecording() async {
-    if (await record.hasPermission()) {
-      try {
-        print(directory);
-        await record.start(
-          path: '${directory}/myFile.m4a',
-          encoder: AudioEncoder.aacLc, // by default
-          bitRate: 128000, // by default
-          samplingRate: 44100, // by default
-        );
-      }
-      catch (e) {
-        print(e);
-      }
-    }
-    else {
-      if(await Essential.requestPermission()) {
-        startRecording();
-      }
-      else {
-        Essential.showSnackBar("Please allow permissions");
-      }
-    }
-  }
-
-  Future<void> stopRecording() async {
-    record.stop();
-    print(File('${directory}/myFile.m4a'));
-    AudioPlayer audioPlayer = AudioPlayer();
-    String filePath = '${directory}/myFile.m4a';
-    audioPlayer.setSourceDeviceFile(filePath);
-    await audioPlayer.play(DeviceFileSource(filePath));
-
-    Future.delayed(const Duration(seconds: 10), () {
-      audioPlayer.stop(); // Prints after 1 second.
-    });
-
-
-  }
-
   void chooseOption(ThemeData theme) {
     Get.bottomSheet(
       Container(
@@ -985,21 +1050,21 @@ class ChatController extends GetxController {
                 title: Text("Camera", style: theme.textTheme.bodyText1),
                 onTap: () {
                   sendImage(ImageSource.camera);
-                  Get.back();
+                  back();
                 },
               ),
               ListTile(
                 title: Text("Photo Gallery", style: theme.textTheme.bodyText1),
                 onTap: () {
                   sendImage(ImageSource.gallery);
-                  Get.back();
+                  back();
                 },
               ),
               ListTile(
                 title: Text("Document", style: theme.textTheme.bodyText1),
                 onTap: () {
                   sendDocument();
-                  Get.back();
+                  back();
                 },
               ),
             ],
@@ -1029,13 +1094,11 @@ class ChatController extends GetxController {
         print("emiteddd");
 
         for (int i=0; i<chats.length; i++) {
+          print(chats[i].id);
+          print(chatResponseModel.m_id);
+          print(chats[i].id==chatResponseModel.m_id);
           if(chats[i].id==chatResponseModel.m_id) {
-            if(chatResponseModel.code==1) {
-              chats[i] = chatResponseModel.data!;
-            }
-            else {
-              chats[i] = chats[i].copyWith(error: 1);
-            }
+            chats[i] = chatResponseModel.data!;
             update();
             break;
           }
@@ -1043,8 +1106,170 @@ class ChatController extends GetxController {
 
       }
       else {
+
+      for (int i=0; i<chats.length; i++) {
+        print(chats[i].id);
+        print(response.m_id);
+        print(chats[i].id==response.m_id);
+        if(chats[i].id==response.m_id) {
+          chats[i] = chats[i].copyWith(error: 1);
+          update();
+          break;
+        }
+      }
         Essential.showSnackBar(response.message);
       }
     });
+  }
+
+
+  Future<void> startRecording() async {
+    try {
+      bool permission = await audioRecorder.hasPermission();
+      if (permission) {
+        const encoder = r.AudioEncoder.wav;
+
+        // We don't do anything with this but printing
+        final isSupported = await audioRecorder.isEncoderSupported(
+          encoder,
+        );
+
+        debugPrint('${encoder.name} supported: $isSupported');
+
+        final devs = await audioRecorder.listInputDevices();
+        debugPrint(devs.toString());
+
+        // const config = RecordConfig(encoder: encoder, numChannels: 1);
+
+        // Record to file
+        String path;
+        final dir = await getApplicationDocumentsDirectory();
+        path = join(
+          dir.path,
+          '${sessionHistory.id}_audio_${DateTime.now().millisecondsSinceEpoch}.m4a',
+        );
+        await audioRecorder.start(path: path);
+
+        // Record to stream
+        // final file = File(path);
+        // final stream = await _audioRecorder.startStream(config);
+        // stream.listen(
+        //   (data) {
+        //     // ignore: avoid_print
+        //     print(
+        //       _audioRecorder.convertBytesToInt16(Uint8List.fromList(data)),
+        //     );
+        //     file.writeAsBytesSync(data, mode: FileMode.append);
+        //   },
+        //   // ignore: avoid_print
+        //   onDone: () => print('End of stream'),
+        // );
+
+        recordDuration = 0;
+        update();
+
+        startRecordTimer();
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
+  }
+  Future<void> stopRecording(bool send) async {
+    final path = await audioRecorder.stop();
+
+    if(send) {
+      if (path != null) {
+        sendVoice(path);
+      }
+    }
+    else {
+      print("delete");
+      File file = File(path!);
+      await file.delete();
+    }
+
+
+
+    // Simple download code for web testing
+    // final anchor = html.document.createElement('a') as html.AnchorElement
+    //   ..href = path
+    //   ..style.display = 'none'
+    //   ..download = 'audio.wav';
+    // html.document.body!.children.add(anchor);
+
+    // // download
+    // anchor.click();
+
+    // // cleanup
+    // html.document.body!.children.remove(anchor);
+    // html.Url.revokeObjectUrl(path!);
+  }
+
+  Future<void> pause() => audioRecorder.pause();
+
+  Future<void> resume() => audioRecorder.resume();
+
+  void updateRecordState(r.RecordState recordState) {
+    this.recordState = recordState;
+    update();
+
+    switch (recordState) {
+      case r.RecordState.pause:
+        recordTimer?.cancel();
+        break;
+      case r.RecordState.record:
+        startRecordTimer();
+        break;
+      case r.RecordState.stop:
+        recordTimer?.cancel();
+        recordDuration = 0;
+        update();
+        break;
+    }
+  }
+
+
+  void startRecordTimer() {
+    recordTimer?.cancel();
+
+    recordTimer = Timer.periodic(const Duration(seconds: 1), (Timer t) {
+      recordDuration++;
+      update();
+    });
+  }
+
+  Future<void> stop() => audioPlayer.stop();
+
+  String getTime(int seconds) {
+    // return "${seconds} secs";
+    int hours = seconds ~/ 3600;
+    int minutes = (seconds % 3600) ~/ 60;
+    int remainingSeconds = seconds % 60;
+    String hoursStr = "";
+    if(hours>0) {
+      hoursStr = hours.toString().padLeft(2, '0')+":";
+    }
+    String minutesStr = minutes.toString().padLeft(2, '0');
+    String secondsStr = remainingSeconds.toString().padLeft(2, '0');
+
+    return '$hoursStr$minutesStr:$secondsStr';
+  }
+
+
+  void disposeObjects() {
+    print("disposeeee objectsss");
+    recordTimer?.cancel();
+    recordSub?.cancel();
+    amplitudeSub?.cancel();
+    audioRecorder.dispose();
+    // message.dispose();
+    audioPlayer.dispose();
+    playerStateChangedSubscription.cancel();
+    durationChangedSubscription.cancel();
+    positionChangedSubscription.cancel();
+    socket.close();
+    socket.dispose();
   }
 }

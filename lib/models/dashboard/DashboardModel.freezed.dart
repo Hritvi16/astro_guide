@@ -34,6 +34,7 @@ mixin _$DashboardModel {
   List<TestimonialModel>? get testimonials =>
       throw _privateConstructorUsedError;
   UserModel? get user => throw _privateConstructorUsedError;
+  SessionHistoryModel? get session => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -58,9 +59,11 @@ abstract class $DashboardModelCopyWith<$Res> {
       List<BlogModel>? blogs,
       List<VideoModel>? videos,
       List<TestimonialModel>? testimonials,
-      UserModel? user});
+      UserModel? user,
+      SessionHistoryModel? session});
 
   $UserModelCopyWith<$Res>? get user;
+  $SessionHistoryModelCopyWith<$Res>? get session;
 }
 
 /// @nodoc
@@ -87,6 +90,7 @@ class _$DashboardModelCopyWithImpl<$Res, $Val extends DashboardModel>
     Object? videos = freezed,
     Object? testimonials = freezed,
     Object? user = freezed,
+    Object? session = freezed,
   }) {
     return _then(_value.copyWith(
       status: null == status
@@ -133,6 +137,10 @@ class _$DashboardModelCopyWithImpl<$Res, $Val extends DashboardModel>
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as UserModel?,
+      session: freezed == session
+          ? _value.session
+          : session // ignore: cast_nullable_to_non_nullable
+              as SessionHistoryModel?,
     ) as $Val);
   }
 
@@ -145,6 +153,18 @@ class _$DashboardModelCopyWithImpl<$Res, $Val extends DashboardModel>
 
     return $UserModelCopyWith<$Res>(_value.user!, (value) {
       return _then(_value.copyWith(user: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $SessionHistoryModelCopyWith<$Res>? get session {
+    if (_value.session == null) {
+      return null;
+    }
+
+    return $SessionHistoryModelCopyWith<$Res>(_value.session!, (value) {
+      return _then(_value.copyWith(session: value) as $Val);
     });
   }
 }
@@ -168,10 +188,13 @@ abstract class _$$_DashboardModelCopyWith<$Res>
       List<BlogModel>? blogs,
       List<VideoModel>? videos,
       List<TestimonialModel>? testimonials,
-      UserModel? user});
+      UserModel? user,
+      SessionHistoryModel? session});
 
   @override
   $UserModelCopyWith<$Res>? get user;
+  @override
+  $SessionHistoryModelCopyWith<$Res>? get session;
 }
 
 /// @nodoc
@@ -196,6 +219,7 @@ class __$$_DashboardModelCopyWithImpl<$Res>
     Object? videos = freezed,
     Object? testimonials = freezed,
     Object? user = freezed,
+    Object? session = freezed,
   }) {
     return _then(_$_DashboardModel(
       status: null == status
@@ -242,6 +266,10 @@ class __$$_DashboardModelCopyWithImpl<$Res>
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as UserModel?,
+      session: freezed == session
+          ? _value.session
+          : session // ignore: cast_nullable_to_non_nullable
+              as SessionHistoryModel?,
     ));
   }
 }
@@ -260,7 +288,8 @@ class _$_DashboardModel implements _DashboardModel {
       final List<BlogModel>? blogs,
       final List<VideoModel>? videos,
       final List<TestimonialModel>? testimonials,
-      this.user})
+      this.user,
+      this.session})
       : _banners = banners,
         _specifications = specifications,
         _new_astrologers = new_astrologers,
@@ -351,10 +380,12 @@ class _$_DashboardModel implements _DashboardModel {
 
   @override
   final UserModel? user;
+  @override
+  final SessionHistoryModel? session;
 
   @override
   String toString() {
-    return 'DashboardModel(status: $status, code: $code, message: $message, banners: $banners, specifications: $specifications, new_astrologers: $new_astrologers, live_astrologers: $live_astrologers, blogs: $blogs, videos: $videos, testimonials: $testimonials, user: $user)';
+    return 'DashboardModel(status: $status, code: $code, message: $message, banners: $banners, specifications: $specifications, new_astrologers: $new_astrologers, live_astrologers: $live_astrologers, blogs: $blogs, videos: $videos, testimonials: $testimonials, user: $user, session: $session)';
   }
 
   @override
@@ -376,7 +407,8 @@ class _$_DashboardModel implements _DashboardModel {
             const DeepCollectionEquality().equals(other._videos, _videos) &&
             const DeepCollectionEquality()
                 .equals(other._testimonials, _testimonials) &&
-            (identical(other.user, user) || other.user == user));
+            (identical(other.user, user) || other.user == user) &&
+            (identical(other.session, session) || other.session == session));
   }
 
   @JsonKey(ignore: true)
@@ -393,7 +425,8 @@ class _$_DashboardModel implements _DashboardModel {
       const DeepCollectionEquality().hash(_blogs),
       const DeepCollectionEquality().hash(_videos),
       const DeepCollectionEquality().hash(_testimonials),
-      user);
+      user,
+      session);
 
   @JsonKey(ignore: true)
   @override
@@ -421,7 +454,8 @@ abstract class _DashboardModel implements DashboardModel {
       final List<BlogModel>? blogs,
       final List<VideoModel>? videos,
       final List<TestimonialModel>? testimonials,
-      final UserModel? user}) = _$_DashboardModel;
+      final UserModel? user,
+      final SessionHistoryModel? session}) = _$_DashboardModel;
 
   factory _DashboardModel.fromJson(Map<String, dynamic> json) =
       _$_DashboardModel.fromJson;
@@ -448,6 +482,8 @@ abstract class _DashboardModel implements DashboardModel {
   List<TestimonialModel>? get testimonials;
   @override
   UserModel? get user;
+  @override
+  SessionHistoryModel? get session;
   @override
   @JsonKey(ignore: true)
   _$$_DashboardModelCopyWith<_$_DashboardModel> get copyWith =>

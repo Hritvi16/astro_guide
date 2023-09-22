@@ -210,6 +210,7 @@ class SupportChat extends StatelessWidget {
                   supportChatController.changeSend();
                 },
                 keyboardType: TextInputType.name,
+                textInputAction: TextInputAction.newline,
                 style: GoogleFonts.manrope(
                   fontSize: 16.0,
                   color: MyColors.black,
@@ -275,6 +276,7 @@ class SupportChat extends StatelessWidget {
         initialRating: 5,
         direction: Axis.horizontal,
         itemCount: 5,
+        unratedColor: MyColors.colorUnrated,
         itemPadding: EdgeInsets.symmetric(horizontal: 6.0),
         ignoreGestures: true,
         itemSize: 30,
@@ -336,6 +338,7 @@ class SupportChat extends StatelessWidget {
       initialRating: supportChatController.support.rating??0,
       allowHalfRating: true,
       direction: Axis.horizontal,
+      unratedColor: MyColors.colorUnrated,
       itemCount: 5,
       itemPadding: EdgeInsets.symmetric(horizontal: 2.0),
       ignoreGestures: true,

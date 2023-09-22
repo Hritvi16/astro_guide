@@ -15,6 +15,7 @@ import 'package:astro_guide/providers/CountryProvider.dart';
 import 'package:astro_guide/providers/StateProvider.dart';
 import 'package:astro_guide/providers/UserProvider.dart';
 import 'package:astro_guide/services/networking/ApiConstants.dart';
+import 'package:astro_guide/views/country/Country.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -38,12 +39,13 @@ class SignUpController extends GetxController {
   late TextEditingController email = TextEditingController();
 
   late TextEditingController dob = TextEditingController();
-  late DateTime date;
+  DateTime? date;
   late String gender;
 
   List<CountryModel> countries = [];
   CountryModel? country;
   CountryModel? nationality;
+  late CountryModel code;
   List<StateModel> states = [];
   StateModel? state;
   List<CityModel> cities = [];
@@ -76,9 +78,11 @@ class SignUpController extends GetxController {
 
     pincode = TextEditingController();
 
-    countries.add(
-      CountryModel(id: 1, name: "INDIA", nationality: "INDIAN", code: "+91")
-    );
+    countries = [
+      CountryModel(id: -1, name: "India", nationality: "Indian", icon: "assets/country/India.png", code: "+91", imageFullUrl: "assets/country/India.png")
+    ];
+    code = countries.first;
+
 
     process = false;
 
@@ -98,6 +102,12 @@ class SignUpController extends GetxController {
       print(response.toJson());
       if(response.code==1) {
         countries = response.data??[];
+        for (var value in countries) {
+          if(value.name.toUpperCase()=="INDIA") {
+            code = value;
+            break;
+          }
+        }
       }
       update();
     });
@@ -202,12 +212,15 @@ class SignUpController extends GetxController {
 
   void changeCountry(CountryModel? value) {
     country = value!;
+    state = null;
+    city = null;
     update();
     getStates(country!.id.toString());
   }
 
   void changeState(StateModel? value) {
     state = value!;
+    city = null;
     update();
     getCities(state!.id.toString());
   }
@@ -224,7 +237,7 @@ class SignUpController extends GetxController {
 
   void setDOB(value) {
     date = value;
-    dob.text = DateFormat("dd MMM, yyyy").format(date);
+    dob.text = DateFormat("dd MMM, yyyy").format(date!);
     update();
   }
 
@@ -247,18 +260,18 @@ class SignUpController extends GetxController {
       if(image!=null)
         ApiConstants.file : MultipartFile(File(image!.path), filename: image!.name),
       UserConstants.name : name.text,
-      UserConstants.mobile : mobile.text,
+      UserConstants.mobile : code.code+"-"+mobile.text,
       UserConstants.email : email.text,
       UserConstants.nationality : nationality!.id,
       UserConstants.dob : date.toString(),
       UserConstants.gender : gender,
       UserConstants.ci_id : city!.id,
       UserConstants.joined_via : UserConstants.jv['C'],
-      UserConstants.postal_code : pincode,
+      UserConstants.postal_code : pincode.text,
       UserConstants.fcm : await NotificationHelper.generateFcmToken()
     });
 
-    userProvider.add(data, storage.read("access")).then((response) {
+    userProvider.add(data, ApiConstants.add, storage.read("access")).then((response) {
       print(response.toJson());
       process = false;
       update();
@@ -320,4 +333,19 @@ class SignUpController extends GetxController {
     }
   }
 
+
+  void changeCode() {
+    Get.bottomSheet(
+        isScrollControlled: true,
+        Country(countries, code)
+    ).then((value) {
+      print(value);
+
+      if(value!=null) {
+        countries = value['countries'];
+        code = value['country'];
+        update();
+      }
+    });
+  }
 }

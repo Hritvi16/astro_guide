@@ -34,7 +34,6 @@ class CheckSession extends StatelessWidget {
     return GetBuilder<CheckSessionController>(
       builder: (controller) {
         return Scaffold(
-          backgroundColor: MyColors.white,
           bottomNavigationBar: checkSessionController.load ? getConfirmDesign(context) : null,
           body: getBody(context),
         );
@@ -52,14 +51,11 @@ class CheckSession extends StatelessWidget {
           child: ClipPath(
             clipper: CustomClipPath(),
             child: Container(
-              height: standardUpperFixedDesignHeight,
-              padding: EdgeInsets.symmetric(
-                  horizontal: standardHorizontalPagePadding),
               decoration: BoxDecoration(
                   color: MyColors.colorPrimary,
                   image: const DecorationImage(
                       image: AssetImage(
-                          "assets/essential/upper_bg.png"
+                          "assets/essential/upper_bg_s.png"
                       )
                   )
               ),
@@ -108,7 +104,7 @@ class CheckSession extends StatelessWidget {
                                 dropdownDecoratorProps:  DropDownDecoratorProps(
                                     baseStyle: GoogleFonts.manrope(
                                       fontSize: 16.0,
-                                      color: MyColors.black,
+                                      color: MyColors.labelColor(),
                                       letterSpacing: 0,
                                       fontWeight: FontWeight.w400,
                                     ),
@@ -162,7 +158,7 @@ class CheckSession extends StatelessWidget {
                           dropdownDecoratorProps:  DropDownDecoratorProps(
                               baseStyle: GoogleFonts.manrope(
                                 fontSize: 16.0,
-                                color: MyColors.black,
+                                color: MyColors.labelColor(),
                                 letterSpacing: 0,
                                 fontWeight: FontWeight.w400,
                               ),
@@ -203,7 +199,7 @@ class CheckSession extends StatelessWidget {
                         keyboardType: TextInputType.name,
                         style: GoogleFonts.manrope(
                           fontSize: 16.0,
-                          color: MyColors.black,
+                          color: MyColors.labelColor(),
                           letterSpacing: 0,
                           fontWeight: FontWeight.w400,
                         ),
@@ -282,13 +278,20 @@ class CheckSession extends StatelessWidget {
                             onSubmit: (value) {
                               checkSessionController.setDOB(value);
                             },
+                            backgroundColor: MyColors.cardColor(),
+                            closeIconColor: MyColors.iconColor(),
                             bottomPickerTheme:  BottomPickerTheme.plumPlate,
                             buttonText: "Done",
                             buttonTextStyle: GoogleFonts.manrope(
                               fontSize: 16.0,
-                              color: MyColors.black,
+                              color: MyColors.labelColor(),
                               letterSpacing: 0,
                               fontWeight: FontWeight.w600,
+                            ),
+                            pickerTextStyle: GoogleFonts.manrope(
+                              fontSize: 14.0,
+                              color: MyColors.labelColor(),
+                              letterSpacing: 0,
                             ),
                             buttonSingleColor: Colors.transparent,
                             displayButtonIcon: false,
@@ -299,7 +302,7 @@ class CheckSession extends StatelessWidget {
                         keyboardType: TextInputType.datetime,
                         style: GoogleFonts.manrope(
                           fontSize: 16.0,
-                          color: MyColors.black,
+                          color: MyColors.labelColor(),
                           letterSpacing: 0,
                           fontWeight: FontWeight.w400,
                         ),
@@ -354,13 +357,20 @@ class CheckSession extends StatelessWidget {
                               print(value);
                               checkSessionController.setTOB(value);
                             },
+                            backgroundColor: MyColors.cardColor(),
+                            closeIconColor: MyColors.iconColor(),
                             bottomPickerTheme:  BottomPickerTheme.plumPlate,
                             buttonText: "Done",
                             buttonTextStyle: GoogleFonts.manrope(
                               fontSize: 16.0,
-                              color: MyColors.black,
+                              color: MyColors.labelColor(),
                               letterSpacing: 0,
                               fontWeight: FontWeight.w600,
+                            ),
+                            pickerTextStyle: GoogleFonts.manrope(
+                              fontSize: 14.0,
+                              color: MyColors.labelColor(),
+                              letterSpacing: 0,
                             ),
                             buttonSingleColor: Colors.transparent,
                             displayButtonIcon: false,
@@ -371,7 +381,7 @@ class CheckSession extends StatelessWidget {
                         keyboardType: TextInputType.datetime,
                         style: GoogleFonts.manrope(
                           fontSize: 16.0,
-                          color: MyColors.black,
+                          color: MyColors.labelColor(),
                           letterSpacing: 0,
                           fontWeight: FontWeight.w400,
                         ),
@@ -426,7 +436,7 @@ class CheckSession extends StatelessWidget {
                           dropdownDecoratorProps:  DropDownDecoratorProps(
                               baseStyle: GoogleFonts.manrope(
                                 fontSize: 16.0,
-                                color: MyColors.black,
+                                color: MyColors.labelColor(),
                                 letterSpacing: 0,
                                 fontWeight: FontWeight.w400,
                               ),
@@ -532,14 +542,14 @@ class CheckSession extends StatelessWidget {
           topLeft: Radius.circular(standardBottomBarRadius),
           topRight: Radius.circular(standardBottomBarRadius)
       ),
-      shadowColor: MyColors.black,
+      shadowColor: MyColors.labelColor(),
       color: MyColors.white,
       child: Container(
         height: standardBottomBarHeight,
         width: standardBottomBarWidth,
         padding: EdgeInsets.symmetric(horizontal: 24),
         decoration: BoxDecoration(
-          color: MyColors.white,
+          color: MyColors.cardColor(),
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(standardBottomBarRadius),
               topRight: Radius.circular(standardBottomBarRadius)
@@ -578,6 +588,7 @@ class CheckSession extends StatelessWidget {
         Radio(
           value: value,
           groupValue: checkSessionController.type,
+          activeColor: MyColors.colorButton,
           onChanged: (val) {
             checkSessionController.changeType(value);
           },

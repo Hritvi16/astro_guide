@@ -15,6 +15,7 @@ class SessionHistoryModel with _$SessionHistoryModel {
     String? meeting_id,
     int? k_id,
     required String status,
+    required String category,
     String? reason,
     String? started_at,
     String? ended_at,

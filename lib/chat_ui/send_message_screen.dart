@@ -1,5 +1,6 @@
 import 'package:astro_guide/chat_ui/CustomShape.dart';
 import 'package:astro_guide/colors/MyColors.dart';
+import 'package:astro_guide/essential/Essential.dart';
 import 'package:astro_guide/models/chat/ChatModel.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -61,7 +62,7 @@ class SentMessageScreen extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          DateFormat("dd MMM, yyyy  hh:mm a").format(DateTime.parse(chat.sent_at)),
+                          Essential.getDateTime(chat.sent_at),
                           style: TextStyle(
                               fontSize: 10
                           ),

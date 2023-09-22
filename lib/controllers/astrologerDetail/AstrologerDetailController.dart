@@ -44,7 +44,9 @@ class AstrologerDetailController extends GetxController {
     super.onInit();
     print(Get.arguments);
     print(Get.parameters);
-    id = Get.arguments;
+    if(Get.arguments!=null) {
+      id = Get.arguments;
+    }
     load = false;
     similar = [];
     languages = [];
@@ -158,8 +160,10 @@ class AstrologerDetailController extends GetxController {
 
   void goto(String page, {dynamic arguments}) {
     Get.toNamed(page, arguments: arguments, preventDuplicates: false)?.then((value) {
+
+      wallet = double.parse((storage.read("wallet")??0.0).toString());
       print("objecttt");
-      onInit();
+      getAstrologer();
     });
   }
 

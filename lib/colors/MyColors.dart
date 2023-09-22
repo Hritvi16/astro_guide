@@ -13,6 +13,12 @@ class MyColors
 
   static Color colorWalletBG = Color(0xffFEFDE8);
 
+  static Color receiverColor = Color(0xff2d2d2d);
+
+  static Color blackM = Color(0xff1a1b1d);
+
+  static Color colorOn = Color(0xff33c634);
+  static Color colorOff = Color(0xfffb1c27);
 
   static Color colorBlueBorder = Color(0xff93C5FD);
   static Color colorBlueBG = Color(0xffDBEAFE);
@@ -23,6 +29,7 @@ class MyColors
   static Color colorButton = Color(0xffF4C23E);
   static Color colorDivider = Color(0xffD4D4D8);
   static Color colorBorder = Color(0xffD4D4D8);
+  static Color colorBorderDark = Color(0x1F5B5B5B);
   static Color colorPCBorder = Color(0xffE4E4E7);
   static Color colorPSigns = Color(0xffbbbbbe);
   static Color colorAstroBG = Color(0xff18181B);
@@ -55,6 +62,7 @@ class MyColors
   static Color colorLightInactive = Color(0xffff8888);
   // static Color colorPrimary = Color(0xff1d0b54);
 
+  static Color colorUnrated = Color(0xff9e9e9e);
 
   static Color colorActionEnabledBG = Color(0xffffffff);
   static Color colorActionDisabledBG = Color(0xff363637);
@@ -242,7 +250,40 @@ class MyColors
     return [colors.shade200, colors.shade400, colors.shade900];
   }
 
-  static colorBackground() {
+  static Color backgroundColor() {
     return Get.isDarkMode ? black : white;
   }
+
+  static Color cardColor() {
+    return Get.isDarkMode ? blackM : white;
+  }
+
+  static Color labelColor() {
+    return Get.isDarkMode ? white : black;
+  }
+
+  static Color iconColor() {
+    return Get.isDarkMode ? white : black;
+  }
+
+  static Color inverseIconColor() {
+    return Get.isDarkMode ? black : white;
+  }
+
+  static Color borderColor() {
+    return Get.isDarkMode ? colorBorderDark : colorBorder;
+  }
+
+  static Color selectedColor() {
+    return Get.isDarkMode ? black : white;
+  }
+
+  static Color dividerColor() {
+    return Get.isDarkMode ? blackM : colorBG;
+  }
+
+  static Color pcBorder() {
+    return Get.isDarkMode ? colorBorderDark : colorPCBorder;
+  }
+
 }

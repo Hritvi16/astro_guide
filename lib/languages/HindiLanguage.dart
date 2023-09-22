@@ -1,4 +1,8 @@
 Map<String, String> hindi = {
+  //Sign Up
+  'Name' : 'नाम',
+  'Mobile No.' : 'मोबाइल नंबर',
+
   //Languages
   'English' : 'अंग्रेज़ी',
   'Hindi' : 'हिंदी',
@@ -8,16 +12,22 @@ Map<String, String> hindi = {
 
   //Common
   'Search Astrologer' : 'ज्योतिषी खोजें',
+  'Astrologer' : 'ज्योतिषी',
   'Read More' : 'और पढ़ें',
   'Read Less' : 'कम पढ़ें',
+  'Add' : 'ऐड',
+  'Update' : 'अपडेट',
+  'New' : 'नया',
+  'Old' : 'पुराना',
+  'GET OTP' : 'OTP प्राप्त करें',
 
   //Dashboard
   'Dashboard': 'डैशबोर्ड',
   'Free Kundali' : 'मुफ़्त कुंडली',
   'Match Kundali' : 'कुंडली मिलान करें',
   'Daily Horoscope' : 'दैनिक भविष्यफल',
-  'Currently Live Astrologer' : 'वर्तमान में लाइव ज्योतिषी',
-  'New Arrival Astrologer' : 'नव आगमन ज्योतिषी',
+  'Currently Live Astrologers' : 'वर्तमान में लाइव ज्योतिषी',
+  'New Arrival Astrologers' : 'नव आगमन ज्योतिषी',
   'New Updates and Blogs' : 'नए अपडेट और ब्लॉग',
   'User Testimonials' : 'उपयोगकर्ता प्रशंसापत्र',
   'New Videos' : 'नए वीडियो',
@@ -51,14 +61,29 @@ Map<String, String> hindi = {
   'Session Type' : 'सत्र प्रकार',
   'Rate' : 'कीमत',
   'SHOW CHAT' : 'चैट दिखाएँ',
+  'RESUME CALL' : 'कॉल फिर से शुरू करें',
+  'SHOW DETAILS' : 'प्रदर्शन का विवरण',
+  'Copy' : 'कॉपी',
+  'Success' : 'सफलता',
+  'Failed' : 'असफलता',
+  'Download Invoice' : 'इनवाइस को डाउनलोड करो',
+  'Status' : 'स्थिति',
+  'Amount' : 'मात्रा',
+  "You've not done any money transaction yet!" : "आपने अभी तक पैसे का कोई लेन-देन नहीं किया है!",
+  "You've not recharged yet!"  : "आपने अभी तक रिचार्ज नहीं कराया है!",
+  "You've not taken any call consultations yet!" : "आपने अभी तक कोई कॉल परामर्श नहीं लिया है!",
+  "You've not taken any chat consultations yet!" : "आपने अभी तक कोई चैट परामर्श नहीं लिया है",
 
   //Settings
   'Settings' : 'समायोजन',
   'Wishlist' : 'पसंदीदा',
   'Following' : 'फोल्लोविंग',
+  'My Testimonials' : 'मेरे प्रशंसापत्र',
   'Notification' : 'अधिसूचना',
   'Appearance' : 'उपस्थिति',
   'Change App Language' : 'ऐप की भाषा बदलें',
+  'Change Mobile No.' : 'मोबाइल नंबर बदलें',
+  'Support' : 'सहायता',
   'Terms and Condition' : 'नियम व शर्तें',
   'Privacy Policy' : 'गोपनीयता नीति',
   'About Us' : 'हमारे बारे में',
@@ -67,6 +92,8 @@ Map<String, String> hindi = {
 
   //Astrologer
   'Astrologer Profile' : 'ज्योतिषी प्रोफाइल',
+  'Years' : 'साल',
+  'of Exp' : 'का अनुभव',
   'About Astrologer' : 'ज्योतिषी के बारे में',
   'Languages Spoken' : 'बोली जाने वाली भाषाएं',
   'Expertise' : 'विशेषज्ञता',
@@ -74,6 +101,11 @@ Map<String, String> hindi = {
   'View All Reviews' : 'सभी समीक्षाएँ देखें',
   'Total min chat' : 'कुल न्यूनतम चैट',
   'Total min call' : 'कुल न्यूनतम कॉल',
+  'Location' : 'जगह',
+  'Similar Astrologers' : 'ऐसे ही ज्योतिषी',
+
+  'You have not wishlisted any astrologers' : 'आपने किसी ज्योतिषी को इच्छा सूची में नहीं रखा है',
+  'You have not followed any astrologer' : 'Yआपने किसी ज्योतिषी का अनुसरण नहीं किया है',
 
   //Wallet
   'My Wallet' : 'मेरा वॉलेट',
@@ -91,4 +123,80 @@ Map<String, String> hindi = {
 
   //Horoscope
   "Today's Horoscope" : "आज का राशिफल",
+
+  //Rating and Reviews
+  "Rating and Reviews" : "रेटिंग और समीक्षाएँ",
+  "Ratings" : "रेटिंग",
+
+  //Filter
+  "Sort & Filter" : "क्रमबद्ध एवं फ़िल्टर करें",
+  "Sort by" : "क्रमबद्ध करें",
+  "Language" : "भाषा",
+  "Gender" : "लिंग",
+  "Country" : "देश",
+
+  //Sort by
+  'Popularity' : 'लोकप्रियता',
+  'Experience: High to Low' : 'अनुभव: उच्चे से नीचा',
+  'Experience: Low to High' : 'अनुभव: नीचे से उच्चा',
+  'Sessions: High to Low' : 'सेशंस: उच्चे से नीचा',
+  'Sessions: Low to High' : 'सेशंस: नीचे से उच्चा',
+  'Chat Price: High to Low' : 'चैट कीमत: उच्चे से नीचा',
+  'Chat Price: Low to High' : 'चैट कीमत: नीचे से उच्चा',
+  'Call Price: High to Low' : 'कॉल कीमतe: उच्चे से नीचा',
+  'Call Price: Low to High' : 'कॉल कीमत: नीचे से उच्चा',
+  'Rating: High to Low' : 'रेटिंग: उच्चे से नीचा',
+  'Rating: Low to High' : 'रेटिंग: नीचे से उच्चा',
+
+  //Gender
+  "MALE" : "पुरुष",
+  "FEMALE" : "महिला",
+  "OTHER" : "अन्य",
+
+  //Chat
+  "Your Review" : "आपकी समीक्षा",
+  "Duration" : "अवधि",
+  "Please let us know your genuine and honest feedback about the astrologer. So we can serve you the best." : "कृपया हमें ज्योतिषी के बारे में अपनी वास्तविक और ईमानदार प्रतिक्रिया बताएं। तो हम आपकी सर्वोत्तम सेवा कर सकते हैं.",
+  "Anonymous" : "गुमनाम",
+
+  //Call
+  'Call Detail' : 'कॉल डिटेल',
+
+  //Review Dialog
+  "Reviews are public if you are not anonymous" : "यदि आप गुमनाम नहीं हैं तो समीक्षाएँ सार्वजनिक हैं",
+  "Hide my name from all public reviews" : "सभी सार्वजनिक समीक्षाओं से मेरा नाम छिपाएँ",
+  "Describe your experience" : "अपने अनुभव का वर्णन करें",
+
+  "Review" : "समीक्षा",
+  "Optional" : "वैकल्पिक",
+  "SUBMIT" : "सबमिट",
+
+  //Testimonials
+  'Testimonial' : 'प्रशंसापत्र',
+  'Testimonial Description' : 'प्रशंसापत्र विवरण',
+  'Write your testimonial description' : 'अपना प्रशंसापत्र विवरण लिखें',
+  'Post' : 'पोस्ट',
+
+  //Change Mobile No.
+  'Verify your old mobile number' : 'अपना पुराना मोबाइल नंबर सत्यापित करें',
+  'Verify your new mobile number' : 'अपना नया मोबाइल नंबर सत्यापित करें',
+  'Enter New Mobile No.' : 'नया मोबाइल नंबर दर्ज करें',
+  'Enter Mobile No.' : 'मोबाइल नंबर दर्ज करें',
+
+  //OTP
+  'Verify Mobile No.' : 'मोबाइल नंबर सत्यापित करें',
+  'Verify your phone number' : 'अपना फोन का नंबर जांच लें',
+  "Didn't receive code?" : "कोड प्राप्त नहीं हुआ?",
+  'Resend' : 'पुन: भेजें',
+  'VERIFY OTP' : 'OTP सत्यापित करें',
+
+  //Support
+  "Support" : "सहायता",
+  "Request" : "अनुरोध",
+  "Request Support" : "समर्थन का अनुरोध करें",
+  "Reason" : "कारण",
+  "Select Reason" : "कारण चुनें",
+  "Message" : "संदेश",
+  "Write your query" : "अपनी क्वेरी लिखें",
+  "You have not asked for any support yet!" : "आपने अभी तक कोई समर्थन नहीं मांगा है!",
 };

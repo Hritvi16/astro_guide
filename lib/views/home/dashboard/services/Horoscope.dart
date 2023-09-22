@@ -34,6 +34,7 @@ class Horoscope extends StatelessWidget {
       children: [
         SizedBox(
           width: MySize.size100(context),
+          height: standardUpperFixedDesignHeight,
           child: ClipPath(
             clipper: CustomClipPath(),
             child: Container(
@@ -41,7 +42,7 @@ class Horoscope extends StatelessWidget {
                   color: MyColors.colorPrimary,
                   image: const DecorationImage(
                       image: AssetImage(
-                          "assets/essential/upper_bg.png"
+                          "assets/essential/upper_bg_s.png"
                       )
                   )
               ),

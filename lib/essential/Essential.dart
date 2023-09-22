@@ -10,7 +10,11 @@ import 'package:astro_guide/providers/TokenProvider.dart';
 import 'package:astro_guide/repositories/TokenRepository.dart';
 import 'package:astro_guide/services/networking/ApiConstants.dart';
 import 'package:astro_guide/services/networking/ApiService.dart';
+import 'package:astro_guide/views/loadingScreen/LoadingScreen.dart';
+import 'package:device_info_plus/device_info_plus.dart';
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
 import 'package:get/get.dart';
@@ -67,6 +71,13 @@ class Essential {
     );
   }
 
+  static Future<dynamic> showLoadingDialog() async {
+    return await Get.dialog(
+      LoadingScreen(),
+      barrierDismissible: false,
+    );
+  }
+
 
   static void checkLength(int length, TextEditingController controller) {
     if(controller!.text.length>length) {
@@ -88,7 +99,9 @@ class Essential {
   }
 
   static link(String link) {
-    launchUrlString(link);
+    print("linkkkkk");
+    print(link);
+    launchUrlString(link, mode: LaunchMode.externalApplication);
   }
 
   static share() {
@@ -236,6 +249,11 @@ class Essential {
     return tz.TZDateTime.parse(TimezoneConstants.location, "$date+0000");
   }
 
+
+  static tz.TZDateTime getCurrentDate() {
+    return tz.TZDateTime.now(TimezoneConstants.location);
+  }
+
   static tz.TZDateTime getConvertedDate(String date) {
     tz.TZDateTime parsed = getGMTDate(date);
     return tz.TZDateTime.from(parsed, TimezoneConstants.currLocation);
@@ -310,6 +328,24 @@ class Essential {
         status[Permission.storage] == PermissionStatus.granted;
   }
 
+
+  static Future<PermissionStatus> pdfRequestPermission() async {
+    if(Platform.isAndroid) {
+      DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
+      AndroidDeviceInfo androidDeviceInfo = await deviceInfoPlugin.androidInfo;
+
+      if(androidDeviceInfo.version.sdkInt>=33)  {
+        return PermissionStatus.granted;
+      }
+      else  {
+        return await Permission.storage.request();
+      }
+    }
+    else {
+      return await Permission.storage.request();
+    }
+  }
+
   static String getDisplayDate(String date) {
     DateTime today = DateTime.now();
     DateTime sent_at = DateTime.parse(date);
@@ -343,4 +379,72 @@ class Essential {
     }
     return sessionHistory.requested_at;
   }
+
+  static ThemeMode getThemeMode(String type) {
+    ThemeMode themeMode = ThemeMode.system;
+    switch (type) {
+      case "system":
+        themeMode = ThemeMode.system;
+        break;
+      case "dark":
+        themeMode = ThemeMode.dark;
+        break;
+      default:
+        themeMode = ThemeMode.light;
+        break;
+    }
+
+    return themeMode;
+  }
+
+
+  static shareFile(List<XFile> files, String title) {
+    Share.shareXFiles(files, subject: title);
+    // Share.share("https://play.google.com/store/apps/details?id=com.ss.itm", subject: 'Hey, looking for an app to grow your income?\n Here it is!');
+  }
+
+  static call(String number) {
+    link("tel:$number");
+  }
+
+  static email(String email) {
+    link("mailto:$email");
+  }
+
+  static Future<void> createDynamicLink(bool short) async {
+    // setState(() {
+    //   _isCreatingLink = true;
+    // });
+
+    // final DynamicLinkParameters parameters = DynamicLinkParameters(
+    //   uriPrefix: 'https://flutterfiretests.page.link',
+    //   longDynamicLink: Uri.parse(
+    //     'https://flutterfiretests.page.link?efr=0&ibi=io.flutter.plugins.firebase.dynamiclinksexample&apn=io.flutter.plugins.firebase.dynamiclinksexample&imv=0&amv=0&link=https%3A%2F%2Fexample%2Fhelloworld&ofl=https://ofl-example.com',
+    //   ),
+    //   link: Uri.parse(DynamicLink),
+    //   androidParameters: const AndroidParameters(
+    //     packageName: 'io.flutter.plugins.firebase.dynamiclinksexample',
+    //     minimumVersion: 0,
+    //   ),
+    //   iosParameters: const IOSParameters(
+    //     bundleId: 'io.flutter.plugins.firebase.dynamiclinksexample',
+    //     minimumVersion: '0',
+    //   ),
+    // );
+
+    // Uri url;
+    // if (short) {
+    //   final ShortDynamicLink shortLink =
+    //   await dynamicLinks.buildShortLink(parameters);
+    //   url = shortLink.shortUrl;
+    // } else {
+    //   url = await dynamicLinks.buildLink(parameters);
+    // }
+    //
+    // setState(() {
+    //   _linkMessage = url.toString();
+    //   _isCreatingLink = false;
+    // });
+  }
+
 }

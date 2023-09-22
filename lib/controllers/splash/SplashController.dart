@@ -1,6 +1,7 @@
 import 'package:astro_guide/constants/CommonConstants.dart';
 import 'package:astro_guide/essential/Essential.dart';
 import 'package:astro_guide/notification_helper/NotificationHelper2.dart';
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 // import 'package:astro_guide/providers/UserProvider.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -12,9 +13,11 @@ class SplashController extends GetxController {
   final storage = GetStorage();
 
   // late UserProvider userProvider = Get.find();
+  FirebaseDynamicLinks dynamicLinks = FirebaseDynamicLinks.instance;
 
   @override
   void onInit() {
+    initDynamicLinks();
     taketo();
     super.onInit();
   }
@@ -39,6 +42,16 @@ class SplashController extends GetxController {
 
     });
 
+  }
+
+  Future<void> initDynamicLinks() async {
+    dynamicLinks.onLink.listen((dynamicLinkData) {
+      print("linkkk");
+      print(dynamicLinkData);
+    }).onError((error) {
+      print('onLink error');
+      print(error.message);
+    });
   }
 
   @override

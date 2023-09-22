@@ -10,6 +10,7 @@ import 'package:astro_guide/size/WidgetSize.dart';
 import 'package:bottom_picker/bottom_picker.dart';
 import 'package:bottom_picker/resources/arrays.dart';
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -40,7 +41,7 @@ class SignUp extends StatelessWidget {
         decoration: const BoxDecoration(
             image: DecorationImage(
                 image: AssetImage(
-                    "assets/essential/upper_bg.png"
+                    "assets/essential/upper_bg_s.png"
                 )
             )
         ),
@@ -127,6 +128,9 @@ class SignUp extends StatelessWidget {
                           style: GoogleFonts.manrope(
                             fontWeight: FontWeight.w600,
                           ),
+                          recognizer: TapGestureRecognizer()..onTap = () {
+                            Get.back();
+                          }
                         )
                       ]
                   ),
@@ -342,14 +346,20 @@ class SignUp extends StatelessWidget {
                   contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                   prefixIcon: GestureDetector(
                     onTap: () {
-
+                      signUpController.changeCode();
                     },
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(left: 14),
-                          child: Image.asset(
+                          child: signUpController.code.imageFullUrl.startsWith("http") ?
+                          Image.network(
+                            signUpController.code.imageFullUrl,
+                            height: 24,
+                            width: 33,
+                          )
+                              : Image.asset(
                             "assets/country/India.png",
                             height: 24,
                             width: 33,
@@ -358,7 +368,7 @@ class SignUp extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 5),
                           child: Text(
-                            '+91',
+                            signUpController.code.code,
                             style: GoogleFonts.manrope(
                               fontSize: 16.0,
                               color: MyColors.black,
@@ -516,6 +526,10 @@ class SignUp extends StatelessWidget {
                   onSubmit: (value) {
                     signUpController.setDOB(value);
                   },
+                  backgroundColor: MyColors.cardColor(),
+                  closeIconColor: MyColors.iconColor(),
+                  initialDateTime: signUpController.date,
+                  maxDateTime: DateTime.now(),
                   bottomPickerTheme:  BottomPickerTheme.plumPlate,
                   buttonText: "Done",
                   buttonTextStyle: GoogleFonts.manrope(

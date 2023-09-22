@@ -1,4 +1,6 @@
 import 'package:astro_guide/chat_ui/CustomShape.dart';
+import 'package:astro_guide/colors/MyColors.dart';
+import 'package:astro_guide/essential/Essential.dart';
 import 'package:astro_guide/models/chat/ChatModel.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
@@ -29,7 +31,7 @@ class ReceivedMessageScreen extends StatelessWidget {
           child: Container(
             padding: EdgeInsets.all(14),
             decoration: BoxDecoration(
-              color: Colors.grey[300],
+              color: MyColors.receiverColor,
               borderRadius: BorderRadius.only(
                 topRight: Radius.circular(18),
                 bottomLeft: Radius.circular(18),
@@ -42,14 +44,14 @@ class ReceivedMessageScreen extends StatelessWidget {
                 RichText(
                   text: TextSpan(
                     text: chat.message,
-                    style: TextStyle(color: Colors.black, fontSize: 14),
+                    style: TextStyle(color: MyColors.white, fontSize: 14),
                   ),
                 ),
                 SizedBox(
                   height: 5,
                 ),
                 Text(
-                  DateFormat("dd MMM, yyyy  hh:mm a").format(DateTime.parse(chat.sent_at)),
+                  Essential.getDateTime(chat.sent_at),
                   textAlign: TextAlign.right,
                   style: TextStyle(
                       fontSize: 10

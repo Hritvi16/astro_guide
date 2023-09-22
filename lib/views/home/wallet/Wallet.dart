@@ -34,7 +34,6 @@ class Wallet extends StatelessWidget {
     return GetBuilder<WalletController>(
       builder: (controller) {
         return Scaffold(
-          backgroundColor: MyColors.white,
           bottomNavigationBar: getPayDesign(context),
           body: getBody(context),
         );
@@ -47,6 +46,7 @@ class Wallet extends StatelessWidget {
       children: [
         SizedBox(
           width: MySize.size100(context),
+          height: standardUpperFixedDesignHeight,
           child: ClipPath(
             clipper: CustomClipPath(),
             child: Container(
@@ -54,8 +54,8 @@ class Wallet extends StatelessWidget {
                   color: MyColors.colorPrimary,
                   image: const DecorationImage(
                       image: AssetImage(
-                          "assets/essential/upper_bg.png"
-                      )
+                        "assets/essential/upper_bg.png",
+                      ),
                   )
               ),
               child: SafeArea(
@@ -121,7 +121,7 @@ class Wallet extends StatelessWidget {
               "Available Balance".tr,
               style: GoogleFonts.playfairDisplay(
                 fontSize: 20.0,
-                color: MyColors.black,
+                color: MyColors.labelColor(),
                 letterSpacing: 0,
                 fontWeight: FontWeight.w700,
               ),
@@ -150,7 +150,7 @@ class Wallet extends StatelessWidget {
           "Custom Amount".tr,
           style: GoogleFonts.manrope(
             fontSize: 18.0,
-            color: MyColors.black,
+            color: MyColors.labelColor(),
             letterSpacing: 0,
             fontWeight: FontWeight.w600,
           ),
@@ -168,7 +168,7 @@ class Wallet extends StatelessWidget {
           ],
           style: GoogleFonts.manrope(
             fontSize: 16.0,
-            color: MyColors.black,
+            color: MyColors.labelColor(),
             letterSpacing: 0,
             fontWeight: FontWeight.w400,
           ),
@@ -189,7 +189,7 @@ class Wallet extends StatelessWidget {
                 CommonConstants.rupee,
                 style: GoogleFonts.manrope(
                   fontSize: 16.0,
-                  color: MyColors.black,
+                  color: MyColors.labelColor(),
                   letterSpacing: 0,
                   fontWeight: FontWeight.w600,
                 ),
@@ -211,7 +211,7 @@ class Wallet extends StatelessWidget {
           "Recharge Wallet".tr,
           style: GoogleFonts.manrope(
             fontSize: 18.0,
-            color: MyColors.black,
+            color: MyColors.labelColor(),
             letterSpacing: 0,
             fontWeight: FontWeight.w600,
           ),
@@ -264,9 +264,9 @@ class Wallet extends StatelessWidget {
         height: standardPackageCardHeight,
         padding: EdgeInsets.all(6),
         decoration: BoxDecoration(
-          color: walletController.package==package ? MyColors.colorPrimary : MyColors.white,
+          color: walletController.package==package ? MyColors.colorPrimary : MyColors.cardColor(),
           border: Border.all(
-            color: walletController.package==package ? MyColors.colorPrimary : MyColors.colorPCBorder,
+            color: walletController.package==package ? MyColors.colorPrimary : MyColors.pcBorder(),
             width: 2
           ),
           borderRadius: BorderRadius.only(
@@ -283,7 +283,7 @@ class Wallet extends StatelessWidget {
               width: double.infinity,
               padding: EdgeInsets.only(top: 15, bottom: 5),
               decoration: BoxDecoration(
-                color: walletController.package==package ? MyColors.colorButton : MyColors.colorPCBorder,
+                color: walletController.package==package ? MyColors.colorButton : MyColors.pcBorder(),
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(standardImageRadius),
                   topRight: Radius.circular(standardImageRadius),
@@ -303,7 +303,7 @@ class Wallet extends StatelessWidget {
                     maxLines: 1,
                     style: GoogleFonts.manrope(
                       fontSize: 18.0,
-                      color: walletController.package==package ? MyColors.white : MyColors.black,
+                      color: walletController.package==package ? MyColors.white : MyColors.labelColor(),
                       fontWeight: FontWeight.w700,
                       letterSpacing: -2
                     ),
@@ -358,7 +358,7 @@ class Wallet extends StatelessWidget {
           width: standardBottomBarWidth,
           padding: EdgeInsets.symmetric(horizontal: 24),
           decoration: BoxDecoration(
-            color: MyColors.white,
+            color: MyColors.cardColor(),
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(standardBottomBarRadius),
                 topRight: Radius.circular(standardBottomBarRadius)

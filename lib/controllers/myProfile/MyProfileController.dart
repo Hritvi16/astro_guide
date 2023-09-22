@@ -45,6 +45,7 @@ class MyProfileController extends GetxController {
   List<CountryModel> countries = [];
   CountryModel? country;
   CountryModel? nationality;
+  late CountryModel code;
   List<StateModel> states = [];
   StateModel? state;
   List<CityModel> cities = [];
@@ -77,10 +78,6 @@ class MyProfileController extends GetxController {
 
     pincode = TextEditingController();
 
-    countries.add(
-      CountryModel(id: 1, name: "INDIA", nationality: "INDIAN", code: "+91")
-    );
-
     load = false;
 
     start();
@@ -108,7 +105,7 @@ class MyProfileController extends GetxController {
     Map<String, dynamic> data = {
       StateConstant().co_id : id
     };
-    stateProvider.fetchList(data, ApiConstants.country, storage.read("access")??CommonConstants.essential).then((response) {
+    stateProvider.fetchList(data, ApiConstants.country, storage.read("access")).then((response) {
       if(response.code==1) {
         states = response.data??[];
 
@@ -164,7 +161,8 @@ class MyProfileController extends GetxController {
   void validateStep(int current, bool back) {
     if(current==0) {
       print(step1.currentState!.validate());
-      if(step1.currentState!.validate() && (image!=null || (user.profile??"").isNotEmpty)) {
+      // if(step1.currentState!.validate() && (image!=null || (user.profile??"").isNotEmpty)) {
+      if(step1.currentState!.validate()) {
         eval1 = 1;
       }
       else {
@@ -213,12 +211,15 @@ class MyProfileController extends GetxController {
 
   void changeCountry(CountryModel? value) {
     country = value!;
+    state = null;
+    city = null;
     update();
     getStates(country!.id.toString());
   }
 
   void changeState(StateModel? value) {
     state = value!;
+    city = null;
     update();
     getCities(state!.id.toString());
   }
@@ -251,7 +252,6 @@ class MyProfileController extends GetxController {
   }
 
   void updateMyProfile() {
-
     final FormData data = FormData({
       if(image!=null)
         ApiConstants.file : MultipartFile(File(image!.path), filename: image!.name),
@@ -263,20 +263,27 @@ class MyProfileController extends GetxController {
       UserConstants.gender : gender,
       UserConstants.ci_id : city!.id,
       UserConstants.joined_via : UserConstants.jv['C'],
-      UserConstants.postal_code : pincode,
+      UserConstants.postal_code : pincode.text,
     });
 
-    userProvider.add(data, storage.read("access")).then((response) {
+    print(data.fields);
+
+    userProvider.add(data, ApiConstants.update, storage.read("access")).then((response) {
       print(response.toJson());
-      if(response.code==1) {
-        storage.write("access", response.access_token);
-        storage.write("refresh", response.refresh_token);
-        storage.write("status", "logged in");
-        Get.offAllNamed("/home");
-      }
-      else {
-        Essential.showSnackBar(response.message);
-      }
+      Essential.showSnackBar(response.message);
+    });
+  }
+
+  void updateProfile() {
+    final FormData data = FormData({
+      ApiConstants.file : MultipartFile(File(image!.path), filename: image!.name),
+    });
+
+    print(data.fields);
+
+    userProvider.add(data, ApiConstants.profile, storage.read("access")).then((response) {
+      print(response.toJson());
+      Essential.showSnackBar(response.message);
     });
   }
 
@@ -309,6 +316,7 @@ class MyProfileController extends GetxController {
     if (file != null) {
       image = file;
       update();
+      updateProfile();
     }
   }
 
@@ -322,12 +330,15 @@ class MyProfileController extends GetxController {
     if (pickedFileList!=null) {
       image = pickedFileList;
       update();
+      updateProfile();
     }
   }
 
   void setUserData() {
+    String mob = user.mobile;
+    String code = mob.substring(0, mob.indexOf("-"));
     name.text = user.name;
-    mobile.text = user.mobile;
+    mobile.text = mob.substring(mob.indexOf("-")+1);
     email.text = user.email??"";
     gender = user.gender??"";
     pincode .text= user.postal_code??"";
@@ -340,6 +351,9 @@ class MyProfileController extends GetxController {
       }
       if(element.id==user.co_id) {
         changeCountry(element);
+      }
+      if(element.code==code) {
+        this.code = element;
       }
     }
     update();

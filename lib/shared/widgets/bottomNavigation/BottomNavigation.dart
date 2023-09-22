@@ -67,7 +67,7 @@ Widget bottomItem(int current, int index, String icon, HomeController controller
       child: Container(
         height: standardBottomItemHeight,
         decoration: BoxDecoration(
-          color: current==index ? MyColors.white : MyColors.colorPrimary,
+          color: current==index ? MyColors.selectedColor() : MyColors.colorPrimary,
           borderRadius: current==index ? BorderRadius.only(bottomLeft: Radius.circular(35), bottomRight: Radius.circular(35)) : null
 
           // color: MyColors.white ,

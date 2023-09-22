@@ -25,7 +25,6 @@ class Support extends StatelessWidget {
     return GetBuilder<SupportController>(
       builder: (controller) {
         return Scaffold(
-          backgroundColor: MyColors.white,
           body: getBody(context),
         );
       },
@@ -37,6 +36,7 @@ class Support extends StatelessWidget {
       children: [
         SizedBox(
           width: MySize.size100(context),
+          height: standardUpperFixedDesignHeight,
           child: ClipPath(
             clipper: CustomClipPath(),
             child: Container(
@@ -44,7 +44,7 @@ class Support extends StatelessWidget {
                   color: MyColors.colorPrimary,
                   image: const DecorationImage(
                       image: AssetImage(
-                          "assets/essential/upper_bg.png"
+                          "assets/essential/upper_bg_s.png"
                       )
                   )
               ),
@@ -124,7 +124,7 @@ class Support extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 6, horizontal: 12),
         decoration: BoxDecoration(
-            color: MyColors.white,
+            color: MyColors.cardColor(),
             borderRadius: BorderRadius.circular(14),
             border: Border.all(
                 color: MyColors.colorBorder
@@ -152,7 +152,6 @@ class Support extends StatelessWidget {
               "#"+support.id.toString(),
               style: GoogleFonts.manrope(
                 fontSize: 16.0,
-                color: MyColors.black,
                 letterSpacing: 0,
                 fontWeight: FontWeight.w600,
               ),
@@ -176,7 +175,6 @@ class Support extends StatelessWidget {
               support.reason,
               style: GoogleFonts.manrope(
                 fontSize: 16.0,
-                color: MyColors.black,
                 letterSpacing: 0,
                 fontWeight: FontWeight.w600,
               ),
@@ -188,7 +186,6 @@ class Support extends StatelessWidget {
               support.message??"",
               style: GoogleFonts.manrope(
                 fontSize: 16.0,
-                color: MyColors.black,
                 letterSpacing: 0,
                 fontWeight: FontWeight.w400,
               ),
@@ -207,7 +204,6 @@ class Support extends StatelessWidget {
           title+" : ",
           style: GoogleFonts.manrope(
             fontSize: 14.0,
-            color: MyColors.black,
             letterSpacing: 0,
           ),
         ),

@@ -14,6 +14,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:videosdk/videosdk.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
@@ -65,11 +66,21 @@ class CallController extends GetxController {
 
   int cnt = 0;
 
+  final player = AudioPlayer();
+
   @override
   void onInit() {
+    print("hellloooo callllll");
+    wallet = 0;
+    seconds = 0;
     astrologer = Get.arguments['astrologer'];
+    print("hellloooo callllll1");
     type = Get.arguments['type'];
     action = Get.arguments['action'];
+    print("hellloooo callllll2");
+    if(Get.arguments['wallet']!=null) {
+      wallet = Get.arguments['wallet'];
+    }
     tz.initializeTimeZones();
     location = tz.getLocation("GMT");
     micEnabled = true;
@@ -80,8 +91,6 @@ class CallController extends GetxController {
     auto=false;
     show = true;
     cancel = false;
-    wallet = 0;
-    seconds = 0;
 
     if (action == "VIEW" || action=="ACTIVE") {
       load = false;
@@ -100,6 +109,7 @@ class CallController extends GetxController {
         sessionHistory = SessionHistoryModel(id: ch_id,
             sess_id: 0,
             status: type,
+            category: "CALL",
             meeting_id: Get.arguments['meeting_id'],
             session_id: Get.arguments['session_id'],
             rate: int.parse(Get.arguments['rate']),
@@ -119,11 +129,12 @@ class CallController extends GetxController {
     }
 
 
+    print("inittttttt");
     start();
     super.onInit();
   }
 
-  void start() {
+  void start() {print("ssweb: starttt");
     initCameraPreview();
 
     SystemChrome.setPreferredOrientations([
@@ -215,7 +226,7 @@ class CallController extends GetxController {
     };
 
     await meetingProvider.create(data, storage.read("access")).then((response) async {
-      print("createeee meetingggg");
+      print("ssweb: createeee meetingggg");
       if(response.code==1) {
         token = response.token??"";
         meetingID = response.meetingID??"";
@@ -240,7 +251,7 @@ class CallController extends GetxController {
   }
 
   joinRoom() {
-    print("ssweb: roommmmmmmm");
+    print("ssweb: ssweb: roommmmmmmm");
     try {
       SystemChrome.setPreferredOrientations([
         DeviceOrientation.portraitUp,
@@ -265,22 +276,25 @@ class CallController extends GetxController {
         );
         // print(room);
         // print(room.id);
-        // print("ssweb: " + room.toString());
+        // print("ssweb: ssweb: " + room.toString());
 
 
         // Register meeting events
         // meeting = room;
         update();
-        registerMeetingEvents();
-
         // Join meeting
         meeting.join();
-        stopTimer();
-        type = "ACTIVE";
-        update();
+        if(type=="RECONNECT") {
+          stopTimer();
+          type = "ACTIVE";
+        }
+        registerMeetingEvents();
+
+
+        print("ssweb: joinedddd");
       }
       catch(ex) {
-        print("ex.toString()");
+        print("ssweb: ex.toString()");
         print(meetingID);
         print(ex.toString());
       }
@@ -292,22 +306,20 @@ class CallController extends GetxController {
     }
   }
 
-
   void registerMeetingEvents() {
-    print("ssweb: inittttt");
+    print("ssweb: ssweb: inittttt");
     print(meeting);
     // Called when joined in meeting
     meeting.on(
       Events.roomJoined,
           () {
-        print("ssweb: room joined");
-        print(meeting.participants.length);
-        print(meeting.participants.length > 1);
+        print("ssweb: ssweb: room joined");
         if (meeting.participants.length > 1) {
           stopTimer();
           joined = true;
           seconds = 0;
           type = "ACTIVE";
+          // started_at = Essential.getCurrentDate();
           calculateCountdown();
           update();
           startTimer();
@@ -323,16 +335,16 @@ class CallController extends GetxController {
             "orientation": "portrait",
           };
 
-          print("Recordingggggg : Start Joined");
+          print("ssweb: Recordingggggg : Start Joined");
           meeting.startRecording(config: config);
         } else {
-          // print("stop");
+          // print("ssweb: stop");
           // stopTimer();
-          // print("calculate");
+          // print("ssweb: calculate");
           // seconds = 0;
           // update();
           // calculateCountdown();
-          // print("start");
+          // print("ssweb: start");
           // startTimer();
         }
       },
@@ -341,11 +353,12 @@ class CallController extends GetxController {
     meeting.on(
       Events.participantJoined,
           (Participant participant) {
-            print("ssweb: participant joined");
+            print("ssweb: ssweb: participant joined");
             stopTimer();
         joined = true;
         seconds = 0;
         type = "ACTIVE";
+        // started_at = Essential.getCurrentDate();
         calculateCountdown();
         update();
         startTimer();
@@ -361,7 +374,7 @@ class CallController extends GetxController {
               "orientation": "portrait",
             };
 
-            print("Recordingggggg : Start Joined");
+            print("ssweb: Recordingggggg : Start Joined");
             meeting.startRecording(config: config);
       },
     );
@@ -370,9 +383,10 @@ class CallController extends GetxController {
       Events.participantLeft,
           (Participant participant) {
         if(joined) {
-          print("Recordingggggg : Stop Participant Left");
+          print("ssweb: Recordingggggg : Stop Participant Left");
           meeting.stopRecording();
           meeting.end();
+          disposeObjects();
         }
       },
     );
@@ -381,18 +395,21 @@ class CallController extends GetxController {
     meeting.on(
       Events.recordingStateChanged,
           (String status) {
-        print("Recordingggggg : State Changed - "+status);
+        print("ssweb: Recordingggggg : State Changed - "+status);
       },
     );
 
 
     // Called when meeting is ended
     meeting.on(Events.roomLeft, (String? errorMsg) {
+      print("ssweb: leftttttt");
       if (errorMsg != null) {
         Essential.showSnackBar("Meeting left due to $errorMsg !!");
       }
 
-      Get.back();
+      if(type!="COMPLETED") {
+        endMeeting("COMPLETED");
+      }
     });
 
 
@@ -450,11 +467,14 @@ class CallController extends GetxController {
         Events.error,
             (error)  {
           Essential.showSnackBar("${error['name']} :: ${error['message']}");
-        });
-    print("ssweb: overr  inittttt");
-    print(meeting);
-  }
 
+          print("ssweb: ssweb: overr  inittttt");
+          print("${error['name']} :: ${error['message']}");
+          print(meeting);
+          meeting.end();
+        });
+    print("ssweb: ssweb: overr out inittttt");
+  }
 
   void subscribeToChatMessages(Room meeting) {
     meeting.pubSub.subscribe("CHAT", (message) {
@@ -472,11 +492,14 @@ class CallController extends GetxController {
   }
 
   void accept() {
+    print("ssweb: accept");
+    stopTimer();
     micEnabled = true;
     camEnabled = false;
     speakerEnabled = false;
     update();
     initCameraPreview();
+    print("ssweb: accepteddddd");
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
@@ -490,7 +513,7 @@ class CallController extends GetxController {
       SessionConstants.meetingID : meetingID,
       SessionConstants.type : status,
     };
-
+    print("ssweb: validateeee meetingggg");
     print(data);
 
     await meetingProvider.validate(data, storage.read("access")).then((response) async {
@@ -525,7 +548,7 @@ class CallController extends GetxController {
       SessionConstants.reason : auto ? "Call was ended automatically due to low wallet balance" : "User ended the call",
       CommonConstants.seconds : seconds,
     };
-    print("ssweb: "+data.toString());
+    print("ssweb: ssweb: endddd"+data.toString());
 
     if(storage.read("calling")!=null) {
       storage.remove("calling");
@@ -534,11 +557,12 @@ class CallController extends GetxController {
     meeting.stopRecording();
 
     await meetingProvider.end(data, storage.read("access")).then((response) async {
-      print("ssweb: response.toJson()");
+      print("ssweb: ssweb: response.toJson()");
       print(response.toJson());
       if (response.code == 1) {
-        print("Recordingggggg : Stop end");
+        print("ssweb: Recordingggggg : Stop end");
         // meeting.end();
+        disposeObjects();
         storage.remove("calling");
         back();
       }
@@ -548,7 +572,6 @@ class CallController extends GetxController {
       }
     });
   }
-
 
   void cancelCall(bool auto) async {
     if(timer!=null) {
@@ -565,17 +588,18 @@ class CallController extends GetxController {
       SessionConstants.ch_id: ch_id.toString(),
       SessionConstants.reason : "Call was cancelled by user",
     };
-    print("ssweb: "+data.toString());
+    print("ssweb: ssweb: "+data.toString());
 
     if(storage.read("calling")!=null) {
       storage.remove("calling");
     }
 
     await meetingProvider.cancel(data, storage.read("access")).then((response) async {
-      print("ssweb: response.toJson()");
+      print("ssweb: ssweb: response.toJson()");
       print(response.toJson());
       if (response.code == 1) {
         meeting.end();
+        disposeObjects();
         storage.remove("calling");
         // back();
       }
@@ -593,43 +617,49 @@ class CallController extends GetxController {
 
 
     Map<String, dynamic> data = {
-      // SessionConstants.meetingID: meetingID,
-      // SessionConstants.sessionID: sessionID,
-      SessionConstants.token: token,
-      SessionConstants.ch_id: ch_id.toString(),
-      SessionConstants.reason : auto==true ? "Call was ended automatically due to low wallet balance" : "User ended the call",
-      CommonConstants.seconds : seconds,
+      SessionConstants.ch_id : ch_id,
+      SessionConstants.sender : "U",
+      SessionConstants.reason : "Call was rejected by user",
     };
-    print("ssweb: "+data.toString());
+    print("ssweb: ssweb: "+data.toString());
 
-    // if(storage.read("calling")!=null) {
-    //   storage.remove("calling");
-    // }
+    if(storage.read("calling")!=null) {
+      storage.remove("calling");
+    }
 
-    // await meetingProvider.end(data, storage.read("access")).then((response) async {
-    //   print("ssweb: response.toJson()");
-    //   print(response.toJson());
-    //   if (response.code == 1) {
-    //     meeting.end();
-    //     storage.remove("calling");
-    //     // back();
-    //   }
-    //   else if (response.code == -2) {}
-    //   else {
-    //     Essential.showSnackBar(response.message);
-    //   }
-    // });
+    await meetingProvider.reject(data, storage.read("access")).then((response) async {
+      if(response.code==1) {
+        type = "REJECTED";
+        update();
+      }
+      else if(response.code!=-1) {
+        Essential.showSnackBar(response.message);
+      }
+      else {
+        Essential.showSnackBar(response.message);
+      }
+    });
+    back();
   }
 
   void endMeeting(String status) async {
+    getSessionHistory();
     if(timer!=null) {
       stopTimer();
     }
     type = status;
     update();
-    print("Recordingggggg : Stop endd meetingggg");
-    meeting.stopRecording();
+    print("ssweb: Recordingggggg : Stop endd meetingggg");
+    try {
+      meeting.stopRecording();
+    }
+    catch(ex) {
+      print("ssweb: error ${ex.toString()}");
+    }
     meeting.end();
+    disposeObjects();
+
+    // back();
   }
 
   void cancelMeeting() async {
@@ -649,8 +679,8 @@ class CallController extends GetxController {
 
       await meetingProvider.cancel(data, storage.read("access")).then((response) async {
         if(response.code==1) {
-          type = "CANCELLED";
-          update();
+          // type = "CANCELLED";
+          // update();
         }
         else if(response.code!=-1) {
           Essential.showSnackBar(response.message);
@@ -660,7 +690,7 @@ class CallController extends GetxController {
         }
       });
       storage.remove("calling");
-      Get.back();
+      back();
     }
   }
 
@@ -671,6 +701,7 @@ class CallController extends GetxController {
 
   @override
   void dispose() {
+    print("disposeeeeeee");
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
@@ -686,6 +717,18 @@ class CallController extends GetxController {
 
   void startRing(int time) {
     ring = time;
+    if(type=="RECONNECT") {
+      player.setAsset("assets/audio/notification.mp3");
+      player.play();
+      player.processingStateStream.listen((processingState) {
+        if (processingState == ProcessingState.completed && type == "RECONNECT") {
+          player.seek(Duration.zero);
+          player.play();
+          update();
+          print("completed");
+        }
+      });
+    }
     update();
     timer = Timer.periodic(const Duration(seconds: 1), (_) {
       setRing();
@@ -700,12 +743,12 @@ class CallController extends GetxController {
     if(ring<=0) {
       stopTimer();
       if(type=="REQUESTED") {
-        print("ssweb: waitlist");
+        print("ssweb: ssweb: waitlist");
         waitlistCall();
       }
       else {
-        print("ssweb: missed");
-        // missedChat();
+        print("ssweb: ssweb: missed");
+        missedCall();
       }
     }
   }
@@ -716,16 +759,29 @@ class CallController extends GetxController {
     // Duration duration = now.difference(started_at);
     // seconds = duration.inSeconds;
     // update();
-    timer = Timer.periodic(const Duration(seconds: 1), (_) => setCountDown());
-    update();
-  }
 
+    try {
+      var kolkata = tz.getLocation('GMT');
+      Duration duration = tz.TZDateTime.now(kolkata).difference(started_at);
+      seconds = duration.inSeconds;
+      update();
+      timer = Timer.periodic(const Duration(seconds: 1), (_) => setCountDown());
+      update();
+    }
+    catch(ex) {
+      getSessionHistory();
+    }
+  }
 
   void setCountDown() {
     seconds+=1;
     update();
+    print("ssweb: max");
+    print(max);
+    print("ssweb: total");
+    print(seconds);
     if(max<=seconds) {
-      print("ssweb: enddd");
+      print("ssweb: ssweb: enddd");
       end(true);
     }
     if(show) {
@@ -742,10 +798,14 @@ class CallController extends GetxController {
   }
 
   void stopTimer() {
-    timer!.cancel();
+    if(player.playing) {
+      player.stop();
+    }
+    if(timer!=null) {
+      timer!.cancel();
+    }
     update();
   }
-
 
   Future<void> getSessionHistory() async {
     Map <String, String> data = {
@@ -802,7 +862,6 @@ class CallController extends GetxController {
     });
   }
 
-
   void goto(String page) {
     Get.toNamed(page)?.then((value) {
       show = true;
@@ -811,7 +870,6 @@ class CallController extends GetxController {
       calculateCountdown();
     });
   }
-
 
   void calculateCountdown() {
     max = 0;
@@ -831,16 +889,17 @@ class CallController extends GetxController {
         max+=secs;
       }
     }
-    print("ssweb: maxxxxx $max");
+    print("ssweb: ssweb: maxxxxx $max");
     update();
   }
 
   void initializeMeeting() {
+    print("ssweb: initialize ${type} ${action}");
     if(type=="REQUESTED") {
-      if(action=="ACCEPT") {
-        createAndJoinMeeting();
-      }
-      else if(action=="REQUESTING"){
+      // if(action=="ACCEPT") {
+      //   createAndJoinMeeting();
+      // }
+      if(action=="REQUESTING"){
         token = sessionHistory.token??"";
         meetingID = sessionHistory.meeting_id??"";
         sessionID = sessionHistory.session_id??"";
@@ -860,6 +919,13 @@ class CallController extends GetxController {
         rate = sessionHistory.rate;
         update();
         startRing(60);
+      }
+      else if(action=="ACCEPT") {
+        print("ssweb: acceptttttt meetingggg");
+        wallet = double.parse((storage.read("wallet")??0.0).toString());
+        rate = sessionHistory.rate;
+        update();
+        accept();
       }
     }
   }
@@ -896,10 +962,45 @@ class CallController extends GetxController {
     });
   }
 
+  void missedCall() async {
+    Map <String, dynamic> data = {
+      SessionConstants.ch_id : ch_id,
+      SessionConstants.sender : "U",
+      SessionConstants.reason : "User missed the reconnect call.",
+    };
+
+
+    if(storage.read("calling")!=null) {
+      storage.remove("calling");
+    }
+
+    await meetingProvider.missed(data, storage.read("access")).then((response) async {
+      if(timer!=null) {
+        stopTimer();
+      }
+
+      // Get.back();
+      back();
+      if(response.code==1) {
+        cnt = 0;
+        type = "MISSED";
+        update();
+      }
+      else if(response.code!=-1) {
+        cnt = 0;
+        Essential.showSnackBar(response.message);
+      }
+      else {
+        Essential.showSnackBar(response.message);
+      }
+    });
+  }
+
   void back() {
     if(timer!=null) {
       stopTimer();
     }
+    disposeObjects();
     Get.back();
     // Get.offAllNamed("/home");
   }
@@ -919,7 +1020,6 @@ class CallController extends GetxController {
       }
     });
   }
-
 
   void confirmDelete() {
     Get.dialog(
@@ -956,6 +1056,20 @@ class CallController extends GetxController {
         Essential.showSnackBar(response.message);
       }
     });
+  }
+
+  void disposeObjects() {
+    print("disposeeee objectsss");
+    cameraController?.dispose();
+    try {
+      meeting.stopLivestream();
+      meeting.stopHls();
+    }
+    catch(ex) {
+
+    }
+    shareStream = videoStream = audioStream = remoteParticipantShareStream = null;
+    update();
   }
 
 }

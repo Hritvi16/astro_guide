@@ -4,6 +4,7 @@ import 'package:astro_guide/essential/Essential.dart';
 import 'package:astro_guide/models/astrologer/AstrologerModel.dart';
 import 'package:astro_guide/models/banner/BannerModel.dart';
 import 'package:astro_guide/models/blog/BlogModel.dart';
+import 'package:astro_guide/models/session/SessionHistoryModel.dart';
 import 'package:astro_guide/models/spec/SpecModel.dart';
 import 'package:astro_guide/models/testimonial/TestimonialModel.dart';
 import 'package:astro_guide/models/user/UserModel.dart';
@@ -51,6 +52,7 @@ class DashboardController extends GetxController {
   late bool free;
   late double wallet;
   late UserModel user;
+  SessionHistoryModel? session;
 
   @override
   void onInit() {
@@ -94,6 +96,7 @@ class DashboardController extends GetxController {
         videos = response.videos??[];
         testimonials = response.testimonials??[];
         user = response.user!;
+        session = response.session;
         storage.write("user", user);
         update();
       }
@@ -144,6 +147,8 @@ class DashboardController extends GetxController {
       };
 
       await dashboardProvider.fetchByID(storage.read("access"), ApiConstants.astrologerAPI + ApiConstants.specAPI, data).then((response) async {
+        print(response.toJson());
+
         if (response.code == 1) {
           live = response.live_astrologers ?? [];
           news = response.new_astrologers ?? [];
@@ -222,7 +227,14 @@ class DashboardController extends GetxController {
 
   void goto(String page, {dynamic arguments}) {
     print(page);
-    Get.toNamed(page, arguments: arguments);
+    Get.toNamed(page, arguments: arguments)?.then((value) {
+      getDashboard();
+    });
+  }
+
+  void gotoOff(String page, {dynamic arguments}) {
+    print(page);
+    Get.offAllNamed(page, arguments: arguments);
   }
 
   @override

@@ -2,6 +2,7 @@ import 'package:astro_guide/colors/MyColors.dart';
 import 'package:astro_guide/constants/CommonConstants.dart';
 import 'package:astro_guide/controllers/call/CallController.dart';
 import 'package:astro_guide/essential/Essential.dart';
+import 'package:astro_guide/services/StorageService.dart';
 import 'package:astro_guide/services/networking/ApiConstants.dart';
 import 'package:astro_guide/shared/CustomClipPath.dart';
 import 'package:astro_guide/shared/widgets/customAppBar/CustomAppBar.dart';
@@ -26,12 +27,9 @@ class Call extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final statusBarHeight = MediaQuery.of(context).padding.top;
-    callController.storeCalling(callController);
-    print("---------------");
-    print(callController.load);
+    StorageService.storeCalling(callController);
     print(callController.type);
-    print(callController.type!="ACTIVE" && callController.type!="COMPLETED");
-    print("---------------");
+    print("callController.type");
     return GetBuilder<CallController>(
       builder: (controller) {
         return WillPopScope(
@@ -39,7 +37,6 @@ class Call extends StatelessWidget {
           child: callController.load ? callController.type!="ACTIVE" && callController.type!="COMPLETED" ?
           WaitingToJoin(callController.astrologer.name, callController.astrologer.profile, callController.cancelMeeting, callController.type, callController.action, callController.accept,  callController.reject, callController.back) :
             Scaffold(
-              backgroundColor: MyColors.white,
               body: callController.type=="COMPLETED" ? getCompletedDesign(context) : getActiveDesign(context),
               bottomNavigationBar: callController.type=="COMPLETED" ? getBottom(context) : null,
             ) : LoadingScreen()
@@ -65,12 +62,12 @@ class Call extends StatelessWidget {
                   color: MyColors.colorPrimary,
                   image: const DecorationImage(
                       image: AssetImage(
-                          "assets/essential/upper_bg.png"
+                          "assets/essential/upper_bg_s.png"
                       )
                   )
               ),
               child: SafeArea(
-                child: CustomAppBar('Call Detail'),
+                child: CustomAppBar('Call Detail'.tr),
               ),
             ),
           ),
@@ -81,19 +78,19 @@ class Call extends StatelessWidget {
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    getTitleInfo("Astrologer Name", callController.astrologer.name),
+                    getTitleInfo("${'Astrologer'.tr} ${'Name'.tr}", callController.astrologer.name),
                     SizedBox(
                       height: 5,
                     ),
-                    getTitleInfo("Session Type", callController.sessionHistory.type, color: Essential.getSessionTypeColor(callController.sessionHistory.type)),
+                    getTitleInfo("Session Type".tr, callController.sessionHistory.type, color: Essential.getSessionTypeColor(callController.sessionHistory.type)),
                     SizedBox(
                       height: 5,
                     ),
-                    getTitleInfo("Rate", "${CommonConstants.rupee}${callController.sessionHistory.rate}/min"),
+                    getTitleInfo("Rate".tr, "${CommonConstants.rupee}${callController.sessionHistory.rate}/min"),
                     SizedBox(
                       height: 5,
                     ),
-                    getTitleInfo("Status", callController.sessionHistory.status, color: Essential.getStatusColor(callController.sessionHistory.status)),
+                    getTitleInfo("Status".tr, callController.sessionHistory.status, color: Essential.getStatusColor(callController.sessionHistory.status)),
                     SizedBox(
                       height: 10,
                     ),
@@ -113,7 +110,10 @@ class Call extends StatelessWidget {
                     SizedBox(
                       height: 5,
                     ),
-                    getTitleInfo("Duration", Essential.getChatDuration(null, callController.sessionHistory.started_at??"", callController.sessionHistory.ended_at??"")),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    getTitleInfo("Amount".tr, "${CommonConstants.rupee}${callController.sessionHistory.amount}"),
                   ]
               ),
             )
@@ -150,7 +150,7 @@ class Call extends StatelessWidget {
           style:GoogleFonts.manrope(
               fontSize: 16,
               fontWeight: FontWeight.w400,
-              color: MyColors.black
+              color: MyColors.labelColor()
           ),
           children: [
             TextSpan(
@@ -182,7 +182,7 @@ class Call extends StatelessWidget {
           info,
           style: GoogleFonts.manrope(
             fontSize: 14.0,
-            color: MyColors.black,
+            color: MyColors.labelColor(),
             letterSpacing: 0,
             fontWeight: FontWeight.w600,
           ),
@@ -220,7 +220,7 @@ class Call extends StatelessWidget {
                 child: Align(
                   alignment: Alignment.center,
                   child: Text(
-                    "Your Review",
+                    "Your Review".tr,
                     style: GoogleFonts.manrope(
                         fontSize: 18,
                         color: MyColors.black,
@@ -269,10 +269,10 @@ class Call extends StatelessWidget {
         child: Column(
           children: [
             Text(
-              "Chat Duration: ${Essential.getChatDuration(callController.action=="VIEW" ? null : callController.seconds, callController.sessionHistory.started_at??"", callController.sessionHistory.ended_at??"", )}",
+              "${'Call'.tr} ${'Duration'.tr}: ${Essential.getChatDuration(callController.action=="VIEW" ? null : callController.seconds, callController.sessionHistory.started_at??"", callController.sessionHistory.ended_at??"", )}",
               style: GoogleFonts.manrope(
                   fontSize: 14,
-                  color: MyColors.black,
+                  color: MyColors.labelColor(),
                   fontWeight: FontWeight.w500
               ),
             ),
@@ -280,7 +280,7 @@ class Call extends StatelessWidget {
               height: 5,
             ),
             Text(
-              "Please let us know your genuine and honest feedback about the astrologer. So we can serve you the best.",
+              "Please let us know your genuine and honest feedback about the astrologer. So we can serve you the best.".tr,
               textAlign: TextAlign.center,
               style: GoogleFonts.manrope(
                   fontSize: 12,
@@ -293,29 +293,6 @@ class Call extends StatelessWidget {
     );
   }
 
-  getNewDateDesign(String sent_at) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Container(
-          margin: EdgeInsets.only(top: 20),
-          padding: EdgeInsets.symmetric(vertical: 2, horizontal: 25),
-          decoration: BoxDecoration(
-              color: MyColors.black.withOpacity(0.5),
-              borderRadius: BorderRadius.circular(8)
-          ),
-          child: Text(
-            Essential.getDisplayDate(sent_at),
-            style: GoogleFonts.manrope(
-                color: MyColors.white,
-                fontSize: 12
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
   Widget askRating() {
     return GestureDetector(
       onTap: () {
@@ -325,6 +302,7 @@ class Call extends StatelessWidget {
         initialRating: 5,
         direction: Axis.horizontal,
         itemCount: 5,
+        unratedColor: MyColors.colorUnrated,
         itemPadding: EdgeInsets.symmetric(horizontal: 6.0),
         ignoreGestures: true,
         itemSize: 30,
@@ -378,7 +356,7 @@ class Call extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(top: 2.0, bottom: 5),
                         child: Text(
-                          callController.sessionHistory.anonymous==1 ? "Anonymous" : callController.sessionHistory.user??"",
+                          callController.sessionHistory.anonymous==1 ? "Anonymous".tr : callController.sessionHistory.user??"",
                           style: GoogleFonts.manrope(
                               fontSize: 14,
                               color: MyColors.black,
@@ -448,6 +426,7 @@ class Call extends StatelessWidget {
       itemPadding: EdgeInsets.symmetric(horizontal: 2.0),
       ignoreGestures: true,
       itemSize: 16,
+      unratedColor: MyColors.colorUnrated,
       itemBuilder: (context, _) => Image.asset(
         "assets/common/star.png",
         color: MyColors.colorButton,

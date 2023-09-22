@@ -4,11 +4,14 @@ import 'dart:io';
 import 'package:astro_guide/constants/CommonConstants.dart';
 import 'package:astro_guide/constants/UserConstants.dart';
 import 'package:astro_guide/essential/Essential.dart';
+import 'package:astro_guide/models/country/CountryModel.dart';
 import 'package:astro_guide/models/login/LoginModel.dart';
 import 'package:astro_guide/notification_helper/NotificationHelper.dart';
 import 'package:astro_guide/notification_helper/NotificationHelper2.dart';
+import 'package:astro_guide/providers/CountryProvider.dart';
 import 'package:astro_guide/providers/UserProvider.dart';
 import 'package:astro_guide/services/networking/ApiConstants.dart';
+import 'package:astro_guide/views/country/Country.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
@@ -32,14 +35,22 @@ class LoginController extends GetxController {
   );
   final FacebookAuth facebookAuth = FacebookAuth.instance;
 
-  final TextEditingController mobile = TextEditingController(text: "9586033791");
+  final TextEditingController mobile = TextEditingController();
   final FocusNode phoneNumberFocusNode = FocusNode();
 
   late UserProvider userProvider = Get.find();
+  late CountryProvider countryProvider = Get.find();
+  late List<CountryModel> countries;
+  late CountryModel country;
 
   @override
   void onInit() {
     // taketo();
+    countries = [
+      CountryModel(id: -1, name: "India", nationality: "Indian", icon: "assets/country/India.png", code: "+91", imageFullUrl: "assets/country/India.png")
+    ];
+    country = countries.first;
+    getCountries();
     super.onInit();
   }
 
@@ -48,9 +59,29 @@ class LoginController extends GetxController {
     super.dispose();
   }
 
+
+  void getCountries() {
+    countryProvider.fetchList(storage.read("access")).then((response) {
+      print(response.toJson());
+      if(response.code==1) {
+        countries = response.data??[];
+        for (var value in countries) {
+          if(value.name.toUpperCase()=="INDIA") {
+            country = value;
+            break;
+          }
+        }
+        update();
+      }
+    });
+  }
+
+
   goto(String path, dynamic data, {LoginModel? loginModel}) {
     print(path);
     Get.toNamed(path, arguments: data)?.then((value) {
+      userProvider = Get.find();
+      update();
       if(value=="verified") {
         login();
       }
@@ -152,7 +183,7 @@ class LoginController extends GetxController {
     print(data.fields);
     print(data.files);
 
-    userProvider.add(data, storage.read("access")??CommonConstants.essential).then((response) {
+    userProvider.add(data, ApiConstants.add, storage.read("access")??CommonConstants.essential).then((response) {
       print(response.toJson());
       if(response.code==1) {
         goToHome(response);
@@ -188,7 +219,7 @@ class LoginController extends GetxController {
 
   Future<void> verify() async {
     final Map<String, String> data = {
-      UserConstants.mobile : mobile.text,
+      UserConstants.mobile : country.code+"-"+mobile.text,
     };
 
     print(data);
@@ -196,7 +227,7 @@ class LoginController extends GetxController {
     userProvider.login(data, CommonConstants.essential, ApiConstants.verify).then((response) async {
       print(response.toJson());
       if(response.code==1) {
-        goto("/otp", {"mobile" : mobile.text, "code" : "+91"}, loginModel: response);
+        goto("/otp", {"mobile" : mobile.text, "code" : country.code}, loginModel: response);
         // goToHome(response);
       }
       else {
@@ -207,7 +238,7 @@ class LoginController extends GetxController {
 
   Future<void> login() async {
     final Map<String, String> data = {
-      UserConstants.mobile : mobile.text,
+      UserConstants.mobile : country.code+"-"+mobile.text,
       UserConstants.fcm : await NotificationHelper.generateFcmToken()
     };
 
@@ -230,6 +261,21 @@ class LoginController extends GetxController {
     storage.write("refresh", response.refresh_token);
     storage.write("status", "logged in");
     Get.offAllNamed("/home");
+  }
+
+  void changeCode() {
+    Get.bottomSheet(
+        isScrollControlled: true,
+        Country(countries, country)
+    ).then((value) {
+      print(value);
+
+      if(value!=null) {
+        countries = value['countries'];
+        country = value['country'];
+        update();
+      }
+    });
   }
 
 }

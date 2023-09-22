@@ -25,7 +25,6 @@ class Setting extends StatelessWidget {
     return GetBuilder<SettingController>(
       builder: (controller) {
         return Scaffold(
-          backgroundColor: MyColors.colorBG,
           body: getBody(context, theme),
         );
       },
@@ -46,7 +45,7 @@ class Setting extends StatelessWidget {
                   color: MyColors.colorPrimary,
                   image: const DecorationImage(
                       image: AssetImage(
-                          "assets/essential/upper_bg.png"
+                          "assets/essential/upper_bg_s.png"
                       )
                   )
               ),
@@ -148,12 +147,16 @@ class Setting extends StatelessWidget {
                   SizedBox(
                     height: 16,
                   ),
+                  settingsTab('My Testimonials'.tr, "assets/sign_up/profile.png", '', MyColors.colorButton, theme, onTab: () => Get.toNamed("/myTestimonial", )),
+                  SizedBox(
+                    height: 16,
+                  ),
                   settingsTab('Notification'.tr, "assets/common/notification.png", '', MyColors.colorButton, theme, onTab: () => Get.toNamed("/aboutUs", )),
                   SizedBox(
                     height: 16,
                   ),
                   GetBuilder<ThemesController>(builder: (_) {
-                    return settingsTabI('Appearance'.tr, Get.isDarkMode ? Icons.dark_mode : Icons.light_mode, _.theme.toCapitalized(), Get.isDarkMode ? MyColors.black : null, theme, onTab: () => showAppearanceModal(theme, _.theme));
+                    return settingsTabI('Appearance'.tr, Get.isDarkMode ? Icons.dark_mode : Icons.light_mode, _.theme.toCapitalized(), MyColors.labelColor(), theme, onTab: () => showAppearanceModal(theme, _.theme));
                     // return Text(_.theme);
                   }),
 
@@ -161,19 +164,22 @@ class Setting extends StatelessWidget {
                   settingsTab('Change App Language'.tr, "assets/common/lang.png", (settingController.storage.read("language")??"").toUpperCase(), null, theme, onTab: () => settingController.goto("/language")),
 
                   const SizedBox(height: 16),
+                  settingsTab('Change Mobile No.'.tr, "assets/common/telephone.png", "", MyColors.colorButton, theme, onTab: () => settingController.goto("/changeMobile", arguments: settingController.user.mobile)),
+
+                  const SizedBox(height: 16),
                   settingsTab('Support'.tr, "assets/common/support_filled.png", '', MyColors.colorButton, theme, onTab: () => Get.toNamed("/support", )),
 
                   const SizedBox(height: 16),
-                  settingsTabWI('Terms and Condition'.tr, "", null, theme, onTab: () => settingController.goto("/information", arguments: {"data" : settingController.setting.tc, "title" : "Terms and Condition"})),
+                  settingsTabWI('Terms and Condition'.tr, "", null, theme, onTab: () => settingController.goto("/information", arguments: {"data" : settingController.setting.tc_64, "title" : "Terms and Condition"})),
 
                   const SizedBox(height: 16),
-                  settingsTabWI('Privacy Policy'.tr, "", null, theme, onTab: () => settingController.goto("/information", arguments: {"data" : settingController.setting.privacy_policy, "title" : "Privacy Policy"})),
+                  settingsTabWI('Privacy Policy'.tr, "", null, theme, onTab: () => settingController.goto("/information", arguments: {"data" : settingController.setting.privacy_64, "title" : "Privacy Policy"})),
 
                   const SizedBox(height: 16),
-                  settingsTabWI('About Us'.tr, "", null, theme, onTab: () => settingController.goto("/information", arguments: {"data" : settingController.setting.about, "title" : "About Us"})),
+                  settingsTabWI('About Us'.tr, "", null, theme, onTab: () => settingController.goto("/information", arguments: {"data" : settingController.setting.about_64, "title" : "About Us"})),
 
                   const SizedBox(height: 16),
-                  settingsTabWI('Contact Us'.tr, "", null, theme, onTab: () => (){}),
+                  settingsTabWI('Contact Us'.tr, "", null, theme, onTab: () => settingController.goto("/contactUs", arguments: settingController.setting)),
 
                   const SizedBox(height: 16),
                   settingsTabI('Logout'.tr, Icons.logout, "", null, theme, onTab: () => settingController.logout()),
@@ -194,9 +200,11 @@ class Setting extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
         margin: EdgeInsets.symmetric(horizontal: 10),
         decoration: BoxDecoration(
-          color: MyColors.white,
-          borderRadius: BorderRadius.circular(10),
-            boxShadow: const [
+            color: MyColors.cardColor(),
+            // color: MyColors.white,
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: Get.isDarkMode ? null
+                : const [
               BoxShadow(
                 color: Color.fromRGBO(143, 148, 251, .2),
                 offset: Offset(0.0, 1.0), //(x,y)
@@ -219,10 +227,10 @@ class Setting extends StatelessWidget {
                 text: TextSpan(
                   text: title,
                   style: GoogleFonts.manrope(
-                  fontSize: 18.0,
-                  color: MyColors.black,
-                  letterSpacing: 0,
-                  fontWeight: FontWeight.w600,
+                    fontSize: 18.0,
+                    letterSpacing: 0,
+                    fontWeight: FontWeight.w600,
+                    color: MyColors.labelColor()
                   ),
                   children: [
                     if(trailing.isNotEmpty)
@@ -250,7 +258,7 @@ class Setting extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
         margin: EdgeInsets.symmetric(horizontal: 10),
         decoration: BoxDecoration(
-          color: MyColors.white,
+          color: MyColors.cardColor(),
           borderRadius: BorderRadius.circular(10),
             boxShadow: const [
               BoxShadow(
@@ -284,9 +292,10 @@ class Setting extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
         margin: EdgeInsets.symmetric(horizontal: 10),
         decoration: BoxDecoration(
-          color: MyColors.white,
-          borderRadius: BorderRadius.circular(10),
-            boxShadow: const [
+            color: MyColors.cardColor(),
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: Get.isDarkMode ? null
+                : const [
               BoxShadow(
                 color: Color.fromRGBO(143, 148, 251, .2),
                 offset: Offset(0.0, 1.0), //(x,y)
@@ -308,9 +317,9 @@ class Setting extends StatelessWidget {
               title,
               style: GoogleFonts.manrope(
                 fontSize: 18.0,
-                color: MyColors.black,
                 letterSpacing: 0,
                 fontWeight: FontWeight.w600,
+                color: color
               ),
             )
           ],

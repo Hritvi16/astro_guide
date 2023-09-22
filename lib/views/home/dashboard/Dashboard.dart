@@ -35,7 +35,6 @@ class Dashboard extends StatelessWidget {
     return GetBuilder<DashboardController>(
       builder: (controller) {
         return Scaffold(
-          backgroundColor: MyColors.colorBG,
           body: getBody(context),
         );
       },
@@ -57,7 +56,7 @@ class Dashboard extends StatelessWidget {
                   color: MyColors.colorPrimary,
                   image: const DecorationImage(
                       image: AssetImage(
-                          "assets/essential/upper_bg.png"
+                          "assets/essential/upper_bg_s.png"
                       )
                   )
               ),
@@ -123,21 +122,20 @@ class Dashboard extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(vertical: 5),
                         child: TextFormField(
                           onTap: () {
-                            dashboardController.goto("/custom", arguments: "Search Astrologer");
+                            dashboardController.gotoOff("/home", arguments: {"index" : 1, "title" : "Search Astrologer"});
                           },
                           keyboardType: TextInputType.name,
                           readOnly: true,
                           controller: dashboardController.search,
                           style: GoogleFonts.manrope(
                             fontSize: 16.0,
-                            color: MyColors.black,
                             letterSpacing: 0,
                             fontWeight: FontWeight.w400,
                           ),
                           // controller: dashboardController.name,
                           decoration: InputDecoration(
                             filled: true,
-                            fillColor: MyColors.white,
+                            fillColor: MyColors.cardColor(),
                             hintText: "${'Search Astrologer'.tr}...",
                             contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                             prefixIcon: Padding(
@@ -188,12 +186,13 @@ class Dashboard extends StatelessWidget {
               physics: const AlwaysScrollableScrollPhysics(),
               child: Column(
                 children: [
+                  if(dashboardController.session!=null)
+                    getActiveSession(context),
                   getServices(),
                   const SizedBox(
                     height: 24,
                   ),
                   Container(
-                    color: MyColors.white,
                     child: Column(
                       children: [
                         if(dashboardController.banners.isNotEmpty)
@@ -217,6 +216,91 @@ class Dashboard extends StatelessWidget {
           ),
         )
       ],
+    );
+  }
+
+  Widget getActiveSession(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        if(dashboardController.session?.category=="CHAT") {
+          dashboardController.goto(
+              "/chat",
+              arguments: {
+                "type" : dashboardController.session?.status,
+                "action" : dashboardController.session?.status,
+                "astro_id" : dashboardController.session?.astro_id,
+                "session_history" : dashboardController.session
+              }
+          );
+        }
+        else {
+          dashboardController.goto("/call", arguments: {
+            "type": dashboardController.session?.status,
+            "action": dashboardController.session?.status,
+            "astro_id": dashboardController.session?.astro_id,
+            "session_history": dashboardController.session,
+            'astrologer': AstrologerModel(
+                id: dashboardController.session?.astro_id ?? -1,
+                name: dashboardController.session?.astrologer ?? "",
+                profile: dashboardController.session?.astro_profile ?? "",
+                mobile: '',
+                email: '',
+                experience: 0,
+                about: ''
+            )
+          });
+        }
+      },
+      child: Container(
+        width: MySize.size100(context),
+        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+        margin: EdgeInsets.only(bottom: 20, top: 10, left: standardHorizontalPagePadding, right: standardHorizontalPagePadding),
+        decoration: BoxDecoration(
+          color: (dashboardController.session?.category=="CHAT" ? MyColors.colorChat : MyColors.colorSuccess).withOpacity(0.2),
+          border: Border.all(
+            color: dashboardController.session?.category=="CHAT" ? MyColors.colorChat : MyColors.colorSuccess,
+          ),
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                CircleAvatar(
+                  radius: 25,
+                  backgroundImage: NetworkImage(
+                      ApiConstants.astrologerUrl+(dashboardController.session?.astro_profile??"")
+                  ),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      dashboardController.session?.astrologer??"",
+                      style: GoogleFonts.manrope(
+                        color: MyColors.labelColor(),
+                        fontWeight: FontWeight.w600,
+                        fontSize: 16
+                      ),
+                    ),
+                    Text(
+                      dashboardController.session?.category??"",
+                      style: GoogleFonts.manrope(
+                        color: dashboardController.session?.category=="CHAT" ? MyColors.colorChat : MyColors.colorSuccess,
+                        fontWeight: FontWeight.w700
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ],
+        )
+      ),
     );
   }
 
@@ -247,7 +331,7 @@ class Dashboard extends StatelessWidget {
         children: [
           CircleAvatar(
             radius: standardServiceOCRadius,
-            backgroundColor: MyColors.white,
+            backgroundColor: MyColors.backgroundColor(),
             child: Image.asset(
               "assets/astrology/$image",
               height: standardServiceHeight,
@@ -262,8 +346,6 @@ class Dashboard extends StatelessWidget {
             textAlign: TextAlign.center,
             style: GoogleFonts.manrope(
               fontSize: 14.0,
-              color: MyColors.black,
-              // letterSpacing: 0,
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -348,7 +430,7 @@ class Dashboard extends StatelessWidget {
         margin: EdgeInsets.only(left: ind==0 ? 20 : 0, right: ind==dashboardController.specs.length-1 ? 20 : 0),
         padding: const EdgeInsets.symmetric(horizontal: 12),
         decoration: BoxDecoration(
-            color: dashboardController.spec==spec ? MyColors.colorLightPrimary : MyColors.white,
+            color: dashboardController.spec==spec ? MyColors.colorLightPrimary : MyColors.cardColor(),
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
                 color: dashboardController.spec==spec ? MyColors.colorButton : MyColors.colorGrey
@@ -383,7 +465,7 @@ class Dashboard extends StatelessWidget {
       padding: EdgeInsets.only(top: standardVerticalPadding),
       child: Column(
         children: [
-          getListHeading("Currently Live Astrologer".tr),
+          getListHeading("Currently Live Astrologers".tr, "/home", arguments: {"index" : 1, "title" : "Live Astrologers"}),
           const SizedBox(
             height: 14,
           ),
@@ -505,7 +587,7 @@ class Dashboard extends StatelessWidget {
                 height: 24,
                 width: 59,
                 decoration: BoxDecoration(
-                  color: MyColors.white,
+                  color: MyColors.cardColor(),
                   borderRadius: BorderRadius.circular(standardShortButtonRadius)
                 ),
                 child: Row(
@@ -520,7 +602,6 @@ class Dashboard extends StatelessWidget {
                       "Live".tr,
                       style: GoogleFonts.manrope(
                         fontSize: 12.0,
-                        color: MyColors.black,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -540,7 +621,7 @@ class Dashboard extends StatelessWidget {
       padding: EdgeInsets.only(top: standardVerticalPadding),
       child: Column(
         children: [
-          getListHeading("New Arrival Astrologer".tr),
+          getListHeading("New Arrival Astrologers".tr, "/home", arguments: {"index" : 1, "title" : "New Astrologers"}),
           const SizedBox(
             height: 14,
           ),
@@ -702,7 +783,6 @@ class Dashboard extends StatelessWidget {
                     maxLines: 1,
                     style: GoogleFonts.manrope(
                       fontSize: 18.0,
-                      color: MyColors.black,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -724,7 +804,7 @@ class Dashboard extends StatelessWidget {
       padding: EdgeInsets.only(top: standardVerticalPadding),
       child: Column(
         children: [
-          getListHeading("New Updates and Blogs".tr),
+          getListHeading("New Updates and Blogs".tr, "/blogs"),
           const SizedBox(
             height: 14,
           ),
@@ -803,7 +883,6 @@ class Dashboard extends StatelessWidget {
                     maxLines: 2,
                     style: GoogleFonts.manrope(
                       fontSize: 16.0,
-                      color: MyColors.black,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -842,7 +921,7 @@ class Dashboard extends StatelessWidget {
               },
               child: standardButton(
                 context: context,
-                backgroundColor: MyColors.white,
+                backgroundColor: MyColors.cardColor(),
                 borderColor: MyColors.colorButton,
                 margin: const EdgeInsets.symmetric(horizontal: 12),
                 alignment: Alignment.center,
@@ -850,7 +929,6 @@ class Dashboard extends StatelessWidget {
                   'Read More'.tr,
                   style: GoogleFonts.manrope(
                     fontSize: 16.0,
-                    color: MyColors.black,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -867,7 +945,7 @@ class Dashboard extends StatelessWidget {
       padding: EdgeInsets.only(top: standardVerticalPadding),
       child: Column(
         children: [
-          getListHeading("User Testimonials".tr),
+          getListHeading("User Testimonials".tr, "/testimonials"),
           const SizedBox(
             height: 14,
           ),
@@ -963,7 +1041,6 @@ class Dashboard extends StatelessWidget {
                       maxLines: 2,
                       style: GoogleFonts.manrope(
                         fontSize: 16.0,
-                        color: MyColors.black,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -990,7 +1067,6 @@ class Dashboard extends StatelessWidget {
                               // maxLines: 7,
                               style: GoogleFonts.manrope(
                                 fontSize: 10.0,
-                                color: MyColors.black,
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
@@ -1013,7 +1089,7 @@ class Dashboard extends StatelessWidget {
       padding: EdgeInsets.only(top: standardVerticalPadding),
       child: Column(
         children: [
-          getListHeading("New Videos".tr),
+          getListHeading("New Videos".tr, "/videos"),
           const SizedBox(
             height: 14,
           ),
@@ -1182,7 +1258,7 @@ class Dashboard extends StatelessWidget {
     );
   }
 
-  Widget getListHeading(String title) {
+  Widget getListHeading(String title, String path, {dynamic? arguments}) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: standardHorizontalPagePadding),
       child: Row(
@@ -1192,24 +1268,29 @@ class Dashboard extends StatelessWidget {
             title,
             style: GoogleFonts.manrope(
               fontSize: 18.0,
-              color: MyColors.black,
               fontWeight: FontWeight.w600,
             ),
           ),
           GestureDetector(
             onTap: () {
-              if(title.contains("Astrologer")) {
-                dashboardController.goto("/custom", arguments: title);
-              }
-              else if(title.contains("Blog")) {
-                dashboardController.goto("/blogs");
-              }
-              else if(title.contains("Testimonial")) {
-                dashboardController.goto("/testimonials");
+              if(path.contains("home")) {
+                dashboardController.gotoOff(path, arguments: arguments);
               }
               else {
-                dashboardController.goto("/videos");
+                dashboardController.goto(path, arguments: arguments);
               }
+              // if(title.contains("Astrologer".tr)) {
+              // dashboardController.goto("/custom", arguments: arguments);
+              // }
+              // else if(title.contains("Blog")) {
+              //   dashboardController.goto("/blogs");
+              // }
+              // else if(title.contains("Testimonial")) {
+              //   dashboardController.goto("/testimonials");
+              // }
+              // else {
+              //   dashboardController.goto("/videos");
+              // }
             },
             child: Text(
               "View all".tr,
@@ -1287,7 +1368,6 @@ class Dashboard extends StatelessWidget {
                         maxLines: 1,
                         style: GoogleFonts.manrope(
                           fontSize: 10.0,
-                          color: MyColors.black,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -1350,7 +1430,6 @@ class Dashboard extends StatelessWidget {
                         maxLines: 1,
                         style: GoogleFonts.manrope(
                           fontSize: 10.0,
-                          color: MyColors.black,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -1376,7 +1455,6 @@ class Dashboard extends StatelessWidget {
               overflow: TextOverflow.fade,
               style: GoogleFonts.manrope(
                 fontSize: 18.0,
-                color: MyColors.black,
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -1394,49 +1472,10 @@ class Dashboard extends StatelessWidget {
               children: [
                 getOptionDesign("connection.png", "Easily connect with Astro".tr, "You can easily connect with astrologer with the help of AstroGuide.".tr),
                 getOptionDesign("approved.png", "Privacy guarantee 100%".tr, "AstroGuide provide 100% privacy guarantee to your personal data.".tr),
-                getOptionDesign("privacy_policy.png", "Approved Astrologer".tr, "You can talk with 100% verified and approved Astrologer.")
+                getOptionDesign("privacy_policy.png", "Approved Astrologer".tr, "You can talk with 100% verified and approved Astrologer.".tr)
               ],
             ),
           ),
-        ],
-      ),
-    );
-  }
-
-  Widget getAppOptions2() {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20),
-      child: Column(
-        children: [
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 20),
-            child: Text(
-              'Why AstroGuide?',
-              overflow: TextOverflow.fade,
-              style: GoogleFonts.manrope(
-                fontSize: 18.0,
-                color: MyColors.black,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.all(16),
-            width: double.infinity,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
-              border: Border.all(
-                color: MyColors.colorPCBorder
-              )
-            ),
-            child: Column(
-              children: [
-                getOptionDesign("connection.png", "Easily connect with Astro", "You can easily connect with astrologer with the help of Asrtoguid."),
-                getOptionDesign("approved.png", "Privacy guarantee 100%", "Astroguid provide 100% privacy guarantee to your personal Data."),
-                getOptionDesign("privacy_policy.png", "Approved Astrologer", "You can talk with 100% verified and approved  Astrologer.")
-              ],
-            ),
-          )
         ],
       ),
     );
@@ -1449,7 +1488,7 @@ class Dashboard extends StatelessWidget {
       children: [
         CircleAvatar(
           radius: standardServiceOCRadius,
-          backgroundColor: MyColors.white,
+          backgroundColor: MyColors.backgroundColor(),
           child: Image.asset(
             "assets/astrology/$image",
             height: standardServiceHeight,
@@ -1467,7 +1506,6 @@ class Dashboard extends StatelessWidget {
                   overflow: TextOverflow.fade,
                   style: GoogleFonts.playfairDisplay(
                     fontSize: 18.0,
-                    color: MyColors.black,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
@@ -1479,7 +1517,6 @@ class Dashboard extends StatelessWidget {
                   overflow: TextOverflow.fade,
                   style: GoogleFonts.manrope(
                     fontSize: 12.0,
-                    // color: MyColors.black,
                     fontWeight: FontWeight.w500,
                   ),
                 ),

@@ -35,6 +35,10 @@ _$_DashboardModel _$$_DashboardModelFromJson(Map<String, dynamic> json) =>
       user: json['user'] == null
           ? null
           : UserModel.fromJson(json['user'] as Map<String, dynamic>),
+      session: json['session'] == null
+          ? null
+          : SessionHistoryModel.fromJson(
+              json['session'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$_DashboardModelToJson(_$_DashboardModel instance) =>
@@ -50,4 +54,5 @@ Map<String, dynamic> _$$_DashboardModelToJson(_$_DashboardModel instance) =>
       'videos': instance.videos,
       'testimonials': instance.testimonials,
       'user': instance.user,
+      'session': instance.session,
     };

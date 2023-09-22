@@ -1,5 +1,6 @@
 import 'package:astro_guide/models/astrologer/AstrologerModel.dart';
 import 'package:astro_guide/models/blog/BlogModel.dart';
+import 'package:astro_guide/models/session/SessionHistoryModel.dart';
 import 'package:astro_guide/models/spec/SpecModel.dart';
 import 'package:astro_guide/models/testimonial/TestimonialModel.dart';
 import 'package:astro_guide/models/user/UserModel.dart';
@@ -26,6 +27,7 @@ class DashboardModel with _$DashboardModel {
     List<VideoModel>? videos,
     List<TestimonialModel>? testimonials,
     UserModel? user,
+    SessionHistoryModel? session,
   }) = _DashboardModel;
 
   factory DashboardModel.fromJson(JSON json) => _$DashboardModelFromJson(json);

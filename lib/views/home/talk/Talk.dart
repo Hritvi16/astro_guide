@@ -19,7 +19,10 @@ import 'dart:math' as math;
 
 
 class Talk extends StatelessWidget {
-  Talk({ Key? key }) : super(key: key);
+  String? title;
+  Talk(String? title, { Key? key }) {
+    this.title = title;
+  }
 
   final TalkController talkController = Get.put<TalkController>(TalkController());
 
@@ -29,7 +32,6 @@ class Talk extends StatelessWidget {
     return GetBuilder<TalkController>(
       builder: (controller) {
         return Scaffold(
-          backgroundColor: MyColors.white,
           body: getBody(context),
         );
       },
@@ -51,7 +53,7 @@ class Talk extends StatelessWidget {
                   color: MyColors.colorPrimary,
                   image: const DecorationImage(
                       image: AssetImage(
-                          "assets/essential/upper_bg.png"
+                          "assets/essential/upper_bg_s.png"
                       )
                   )
               ),
@@ -67,7 +69,7 @@ class Talk extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Talk with Astrologer'.tr,
+                            title!=null ? title.toString().tr : 'Talk with Astrologer'.tr,
                             style: GoogleFonts.playfairDisplay(
                               fontSize: 22.0,
                               color: MyColors.black,
@@ -127,14 +129,13 @@ class Talk extends StatelessWidget {
                           controller: talkController.search,
                           style: GoogleFonts.manrope(
                             fontSize: 16.0,
-                            color: MyColors.black,
                             letterSpacing: 0,
                             fontWeight: FontWeight.w400,
                           ),
                           // controller: talkController.name,
                           decoration: InputDecoration(
                             filled: true,
-                            fillColor: MyColors.white,
+                            fillColor: MyColors.cardColor(),
                             hintText: "Search Astrologer".tr,
                             contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                             prefixIcon: Padding(
@@ -247,10 +248,10 @@ class Talk extends StatelessWidget {
         margin: EdgeInsets.only(left: ind==0 ? 20 : 0, right: ind==talkController.specs.length-1 ? 20 : 0),
         padding: const EdgeInsets.symmetric(horizontal: 12),
         decoration: BoxDecoration(
-          color: talkController.spec==spec ? MyColors.colorLightPrimary : MyColors.white,
+          color: talkController.spec==spec ? MyColors.colorLightPrimary : MyColors.cardColor(),
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
-            color: talkController.spec==spec ? MyColors.colorButton : MyColors.colorGrey
+            color: talkController.spec==spec ? MyColors.colorButton : MyColors.borderColor()
           )
         ),
         child: Row(
@@ -309,7 +310,7 @@ class Talk extends StatelessWidget {
       child: RatingBar.builder(
         initialRating: rating,
         direction: Axis.horizontal,
-        unratedColor: MyColors.colorGrey,
+        unratedColor: MyColors.colorUnrated,
         allowHalfRating: true,
         itemCount: 5,
         itemPadding: EdgeInsets.symmetric(horizontal: 1.0),
@@ -413,46 +414,55 @@ class Talk extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        astrologer.name,
-                        style: GoogleFonts.playfairDisplay(
-                          fontSize: 18.0,
-                          color: MyColors.black,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                      if(astrologer.online==1)
-                        Row(
-                        children: [
-                          SizedBox(
-                            width: 5,
+              Flexible(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Flexible(
+                          child: Text(
+                            astrologer.name,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: GoogleFonts.playfairDisplay(
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.w700,
+                                color: MyColors.labelColor()
+                            ),
                           ),
-                          Image.asset(
-                            "assets/common/online.png",
-                            height: 11,
-                            width: 11,
+                        ),
+                        if(astrologer.online==1)
+                          Row(
+                            children: [
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Image.asset(
+                                "assets/common/online.png",
+                                height: 11,
+                                width: 11,
+                              )
+                            ],
                           )
-                        ],
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    height: 2,
-                  ),
-                  Text(
-                    "Vedic Astrologer",
-                    style: GoogleFonts.manrope(
-                      fontSize: 12.0,
-                      color: MyColors.colorGrey,
-                      fontWeight: FontWeight.w500,
+                      ],
                     ),
-                  ),
-                ],
+                    SizedBox(
+                      height: 2,
+                    ),
+                    Text(
+                      astrologer.types??"-",
+                      // "Vedic Astrologer",
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: GoogleFonts.manrope(
+                        fontSize: 12.0,
+                        color: MyColors.colorGrey,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
               ),
               GestureDetector(
                 onTap: () {
@@ -480,7 +490,7 @@ class Talk extends StatelessWidget {
                 width: 6,
               ),
               Text(
-                "Hindi, English, Telegu",
+                astrologer.languages??"-",
                 style: GoogleFonts.manrope(
                   fontSize: 12.0,
                   color: MyColors.colorGrey,
@@ -508,21 +518,31 @@ class Talk extends StatelessWidget {
           fit: FlexFit.tight,
           child: GestureDetector(
             onTap: () {
-              double min = Essential.getCalculatedAmount(astrologer.p_call??0, minutes: 5);
-              if((talkController.free && astrologer.free==1) || (talkController.wallet>=min)) {
-                talkController.goto("/checkSession", arguments: {
-                  "astrologer": astrologer,
-                  "free": talkController.free && astrologer.free == 1,
-                  "controller" : talkController,
-                  "category" : "CALL"
-                });
+              if(astrologer.online==1) {
+                double min = Essential.getCalculatedAmount(
+                    astrologer.p_call ?? 0, minutes: 5);
+                if ((talkController.free && astrologer.free == 1) ||
+                    (talkController.wallet >= min)) {
+                  talkController.goto("/checkSession", arguments: {
+                    "astrologer": astrologer,
+                    "free": talkController.free && astrologer.free == 1,
+                    "controller": talkController,
+                    "category": "CALL"
+                  });
+                }
+                else {
+                  Essential.showBasicDialog(
+                      "You must have minimum of ${CommonConstants.rupee}${min
+                          .ceil()} balance in your wallet. Do you want to recharge?",
+                      "Recharge Now", "No, Thanks").then((value) {
+                    if (value == "Recharge Now") {
+                      talkController.goto("/wallet");
+                    }
+                  });
+                }
               }
               else {
-                Essential.showBasicDialog("You must have minimum of ${CommonConstants.rupee}${min.ceil()} balance in your wallet. Do you want to recharge?", "Recharge Now", "No, Thanks").then((value) {
-                  if(value=="Recharge Now") {
-                    talkController.goto("/wallet");
-                  }
-                });
+                Essential.showInfoDialog("${astrologer.name} is currently offline." , btn: "OK");
               }
               // talkController.goto("/call", arguments: {"astrologer" : astrologer, "type" : "REQUESTED", "action" : });
             },
@@ -553,8 +573,8 @@ class Talk extends StatelessWidget {
                         maxLines: 1,
                         style: GoogleFonts.manrope(
                           fontSize: 12.0,
-                          color: MyColors.black,
                           fontWeight: talkController.free && astrologer.free==1 ? FontWeight.w600 : FontWeight.w500,
+                          color: MyColors.labelColor()
                         ),
                       ),
                     ),
@@ -571,21 +591,31 @@ class Talk extends StatelessWidget {
           fit: FlexFit.tight,
           child: GestureDetector(
             onTap: () {
-              double min = Essential.getCalculatedAmount(astrologer.p_chat??0, minutes: 5);
-              if((talkController.free && astrologer.free==1) || (talkController.wallet>=min)) {
-                talkController.goto("/checkSession", arguments: {
-                  "astrologer": astrologer,
-                  "free": talkController.free && astrologer.free == 1,
-                  "controller" : talkController,
-                  "category" : "CHAT"
-                });
+              if(astrologer.online==1) {
+                double min = Essential.getCalculatedAmount(
+                    astrologer.p_chat ?? 0, minutes: 5);
+                if ((talkController.free && astrologer.free == 1) ||
+                    (talkController.wallet >= min)) {
+                  talkController.goto("/checkSession", arguments: {
+                    "astrologer": astrologer,
+                    "free": talkController.free && astrologer.free == 1,
+                    "controller": talkController,
+                    "category": "CHAT"
+                  });
+                }
+                else {
+                  Essential.showBasicDialog(
+                      "You must have minimum of ${CommonConstants.rupee}${min
+                          .ceil()} balance in your wallet. Do you want to recharge?",
+                      "Recharge Now", "No, Thanks").then((value) {
+                    if (value == "Recharge Now") {
+                      talkController.goto("/wallet");
+                    }
+                  });
+                }
               }
               else {
-                Essential.showBasicDialog("You must have minimum of ${CommonConstants.rupee}${min.ceil()} balance in your wallet. Do you want to recharge?", "Recharge Now", "No, Thanks").then((value) {
-                  if(value=="Recharge Now") {
-                    talkController.goto("/wallet");
-                  }
-                });
+                Essential.showInfoDialog("${astrologer.name} is currently offline." , btn: "OK");
               }
             },
             child: Container(
@@ -615,8 +645,8 @@ class Talk extends StatelessWidget {
                         maxLines: 1,
                         style: GoogleFonts.manrope(
                           fontSize: 12.0,
-                          color: MyColors.black,
                           fontWeight: talkController.free && astrologer.free==1 ? FontWeight.w600 : FontWeight.w500,
+                          color: MyColors.labelColor()
                         ),
                       ),
                     ),
@@ -629,55 +659,3 @@ class Talk extends StatelessWidget {
     );
   }
 }
-
-
-getOldBottom(AstrologerModel astrologer) {
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    children: [
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "${CommonConstants.rupee} 50000/${'min'.tr}",
-            // "${CommonConstants.rupee} ${astrologer.chat_rate}/${'min'.tr}",
-            style: GoogleFonts.playfairDisplay(
-              fontSize: 16.0,
-              color: MyColors.black,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-          Text(
-            "First 5 minutes free",
-            style: GoogleFonts.manrope(
-              fontSize: 12.0,
-              color: MyColors.colorButton,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-        ],
-      ),
-      Container(
-        padding: EdgeInsets.symmetric(horizontal: 16),
-        alignment: Alignment.center,
-        height: standardShortButtonHeight,
-        decoration: BoxDecoration(
-          color: MyColors.colorLightPrimary,
-          border: Border.all(
-            color: MyColors.colorButton
-          ),
-          borderRadius: BorderRadius.circular(standardShortButtonRadius)
-        ),
-        child: Text(
-          "Chat",
-          style: GoogleFonts.manrope(
-            fontSize: 12.0,
-            color: MyColors.black,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-      )
-    ],
-  );
-}
-

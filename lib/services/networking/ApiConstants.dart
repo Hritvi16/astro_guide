@@ -1,10 +1,10 @@
 class ApiConstants {
-  static const url = "http://192.168.29.244:9000/";
-  static const urlS = "http://192.168.29.244:3000/";
+  // static const url = "http://192.168.29.244:9000/";
+  // static const urlS = "http://192.168.29.244:3000/";
   // static const url = "http://15.206.164.99:9000/";
   // static const urlS = "http://15.206.164.99:3000/";
-  // static const url = "http://13.233.167.153:9001/";
-  // static const urlS = "http:/13.233.167.153:9002/";
+  static const url = "http://35.154.148.6:9000/";
+  static const urlS = "http://35.154.148.6:9001/";
   static const token = "x-access-token";
   // static const url = "http://localhost:9002/";
   // static const url = "http://15.207.254.222:9000/";
@@ -22,6 +22,7 @@ class ApiConstants {
   static const blog = "blog/";
   static const video = "video/";
   static const chats = "chats/";
+  static const countries = "country/";
   static const userUrl = url+asset+user;
   static const specificationUrl = url+asset+specification;
   static const astrologerUrl = url+asset+astrologer;
@@ -31,6 +32,7 @@ class ApiConstants {
   static const blogUrl = url+asset+blog;
   static const videoUrl = url+asset+video;
   static const chatUrl = url+asset+chats;
+  static const countryUrl = url+asset+countries;
 
   static const androidGoogleClientID = "170894307366-1121stmp5mna8q9illqf4r7p7e7okuea.apps.googleusercontent.com";
   static const iOSGoogleClientID = "170894307366-8viag128kkui1l8ngqea77i3he3e5tq2.apps.googleusercontent.com";
@@ -73,10 +75,12 @@ class ApiConstants {
   static const refreshAPI = "refresh/";
   static const meetingAPI = "meeting/";
   static const supportAPI = "support/";
+  static const reviewAPI = "review/";
 
 
   static const all = "all/";
   static const add = "add/";
+  static const update = "update/";
   static const delete = "delete/";
   static const remove = "remove/";
   static const check = "check/";
@@ -89,7 +93,9 @@ class ApiConstants {
   static const session = "session/";
   static const validate = "validate/";
   static const waitlist = "waitlist/";
+  static const missed = "missed/";
   static const end = "end/";
+  static const reject = "reject";
   static const cancel = "cancel/";
   static const meeting_token = "token/";
   static const rating = "rating/";
@@ -102,7 +108,9 @@ class ApiConstants {
   static const state = "state";
   static const socialLogin = "socialLogin";
   static const login = "login";
+  static const logout = "logout";
   static const verify = "verify";
+  static const profile = "profile";
   static const fetchbyid = "FETCHBYID";
   static const fetchbyuser = "FETCHBYUSER";
   static const fetchbycoid = "FETCHBYCOID";
@@ -114,7 +122,6 @@ class ApiConstants {
   static const fetchboardbyfilter = "FETCHBOARDBYFILTER";
   static const fetchr = "FETCHR";
   static const fetchnr = "FETCHNR";
-  static const update = "UPDATE";
   static const status = "STATUS";
   static const statuss = "status";
   static const updateProfile = "UPDATEPROFILE";

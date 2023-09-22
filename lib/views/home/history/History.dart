@@ -1,15 +1,18 @@
 import 'package:astro_guide/colors/MyColors.dart';
 import 'package:astro_guide/constants/CommonConstants.dart';
 import 'package:astro_guide/controllers/history/HistoryController.dart';
+import 'package:astro_guide/controllers/theme/ThemesController.dart';
 import 'package:astro_guide/essential/Essential.dart';
 import 'package:astro_guide/models/astrologer/AstrologerModel.dart';
 import 'package:astro_guide/models/session/SessionHistoryModel.dart';
 import 'package:astro_guide/models/wallet/WalletHistoryModel.dart';
 import 'package:astro_guide/shared/CustomClipPath.dart';
 import 'package:astro_guide/shared/widgets/button/Button.dart';
+import 'package:astro_guide/shared/widgets/customAppBar/CustomAppBar.dart';
 import 'package:astro_guide/size/MySize.dart';
 import 'package:astro_guide/size/Spacing.dart';
 import 'package:astro_guide/size/WidgetSize.dart';
+import 'package:astro_guide/themes/Themes.dart';
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -29,13 +32,16 @@ class History extends StatelessWidget  {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final ThemesController themeController = Get.put(ThemesController());
     return GetBuilder<HistoryController>(
       builder: (controller) {
         return MaterialApp(
+          theme: Themes.lightTheme,
+          darkTheme: Themes.darkTheme,
+          themeMode: Essential.getThemeMode(themeController.theme),
           home: DefaultTabController(
             length: 2,
             child: Scaffold(
-              backgroundColor: MyColors.white,
               body: getBody(context),
             ),
           ),
@@ -49,11 +55,10 @@ class History extends StatelessWidget  {
       children: [
         SizedBox(
           width: MySize.size100(context),
-          height: 115,
+          height: standardUpperFixedDesignHeight,
           child: ClipPath(
             clipper: CustomClipPath(),
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: standardHorizontalPagePadding),
               decoration: BoxDecoration(
                   color: MyColors.colorPrimary,
                   image: const DecorationImage(
@@ -63,65 +68,40 @@ class History extends StatelessWidget  {
                   )
               ),
               child: SafeArea(
-                child: Padding(
-                  // color: Colors.white,
-                  padding: const EdgeInsets.only(top: 25.0, bottom: 35),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'History'.tr,
-                            style: GoogleFonts.playfairDisplay(
-                              fontSize: 22.0,
-                              color: MyColors.black,
-                              letterSpacing: 0,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                          Row(
-                            children: [
-                              Image.asset(
-                                "assets/common/notification.png",
-                                height: 25,
-                              ),
-                              const SizedBox(
-                                width: 15,
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  historyController.goto("/wallet");
-                                },
-                                child: Image.asset(
-                                  "assets/common/wallet.png",
-                                  height: 25,
-                                  color: MyColors.black,
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 15,
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  historyController.goto("/language");
-                                },
-                                child: Image.asset(
-                                  "assets/common/lang.png",
-                                  height: 25,
-                                  color: MyColors.black,
-                                ),
-                              )
-                            ],
-                          )
-                        ],
+                child: CustomAppBar('History'.tr, options: Row(
+                  children: [
+                    Image.asset(
+                      "assets/common/notification.png",
+                      height: 25,
+                    ),
+                    const SizedBox(
+                      width: 15,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        historyController.goto("/wallet");
+                      },
+                      child: Image.asset(
+                        "assets/common/wallet.png",
+                        height: 25,
+                        color: MyColors.black,
                       ),
-                    ],
-                  ),
-                ),
+                    ),
+                    const SizedBox(
+                      width: 15,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        historyController.goto("/language");
+                      },
+                      child: Image.asset(
+                        "assets/common/lang.png",
+                        height: 25,
+                        color: MyColors.black,
+                      ),
+                    )
+                  ],
+                ), arrow: false),
               ),
             ),
           ),
@@ -197,19 +177,19 @@ class History extends StatelessWidget  {
                   color: MyColors.colorButton
               )
           )
-          : BoxDecoration(
-              color: MyColors.white,
+              : BoxDecoration(
+              color: MyColors.cardColor(),
               borderRadius: BorderRadius.circular(14),
               border: Border.all(
-                  color: MyColors.colorBorder
+                  color: MyColors.borderColor()
               )
           ),
           child: Text(
             title,
             style: GoogleFonts.manrope(
               fontSize: 16.0,
-              color: MyColors.black,
               letterSpacing: 0,
+              color: historyController.current==index ? MyColors.colorButton : MyColors.labelColor(),
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -243,10 +223,10 @@ class History extends StatelessWidget  {
             Tab(text: "Wallet Transactions".tr),
             Tab(text: "Payment Logs".tr),
           ],
-          labelColor: MyColors.black,
+          labelColor: MyColors.labelColor(),
           labelStyle: GoogleFonts.manrope(
             fontSize: 14.0,
-            color: MyColors.black,
+            color: MyColors.labelColor(),
             letterSpacing: 0,
             fontWeight: FontWeight.w600,
           ),
@@ -280,7 +260,7 @@ class History extends StatelessWidget  {
           return getCallDesign(index, context);
         }
     )
-        : getNoDataWidget("You’ve not taken any call\nconsultations yet!");
+        : getNoDataWidget("You've not taken any call consultations yet!".tr);
   }
 
   Widget getChatView(BuildContext context) {
@@ -300,7 +280,7 @@ class History extends StatelessWidget  {
           return getChatDesign(index, context);
         }
     )
-        : getNoDataWidget("You’ve not taken any chat\nconsultations yet!");
+        : getNoDataWidget("You've not taken any chat consultations yet!".tr);
   }
 
   Widget getMyAmountDesign() {
@@ -332,7 +312,6 @@ class History extends StatelessWidget  {
                     "Available Balance".tr,
                     style: GoogleFonts.playfairDisplay(
                       fontSize: 20.0,
-                      color: MyColors.black,
                       letterSpacing: 0,
                       fontWeight: FontWeight.w700,
                     ),
@@ -405,7 +384,7 @@ class History extends StatelessWidget  {
         return getWTDesign(index, context);
       }
     )
-    : getNoDataWidget("You’ve not done any money\ntransaction yet!");
+    : getNoDataWidget("You've not done any money transaction yet!".tr);
   }
 
   Widget getPaymentLogs(BuildContext context) {
@@ -424,7 +403,7 @@ class History extends StatelessWidget  {
           return getPLDesign(index, context);
         }
     )
-    : getNoDataWidget("You've not recharged yet!");
+    : getNoDataWidget("You've not recharged yet!".tr);
   }
 
   Widget getWTDesign(int index, BuildContext context) {
@@ -517,7 +496,7 @@ class History extends StatelessWidget  {
                   await Clipboard.setData(ClipboardData(text: "#${walletHistory.order_id}"));
                   Essential.showSnackBar("Copied to clipboard", time: 1);
                 },
-                child: getIconInfo("assets/common/copy.png", "Copy", color: MyColors.colorGrey)
+                child: getIconInfo("assets/common/copy.png", "Copy".tr, color: MyColors.colorGrey)
               ),
             ],
           ),
@@ -557,7 +536,7 @@ class History extends StatelessWidget  {
                           await Clipboard.setData(ClipboardData(text: "#${walletHistory.invoice_id}"));
                           Essential.showSnackBar("Copied to clipboard", time: 1);
                         },
-                        child: getIconInfo("assets/common/copy.png", "Copy", color: MyColors.colorGrey)
+                        child: getIconInfo("assets/common/copy.png", "Copy".tr, color: MyColors.colorGrey)
                     ),
                   ],
                 ),
@@ -603,7 +582,7 @@ class History extends StatelessWidget  {
                                 await Clipboard.setData(ClipboardData(text: "#${walletHistory.order_id}"));
                                 Essential.showSnackBar("Copied to clipboard", time: 1);
                               },
-                              child: getIconInfo("assets/common/copy.png", "Copy", color: MyColors.colorGrey)
+                              child: getIconInfo("assets/common/copy.png", "Copy".tr, color: MyColors.colorGrey)
                           ),
                         ],
                       ),
@@ -611,6 +590,7 @@ class History extends StatelessWidget  {
                   ),
                 GestureDetector(
                   onTap: () {
+                    historyController.goto("/invoice", arguments: walletHistory);
                   },
                   child: standardButton(
                     context: context,
@@ -621,7 +601,7 @@ class History extends StatelessWidget  {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Download Invoice',
+                          'Download Invoice'.tr,
                           style: GoogleFonts.manrope(
                             fontSize: 16.0,
                             color: MyColors.white,
@@ -645,7 +625,7 @@ class History extends StatelessWidget  {
     return Container(
       padding: EdgeInsets.all(12),
       decoration: BoxDecoration(
-          color: MyColors.white,
+          color: MyColors.cardColor(),
           borderRadius: BorderRadius.circular(14),
           border: Border.all(
               color: MyColors.colorBorder
@@ -663,7 +643,6 @@ class History extends StatelessWidget  {
                   "Recharge".tr,
                   style: GoogleFonts.manrope(
                     fontSize: 14.0,
-                    color: MyColors.black,
                     letterSpacing: 0,
                     fontWeight: FontWeight.w600,
                   ),
@@ -722,7 +701,7 @@ class History extends StatelessWidget  {
                   await Clipboard.setData(ClipboardData(text: "#${transaction.transaction_id}"));
                   Essential.showSnackBar("Copied to clipboard", time: 1);
                 },
-                child: getIconInfo("assets/common/copy.png", "Copy", color: MyColors.colorGrey)
+                child: getIconInfo("assets/common/copy.png", "Copy".tr, color: MyColors.colorGrey)
               ),
             ],
           ),
@@ -772,7 +751,6 @@ class History extends StatelessWidget  {
           title+" : ",
           style: GoogleFonts.manrope(
             fontSize: 14.0,
-            color: MyColors.black,
             letterSpacing: 0,
           ),
         ),
@@ -783,7 +761,7 @@ class History extends StatelessWidget  {
           info,
           style: GoogleFonts.manrope(
               fontSize: 14.0,
-              color: color,
+              color: color??null,
               letterSpacing: 0,
               fontWeight: FontWeight.w500
           ),
@@ -847,10 +825,9 @@ class History extends StatelessWidget  {
             height: 24,
           ),
           Text(
-            "Uh-Oh!",
+            "Uh-Oh!".tr,
             style: GoogleFonts.manrope(
               fontSize: 22.0,
-              color: MyColors.black,
               letterSpacing: 0,
               fontWeight: FontWeight.w600,
             ),
@@ -878,7 +855,7 @@ class History extends StatelessWidget  {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 6, horizontal: 12),
       decoration: BoxDecoration(
-          color: MyColors.white,
+          color: MyColors.cardColor(),
           borderRadius: BorderRadius.circular(14),
           border: Border.all(
               color: MyColors.colorBorder
@@ -911,7 +888,6 @@ class History extends StatelessWidget  {
                   sessionHistory.astrologer??"",
                   style: GoogleFonts.manrope(
                     fontSize: 14.0,
-                    color: MyColors.black,
                     letterSpacing: 0,
                     fontWeight: FontWeight.w600,
                   ),
@@ -955,7 +931,7 @@ class History extends StatelessWidget  {
           SizedBox(
             height: 5,
           ),
-          getTitleInfo("Rate".tr, "${CommonConstants.rupee}${sessionHistory.type=="FREE"  ? 0 : sessionHistory.rate}/${'min'.tr}", color: MyColors.black, flex: true),
+          getTitleInfo("Rate".tr, "${CommonConstants.rupee}${sessionHistory.type=="FREE"  ? 0 : sessionHistory.rate}/${'min'.tr}", flex: true),
           SizedBox(
             height: 5,
           ),
@@ -995,7 +971,6 @@ class History extends StatelessWidget  {
                         Essential.getChatDuration(null, sessionHistory.started_at??"", sessionHistory.ended_at??""),
                         style: GoogleFonts.manrope(
                           fontSize: 12.0,
-                          color: MyColors.black,
                           letterSpacing: 0,
                           fontWeight: FontWeight.w600,
                         ),
@@ -1039,7 +1014,7 @@ class History extends StatelessWidget  {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 6, horizontal: 12),
       decoration: BoxDecoration(
-          color: MyColors.white,
+          color: MyColors.cardColor(),
           borderRadius: BorderRadius.circular(14),
           border: Border.all(
               color: MyColors.colorBorder
@@ -1072,7 +1047,6 @@ class History extends StatelessWidget  {
                   sessionHistory.astrologer??"",
                   style: GoogleFonts.manrope(
                     fontSize: 14.0,
-                    color: MyColors.black,
                     letterSpacing: 0,
                     fontWeight: FontWeight.w600,
                   ),
@@ -1116,7 +1090,7 @@ class History extends StatelessWidget  {
           SizedBox(
             height: 5,
           ),
-          getTitleInfo("Rate".tr, "${CommonConstants.rupee}${sessionHistory.type=="FREE"  ? 0 : sessionHistory.rate}/${'min'.tr}", color: MyColors.black, flex: true),
+          getTitleInfo("Rate".tr, "${CommonConstants.rupee}${sessionHistory.type=="FREE"  ? 0 : sessionHistory.rate}/${'min'.tr}", flex: true),
           SizedBox(
             height: 5,
           ),
@@ -1156,7 +1130,6 @@ class History extends StatelessWidget  {
                         Essential.getChatDuration(null, sessionHistory.started_at??"", sessionHistory.ended_at??""),
                         style: GoogleFonts.manrope(
                           fontSize: 12.0,
-                          color: MyColors.black,
                           letterSpacing: 0,
                           fontWeight: FontWeight.w600,
                         ),

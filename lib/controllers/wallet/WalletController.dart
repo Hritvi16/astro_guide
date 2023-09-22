@@ -38,7 +38,7 @@ class WalletController extends GetxController {
   }
 
   Future<void> getPackages() async {
-    await walletProvider.fetch(storage.read("access")??CommonConstants.essential, ApiConstants.user).then((response) async {
+    await walletProvider.fetch(storage.read("access"), ApiConstants.user).then((response) async {
       if(response.code==1) {
         wallet = response.amount??0;
         storage.write("wallet", wallet);
@@ -90,9 +90,17 @@ class WalletController extends GetxController {
         Essential.showInfoDialog("You have to recharge minimum of Rs. 50");
       }
       else {
-        Essential.showBasicDialog("You will get Rs. ${amount.text} of balance. Are you sure you want to proceed?", "Yes", "No").then((value) {
+        String text = "We are delighted to provide you with the details of your recharge. Upon recharging with Rs. ${amount.text}, you will receive the following balance:"
+            "\n\nWallet Amount :   Rs. ${amount.text}"
+            "\nValidity :   Lifetime"
+            "\nGST :   ${double.parse(amount.text)*0.18}"
+            "\nTotal Payment :   ${(double.parse(amount.text)*0.18)+double.parse(amount.text)}"
+            "\nDo you want to proceed?";
+
+        // Essential.showBasicDialog("You will get Rs. ${amount.text} of balance. Are you sure you want to proceed?", "Yes", "No").then((value) {
+        Essential.showBasicDialog(text, "Yes", "No").then((value) {
           if(value=="Yes") {
-            addToWallet(amount.text, amount.text, 'C', "Money added to your wallet on recharge of Rs. ${amount.text}");
+            addToWallet(amount.text, amount.text, 'CUS', "Money added to your wallet on recharge of Rs. ${amount.text}");
           }
         });
       }
@@ -102,6 +110,8 @@ class WalletController extends GetxController {
       String text = "We are delighted to provide you with the details of our recharge offer. Upon recharging with Rs. ${package?.amount.toString()}, you will receive the following balance:"
           "\n\nWallet Amount :   Rs. ${getOfferAmount()}"
           "\nValidity :   Lifetime"
+          "\nGST :   ${(package?.amount??0)*0.18}"
+          "\nTotal Payment :   ${((package?.amount??0)*0.18)+(package?.amount??0)}"
           "\nDo you want to proceed?";
 
       print(text);

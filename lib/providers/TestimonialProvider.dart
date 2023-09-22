@@ -1,3 +1,4 @@
+import 'package:astro_guide/models/response/ResponseModel.dart';
 import 'package:astro_guide/models/testimonial/TestimonialListModel.dart';
 import 'package:astro_guide/models/testimonial/TestimonialListModel.dart';
 import 'package:astro_guide/models/testimonial/TestimonialResponseModel.dart';
@@ -18,5 +19,11 @@ class TestimonialProvider {
     var testimonialResponseModel = await testimonialRepository.fetch(token, endpoint);
 
     return TestimonialResponseModel.fromJson(testimonialResponseModel);
+  }
+
+  Future<ResponseModel> manage(String token, String endpoint, Map<String, dynamic> data) async {
+    var responseModel = await testimonialRepository.manage(token, endpoint, data);
+
+    return ResponseModel.fromJson(responseModel);
   }
 }

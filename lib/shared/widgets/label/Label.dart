@@ -13,7 +13,6 @@ Widget standardTFLabel({required String text, String? optional, Color? optionalC
           text,
           style: GoogleFonts.manrope(
             fontSize: 16.0,
-            color: MyColors.black,
             letterSpacing: 0,
             fontWeight: FontWeight.w600,
           ),

@@ -36,6 +36,8 @@ class AstrologerModel with _$AstrologerModel {
     int? total_call_sec,
     double? total_chat_rating,
     double? total_call_rating,
+    String? types,
+    String? languages,
   }) = _AstrologerModel;
 
   factory AstrologerModel.fromJson(JSON json) => _$AstrologerModelFromJson(json);

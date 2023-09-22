@@ -23,6 +23,9 @@ mixin _$SettingModel {
   String get about => throw _privateConstructorUsedError;
   String get tc => throw _privateConstructorUsedError;
   String get privacy_policy => throw _privateConstructorUsedError;
+  String get about_64 => throw _privateConstructorUsedError;
+  String get tc_64 => throw _privateConstructorUsedError;
+  String get privacy_64 => throw _privateConstructorUsedError;
   String get mobile => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
   String get address => throw _privateConstructorUsedError;
@@ -44,6 +47,9 @@ abstract class $SettingModelCopyWith<$Res> {
       {String about,
       String tc,
       String privacy_policy,
+      String about_64,
+      String tc_64,
+      String privacy_64,
       String mobile,
       String email,
       String address,
@@ -66,6 +72,9 @@ class _$SettingModelCopyWithImpl<$Res, $Val extends SettingModel>
     Object? about = null,
     Object? tc = null,
     Object? privacy_policy = null,
+    Object? about_64 = null,
+    Object? tc_64 = null,
+    Object? privacy_64 = null,
     Object? mobile = null,
     Object? email = null,
     Object? address = null,
@@ -83,6 +92,18 @@ class _$SettingModelCopyWithImpl<$Res, $Val extends SettingModel>
       privacy_policy: null == privacy_policy
           ? _value.privacy_policy
           : privacy_policy // ignore: cast_nullable_to_non_nullable
+              as String,
+      about_64: null == about_64
+          ? _value.about_64
+          : about_64 // ignore: cast_nullable_to_non_nullable
+              as String,
+      tc_64: null == tc_64
+          ? _value.tc_64
+          : tc_64 // ignore: cast_nullable_to_non_nullable
+              as String,
+      privacy_64: null == privacy_64
+          ? _value.privacy_64
+          : privacy_64 // ignore: cast_nullable_to_non_nullable
               as String,
       mobile: null == mobile
           ? _value.mobile
@@ -116,6 +137,9 @@ abstract class _$$_SettingModelCopyWith<$Res>
       {String about,
       String tc,
       String privacy_policy,
+      String about_64,
+      String tc_64,
+      String privacy_64,
       String mobile,
       String email,
       String address,
@@ -136,6 +160,9 @@ class __$$_SettingModelCopyWithImpl<$Res>
     Object? about = null,
     Object? tc = null,
     Object? privacy_policy = null,
+    Object? about_64 = null,
+    Object? tc_64 = null,
+    Object? privacy_64 = null,
     Object? mobile = null,
     Object? email = null,
     Object? address = null,
@@ -153,6 +180,18 @@ class __$$_SettingModelCopyWithImpl<$Res>
       privacy_policy: null == privacy_policy
           ? _value.privacy_policy
           : privacy_policy // ignore: cast_nullable_to_non_nullable
+              as String,
+      about_64: null == about_64
+          ? _value.about_64
+          : about_64 // ignore: cast_nullable_to_non_nullable
+              as String,
+      tc_64: null == tc_64
+          ? _value.tc_64
+          : tc_64 // ignore: cast_nullable_to_non_nullable
+              as String,
+      privacy_64: null == privacy_64
+          ? _value.privacy_64
+          : privacy_64 // ignore: cast_nullable_to_non_nullable
               as String,
       mobile: null == mobile
           ? _value.mobile
@@ -181,6 +220,9 @@ class _$_SettingModel implements _SettingModel {
       {required this.about,
       required this.tc,
       required this.privacy_policy,
+      required this.about_64,
+      required this.tc_64,
+      required this.privacy_64,
       required this.mobile,
       required this.email,
       required this.address,
@@ -196,6 +238,12 @@ class _$_SettingModel implements _SettingModel {
   @override
   final String privacy_policy;
   @override
+  final String about_64;
+  @override
+  final String tc_64;
+  @override
+  final String privacy_64;
+  @override
   final String mobile;
   @override
   final String email;
@@ -206,7 +254,7 @@ class _$_SettingModel implements _SettingModel {
 
   @override
   String toString() {
-    return 'SettingModel(about: $about, tc: $tc, privacy_policy: $privacy_policy, mobile: $mobile, email: $email, address: $address, link: $link)';
+    return 'SettingModel(about: $about, tc: $tc, privacy_policy: $privacy_policy, about_64: $about_64, tc_64: $tc_64, privacy_64: $privacy_64, mobile: $mobile, email: $email, address: $address, link: $link)';
   }
 
   @override
@@ -218,6 +266,11 @@ class _$_SettingModel implements _SettingModel {
             (identical(other.tc, tc) || other.tc == tc) &&
             (identical(other.privacy_policy, privacy_policy) ||
                 other.privacy_policy == privacy_policy) &&
+            (identical(other.about_64, about_64) ||
+                other.about_64 == about_64) &&
+            (identical(other.tc_64, tc_64) || other.tc_64 == tc_64) &&
+            (identical(other.privacy_64, privacy_64) ||
+                other.privacy_64 == privacy_64) &&
             (identical(other.mobile, mobile) || other.mobile == mobile) &&
             (identical(other.email, email) || other.email == email) &&
             (identical(other.address, address) || other.address == address) &&
@@ -226,8 +279,8 @@ class _$_SettingModel implements _SettingModel {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, about, tc, privacy_policy, mobile, email, address, link);
+  int get hashCode => Object.hash(runtimeType, about, tc, privacy_policy,
+      about_64, tc_64, privacy_64, mobile, email, address, link);
 
   @JsonKey(ignore: true)
   @override
@@ -248,6 +301,9 @@ abstract class _SettingModel implements SettingModel {
       {required final String about,
       required final String tc,
       required final String privacy_policy,
+      required final String about_64,
+      required final String tc_64,
+      required final String privacy_64,
       required final String mobile,
       required final String email,
       required final String address,
@@ -262,6 +318,12 @@ abstract class _SettingModel implements SettingModel {
   String get tc;
   @override
   String get privacy_policy;
+  @override
+  String get about_64;
+  @override
+  String get tc_64;
+  @override
+  String get privacy_64;
   @override
   String get mobile;
   @override

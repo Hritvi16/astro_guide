@@ -15,7 +15,6 @@ import 'package:astro_guide/repositories/AstrologerRepository.dart';
 import 'package:astro_guide/repositories/SpecRepository.dart';
 import 'package:astro_guide/services/networking/ApiConstants.dart';
 import 'package:astro_guide/services/networking/ApiService.dart';
-import 'package:astro_guide/size/MySize.dart';
 import 'package:astro_guide/views/home/filter/AstroFilter.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -68,9 +67,7 @@ class TalkController extends GetxController {
     astrologerProvider = Get.put(AstrologerProvider(astrologerRepository));
     load = false;
 
-    specs.add(
-      SpecModel(id: -1, spec: "All", icon: "all.png")
-    );
+    specs = [SpecModel(id: -1, spec: "All", icon: "all.png")];
     spec = specs.first;
 
     sort = CommonConstants.sort;
@@ -92,6 +89,7 @@ class TalkController extends GetxController {
 
   Future<void> getSpecs() async {
     await specProvider.fetch(storage.read("access"), ApiConstants.all).then((response) async {
+      print("specssss");
       print(response.toJson());
       if(response.code==1) {
         specs = [];
@@ -114,7 +112,9 @@ class TalkController extends GetxController {
 
   void getValues() {
     astrologerProvider.fetchValues(storage.read("access"), ApiConstants.values).then((response) async {
+      print("valuessss");
       print(response.toJson());
+      print(response.types);
       if(response.code==1) {
         // countries = response.countries??[];
         countries = response.countries??[];
@@ -125,6 +125,7 @@ class TalkController extends GetxController {
         specs.add(
           SpecModel(id: -1, spec: "All", icon: "all.png")
         );
+
         specs.addAll(response.specifications??[]);
         for (var element in specs) {
           if(spec.id==element.id) {

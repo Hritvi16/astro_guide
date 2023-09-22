@@ -31,7 +31,6 @@ class Language extends StatelessWidget {
     return GetBuilder<LanguageController>(
       builder: (controller) {
         return Scaffold(
-          backgroundColor: MyColors.white,
           body: getBody(context),
         );
       },
@@ -43,6 +42,7 @@ class Language extends StatelessWidget {
       children: [
         SizedBox(
           width: MySize.size100(context),
+          height: standardUpperFixedDesignHeight,
           child: ClipPath(
             clipper: CustomClipPath(),
             child: Container(
@@ -116,7 +116,6 @@ class Language extends StatelessWidget {
               style: GoogleFonts.manrope(
                   fontSize: 26.0,
                   fontWeight: FontWeight.w600,
-                  color: MyColors.black
               )
             ),
             SizedBox(
@@ -129,7 +128,6 @@ class Language extends StatelessWidget {
                 style: GoogleFonts.manrope(
                     fontSize: 16.0,
                     fontWeight: FontWeight.w600,
-                    color: MyColors.black
                 )
               ),
             ),

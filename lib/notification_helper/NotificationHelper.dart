@@ -1,8 +1,15 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:astro_guide/colors/MyColors.dart';
+import 'package:astro_guide/constants/SessionConstants.dart';
 import 'package:astro_guide/controllers/call/CallController.dart';
 import 'package:astro_guide/models/astrologer/AstrologerModel.dart';
+import 'package:astro_guide/models/session/SessionHistoryModel.dart';
+import 'package:astro_guide/providers/MeetingProvider.dart';
+import 'package:astro_guide/repositories/MeetingRepository.dart';
+import 'package:astro_guide/services/networking/ApiService.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 // import 'package:astro_guide/providers/UserProvider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -152,14 +159,16 @@ class NotificationHelper {
   @pragma('vm:entry-point')
   static Future<void> _fcmBackgroundHandler(RemoteMessage message) async {
     print("categoryyyyy backkk");
+    print(message.notification?.title);
     print(message.data['category']);
+    print(message.data['category']=="call");
     _showNotification(
         id: 1,
         title: message.notification?.title ?? 'Title',
         body: message.notification?.body ?? 'Body',
         payload: message.data.cast(),
         notificationLayout: NotificationLayout.BigText,
-        category: message.data['category']=="call" ? NotificationCategory.Call : message.data['category']=="cancelled" ? NotificationCategory.MissedCall : null
+        category: message.data['category']=="call" || message.data['category']=="chat" ? NotificationCategory.Call : message.data['category']=="cancelled" ? NotificationCategory.MissedCall : null
     );
   }
 
@@ -170,7 +179,7 @@ class NotificationHelper {
     print(message.data['category']);
     print(message.data['path']);
     bool go = true;
-    if(message.data['category']=="reconnect") {
+    if(message.data['category']=="chat" || message.data['category']=="call") {
       go = false;
       Get.toNamed(
           message.data['path'] ?? "/splash",
@@ -191,6 +200,11 @@ class NotificationHelper {
           }
       );
     }
+    if(message.data['category']=="chat" || message.data['category']=="call") {
+      go = false;
+      session(message.data);
+    }
+
     if(go) {
       if(message.data['category']=="waitlist") {
         final storage = GetStorage();
@@ -214,13 +228,13 @@ class NotificationHelper {
         }
       }
 
-      else if(message.data['category']=="rejected") {
+      else if(message.data['category']=="rejected" || message.data['category']=="ended") {
         final storage = GetStorage();
 
         print(storage.read("calling"));
         if(storage.read("calling")!=null) {
           CallController callController = storage.read("calling");
-          callController.endMeeting("REJECTED");
+          callController.endMeeting(message.data['category']=="rejected" ? "REJECTED" : "COMPLETED");
           storage.remove("calling");
         }
       }
@@ -240,6 +254,42 @@ class NotificationHelper {
     }
   }
 
+  static void session(Map<String, dynamic> data) {
+    print("message.data['wallet']");
+    print(data['wallet']);
+    Map<String, dynamic> arguments= {
+      "astrologer": AstrologerModel(
+        id: int.parse(data['astro_id'] ?? "-1"),
+        name: data['name'] ?? "",
+        profile: data['profile'] ?? "",
+        mobile: '', email: '', experience: 0, about: '',
+      ),
+      "ch_id": int.parse(data['ch_id'] ?? "-1"),
+      "type": "RECONNECT",
+      "action" : "NOT DECIDED",
+      "rate" : data['rate'],
+      "chat_type" : data['chat_type'],
+      "ch_id": int.parse(data['ch_id'] ?? "-1"),
+      "type": "RECONNECT",
+      "action" : "NOT DECIDED",
+      "wallet": double.parse(data['wallet'] ?? "0"),
+    };
+
+    if(data['category']=="call") {
+      arguments.addAll(
+          {
+            "session_history" : SessionHistoryModel.fromJson(json.decode(data['session_history'])),
+            "meeting_id": data['meeting_id'] ?? "-1",
+            "session_id": data['session_id'] ?? "-1",
+          }
+      );
+    }
+
+    Get.toNamed(
+        data['path'] ?? "/splash",
+        arguments: arguments
+    );
+  }
   //display notification for user with sound
   static _showNotification(
       {required String title,
@@ -279,7 +329,7 @@ class NotificationHelper {
             actionButtons: category==NotificationCategory.Call ?
             [
               NotificationActionButton(key: "ACCEPT", label: "ACCEPT", color: MyColors.colorSuccess, autoDismissible: true),
-              NotificationActionButton(key: "REJECT", label: "REJECT", color: MyColors.colorError, autoDismissible: true),
+              NotificationActionButton(key: "REJECT", label: "REJECT", color: MyColors.colorError, autoDismissible: true, actionType: ActionType.DismissAction),
             ] : null
         );
       }
@@ -314,26 +364,14 @@ class NotificationHelper {
             channelGroupKey: NotificationChannels.generalChannelGroupKey,
             channelKey: NotificationChannels.generalChannelKey,
             channelName: NotificationChannels.generalChannelName,
-            groupKey: NotificationChannels.generalGroupKey,
             channelDescription: 'Notification channel for general notifications',
             defaultColor: Colors.green,
             ledColor: Colors.white,
             channelShowBadge: true,
             playSound: true,
             importance: NotificationImportance.Max,
+            soundSource: 'resource://raw/notinoti',
           ),
-          NotificationChannel(
-              channelGroupKey: NotificationChannels.chatChannelGroupKey,
-              channelKey: NotificationChannels.chatChannelKey,
-              channelName: NotificationChannels.chatChannelName,
-              groupKey: NotificationChannels.chatGroupKey,
-              channelDescription: 'Notification channel for messages',
-              defaultColor: Colors.green,
-              ledColor: Colors.white,
-              channelShowBadge: true,
-              playSound: true,
-
-              importance: NotificationImportance.Max)
         ],
 
         channelGroups: [
@@ -341,10 +379,6 @@ class NotificationHelper {
             channelGroupKey: NotificationChannels.generalChannelGroupKey,
             channelGroupName: NotificationChannels.generalChannelGroupName,
           ),
-          NotificationChannelGroup(
-            channelGroupKey: NotificationChannels.chatChannelGroupKey,
-            channelGroupName: NotificationChannels.chatChannelGroupName,
-          )
         ]);
   }
 }
@@ -393,14 +427,179 @@ class NotificationController {
     print("dismiss");
     print(receivedAction);
 
+    Map<String, String?>? payload = receivedAction.payload;
+    if(receivedAction.buttonKeyPressed=="REJECT") {
+      if(payload?['category']=="call" || payload?['path'] == "/call") {
+        rejectCall(payload?['ch_id'] ?? "-1");
+      }
+      if(payload?['category']=="chat" || payload?['path'] == "/chat") {
+        rejectChat(payload?['ch_id'] ?? "", payload?['astro_id'] ?? "-1");
+      }
+    }
+
     // Your code goes here
   }
 
   /// Use this method to detect when the user taps on a notification or action button
   @pragma("vm:entry-point")
   static Future <void> onActionReceivedMethod(ReceivedAction receivedAction) async {
-    print("receivedAction.buttonKeyPressedddd");
     print(receivedAction);
+    print("receivedAction.buttonKeyPressedddd");
     print(receivedAction.buttonKeyPressed);
+    print(receivedAction.payload);
+
+
+    Map<String, String?>? payload = receivedAction.payload;
+
+    if(receivedAction.buttonKeyPressed=="ACCEPT") {
+      print("payload");
+      print(receivedAction.payload);
+      print(payload?['category'] == "call" || payload?['path'] == "/call");
+      print(payload?['category'] == "chat" || payload?['path'] == "/chat");
+
+      if (payload?['category'] == "call" || payload?['path'] == "/call") {
+        print(payload?['path'] ?? "/splash");
+        print(payload);
+        print(SessionHistoryModel.fromJson(
+            json.decode(payload?['session_history'] ?? "{}")));
+        Get.toNamed(
+            "/call",
+            arguments: {
+              "astrologer": AstrologerModel(
+                id: int.parse(payload?['astro_id'] ?? "-1"),
+                name: payload?['name'] ?? "",
+                profile: payload?['profile'] ?? "",
+                mobile: '', email: '', experience: 0, about: '',
+              ),
+              "ch_id": int.parse(payload?['ch_id'] ?? "-1"),
+              "chat_type": payload?['chat_type'] ?? "",
+              "meeting_id": payload?['meeting_id'] ?? "",
+              "session_id": payload?['session_id'] ?? "",
+              "wallet": double.parse(payload?['wallet'] ?? "0"),
+              "type": "RECONNECT",
+              "action": "ACCEPT",
+              "session_history": SessionHistoryModel.fromJson(
+                  json.decode(payload?['session_history'] ?? "{}")),
+            }
+        );
+      }
+      else if(payload?['category']=="chat" || payload?['path'] == "/chat") {
+        Get.toNamed(
+            payload?['path'] ?? "/splash",
+            arguments: {
+              "astrologer": AstrologerModel(
+                id: int.parse(payload?['astro_id'] ?? "-1"),
+                name: payload?['name'] ?? "",
+                profile: payload?['profile'] ?? "",
+                mobile: '', email: '', experience: 0, about: '',
+              ),
+              "ch_id": int.parse(payload?['ch_id'] ?? "-1"),
+              "chat_type": payload?['chat_type'] ?? "",
+              "type": "RECONNECT",
+              "action": "ACCEPT",
+            }
+        );
+      }
+    }
+    else {
+      if(payload?['category']=="call" || payload?['path'] == "/call") {
+        Get.toNamed(
+            "/call",
+            arguments:
+            {
+              "astrologer": AstrologerModel(
+                id: int.parse(payload?['astro_id'] ?? "-1"),
+                name: payload?['name'] ?? "",
+                profile: payload?['profile'] ?? "",
+                mobile: '', email: '', experience: 0, about: '',
+              ),
+              "ch_id": int.parse(payload?['ch_id'] ?? "-1"),
+              "meet_id": payload?['meet_id'] ?? "",
+              "meeting_id": payload?['meeting_id'] ?? "",
+              "session_id": payload?['session_id'] ?? "",
+              "wallet": double.parse(payload?['wallet'] ?? "0"),
+              "type": "RECONNECT",
+              "chat_type": payload?['chat_type'] ?? "",
+              "action" : "NOT DECIDED",
+              "session_history": SessionHistoryModel.fromJson(
+                  json.decode(payload?['session_history'] ?? "{}")),
+            }
+        );
+      }
+      else if(payload?['category']=="chat" || payload?['path'] == "/chat") {
+        Get.toNamed(
+            payload?['path'] ?? "/splash",
+            arguments: {
+              "astrologer": AstrologerModel(
+                id: int.parse(payload?['astro_id'] ?? "-1"),
+                name: payload?['name'] ?? "",
+                profile: payload?['profile'] ?? "",
+                mobile: '', email: '', experience: 0, about: '',
+              ),
+              "ch_id": int.parse(payload?['ch_id'] ?? "-1"),
+              "chat_type": payload?['chat_type'] ?? "",
+              "type": "RECONNECT",
+              "action" : "NOT DECIDED"
+            }
+        );
+      }
+    }
   }
+
+
 }
+
+
+Future<void> rejectCall(String ch_id) async {
+  final MeetingRepository meetingRepository = Get.put(MeetingRepository(Get.put(ApiService(Get.find()), permanent: true)));
+  final MeetingProvider meetingProvider = Get.put(MeetingProvider(meetingRepository));;
+
+  final storage = GetStorage();
+
+  Map <String, dynamic> data = {
+    SessionConstants.ch_id : ch_id,
+    SessionConstants.sender : "U",
+    SessionConstants.reason : "Chat was rejected by user",
+  };
+
+  if(storage.read("calling")!=null) {
+    storage.remove("calling");
+  }
+
+  await meetingProvider.reject(data, storage.read("access")).then((response) async {
+    if(response.code==1) {
+    }
+    else if(response.code!=-1) {
+    }
+    else {
+    }
+  });
+}
+
+Future<void> rejectChat(String ch_id, String astro_id) async {
+
+  final storage = GetStorage();
+  IO.Socket socket = IO.io(
+    ApiConstants.urlS,
+    IO.OptionBuilder().setTransports(['websocket']).setQuery(
+        {
+          SessionConstants.username : storage.read("access"),
+          SessionConstants.ch_id : ch_id.toString(),
+          SessionConstants.sender : "U",
+          SessionConstants.user_id : astro_id,
+        }).build(),
+  );
+  socket.onConnect((data) => print('Connection established'));
+  socket.onConnectError((data) => print('Connect Error: $data'));
+  socket.onDisconnect((data) => print('Socket.IO server disconnected'));
+
+  Map <String, dynamic> data = {
+    SessionConstants.username : storage.read("access"),
+    SessionConstants.ch_id : ch_id,
+    SessionConstants.sender : "U",
+    SessionConstants.reason : "Chat was rejected by user",
+  };
+
+  socket.emit('reject', data);
+}
+
