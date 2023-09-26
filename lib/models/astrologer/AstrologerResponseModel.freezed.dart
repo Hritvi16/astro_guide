@@ -32,6 +32,7 @@ mixin _$AstrologerResponseModel {
   List<ReviewModel>? get reviews => throw _privateConstructorUsedError;
   List<GalleryModel>? get galleries => throw _privateConstructorUsedError;
   List<AstrologerModel>? get similar => throw _privateConstructorUsedError;
+  double? get wallet => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -56,7 +57,8 @@ abstract class $AstrologerResponseModelCopyWith<$Res> {
       List<TypeModel>? types,
       List<ReviewModel>? reviews,
       List<GalleryModel>? galleries,
-      List<AstrologerModel>? similar});
+      List<AstrologerModel>? similar,
+      double? wallet});
 
   $AstrologerModelCopyWith<$Res>? get astrologer;
   $RatingModelCopyWith<$Res>? get rating;
@@ -87,6 +89,7 @@ class _$AstrologerResponseModelCopyWithImpl<$Res,
     Object? reviews = freezed,
     Object? galleries = freezed,
     Object? similar = freezed,
+    Object? wallet = freezed,
   }) {
     return _then(_value.copyWith(
       status: null == status
@@ -133,6 +136,10 @@ class _$AstrologerResponseModelCopyWithImpl<$Res,
           ? _value.similar
           : similar // ignore: cast_nullable_to_non_nullable
               as List<AstrologerModel>?,
+      wallet: freezed == wallet
+          ? _value.wallet
+          : wallet // ignore: cast_nullable_to_non_nullable
+              as double?,
     ) as $Val);
   }
 
@@ -180,7 +187,8 @@ abstract class _$$_AstrologerResponseModelCopyWith<$Res>
       List<TypeModel>? types,
       List<ReviewModel>? reviews,
       List<GalleryModel>? galleries,
-      List<AstrologerModel>? similar});
+      List<AstrologerModel>? similar,
+      double? wallet});
 
   @override
   $AstrologerModelCopyWith<$Res>? get astrologer;
@@ -211,6 +219,7 @@ class __$$_AstrologerResponseModelCopyWithImpl<$Res>
     Object? reviews = freezed,
     Object? galleries = freezed,
     Object? similar = freezed,
+    Object? wallet = freezed,
   }) {
     return _then(_$_AstrologerResponseModel(
       status: null == status
@@ -257,6 +266,10 @@ class __$$_AstrologerResponseModelCopyWithImpl<$Res>
           ? _value._similar
           : similar // ignore: cast_nullable_to_non_nullable
               as List<AstrologerModel>?,
+      wallet: freezed == wallet
+          ? _value.wallet
+          : wallet // ignore: cast_nullable_to_non_nullable
+              as double?,
     ));
   }
 }
@@ -275,7 +288,8 @@ class _$_AstrologerResponseModel implements _AstrologerResponseModel {
       final List<TypeModel>? types,
       final List<ReviewModel>? reviews,
       final List<GalleryModel>? galleries,
-      final List<AstrologerModel>? similar})
+      final List<AstrologerModel>? similar,
+      this.wallet})
       : _languages = languages,
         _specifications = specifications,
         _types = types,
@@ -357,8 +371,11 @@ class _$_AstrologerResponseModel implements _AstrologerResponseModel {
   }
 
   @override
+  final double? wallet;
+
+  @override
   String toString() {
-    return 'AstrologerResponseModel(status: $status, code: $code, message: $message, astrologer: $astrologer, rating: $rating, languages: $languages, specifications: $specifications, types: $types, reviews: $reviews, galleries: $galleries, similar: $similar)';
+    return 'AstrologerResponseModel(status: $status, code: $code, message: $message, astrologer: $astrologer, rating: $rating, languages: $languages, specifications: $specifications, types: $types, reviews: $reviews, galleries: $galleries, similar: $similar, wallet: $wallet)';
   }
 
   @override
@@ -380,7 +397,8 @@ class _$_AstrologerResponseModel implements _AstrologerResponseModel {
             const DeepCollectionEquality().equals(other._reviews, _reviews) &&
             const DeepCollectionEquality()
                 .equals(other._galleries, _galleries) &&
-            const DeepCollectionEquality().equals(other._similar, _similar));
+            const DeepCollectionEquality().equals(other._similar, _similar) &&
+            (identical(other.wallet, wallet) || other.wallet == wallet));
   }
 
   @JsonKey(ignore: true)
@@ -397,7 +415,8 @@ class _$_AstrologerResponseModel implements _AstrologerResponseModel {
       const DeepCollectionEquality().hash(_types),
       const DeepCollectionEquality().hash(_reviews),
       const DeepCollectionEquality().hash(_galleries),
-      const DeepCollectionEquality().hash(_similar));
+      const DeepCollectionEquality().hash(_similar),
+      wallet);
 
   @JsonKey(ignore: true)
   @override
@@ -427,7 +446,8 @@ abstract class _AstrologerResponseModel implements AstrologerResponseModel {
       final List<TypeModel>? types,
       final List<ReviewModel>? reviews,
       final List<GalleryModel>? galleries,
-      final List<AstrologerModel>? similar}) = _$_AstrologerResponseModel;
+      final List<AstrologerModel>? similar,
+      final double? wallet}) = _$_AstrologerResponseModel;
 
   factory _AstrologerResponseModel.fromJson(Map<String, dynamic> json) =
       _$_AstrologerResponseModel.fromJson;
@@ -454,6 +474,8 @@ abstract class _AstrologerResponseModel implements AstrologerResponseModel {
   List<GalleryModel>? get galleries;
   @override
   List<AstrologerModel>? get similar;
+  @override
+  double? get wallet;
   @override
   @JsonKey(ignore: true)
   _$$_AstrologerResponseModelCopyWith<_$_AstrologerResponseModel>

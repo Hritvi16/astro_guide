@@ -14,10 +14,70 @@
       },
       "oauth_client": [
         {
-          "client_id": "170894307366-50u4g9uhufa4di7d60sglehpv89ot795.apps.googleusercontent.com",
+          "client_id": "170894307366-0qd77a7vsh3qgkdidkrach32fs6ljdod.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.ss.astro_guide",
+            "certificate_hash": "e8b0a4fe7333ff7308eddd2d02a36bc8f95fd516"
+          }
+        },
+        {
+          "client_id": "170894307366-1121stmp5mna8q9illqf4r7p7e7okuea.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ss.astro_guide",
+            "certificate_hash": "c77a599012dd3ea8db5bc5f32f2953006f0b3866"
+          }
+        },
+        {
+          "client_id": "170894307366-8espv3boeicsuv18pqccb3r7eggj2a2c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ss.astro_guide",
+            "certificate_hash": "a9b74d2435b971fbd21281839892425dd6058269"
+          }
+        },
+        {
+          "client_id": "170894307366-h9eogdnpk0q6hquuv5fmcck2cdd082mm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBCTcTPD6-eO3E278k30w3JSSlSTqQHmpw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "170894307366-h9eogdnpk0q6hquuv5fmcck2cdd082mm.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "170894307366-8viag128kkui1l8ngqea77i3he3e5tq2.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.ss.astroGuide"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:170894307366:android:2a65dc6377cf64d14136e7",
+        "android_client_info": {
+          "package_name": "com.ss.astro_guide_astro"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "170894307366-3geulv9k3tuc222anko7gpcr9kqt0ahh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ss.astro_guide_astro",
             "certificate_hash": "c77a599012dd3ea8db5bc5f32f2953006f0b3866"
           }
         },

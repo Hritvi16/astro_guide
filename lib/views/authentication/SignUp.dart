@@ -479,22 +479,22 @@ class SignUp extends StatelessWidget {
                         ),
                         hintText: "Enter Nationality",
                         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-                        prefixIcon: signUpController.country==null
-                            ? Padding(
+                        // prefixIcon: signUpController.country==null
+                        prefixIcon: Padding(
                             padding: const EdgeInsets.symmetric(vertical: 14),
                             child: Image.asset(
                               "assets/sign_up/location.png",
                               height: 10,
                               color: MyColors.colorButton,
                             )
-                        ) :
-                        Padding(
-                          padding: const EdgeInsets.only(left: 14, right: 10),
-                          child: Image.asset(
-                            "assets/country/India.png",
-                            height: 24,
-                            width: 33,
-                          ),
+                        // ) :
+                        // Padding(
+                        //   padding: const EdgeInsets.only(left: 14, right: 10),
+                        //   child: Image.asset(
+                        //     "assets/country/India.png",
+                        //     height: 24,
+                        //     width: 33,
+                        //   ),
                         )
                     )
                 ),
@@ -657,22 +657,22 @@ class SignUp extends StatelessWidget {
                     ),
                     hintText: "Enter Country",
                     contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-                    prefixIcon: signUpController.country==null
-                    ? Padding(
+                    // prefixIcon: signUpController.country==null
+                    prefixIcon: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 14),
                       child: Image.asset(
                         "assets/sign_up/location.png",
                         height: 10,
                         color: MyColors.colorButton,
                       )
-                    ) :
-                    Padding(
-                      padding: const EdgeInsets.only(left: 14, right: 10),
-                      child: Image.asset(
-                        "assets/country/India.png",
-                        height: 24,
-                        width: 33,
-                      ),
+                    // ) :
+                    // Padding(
+                    //   padding: const EdgeInsets.only(left: 14, right: 10),
+                    //   child: Image.asset(
+                    //     "assets/country/India.png",
+                    //     height: 24,
+                    //     width: 33,
+                    //   ),
                     )
                 )
               ),

@@ -172,6 +172,10 @@ class CallController extends GetxController {
 
   void updateMic() {
     // micEnabled = !micEnabled;
+    print("audioStreammmmm");
+    print(audioStream);
+    print(meeting.micEnabled);
+
     if (audioStream != null) {
       meeting.muteMic();
       micEnabled = true;
@@ -184,12 +188,17 @@ class CallController extends GetxController {
 
   void updateCamera() {
     // camEnabled = !camEnabled;
+    print("videoStreammmmm");
+    print(videoStream);
+    print(meeting.camEnabled);
     if (videoStream != null) {
+    // if (meeting.camEnabled==true) {
       meeting.disableCam();
       camEnabled = false;
     } else {
       meeting.enableCam();
       camEnabled = true;
+      print("hellloooo");
     }
     update();
   }
@@ -407,7 +416,7 @@ class CallController extends GetxController {
         Essential.showSnackBar("Meeting left due to $errorMsg !!");
       }
 
-      if(type!="COMPLETED") {
+      if(type=="COMPLETED") {
         endMeeting("COMPLETED");
       }
     });
@@ -415,6 +424,7 @@ class CallController extends GetxController {
 
     // Called when stream is enabled
     meeting.localParticipant.on(Events.streamEnabled, (Stream _stream) {
+      print("enableStreammmmm");
       if (_stream.kind == 'video') {
         videoStream = _stream;
       } else if (_stream.kind == 'audio') {
@@ -427,6 +437,7 @@ class CallController extends GetxController {
 
     // Called when stream is disabled
     meeting.localParticipant.on(Events.streamDisabled, (Stream _stream) {
+      print("disableStreammmmm");
       if (_stream.kind == 'video' && videoStream?.id == _stream.id) {
         videoStream = null;
       } else if (_stream.kind == 'audio' && audioStream?.id == _stream.id) {
@@ -562,8 +573,12 @@ class CallController extends GetxController {
       if (response.code == 1) {
         print("ssweb: Recordingggggg : Stop end");
         // meeting.end();
+        stopTimer();
         disposeObjects();
         storage.remove("calling");
+        type = "COMPLETED";
+        update();
+        // manageRating();
         back();
       }
       else if (response.code == -2) {}
@@ -658,6 +673,13 @@ class CallController extends GetxController {
     }
     meeting.end();
     disposeObjects();
+
+
+    print("statusssss");
+    print(status);
+    if(status=="COMPLETED") {
+      manageRating();
+    }
 
     // back();
   }
@@ -1066,6 +1088,9 @@ class CallController extends GetxController {
       meeting.stopHls();
     }
     catch(ex) {
+      print("errorrrrrrr");
+      print(ex.toString());
+      print(ex);
 
     }
     shareStream = videoStream = audioStream = remoteParticipantShareStream = null;

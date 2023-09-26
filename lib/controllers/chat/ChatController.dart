@@ -99,6 +99,7 @@ class ChatController extends GetxController {
     super.onInit();
     initAudio();
 
+
     cancel = false;
     reject = false;
     load = true;
@@ -531,6 +532,7 @@ class ChatController extends GetxController {
           storage.write("wallet", endSessionResponse.wallet??storage.read(("wallet")));
 
           stopTimer(true);
+          manageRating();
         }
         else if(endSessionResponse.code!=-1) {
           cnt = 0;
@@ -819,7 +821,7 @@ class ChatController extends GetxController {
   }
 
   void back() {
-    disposeObjects();
+    stopTimer(true);
     Get.back();
   }
 

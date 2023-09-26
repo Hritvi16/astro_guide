@@ -26,6 +26,7 @@ class AstrologerResponseModel with _$AstrologerResponseModel {
     List<ReviewModel>? reviews,
     List<GalleryModel>? galleries,
     List<AstrologerModel>? similar,
+    double? wallet
   }) = _AstrologerResponseModel;
 
   factory AstrologerResponseModel.fromJson(JSON json) => _$AstrologerResponseModelFromJson(json);

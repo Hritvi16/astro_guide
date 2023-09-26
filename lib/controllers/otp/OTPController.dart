@@ -89,6 +89,8 @@ class OTPController extends GetxController {
         update();
       },
       verificationFailed: (FirebaseAuthException error) {
+        print(error);
+        print(error.toString());
       },
     );
   }

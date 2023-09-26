@@ -86,6 +86,7 @@ class AstrologerDetailController extends GetxController {
         reviews = response.reviews??[];
         galleries = response.galleries??[];
         similar = response.similar??[];
+        wallet = response.wallet??wallet;
       }
       load = true;
       update();
