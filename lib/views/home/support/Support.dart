@@ -6,6 +6,7 @@ import 'package:astro_guide/shared/CustomClipPath.dart';
 import 'package:astro_guide/shared/widgets/customAppBar/CustomAppBar.dart';
 import 'package:astro_guide/size/MySize.dart';
 import 'package:astro_guide/size/WidgetSize.dart';
+import 'package:astro_guide/views/loadingScreen/LoadingScreen.dart';
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,7 @@ class Support extends StatelessWidget {
     return GetBuilder<SupportController>(
       builder: (controller) {
         return Scaffold(
-          body: getBody(context),
+          body: supportController.load ? getBody(context) : LoadingScreen(),
         );
       },
     );
@@ -42,11 +43,12 @@ class Support extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                   color: MyColors.colorPrimary,
-                  image: const DecorationImage(
+                  image: Essential.getPlatform() ?
+                  const DecorationImage(
                       image: AssetImage(
                           "assets/essential/upper_bg_s.png"
                       )
-                  )
+                  ) : null
               ),
               child: SafeArea(
                   child: CustomAppBar('Support'.tr, options: GestureDetector(
@@ -68,7 +70,7 @@ class Support extends StatelessWidget {
             builder: MaterialIndicatorDelegate(
               builder: (context, controller) {
                 return Image.asset(
-                  "assets/essential/loading.png",
+                  Essential.getPlatform() ? "assets/essential/loading.png" : "assets/app_icon/ios_icon.jpg",
                   height: 30,
                 );
               },

@@ -6,9 +6,9 @@ part of 'SupportChatResponseModel.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_SupportChatResponseModel _$$_SupportChatResponseModelFromJson(
+_$SupportChatResponseModelImpl _$$SupportChatResponseModelImplFromJson(
         Map<String, dynamic> json) =>
-    _$_SupportChatResponseModel(
+    _$SupportChatResponseModelImpl(
       status: json['status'] as String,
       code: json['code'] as int,
       message: json['message'] as String,
@@ -18,8 +18,8 @@ _$_SupportChatResponseModel _$$_SupportChatResponseModelFromJson(
       m_id: json['m_id'] as int?,
     );
 
-Map<String, dynamic> _$$_SupportChatResponseModelToJson(
-        _$_SupportChatResponseModel instance) =>
+Map<String, dynamic> _$$SupportChatResponseModelImplToJson(
+        _$SupportChatResponseModelImpl instance) =>
     <String, dynamic>{
       'status': instance.status,
       'code': instance.code,

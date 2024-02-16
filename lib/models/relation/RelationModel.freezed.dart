@@ -68,22 +68,22 @@ class _$RelationModelCopyWithImpl<$Res, $Val extends RelationModel>
 }
 
 /// @nodoc
-abstract class _$$_RelationModelCopyWith<$Res>
+abstract class _$$RelationModelImplCopyWith<$Res>
     implements $RelationModelCopyWith<$Res> {
-  factory _$$_RelationModelCopyWith(
-          _$_RelationModel value, $Res Function(_$_RelationModel) then) =
-      __$$_RelationModelCopyWithImpl<$Res>;
+  factory _$$RelationModelImplCopyWith(
+          _$RelationModelImpl value, $Res Function(_$RelationModelImpl) then) =
+      __$$RelationModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int id, String name});
 }
 
 /// @nodoc
-class __$$_RelationModelCopyWithImpl<$Res>
-    extends _$RelationModelCopyWithImpl<$Res, _$_RelationModel>
-    implements _$$_RelationModelCopyWith<$Res> {
-  __$$_RelationModelCopyWithImpl(
-      _$_RelationModel _value, $Res Function(_$_RelationModel) _then)
+class __$$RelationModelImplCopyWithImpl<$Res>
+    extends _$RelationModelCopyWithImpl<$Res, _$RelationModelImpl>
+    implements _$$RelationModelImplCopyWith<$Res> {
+  __$$RelationModelImplCopyWithImpl(
+      _$RelationModelImpl _value, $Res Function(_$RelationModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -92,7 +92,7 @@ class __$$_RelationModelCopyWithImpl<$Res>
     Object? id = null,
     Object? name = null,
   }) {
-    return _then(_$_RelationModel(
+    return _then(_$RelationModelImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -107,11 +107,11 @@ class __$$_RelationModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_RelationModel implements _RelationModel {
-  _$_RelationModel({required this.id, required this.name});
+class _$RelationModelImpl implements _RelationModel {
+  _$RelationModelImpl({required this.id, required this.name});
 
-  factory _$_RelationModel.fromJson(Map<String, dynamic> json) =>
-      _$$_RelationModelFromJson(json);
+  factory _$RelationModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$RelationModelImplFromJson(json);
 
   @override
   final int id;
@@ -124,10 +124,10 @@ class _$_RelationModel implements _RelationModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_RelationModel &&
+            other is _$RelationModelImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name));
   }
@@ -139,12 +139,12 @@ class _$_RelationModel implements _RelationModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_RelationModelCopyWith<_$_RelationModel> get copyWith =>
-      __$$_RelationModelCopyWithImpl<_$_RelationModel>(this, _$identity);
+  _$$RelationModelImplCopyWith<_$RelationModelImpl> get copyWith =>
+      __$$RelationModelImplCopyWithImpl<_$RelationModelImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_RelationModelToJson(
+    return _$$RelationModelImplToJson(
       this,
     );
   }
@@ -152,10 +152,10 @@ class _$_RelationModel implements _RelationModel {
 
 abstract class _RelationModel implements RelationModel {
   factory _RelationModel({required final int id, required final String name}) =
-      _$_RelationModel;
+      _$RelationModelImpl;
 
   factory _RelationModel.fromJson(Map<String, dynamic> json) =
-      _$_RelationModel.fromJson;
+      _$RelationModelImpl.fromJson;
 
   @override
   int get id;
@@ -163,6 +163,6 @@ abstract class _RelationModel implements RelationModel {
   String get name;
   @override
   @JsonKey(ignore: true)
-  _$$_RelationModelCopyWith<_$_RelationModel> get copyWith =>
+  _$$RelationModelImplCopyWith<_$RelationModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

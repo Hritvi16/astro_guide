@@ -161,11 +161,11 @@ class _$ReviewModelCopyWithImpl<$Res, $Val extends ReviewModel>
 }
 
 /// @nodoc
-abstract class _$$_ReviewModelCopyWith<$Res>
+abstract class _$$ReviewModelImplCopyWith<$Res>
     implements $ReviewModelCopyWith<$Res> {
-  factory _$$_ReviewModelCopyWith(
-          _$_ReviewModel value, $Res Function(_$_ReviewModel) then) =
-      __$$_ReviewModelCopyWithImpl<$Res>;
+  factory _$$ReviewModelImplCopyWith(
+          _$ReviewModelImpl value, $Res Function(_$ReviewModelImpl) then) =
+      __$$ReviewModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -187,11 +187,11 @@ abstract class _$$_ReviewModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_ReviewModelCopyWithImpl<$Res>
-    extends _$ReviewModelCopyWithImpl<$Res, _$_ReviewModel>
-    implements _$$_ReviewModelCopyWith<$Res> {
-  __$$_ReviewModelCopyWithImpl(
-      _$_ReviewModel _value, $Res Function(_$_ReviewModel) _then)
+class __$$ReviewModelImplCopyWithImpl<$Res>
+    extends _$ReviewModelCopyWithImpl<$Res, _$ReviewModelImpl>
+    implements _$$ReviewModelImplCopyWith<$Res> {
+  __$$ReviewModelImplCopyWithImpl(
+      _$ReviewModelImpl _value, $Res Function(_$ReviewModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -213,7 +213,7 @@ class __$$_ReviewModelCopyWithImpl<$Res>
     Object? replied_at = freezed,
     Object? started_at = null,
   }) {
-    return _then(_$_ReviewModel(
+    return _then(_$ReviewModelImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -280,8 +280,8 @@ class __$$_ReviewModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_ReviewModel implements _ReviewModel {
-  _$_ReviewModel(
+class _$ReviewModelImpl implements _ReviewModel {
+  _$ReviewModelImpl(
       {required this.id,
       required this.order_id,
       required this.category,
@@ -298,8 +298,8 @@ class _$_ReviewModel implements _ReviewModel {
       this.replied_at,
       required this.started_at});
 
-  factory _$_ReviewModel.fromJson(Map<String, dynamic> json) =>
-      _$$_ReviewModelFromJson(json);
+  factory _$ReviewModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ReviewModelImplFromJson(json);
 
   @override
   final int id;
@@ -338,10 +338,10 @@ class _$_ReviewModel implements _ReviewModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ReviewModel &&
+            other is _$ReviewModelImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.order_id, order_id) ||
                 other.order_id == order_id) &&
@@ -391,12 +391,12 @@ class _$_ReviewModel implements _ReviewModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ReviewModelCopyWith<_$_ReviewModel> get copyWith =>
-      __$$_ReviewModelCopyWithImpl<_$_ReviewModel>(this, _$identity);
+  _$$ReviewModelImplCopyWith<_$ReviewModelImpl> get copyWith =>
+      __$$ReviewModelImplCopyWithImpl<_$ReviewModelImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ReviewModelToJson(
+    return _$$ReviewModelImplToJson(
       this,
     );
   }
@@ -418,10 +418,10 @@ abstract class _ReviewModel implements ReviewModel {
       final String? astro_profile,
       required final String reviewed_at,
       final String? replied_at,
-      required final String started_at}) = _$_ReviewModel;
+      required final String started_at}) = _$ReviewModelImpl;
 
   factory _ReviewModel.fromJson(Map<String, dynamic> json) =
-      _$_ReviewModel.fromJson;
+      _$ReviewModelImpl.fromJson;
 
   @override
   int get id;
@@ -455,6 +455,6 @@ abstract class _ReviewModel implements ReviewModel {
   String get started_at;
   @override
   @JsonKey(ignore: true)
-  _$$_ReviewModelCopyWith<_$_ReviewModel> get copyWith =>
+  _$$ReviewModelImplCopyWith<_$ReviewModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -6,8 +6,9 @@ part of 'CheckSessionModel.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_CheckSessionModel _$$_CheckSessionModelFromJson(Map<String, dynamic> json) =>
-    _$_CheckSessionModel(
+_$CheckSessionModelImpl _$$CheckSessionModelImplFromJson(
+        Map<String, dynamic> json) =>
+    _$CheckSessionModelImpl(
       name: json['name'] as String,
       mobile: json['mobile'] as String,
       gender: json['gender'] as String,
@@ -18,8 +19,8 @@ _$_CheckSessionModel _$$_CheckSessionModelFromJson(Map<String, dynamic> json) =>
       info: json['info'] as String,
     );
 
-Map<String, dynamic> _$$_CheckSessionModelToJson(
-        _$_CheckSessionModel instance) =>
+Map<String, dynamic> _$$CheckSessionModelImplToJson(
+        _$CheckSessionModelImpl instance) =>
     <String, dynamic>{
       'name': instance.name,
       'mobile': instance.mobile,

@@ -6,8 +6,9 @@ part of 'PackageListModel.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_PackageListModel _$$_PackageListModelFromJson(Map<String, dynamic> json) =>
-    _$_PackageListModel(
+_$PackageListModelImpl _$$PackageListModelImplFromJson(
+        Map<String, dynamic> json) =>
+    _$PackageListModelImpl(
       status: json['status'] as String,
       code: json['code'] as int,
       message: json['message'] as String,
@@ -16,7 +17,8 @@ _$_PackageListModel _$$_PackageListModelFromJson(Map<String, dynamic> json) =>
           .toList(),
     );
 
-Map<String, dynamic> _$$_PackageListModelToJson(_$_PackageListModel instance) =>
+Map<String, dynamic> _$$PackageListModelImplToJson(
+        _$PackageListModelImpl instance) =>
     <String, dynamic>{
       'status': instance.status,
       'code': instance.code,

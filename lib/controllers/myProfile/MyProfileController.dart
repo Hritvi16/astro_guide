@@ -38,16 +38,16 @@ class MyProfileController extends GetxController {
   late TextEditingController email = TextEditingController();
 
   late TextEditingController dob = TextEditingController();
-  late DateTime date;
+  DateTime? date;
   late String gender;
 
   late UserModel user;
   List<CountryModel> countries = [];
-  CountryModel? country;
+  // CountryModel? country;
   CountryModel? nationality;
-  late CountryModel code;
-  List<StateModel> states = [];
-  StateModel? state;
+  CountryModel? code;
+  // List<StateModel> states = [];
+  // StateModel? state;
   List<CityModel> cities = [];
   CityModel? city;
   late TextEditingController pincode = TextEditingController();
@@ -92,39 +92,39 @@ class MyProfileController extends GetxController {
     print(storage.read("access"));
     userProvider.fetchSingle(storage.read("access"), ApiConstants.myProfile).then((response) {
       print(response.toJson());
+      print(response.cities);
       if(response.code==1) {
         user = response.data!;
         countries = response.countries??[];
+        cities = response.cities??[];
         update();
+        load = true;
         setUserData();
       }
     });
   }
 
-  void getStates(String id) {
-    Map<String, dynamic> data = {
-      StateConstant().co_id : id
-    };
-    stateProvider.fetchList(data, ApiConstants.country, storage.read("access")).then((response) {
-      if(response.code==1) {
-        states = response.data??[];
+  // void getStates(String id) {
+  //   Map<String, dynamic> data = {
+  //     StateConstant().co_id : id
+  //   };
+  //   stateProvider.fetchList(data, ApiConstants.country, storage.read("access")).then((response) {
+  //     if(response.code==1) {
+  //       states = response.data??[];
+  //
+  //       for (var element in states) {
+  //         if(element.id==user.st_id) {
+  //           changeState(element);
+  //           break;
+  //         }
+  //       }
+  //     }
+  //     update();
+  //   });
+  // }
 
-        for (var element in states) {
-          if(element.id==user.st_id) {
-            changeState(element);
-            break;
-          }
-        }
-      }
-      update();
-    });
-  }
-
-  void getCities(String id) {
-    Map<String, dynamic> data = {
-      CityConstant().st_id : id
-    };
-    cityProvider.fetchList(data, ApiConstants.state, storage.read("access")??CommonConstants.essential).then((response) {
+  void getCities() {
+    cityProvider.fetchAll(ApiConstants.all, storage.read("access")??CommonConstants.essential).then((response) {
       if(response.code==1) {
         cities = response.data??[];
 
@@ -178,6 +178,7 @@ class MyProfileController extends GetxController {
       }
     }
     else {
+      print(step3.currentState!.validate());
       if(step3.currentState!.validate()) {
         eval3 = 1;
         if(!back) {
@@ -209,20 +210,20 @@ class MyProfileController extends GetxController {
     update();
   }
 
-  void changeCountry(CountryModel? value) {
-    country = value!;
-    state = null;
-    city = null;
-    update();
-    getStates(country!.id.toString());
-  }
+  // void changeCountry(CountryModel? value) {
+  //   country = value!;
+  //   state = null;
+  //   city = null;
+  //   update();
+  //   getStates(country!.id.toString());
+  // }
 
-  void changeState(StateModel? value) {
-    state = value!;
-    city = null;
-    update();
-    getCities(state!.id.toString());
-  }
+  // void changeState(StateModel? value) {
+  //   state = value!;
+  //   city = null;
+  //   update();
+  //   // getCities(state!.id.toString());
+  // }
 
   void changeGender(String gender) {
     this.gender = gender;
@@ -236,7 +237,7 @@ class MyProfileController extends GetxController {
 
   void setDOB(value) {
     date = value;
-    dob.text = DateFormat("dd MMM, yyyy").format(date);
+    dob.text = DateFormat("dd MMM, yyyy").format(date!);
     update();
   }
 
@@ -246,6 +247,7 @@ class MyProfileController extends GetxController {
   }
 
   void validate() {
+    print(eval1 == 1 && eval2 == 1 && eval3 ==1);
     if(eval1 == 1 && eval2 == 1 && eval3 ==1) {
       updateMyProfile();
     }
@@ -256,13 +258,12 @@ class MyProfileController extends GetxController {
       if(image!=null)
         ApiConstants.file : MultipartFile(File(image!.path), filename: image!.name),
       UserConstants.name : name.text,
-      UserConstants.mobile : mobile.text,
-      UserConstants.email : email.text,
-      UserConstants.nationality : nationality!.id,
+      UserConstants.mobile : mobile.text.isEmpty ? null  : mobile.text,
+      UserConstants.email : email.text.isEmpty ? null  : email.text,
+      UserConstants.nationality : nationality?.id,
       UserConstants.dob : date.toString(),
       UserConstants.gender : gender,
       UserConstants.ci_id : city!.id,
-      UserConstants.joined_via : UserConstants.jv['C'],
       UserConstants.postal_code : pincode.text,
     });
 
@@ -335,8 +336,8 @@ class MyProfileController extends GetxController {
   }
 
   void setUserData() {
-    String mob = user.mobile;
-    String code = mob.substring(0, mob.indexOf("-"));
+    String mob = user.mobile??"";
+    String code = mob.isNotEmpty ? mob.substring(0, mob.indexOf("-")) : "";
     name.text = user.name;
     mobile.text = mob.substring(mob.indexOf("-")+1);
     email.text = user.email??"";
@@ -349,11 +350,16 @@ class MyProfileController extends GetxController {
       if(element.id==user.nationality) {
         nationality = element;
       }
-      if(element.id==user.co_id) {
-        changeCountry(element);
-      }
+      // if(element.id==user.co_id) {
+      //   changeCountry(element);
+      // }
       if(element.code==code) {
         this.code = element;
+      }
+    }
+    for (var element in cities) {
+      if(element.id==user.ci_id) {
+        changeCity(element);
       }
     }
     update();

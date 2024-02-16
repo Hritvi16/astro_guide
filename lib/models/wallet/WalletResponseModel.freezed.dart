@@ -91,11 +91,11 @@ class _$WalletResponseModelCopyWithImpl<$Res, $Val extends WalletResponseModel>
 }
 
 /// @nodoc
-abstract class _$$_WalletResponseModelCopyWith<$Res>
+abstract class _$$WalletResponseModelImplCopyWith<$Res>
     implements $WalletResponseModelCopyWith<$Res> {
-  factory _$$_WalletResponseModelCopyWith(_$_WalletResponseModel value,
-          $Res Function(_$_WalletResponseModel) then) =
-      __$$_WalletResponseModelCopyWithImpl<$Res>;
+  factory _$$WalletResponseModelImplCopyWith(_$WalletResponseModelImpl value,
+          $Res Function(_$WalletResponseModelImpl) then) =
+      __$$WalletResponseModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -107,11 +107,11 @@ abstract class _$$_WalletResponseModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_WalletResponseModelCopyWithImpl<$Res>
-    extends _$WalletResponseModelCopyWithImpl<$Res, _$_WalletResponseModel>
-    implements _$$_WalletResponseModelCopyWith<$Res> {
-  __$$_WalletResponseModelCopyWithImpl(_$_WalletResponseModel _value,
-      $Res Function(_$_WalletResponseModel) _then)
+class __$$WalletResponseModelImplCopyWithImpl<$Res>
+    extends _$WalletResponseModelCopyWithImpl<$Res, _$WalletResponseModelImpl>
+    implements _$$WalletResponseModelImplCopyWith<$Res> {
+  __$$WalletResponseModelImplCopyWithImpl(_$WalletResponseModelImpl _value,
+      $Res Function(_$WalletResponseModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -123,7 +123,7 @@ class __$$_WalletResponseModelCopyWithImpl<$Res>
     Object? amount = freezed,
     Object? data = freezed,
   }) {
-    return _then(_$_WalletResponseModel(
+    return _then(_$WalletResponseModelImpl(
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -150,8 +150,8 @@ class __$$_WalletResponseModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_WalletResponseModel implements _WalletResponseModel {
-  _$_WalletResponseModel(
+class _$WalletResponseModelImpl implements _WalletResponseModel {
+  _$WalletResponseModelImpl(
       {required this.status,
       required this.code,
       required this.message,
@@ -159,8 +159,8 @@ class _$_WalletResponseModel implements _WalletResponseModel {
       final List<PackageModel>? data})
       : _data = data;
 
-  factory _$_WalletResponseModel.fromJson(Map<String, dynamic> json) =>
-      _$$_WalletResponseModelFromJson(json);
+  factory _$WalletResponseModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$WalletResponseModelImplFromJson(json);
 
   @override
   final String status;
@@ -186,10 +186,10 @@ class _$_WalletResponseModel implements _WalletResponseModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_WalletResponseModel &&
+            other is _$WalletResponseModelImpl &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.code, code) || other.code == code) &&
             (identical(other.message, message) || other.message == message) &&
@@ -205,13 +205,13 @@ class _$_WalletResponseModel implements _WalletResponseModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_WalletResponseModelCopyWith<_$_WalletResponseModel> get copyWith =>
-      __$$_WalletResponseModelCopyWithImpl<_$_WalletResponseModel>(
+  _$$WalletResponseModelImplCopyWith<_$WalletResponseModelImpl> get copyWith =>
+      __$$WalletResponseModelImplCopyWithImpl<_$WalletResponseModelImpl>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_WalletResponseModelToJson(
+    return _$$WalletResponseModelImplToJson(
       this,
     );
   }
@@ -223,10 +223,10 @@ abstract class _WalletResponseModel implements WalletResponseModel {
       required final int code,
       required final String message,
       final double? amount,
-      final List<PackageModel>? data}) = _$_WalletResponseModel;
+      final List<PackageModel>? data}) = _$WalletResponseModelImpl;
 
   factory _WalletResponseModel.fromJson(Map<String, dynamic> json) =
-      _$_WalletResponseModel.fromJson;
+      _$WalletResponseModelImpl.fromJson;
 
   @override
   String get status;
@@ -240,6 +240,6 @@ abstract class _WalletResponseModel implements WalletResponseModel {
   List<PackageModel>? get data;
   @override
   @JsonKey(ignore: true)
-  _$$_WalletResponseModelCopyWith<_$_WalletResponseModel> get copyWith =>
+  _$$WalletResponseModelImplCopyWith<_$WalletResponseModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

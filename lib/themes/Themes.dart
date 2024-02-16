@@ -8,74 +8,77 @@ class Themes {
     checkboxTheme: CheckboxThemeData(
       visualDensity: VisualDensity.compact, // Sets density to standard
     ),
+    textSelectionTheme: TextSelectionThemeData(
+        cursorColor: MyColors.colorButton
+    ),
     textTheme: GoogleFonts.latoTextTheme(
         TextTheme(
-            headline1: TextStyle(
+            headline1: GoogleFonts.manrope(
                 letterSpacing: -1.5,
                 fontSize: 48,
                 color: Colors.black,
                 fontWeight: FontWeight.bold
             ),
-            headline2: TextStyle(
+            headline2: GoogleFonts.manrope(
                 letterSpacing: -1.0,
                 fontSize: 40,
                 color: Colors.black,
                 fontWeight: FontWeight.bold
             ),
-            headline3: TextStyle(
+            headline3: GoogleFonts.manrope(
                 letterSpacing: -1.0,
                 fontSize: 32,
                 color: Colors.black,
                 fontWeight: FontWeight.bold
             ),
-            headline4: TextStyle(
+            headline4: GoogleFonts.manrope(
                 letterSpacing: -1.0,
                 color: Colors.black,
                 fontSize: 28,
                 fontWeight: FontWeight.w600
             ),
-            headline5: TextStyle(
+            headline5: GoogleFonts.manrope(
                 letterSpacing: -1.0,
                 color: Colors.black,
                 fontSize: 24,
                 fontWeight: FontWeight.w500
             ),
-            headline6: TextStyle(
+            headline6: GoogleFonts.manrope(
                 color: Colors.black,
                 fontSize: 18,
                 fontWeight: FontWeight.w500
             ),
-            subtitle1: TextStyle(
+            subtitle1: GoogleFonts.manrope(
                 color: Colors.black,
                 fontSize: 16,
                 fontWeight: FontWeight.w500
             ),
-            subtitle2: TextStyle(
+            subtitle2: GoogleFonts.manrope(
                 color: Colors.black,
                 fontSize: 14,
                 fontWeight: FontWeight.w500
             ),
-            bodyText1: TextStyle(
+            bodyText1: GoogleFonts.manrope(
                 color: Colors.black,
                 fontSize: 16,
                 fontWeight: FontWeight.w400
             ),
-            bodyText2: TextStyle(
+            bodyText2: GoogleFonts.manrope(
                 color: Colors.black,
                 fontSize: 14,
                 fontWeight: FontWeight.w400
             ),
-            button: TextStyle(
+            button: GoogleFonts.manrope(
                 color: Colors.white,
                 fontSize: 14,
                 fontWeight: FontWeight.w600
             ),
-            caption: TextStyle(
+            caption: GoogleFonts.manrope(
                 color: Colors.black,
                 fontSize: 12,
                 fontWeight: FontWeight.w400
             ),
-            overline: TextStyle(
+            overline: GoogleFonts.manrope(
                 color: Colors.black,
                 fontSize: 10,
                 fontWeight: FontWeight.w400,
@@ -86,7 +89,7 @@ class Themes {
     primarySwatch: MyColors.generateMaterialColor(MyColors.colorPrimary),
     brightness: Brightness.light,
     appBarTheme: AppBarTheme(
-      titleTextStyle: TextStyle(
+      titleTextStyle: GoogleFonts.manrope(
         color: MyColors.black,
         fontWeight: FontWeight.w600
       ),
@@ -98,12 +101,20 @@ class Themes {
     ),
     inputDecorationTheme: InputDecorationTheme(
       border: OutlineInputBorder(
-        borderSide: BorderSide.none,
+        borderSide: BorderSide(
+          color: MyColors.colorButton
+        ),
         borderRadius: BorderRadius.circular(10)
       ),
-      hintStyle: TextStyle(
+      focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: MyColors.colorButton
+        ),
+        borderRadius: BorderRadius.circular(10)
+      ),
+      hintStyle: GoogleFonts.manrope(
         fontSize: 14,
-      )
+      ),
     ),
     progressIndicatorTheme: ProgressIndicatorThemeData(
       color: MyColors.red
@@ -116,74 +127,77 @@ class Themes {
     checkboxTheme: CheckboxThemeData(
       visualDensity: VisualDensity.standard, // Sets density to standard
     ),
+    textSelectionTheme: TextSelectionThemeData(
+        cursorColor: MyColors.colorButton
+    ),
     textTheme: GoogleFonts.latoTextTheme(
         TextTheme(
-            headline1: TextStyle(
+            headline1: GoogleFonts.manrope(
                 letterSpacing: -1.5,
                 fontSize: 48,
                 color: Colors.grey.shade50,
                 fontWeight: FontWeight.bold
             ),
-            headline2: TextStyle(
+            headline2: GoogleFonts.manrope(
                 letterSpacing: -1.0,
                 fontSize: 40,
                 color: Colors.grey.shade50,
                 fontWeight: FontWeight.bold
             ),
-            headline3: TextStyle(
+            headline3: GoogleFonts.manrope(
                 letterSpacing: -1.0,
                 fontSize: 32,
                 color: Colors.grey.shade50,
                 fontWeight: FontWeight.bold
             ),
-            headline4: TextStyle(
+            headline4: GoogleFonts.manrope(
                 letterSpacing: -1.0,
                 color: Colors.grey.shade50,
                 fontSize: 28,
                 fontWeight: FontWeight.w600
             ),
-            headline5: TextStyle(
+            headline5: GoogleFonts.manrope(
                 letterSpacing: -1.0,
                 color: Colors.grey.shade50,
                 fontSize: 24,
                 fontWeight: FontWeight.w500
             ),
-            headline6: TextStyle(
+            headline6: GoogleFonts.manrope(
                 color: Colors.grey.shade50,
                 fontSize: 18,
                 fontWeight: FontWeight.w500
             ),
-            subtitle1: TextStyle(
+            subtitle1: GoogleFonts.manrope(
                 color: Colors.grey.shade50,
                 fontSize: 16,
                 fontWeight: FontWeight.w500
             ),
-            subtitle2: TextStyle(
+            subtitle2: GoogleFonts.manrope(
                 color: Colors.grey.shade50,
                 fontSize: 14,
                 fontWeight: FontWeight.w500
             ),
-            bodyText1: TextStyle(
+            bodyText1: GoogleFonts.manrope(
                 color: Colors.grey.shade50,
                 fontSize: 16,
                 fontWeight: FontWeight.w400
             ),
-            bodyText2: TextStyle(
+            bodyText2: GoogleFonts.manrope(
                 color: Colors.grey.shade50,
                 fontSize: 14,
                 fontWeight: FontWeight.w400
             ),
-            button: TextStyle(
+            button: GoogleFonts.manrope(
                 color: Colors.white,
                 fontSize: 14,
                 fontWeight: FontWeight.w600
             ),
-            caption: TextStyle(
+            caption: GoogleFonts.manrope(
                 color: Colors.grey.shade50,
                 fontSize: 12,
                 fontWeight: FontWeight.w500
             ),
-            overline: TextStyle(
+            overline: GoogleFonts.manrope(
                 color: Colors.grey.shade50,
                 fontSize: 10,
                 fontWeight: FontWeight.w400
@@ -204,10 +218,18 @@ class Themes {
     bottomAppBarColor: MyColors.gray900,
     inputDecorationTheme: InputDecorationTheme(
       border: OutlineInputBorder(
-        borderSide: BorderSide.none,
+        borderSide: BorderSide(
+            color: MyColors.colorButton
+        ),
         borderRadius: BorderRadius.circular(10)
       ),
-      hintStyle: TextStyle(
+      focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+            color: MyColors.colorButton
+        ),
+        borderRadius: BorderRadius.circular(10)
+      ),
+      hintStyle: GoogleFonts.manrope(
         fontSize: 14,
       )
     ),

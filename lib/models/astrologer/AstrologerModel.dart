@@ -12,7 +12,7 @@ class AstrologerModel with _$AstrologerModel {
     required String name,
     required String mobile,
     required String email,
-    required double experience,
+    required String experience,
     required String profile,
     required String about,
     int? fav,

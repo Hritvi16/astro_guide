@@ -124,6 +124,8 @@ class CheckSessionController extends GetxController {
 
 
   Future<void> initiateSession() async {
+    Essential.showLoadingDialog();
+
     Map <String, dynamic> data = {
       KundliConstants.existing : type==KundliConstants.existing ? 1 : 0,
       KundliConstants.r_id : (relation?.id??-1),
@@ -154,6 +156,7 @@ class CheckSessionController extends GetxController {
           storage.read("access"), ApiConstants.initiate, data).then((
           response) async {
         print(response.toJson());
+        Get.back();
         if (response.code == 1) {
           goto("/${category.toLowerCase()}", arguments: {
             "astrologer": astrologer,
@@ -173,9 +176,9 @@ class CheckSessionController extends GetxController {
       });
     }
     else {
-
       await meetingProvider.initiate(storage.read("access"), ApiConstants.initiate, data).then((response) async {
         print(response.toJson());
+        Get.back();
         if (response.code == 1) {
           goto("/${category.toLowerCase()}", arguments: {
             "astrologer": astrologer,

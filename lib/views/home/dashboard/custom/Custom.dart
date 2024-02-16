@@ -49,11 +49,12 @@ class Custom extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: standardHorizontalPagePadding),
               decoration: BoxDecoration(
                   color: MyColors.colorPrimary,
-                  image: const DecorationImage(
+                  image: Essential.getPlatform() ?
+                  const DecorationImage(
                       image: AssetImage(
                           "assets/essential/upper_bg_s.png"
                       )
-                  )
+                  ) : null
               ),
               child: SafeArea(
                 child: Padding(
@@ -180,7 +181,7 @@ class Custom extends StatelessWidget {
             builder: MaterialIndicatorDelegate(
               builder: (context, controller) {
                 return Image.asset(
-                  "assets/essential/loading.png",
+                  Essential.getPlatform() ? "assets/essential/loading.png" : "assets/app_icon/ios_icon.jpg",
                   height: 30,
                 );
               },

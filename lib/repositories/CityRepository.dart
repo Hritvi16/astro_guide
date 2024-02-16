@@ -7,6 +7,11 @@ class CityRepository {
 
   CityRepository(this.apiService);
 
+  Future<JSON> getAllCities(String endpoint, String token) async {
+    var cities = await apiService.get(endpoint: ApiConstants.cityAPI+endpoint, token: token);
+    return cities;
+  }
+
   Future<JSON> getCities(Map<String, dynamic> data, String endpoint, String token) async {
     var cities = await apiService.post(endpoint: ApiConstants.cityAPI+endpoint, body: data, token: token);
     return cities;

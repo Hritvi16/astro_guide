@@ -86,22 +86,22 @@ class _$RatingModelCopyWithImpl<$Res, $Val extends RatingModel>
 }
 
 /// @nodoc
-abstract class _$$_RatingModelCopyWith<$Res>
+abstract class _$$RatingModelImplCopyWith<$Res>
     implements $RatingModelCopyWith<$Res> {
-  factory _$$_RatingModelCopyWith(
-          _$_RatingModel value, $Res Function(_$_RatingModel) then) =
-      __$$_RatingModelCopyWithImpl<$Res>;
+  factory _$$RatingModelImplCopyWith(
+          _$RatingModelImpl value, $Res Function(_$RatingModelImpl) then) =
+      __$$RatingModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int rating1, int rating2, int rating3, int rating4, int rating5});
 }
 
 /// @nodoc
-class __$$_RatingModelCopyWithImpl<$Res>
-    extends _$RatingModelCopyWithImpl<$Res, _$_RatingModel>
-    implements _$$_RatingModelCopyWith<$Res> {
-  __$$_RatingModelCopyWithImpl(
-      _$_RatingModel _value, $Res Function(_$_RatingModel) _then)
+class __$$RatingModelImplCopyWithImpl<$Res>
+    extends _$RatingModelCopyWithImpl<$Res, _$RatingModelImpl>
+    implements _$$RatingModelImplCopyWith<$Res> {
+  __$$RatingModelImplCopyWithImpl(
+      _$RatingModelImpl _value, $Res Function(_$RatingModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -113,7 +113,7 @@ class __$$_RatingModelCopyWithImpl<$Res>
     Object? rating4 = null,
     Object? rating5 = null,
   }) {
-    return _then(_$_RatingModel(
+    return _then(_$RatingModelImpl(
       rating1: null == rating1
           ? _value.rating1
           : rating1 // ignore: cast_nullable_to_non_nullable
@@ -140,16 +140,16 @@ class __$$_RatingModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_RatingModel implements _RatingModel {
-  _$_RatingModel(
+class _$RatingModelImpl implements _RatingModel {
+  _$RatingModelImpl(
       {required this.rating1,
       required this.rating2,
       required this.rating3,
       required this.rating4,
       required this.rating5});
 
-  factory _$_RatingModel.fromJson(Map<String, dynamic> json) =>
-      _$$_RatingModelFromJson(json);
+  factory _$RatingModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$RatingModelImplFromJson(json);
 
   @override
   final int rating1;
@@ -168,10 +168,10 @@ class _$_RatingModel implements _RatingModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_RatingModel &&
+            other is _$RatingModelImpl &&
             (identical(other.rating1, rating1) || other.rating1 == rating1) &&
             (identical(other.rating2, rating2) || other.rating2 == rating2) &&
             (identical(other.rating3, rating3) || other.rating3 == rating3) &&
@@ -187,12 +187,12 @@ class _$_RatingModel implements _RatingModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_RatingModelCopyWith<_$_RatingModel> get copyWith =>
-      __$$_RatingModelCopyWithImpl<_$_RatingModel>(this, _$identity);
+  _$$RatingModelImplCopyWith<_$RatingModelImpl> get copyWith =>
+      __$$RatingModelImplCopyWithImpl<_$RatingModelImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_RatingModelToJson(
+    return _$$RatingModelImplToJson(
       this,
     );
   }
@@ -204,10 +204,10 @@ abstract class _RatingModel implements RatingModel {
       required final int rating2,
       required final int rating3,
       required final int rating4,
-      required final int rating5}) = _$_RatingModel;
+      required final int rating5}) = _$RatingModelImpl;
 
   factory _RatingModel.fromJson(Map<String, dynamic> json) =
-      _$_RatingModel.fromJson;
+      _$RatingModelImpl.fromJson;
 
   @override
   int get rating1;
@@ -221,6 +221,6 @@ abstract class _RatingModel implements RatingModel {
   int get rating5;
   @override
   @JsonKey(ignore: true)
-  _$$_RatingModelCopyWith<_$_RatingModel> get copyWith =>
+  _$$RatingModelImplCopyWith<_$RatingModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

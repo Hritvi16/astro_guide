@@ -1,4 +1,10 @@
 Map<String, String> telugu = {
+  //Sign In
+  'Sign In' : 'ప్రవేశించండి',
+  'Continue With Mobile' : 'మొబైల్‌తో కొనసాగించండి',
+  'You will receive a 6 digit code for verification' : 'ధృవీకరణ కోసం మీరు 6 అంకెల కోడ్‌ని అందుకుంటారు',
+  'Enter Mobile No.' : 'మొబైల్ నంబర్‌ని నమోదు చేయండి',
+
   //Sign Up
   'Name' : 'పేరు',
   'Mobile No.' : 'మొబైల్ నెం.',
@@ -19,13 +25,14 @@ Map<String, String> telugu = {
   'Update' : 'అప్డేట్',
   'New' : 'కొత్త',
   'Old' : 'పాతది',
-  'GET OTP' : 'OTP పొందండి',
+  'GET OTP' : 'OTPని పొందండి',
 
   //Dashboard
   'Dashboard': 'డాష్బోర్డ్',
   'Free Kundali' : 'ఉచిత కుండ్లి',
   'Match Kundali' : 'కుండ్లిని సరిపోల్చండిి',
   'Daily Horoscope' : 'రోజువారీ జాతకం',
+  'Live Astrologers' : 'ప్రత్యక్ష జ్యోతిష్యులు',
   'Currently Live Astrologers' : 'ప్రస్తుతం ప్రత్యక్ష జ్యోతిష్యుడు',
   'New Arrival Astrologers' : 'కొత్త రాక జ్యోతిష్కుడు',
   'New Updates and Blogs' : 'కొత్త నవీకరణలు మరియు బ్లాగులు',
@@ -33,19 +40,36 @@ Map<String, String> telugu = {
   'New Videos' : 'కొత్త వీడియోలు',
   'Why AstroGuide?' : 'జఆస్ట్రో గైడ్ ఎందుకు?',
   'Easily connect with Astro' : 'జ్యోతిష్కునితో సులభంగా కనెక్ట్ అవ్వండి',
-  'You can easily connect with astrologer with the help of AstroGuide.' : 'మీరు AstroGuide సహాయంతో జ్యోతిష్కునితో సులభంగా కనెక్ట్ కావచ్చు.',
+  'You can easily connect with astrologer with the help of AstroGuide.' : 'మీరు ఆస్ట్రో గైడ్ సహాయంతో జ్యోతిష్కునితో సులభంగా కనెక్ట్ కావచ్చు.',
   'Privacy guarantee 100%' : 'గోప్యతా హామీ 100%',
-  'AstroGuide provide 100% privacy guarantee to your personal data.' : 'AstroGuide మీ వ్యక్తిగత డేటాకు 100% గోప్యతా హామీని అందిస్తుంది.',
+  'AstroGuide provide 100% privacy guarantee to your personal data.' : 'ఆస్ట్రో గైడ్ మీ వ్యక్తిగత డేటాకు 100% గోప్యతా హామీని అందిస్తుంది.',
   'Approved Astrologer' : 'ఆమోదించబడిన జ్యోతిష్యుడు',
   'You can talk with 100% verified and approved Astrologer.' : 'మీరు 100% ధృవీకరించబడిన మరియు ఆమోదించబడిన జ్యోతిష్కుడితో మాట్లాడవచ్చు.',
   'View all' : 'అన్నీ చూడండి',
   'Live' : 'ప్రత్యక్ష',
   'min' : 'నిమిషం',
+  'AstroGuide Astrology Services' : 'ఆస్ట్రో గైడ్ జ్యోతిష్య సేవలు',
+  'Consult Astrologer' : 'జ్యోతిష్యుడిని సంప్రదించండి',
+  'Indian(City - Wise)' : 'భారతీయ (నగరం - వారీగా)',
+  'International' : 'అంతర్జాతీయ',
+  'Category Wise' : 'వర్గం వారీగా',
+  'AstroGuide shows the live astrologer whom with you can connect.' : 'ఆస్ట్రో గైడ్ మీతో కనెక్ట్ అయ్యే ప్రత్యక్ష జ్యోతిష్యుడిని చూపుతుంది.',
+  'AstroGuide shows the new astrologer whom with you can connect.' : 'ఆస్ట్రో గైడ్ మీతో కనెక్ట్ అయ్యే కొత్త జ్యోతిష్యుడిని చూపుతుంది.',
+  'Hear about us from our customers' : 'మా కస్టమర్ల నుండి మా గురించి వినండి',
+  'FAQs' : 'తరచుగా అడిగే ప్రశ్నలు',
+  'Online Advice' : 'ఆన్‌లైన్ సలహా',
+  'Quick Links' : 'త్వరిత లింక్‌లు',
+  'Reach Us' : 'మమ్మల్ని చేరుకోండి',
+  'Install App' : 'ఆప్ ఇంస్టాల్ చేసుకోండి',
+  'Astrologer Registration' : 'జ్యోతిష్యుని నమోదు',
+  'Refund & Cancellation Policy' : 'వాపసు & రద్దు విధానం',
+  'Add Money to Wallet' : 'వాలెట్‌కి డబ్బు జోడించండి',
 
   //Blog
   'Written by' : 'వ్రాసిన వారు',
 
   //Talk
+  'Chat with Astrologer' : 'జ్యోతిష్కుడితో చాట్ చేయండి',
   'Talk with Astrologer' : 'జ్యోతిష్కుడితో మాట్లాడండి',
   'Reviews' : 'సమీక్షలు',
 
@@ -201,4 +225,22 @@ Map<String, String> telugu = {
   "Write your query" : "మీ ప్రశ్నను వ్రాయండి",
   "You have not asked for any support yet!" : "మీరు ఇంకా మద్దతు కోసం అడగలేదు!",
 
+  //Website
+  "Consult Now" : "ఇప్పుడు సంప్రదించండి",
+  "Hear about us from our customers" : "మా కస్టమర్ల నుండి మా గురించి వినండి",
+  "Generate your free online kundli report from AstroGuide. Our kundli software can help you predict the future for yourself by reading the birth chart." : "AstroGuide నుండి మీ ఉచిత ఆన్‌లైన్ కుండలి నివేదికను రూపొందించండి. మా కుండలి సాఫ్ట్‌వేర్ బర్త్ చార్ట్ చదవడం ద్వారా మీ భవిష్యత్తును అంచనా వేయడంలో మీకు సహాయపడుతుంది.",
+  "Love could be confusing, but only until you haven’t found how compatible you two are for each other." : "ప్రేమ గందరగోళంగా ఉండవచ్చు, కానీ మీరిద్దరూ ఒకరికొకరు ఎంత అనుకూలంగా ఉన్నారో మీరు కనుగొననంత వరకు మాత్రమే.",
+  "Get free daily horoscope prediction today online from the best astrologer. Read your Zodiac Sign horoscope today!" : "ఉత్తమ జ్యోతిష్కుడి నుండి ఈరోజు ఆన్‌లైన్‌లో ఉచిత రోజువారీ జాతక అంచనాలను పొందండి. ఈ రోజు మీ రాశిచక్రం జాతకాన్ని చదవండి!",
+  "Total Astrologers" : "మొత్తం జ్యోతిష్కులు",
+  "Total Chat/Call minutes" : "మొత్తం చాట్/కాల్ నిమిషాలు",
+  "Total Customers" : "మొత్తం కస్టమర్",
+  "Find Best Astrologers" : "ఉత్తమ జ్యోతిష్కులను కనుగొనండి",
+  "Videos" : "వీడియోలు",
+  "Astrologer Gallery" : "జ్యోతిష్య గ్యాలరీ",
+  "Check Similar Consultants" : "ఇలాంటి కన్సల్టెంట్‌ని తనిఖీ చేయండి",
+  "Load More" : "మరింత లోడ్ చేయండి",
+  "Hide More" : "మరిన్ని దాచు",
+  "Mobile pattern does not match" : "మొబైల్ నమూనా సరిపోలలేదు",
+  "Login" :   "ప్రవేశించండి",
+  "Otp Sent To" : "Otp పంపబడింది",
 };

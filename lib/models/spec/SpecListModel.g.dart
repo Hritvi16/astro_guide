@@ -6,8 +6,8 @@ part of 'SpecListModel.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_SpecListModel _$$_SpecListModelFromJson(Map<String, dynamic> json) =>
-    _$_SpecListModel(
+_$SpecListModelImpl _$$SpecListModelImplFromJson(Map<String, dynamic> json) =>
+    _$SpecListModelImpl(
       status: json['status'] as String,
       code: json['code'] as int,
       message: json['message'] as String,
@@ -16,7 +16,7 @@ _$_SpecListModel _$$_SpecListModelFromJson(Map<String, dynamic> json) =>
           .toList(),
     );
 
-Map<String, dynamic> _$$_SpecListModelToJson(_$_SpecListModel instance) =>
+Map<String, dynamic> _$$SpecListModelImplToJson(_$SpecListModelImpl instance) =>
     <String, dynamic>{
       'status': instance.status,
       'code': instance.code,

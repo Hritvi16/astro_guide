@@ -80,22 +80,22 @@ class _$BannerListModelCopyWithImpl<$Res, $Val extends BannerListModel>
 }
 
 /// @nodoc
-abstract class _$$_BannerListModelCopyWith<$Res>
+abstract class _$$BannerListModelImplCopyWith<$Res>
     implements $BannerListModelCopyWith<$Res> {
-  factory _$$_BannerListModelCopyWith(
-          _$_BannerListModel value, $Res Function(_$_BannerListModel) then) =
-      __$$_BannerListModelCopyWithImpl<$Res>;
+  factory _$$BannerListModelImplCopyWith(_$BannerListModelImpl value,
+          $Res Function(_$BannerListModelImpl) then) =
+      __$$BannerListModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String status, int code, String message, List<BannerModel>? data});
 }
 
 /// @nodoc
-class __$$_BannerListModelCopyWithImpl<$Res>
-    extends _$BannerListModelCopyWithImpl<$Res, _$_BannerListModel>
-    implements _$$_BannerListModelCopyWith<$Res> {
-  __$$_BannerListModelCopyWithImpl(
-      _$_BannerListModel _value, $Res Function(_$_BannerListModel) _then)
+class __$$BannerListModelImplCopyWithImpl<$Res>
+    extends _$BannerListModelCopyWithImpl<$Res, _$BannerListModelImpl>
+    implements _$$BannerListModelImplCopyWith<$Res> {
+  __$$BannerListModelImplCopyWithImpl(
+      _$BannerListModelImpl _value, $Res Function(_$BannerListModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -106,7 +106,7 @@ class __$$_BannerListModelCopyWithImpl<$Res>
     Object? message = null,
     Object? data = freezed,
   }) {
-    return _then(_$_BannerListModel(
+    return _then(_$BannerListModelImpl(
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -129,16 +129,16 @@ class __$$_BannerListModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_BannerListModel implements _BannerListModel {
-  _$_BannerListModel(
+class _$BannerListModelImpl implements _BannerListModel {
+  _$BannerListModelImpl(
       {required this.status,
       required this.code,
       required this.message,
       final List<BannerModel>? data})
       : _data = data;
 
-  factory _$_BannerListModel.fromJson(Map<String, dynamic> json) =>
-      _$$_BannerListModelFromJson(json);
+  factory _$BannerListModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$BannerListModelImplFromJson(json);
 
   @override
   final String status;
@@ -162,10 +162,10 @@ class _$_BannerListModel implements _BannerListModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_BannerListModel &&
+            other is _$BannerListModelImpl &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.code, code) || other.code == code) &&
             (identical(other.message, message) || other.message == message) &&
@@ -180,12 +180,13 @@ class _$_BannerListModel implements _BannerListModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_BannerListModelCopyWith<_$_BannerListModel> get copyWith =>
-      __$$_BannerListModelCopyWithImpl<_$_BannerListModel>(this, _$identity);
+  _$$BannerListModelImplCopyWith<_$BannerListModelImpl> get copyWith =>
+      __$$BannerListModelImplCopyWithImpl<_$BannerListModelImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_BannerListModelToJson(
+    return _$$BannerListModelImplToJson(
       this,
     );
   }
@@ -196,10 +197,10 @@ abstract class _BannerListModel implements BannerListModel {
       {required final String status,
       required final int code,
       required final String message,
-      final List<BannerModel>? data}) = _$_BannerListModel;
+      final List<BannerModel>? data}) = _$BannerListModelImpl;
 
   factory _BannerListModel.fromJson(Map<String, dynamic> json) =
-      _$_BannerListModel.fromJson;
+      _$BannerListModelImpl.fromJson;
 
   @override
   String get status;
@@ -211,6 +212,6 @@ abstract class _BannerListModel implements BannerListModel {
   List<BannerModel>? get data;
   @override
   @JsonKey(ignore: true)
-  _$$_BannerListModelCopyWith<_$_BannerListModel> get copyWith =>
+  _$$BannerListModelImplCopyWith<_$BannerListModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

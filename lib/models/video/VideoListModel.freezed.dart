@@ -80,22 +80,22 @@ class _$VideoListModelCopyWithImpl<$Res, $Val extends VideoListModel>
 }
 
 /// @nodoc
-abstract class _$$_VideoListModelCopyWith<$Res>
+abstract class _$$VideoListModelImplCopyWith<$Res>
     implements $VideoListModelCopyWith<$Res> {
-  factory _$$_VideoListModelCopyWith(
-          _$_VideoListModel value, $Res Function(_$_VideoListModel) then) =
-      __$$_VideoListModelCopyWithImpl<$Res>;
+  factory _$$VideoListModelImplCopyWith(_$VideoListModelImpl value,
+          $Res Function(_$VideoListModelImpl) then) =
+      __$$VideoListModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String status, int code, String message, List<VideoModel>? data});
 }
 
 /// @nodoc
-class __$$_VideoListModelCopyWithImpl<$Res>
-    extends _$VideoListModelCopyWithImpl<$Res, _$_VideoListModel>
-    implements _$$_VideoListModelCopyWith<$Res> {
-  __$$_VideoListModelCopyWithImpl(
-      _$_VideoListModel _value, $Res Function(_$_VideoListModel) _then)
+class __$$VideoListModelImplCopyWithImpl<$Res>
+    extends _$VideoListModelCopyWithImpl<$Res, _$VideoListModelImpl>
+    implements _$$VideoListModelImplCopyWith<$Res> {
+  __$$VideoListModelImplCopyWithImpl(
+      _$VideoListModelImpl _value, $Res Function(_$VideoListModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -106,7 +106,7 @@ class __$$_VideoListModelCopyWithImpl<$Res>
     Object? message = null,
     Object? data = freezed,
   }) {
-    return _then(_$_VideoListModel(
+    return _then(_$VideoListModelImpl(
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -129,16 +129,16 @@ class __$$_VideoListModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_VideoListModel implements _VideoListModel {
-  _$_VideoListModel(
+class _$VideoListModelImpl implements _VideoListModel {
+  _$VideoListModelImpl(
       {required this.status,
       required this.code,
       required this.message,
       final List<VideoModel>? data})
       : _data = data;
 
-  factory _$_VideoListModel.fromJson(Map<String, dynamic> json) =>
-      _$$_VideoListModelFromJson(json);
+  factory _$VideoListModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$VideoListModelImplFromJson(json);
 
   @override
   final String status;
@@ -162,10 +162,10 @@ class _$_VideoListModel implements _VideoListModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_VideoListModel &&
+            other is _$VideoListModelImpl &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.code, code) || other.code == code) &&
             (identical(other.message, message) || other.message == message) &&
@@ -180,12 +180,13 @@ class _$_VideoListModel implements _VideoListModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_VideoListModelCopyWith<_$_VideoListModel> get copyWith =>
-      __$$_VideoListModelCopyWithImpl<_$_VideoListModel>(this, _$identity);
+  _$$VideoListModelImplCopyWith<_$VideoListModelImpl> get copyWith =>
+      __$$VideoListModelImplCopyWithImpl<_$VideoListModelImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_VideoListModelToJson(
+    return _$$VideoListModelImplToJson(
       this,
     );
   }
@@ -196,10 +197,10 @@ abstract class _VideoListModel implements VideoListModel {
       {required final String status,
       required final int code,
       required final String message,
-      final List<VideoModel>? data}) = _$_VideoListModel;
+      final List<VideoModel>? data}) = _$VideoListModelImpl;
 
   factory _VideoListModel.fromJson(Map<String, dynamic> json) =
-      _$_VideoListModel.fromJson;
+      _$VideoListModelImpl.fromJson;
 
   @override
   String get status;
@@ -211,6 +212,6 @@ abstract class _VideoListModel implements VideoListModel {
   List<VideoModel>? get data;
   @override
   @JsonKey(ignore: true)
-  _$$_VideoListModelCopyWith<_$_VideoListModel> get copyWith =>
+  _$$VideoListModelImplCopyWith<_$VideoListModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

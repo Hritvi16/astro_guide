@@ -1,5 +1,6 @@
 import 'package:astro_guide/colors/MyColors.dart';
 import 'package:astro_guide/controllers/filter/AstroFilterController.dart';
+import 'package:astro_guide/essential/Essential.dart';
 import 'package:astro_guide/models/country/CountryModel.dart';
 import 'package:astro_guide/models/language/LanguageModel.dart';
 import 'package:astro_guide/models/type/TypeModel.dart';
@@ -53,11 +54,12 @@ class AstroFilter extends StatelessWidget {
               height: 80,
               decoration: BoxDecoration(
                   color: MyColors.colorPrimary,
-                  image: const DecorationImage(
+                  image: Essential.getPlatform() ?
+                  const DecorationImage(
                       image: AssetImage(
                           "assets/essential/upper_bg_s.png"
                       )
-                  )
+                  ) : null
               ),
               child: SafeArea(
                 child: CustomAppBar('Sort & Filter'.tr),
@@ -271,12 +273,14 @@ class AstroFilter extends StatelessWidget {
             activeColor: MyColors.colorButton,
             onChanged: onChanged,
           ),
-          Text(
-            convert ? option.tr : option,
-            style: GoogleFonts.manrope(
-                fontWeight: FontWeight.w500,
-                fontSize: 14,
-                color: MyColors.labelColor()
+          Flexible(
+            child: Text(
+              convert ? option.tr : option,
+              style: GoogleFonts.manrope(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 14,
+                  color: MyColors.labelColor()
+              ),
             ),
           ),
         ],

@@ -23,7 +23,7 @@ mixin _$WalletHistoryModel {
   int get id => throw _privateConstructorUsedError;
   int? get user_id => throw _privateConstructorUsedError;
   int? get astro_id => throw _privateConstructorUsedError;
-  String get order_id => throw _privateConstructorUsedError;
+  String? get order_id => throw _privateConstructorUsedError;
   String? get invoice_id => throw _privateConstructorUsedError;
   String? get transaction_id => throw _privateConstructorUsedError;
   int? get p_id => throw _privateConstructorUsedError;
@@ -52,7 +52,7 @@ abstract class $WalletHistoryModelCopyWith<$Res> {
       {int id,
       int? user_id,
       int? astro_id,
-      String order_id,
+      String? order_id,
       String? invoice_id,
       String? transaction_id,
       int? p_id,
@@ -82,7 +82,7 @@ class _$WalletHistoryModelCopyWithImpl<$Res, $Val extends WalletHistoryModel>
     Object? id = null,
     Object? user_id = freezed,
     Object? astro_id = freezed,
-    Object? order_id = null,
+    Object? order_id = freezed,
     Object? invoice_id = freezed,
     Object? transaction_id = freezed,
     Object? p_id = freezed,
@@ -108,10 +108,10 @@ class _$WalletHistoryModelCopyWithImpl<$Res, $Val extends WalletHistoryModel>
           ? _value.astro_id
           : astro_id // ignore: cast_nullable_to_non_nullable
               as int?,
-      order_id: null == order_id
+      order_id: freezed == order_id
           ? _value.order_id
           : order_id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       invoice_id: freezed == invoice_id
           ? _value.invoice_id
           : invoice_id // ignore: cast_nullable_to_non_nullable
@@ -161,18 +161,18 @@ class _$WalletHistoryModelCopyWithImpl<$Res, $Val extends WalletHistoryModel>
 }
 
 /// @nodoc
-abstract class _$$_WalletHistoryModelCopyWith<$Res>
+abstract class _$$WalletHistoryModelImplCopyWith<$Res>
     implements $WalletHistoryModelCopyWith<$Res> {
-  factory _$$_WalletHistoryModelCopyWith(_$_WalletHistoryModel value,
-          $Res Function(_$_WalletHistoryModel) then) =
-      __$$_WalletHistoryModelCopyWithImpl<$Res>;
+  factory _$$WalletHistoryModelImplCopyWith(_$WalletHistoryModelImpl value,
+          $Res Function(_$WalletHistoryModelImpl) then) =
+      __$$WalletHistoryModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
       {int id,
       int? user_id,
       int? astro_id,
-      String order_id,
+      String? order_id,
       String? invoice_id,
       String? transaction_id,
       int? p_id,
@@ -187,11 +187,11 @@ abstract class _$$_WalletHistoryModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_WalletHistoryModelCopyWithImpl<$Res>
-    extends _$WalletHistoryModelCopyWithImpl<$Res, _$_WalletHistoryModel>
-    implements _$$_WalletHistoryModelCopyWith<$Res> {
-  __$$_WalletHistoryModelCopyWithImpl(
-      _$_WalletHistoryModel _value, $Res Function(_$_WalletHistoryModel) _then)
+class __$$WalletHistoryModelImplCopyWithImpl<$Res>
+    extends _$WalletHistoryModelCopyWithImpl<$Res, _$WalletHistoryModelImpl>
+    implements _$$WalletHistoryModelImplCopyWith<$Res> {
+  __$$WalletHistoryModelImplCopyWithImpl(_$WalletHistoryModelImpl _value,
+      $Res Function(_$WalletHistoryModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -200,7 +200,7 @@ class __$$_WalletHistoryModelCopyWithImpl<$Res>
     Object? id = null,
     Object? user_id = freezed,
     Object? astro_id = freezed,
-    Object? order_id = null,
+    Object? order_id = freezed,
     Object? invoice_id = freezed,
     Object? transaction_id = freezed,
     Object? p_id = freezed,
@@ -213,7 +213,7 @@ class __$$_WalletHistoryModelCopyWithImpl<$Res>
     Object? updated_at = freezed,
     Object? status = null,
   }) {
-    return _then(_$_WalletHistoryModel(
+    return _then(_$WalletHistoryModelImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -226,10 +226,10 @@ class __$$_WalletHistoryModelCopyWithImpl<$Res>
           ? _value.astro_id
           : astro_id // ignore: cast_nullable_to_non_nullable
               as int?,
-      order_id: null == order_id
+      order_id: freezed == order_id
           ? _value.order_id
           : order_id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       invoice_id: freezed == invoice_id
           ? _value.invoice_id
           : invoice_id // ignore: cast_nullable_to_non_nullable
@@ -280,12 +280,12 @@ class __$$_WalletHistoryModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_WalletHistoryModel implements _WalletHistoryModel {
-  _$_WalletHistoryModel(
+class _$WalletHistoryModelImpl implements _WalletHistoryModel {
+  _$WalletHistoryModelImpl(
       {required this.id,
       this.user_id,
       this.astro_id,
-      required this.order_id,
+      this.order_id,
       this.invoice_id,
       this.transaction_id,
       this.p_id,
@@ -298,8 +298,8 @@ class _$_WalletHistoryModel implements _WalletHistoryModel {
       this.updated_at,
       required this.status});
 
-  factory _$_WalletHistoryModel.fromJson(Map<String, dynamic> json) =>
-      _$$_WalletHistoryModelFromJson(json);
+  factory _$WalletHistoryModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$WalletHistoryModelImplFromJson(json);
 
   @override
   final int id;
@@ -308,7 +308,7 @@ class _$_WalletHistoryModel implements _WalletHistoryModel {
   @override
   final int? astro_id;
   @override
-  final String order_id;
+  final String? order_id;
   @override
   final String? invoice_id;
   @override
@@ -338,10 +338,10 @@ class _$_WalletHistoryModel implements _WalletHistoryModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_WalletHistoryModel &&
+            other is _$WalletHistoryModelImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.user_id, user_id) || other.user_id == user_id) &&
             (identical(other.astro_id, astro_id) ||
@@ -390,13 +390,13 @@ class _$_WalletHistoryModel implements _WalletHistoryModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_WalletHistoryModelCopyWith<_$_WalletHistoryModel> get copyWith =>
-      __$$_WalletHistoryModelCopyWithImpl<_$_WalletHistoryModel>(
+  _$$WalletHistoryModelImplCopyWith<_$WalletHistoryModelImpl> get copyWith =>
+      __$$WalletHistoryModelImplCopyWithImpl<_$WalletHistoryModelImpl>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_WalletHistoryModelToJson(
+    return _$$WalletHistoryModelImplToJson(
       this,
     );
   }
@@ -407,7 +407,7 @@ abstract class _WalletHistoryModel implements WalletHistoryModel {
       {required final int id,
       final int? user_id,
       final int? astro_id,
-      required final String order_id,
+      final String? order_id,
       final String? invoice_id,
       final String? transaction_id,
       final int? p_id,
@@ -418,10 +418,10 @@ abstract class _WalletHistoryModel implements WalletHistoryModel {
       required final String description,
       required final String created_at,
       final String? updated_at,
-      required final int status}) = _$_WalletHistoryModel;
+      required final int status}) = _$WalletHistoryModelImpl;
 
   factory _WalletHistoryModel.fromJson(Map<String, dynamic> json) =
-      _$_WalletHistoryModel.fromJson;
+      _$WalletHistoryModelImpl.fromJson;
 
   @override
   int get id;
@@ -430,7 +430,7 @@ abstract class _WalletHistoryModel implements WalletHistoryModel {
   @override
   int? get astro_id;
   @override
-  String get order_id;
+  String? get order_id;
   @override
   String? get invoice_id;
   @override
@@ -455,6 +455,6 @@ abstract class _WalletHistoryModel implements WalletHistoryModel {
   int get status;
   @override
   @JsonKey(ignore: true)
-  _$$_WalletHistoryModelCopyWith<_$_WalletHistoryModel> get copyWith =>
+  _$$WalletHistoryModelImplCopyWith<_$WalletHistoryModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

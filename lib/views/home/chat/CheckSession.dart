@@ -2,6 +2,7 @@ import 'package:astro_guide/colors/MyColors.dart';
 import 'package:astro_guide/constants/KundliConstants.dart';
 import 'package:astro_guide/constants/UserConstants.dart';
 import 'package:astro_guide/controllers/session/CheckSessionController.dart';
+import 'package:astro_guide/essential/Essential.dart';
 import 'package:astro_guide/models/city/CityModel.dart';
 import 'package:astro_guide/models/kundli/KundliModel.dart';
 import 'package:astro_guide/models/relation/RelationModel.dart';
@@ -35,15 +36,15 @@ class CheckSession extends StatelessWidget {
       builder: (controller) {
         return Scaffold(
           bottomNavigationBar: checkSessionController.load ? getConfirmDesign(context) : null,
-          body: getBody(context),
+          body: checkSessionController.load ? getBody(context) :
+          LoadingScreen()
         );
       },
     );
   }
 
   Widget getBody(BuildContext context) {
-    return checkSessionController.load ?
-    Column(
+    return Column(
       children: [
         SizedBox(
           width: MySize.size100(context),
@@ -53,11 +54,12 @@ class CheckSession extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                   color: MyColors.colorPrimary,
-                  image: const DecorationImage(
+                  image: Essential.getPlatform() ?
+                  const DecorationImage(
                       image: AssetImage(
                           "assets/essential/upper_bg_s.png"
                       )
-                  )
+                  ) : null
               ),
               child: SafeArea(
                 child: CustomAppBar('${checkSessionController.category.toTitleCase()} Intake Form'),
@@ -86,15 +88,15 @@ class CheckSession extends StatelessWidget {
                     if(checkSessionController.type==KundliConstants.existing)
                       Column(
                         children: [
-                          standardTFLabel(text: 'Kundli', optional: '*', optionalColor: MyColors.red, optionalFontSize: 16),
+                          standardTFLabel(text: Essential.getPlatformKundli(), optional: '*', optionalColor: MyColors.red, optionalFontSize: 16),
                           Padding(
                               padding: const EdgeInsets.symmetric(vertical: 5),
                               child: DropdownSearch<KundliModel>(
-                                popupProps:  const PopupProps.menu(
+                                popupProps:  PopupProps.menu(
                                     showSearchBox: true,
                                     searchFieldProps: TextFieldProps(
                                       decoration: InputDecoration(
-                                        hintText: "Search Kundli",
+                                        hintText: "Search ${Essential.getPlatformKundli()}",
                                       ),
                                     )
                                 ),
@@ -192,7 +194,7 @@ class CheckSession extends StatelessWidget {
                           },
                         )
                     ),
-                    standardTFLabel(text: 'Full Name', optional: '*', optionalColor: MyColors.red, optionalFontSize: 16),
+                    standardTFLabel(text: 'Name', optional: '*', optionalColor: MyColors.red, optionalFontSize: 16),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 5),
                       child: TextFormField(
@@ -211,7 +213,7 @@ class CheckSession extends StatelessWidget {
                             ),
                             borderRadius: BorderRadius.circular(16),
                           ),
-                          hintText: "Enter Full Name",
+                          hintText: "Enter Name",
                           contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                           prefixIcon: Padding(
                             padding: const EdgeInsets.symmetric(vertical: 14.0),
@@ -281,20 +283,22 @@ class CheckSession extends StatelessWidget {
                             backgroundColor: MyColors.cardColor(),
                             closeIconColor: MyColors.iconColor(),
                             bottomPickerTheme:  BottomPickerTheme.plumPlate,
-                            buttonText: "Done",
-                            buttonTextStyle: GoogleFonts.manrope(
-                              fontSize: 16.0,
-                              color: MyColors.labelColor(),
-                              letterSpacing: 0,
-                              fontWeight: FontWeight.w600,
-                            ),
                             pickerTextStyle: GoogleFonts.manrope(
                               fontSize: 14.0,
                               color: MyColors.labelColor(),
                               letterSpacing: 0,
                             ),
+                            buttonContent: Text(
+                              "Done",
+                              style: GoogleFonts.manrope(
+                                fontSize: 16.0,
+                                color: MyColors.black,
+                                letterSpacing: 0,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
                             buttonSingleColor: Colors.transparent,
-                            displayButtonIcon: false,
+                            displaySubmitButton: true,
                           ).show(context);
                         },
                         controller: checkSessionController.dob,
@@ -346,34 +350,36 @@ class CheckSession extends StatelessWidget {
                         onTap: () {
                           BottomPicker.time(
                             title:  "Set your Time of Birth",
-                            initialDateTime: checkSessionController.date,
+                            initialTime: Time(hours: checkSessionController.date.hour, minutes: checkSessionController.date.minute),
                             titleStyle: GoogleFonts.manrope(
                               fontSize: 16.0,
                               color: MyColors.colorButton,
                               letterSpacing: 0,
                               fontWeight: FontWeight.w600,
                             ),
-                            onSubmit: (value) {
+                            onChange: (value) {
                               print(value);
                               checkSessionController.setTOB(value);
                             },
                             backgroundColor: MyColors.cardColor(),
                             closeIconColor: MyColors.iconColor(),
                             bottomPickerTheme:  BottomPickerTheme.plumPlate,
-                            buttonText: "Done",
-                            buttonTextStyle: GoogleFonts.manrope(
-                              fontSize: 16.0,
-                              color: MyColors.labelColor(),
-                              letterSpacing: 0,
-                              fontWeight: FontWeight.w600,
-                            ),
                             pickerTextStyle: GoogleFonts.manrope(
                               fontSize: 14.0,
                               color: MyColors.labelColor(),
                               letterSpacing: 0,
                             ),
+                            buttonContent: Text(
+                              "Done",
+                              style: GoogleFonts.manrope(
+                                fontSize: 16.0,
+                                color: MyColors.black,
+                                letterSpacing: 0,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
                             buttonSingleColor: Colors.transparent,
-                            displayButtonIcon: false,
+                            displaySubmitButton: true,
                           ).show(context);
                         },
                         controller: checkSessionController.tob,
@@ -529,8 +535,7 @@ class CheckSession extends StatelessWidget {
           ),
         )
       ],
-    ) :
-    LoadingScreen();
+    );
   }
 
 

@@ -6,7 +6,8 @@ part of 'CityModel.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_CityModel _$$_CityModelFromJson(Map<String, dynamic> json) => _$_CityModel(
+_$CityModelImpl _$$CityModelImplFromJson(Map<String, dynamic> json) =>
+    _$CityModelImpl(
       id: json['id'] as int,
       name: json['name'] as String,
       st_id: json['st_id'] as int,
@@ -14,7 +15,7 @@ _$_CityModel _$$_CityModelFromJson(Map<String, dynamic> json) => _$_CityModel(
       country: json['country'] as String?,
     );
 
-Map<String, dynamic> _$$_CityModelToJson(_$_CityModel instance) =>
+Map<String, dynamic> _$$CityModelImplToJson(_$CityModelImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,

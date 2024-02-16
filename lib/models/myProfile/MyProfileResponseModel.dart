@@ -1,3 +1,4 @@
+import 'package:astro_guide/models/city/CityModel.dart';
 import 'package:astro_guide/models/country/CountryModel.dart';
 import 'package:astro_guide/models/setting/SettingModel.dart';
 import 'package:astro_guide/models/user/UserModel.dart';
@@ -15,6 +16,7 @@ class MyProfileResponseModel with _$MyProfileResponseModel {
     required String message,
     UserModel? data,
     List<CountryModel>? countries,
+    List<CityModel>? cities,
   }) = _MyProfileResponseModel;
 
   factory MyProfileResponseModel.fromJson(JSON json) => _$MyProfileResponseModelFromJson(json);

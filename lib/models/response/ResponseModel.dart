@@ -10,6 +10,7 @@ class ResponseModel with _$ResponseModel {
     required String status,
     required int code,
     required String message,
+    String? data,
   }) = _ResponseModel;
 
   factory ResponseModel.fromJson(JSON json) => _$ResponseModelFromJson(json);

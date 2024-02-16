@@ -47,7 +47,7 @@ class SettingController extends GetxController {
     languages = Languages().languages;
     userProvider = Get.put(UserProvider(userRepository));
     // user = storage.read("user");
-    user = UserModel(id: -1, name: "", profile: "profile", mobile: '');
+    user = UserModel(id: -1, name: "", profile: "profile", joined_via: '');
     start();
   }
 

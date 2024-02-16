@@ -280,11 +280,11 @@ class _$SessionHistoryModelCopyWithImpl<$Res, $Val extends SessionHistoryModel>
 }
 
 /// @nodoc
-abstract class _$$_SessionHistoryModelCopyWith<$Res>
+abstract class _$$SessionHistoryModelImplCopyWith<$Res>
     implements $SessionHistoryModelCopyWith<$Res> {
-  factory _$$_SessionHistoryModelCopyWith(_$_SessionHistoryModel value,
-          $Res Function(_$_SessionHistoryModel) then) =
-      __$$_SessionHistoryModelCopyWithImpl<$Res>;
+  factory _$$SessionHistoryModelImplCopyWith(_$SessionHistoryModelImpl value,
+          $Res Function(_$SessionHistoryModelImpl) then) =
+      __$$SessionHistoryModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -323,11 +323,11 @@ abstract class _$$_SessionHistoryModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_SessionHistoryModelCopyWithImpl<$Res>
-    extends _$SessionHistoryModelCopyWithImpl<$Res, _$_SessionHistoryModel>
-    implements _$$_SessionHistoryModelCopyWith<$Res> {
-  __$$_SessionHistoryModelCopyWithImpl(_$_SessionHistoryModel _value,
-      $Res Function(_$_SessionHistoryModel) _then)
+class __$$SessionHistoryModelImplCopyWithImpl<$Res>
+    extends _$SessionHistoryModelCopyWithImpl<$Res, _$SessionHistoryModelImpl>
+    implements _$$SessionHistoryModelImplCopyWith<$Res> {
+  __$$SessionHistoryModelImplCopyWithImpl(_$SessionHistoryModelImpl _value,
+      $Res Function(_$SessionHistoryModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -366,7 +366,7 @@ class __$$_SessionHistoryModelCopyWithImpl<$Res>
     Object? user_profile = freezed,
     Object? token = freezed,
   }) {
-    return _then(_$_SessionHistoryModel(
+    return _then(_$SessionHistoryModelImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -501,8 +501,8 @@ class __$$_SessionHistoryModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_SessionHistoryModel implements _SessionHistoryModel {
-  _$_SessionHistoryModel(
+class _$SessionHistoryModelImpl implements _SessionHistoryModel {
+  _$SessionHistoryModelImpl(
       {required this.id,
       required this.sess_id,
       this.session_id,
@@ -536,8 +536,8 @@ class _$_SessionHistoryModel implements _SessionHistoryModel {
       this.user_profile,
       this.token});
 
-  factory _$_SessionHistoryModel.fromJson(Map<String, dynamic> json) =>
-      _$$_SessionHistoryModelFromJson(json);
+  factory _$SessionHistoryModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$SessionHistoryModelImplFromJson(json);
 
   @override
   final int id;
@@ -610,10 +610,10 @@ class _$_SessionHistoryModel implements _SessionHistoryModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_SessionHistoryModel &&
+            other is _$SessionHistoryModelImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.sess_id, sess_id) || other.sess_id == sess_id) &&
             (identical(other.session_id, session_id) ||
@@ -707,13 +707,13 @@ class _$_SessionHistoryModel implements _SessionHistoryModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_SessionHistoryModelCopyWith<_$_SessionHistoryModel> get copyWith =>
-      __$$_SessionHistoryModelCopyWithImpl<_$_SessionHistoryModel>(
+  _$$SessionHistoryModelImplCopyWith<_$SessionHistoryModelImpl> get copyWith =>
+      __$$SessionHistoryModelImplCopyWithImpl<_$SessionHistoryModelImpl>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_SessionHistoryModelToJson(
+    return _$$SessionHistoryModelImplToJson(
       this,
     );
   }
@@ -752,10 +752,10 @@ abstract class _SessionHistoryModel implements SessionHistoryModel {
       final int? user_id,
       final String? user,
       final String? user_profile,
-      final String? token}) = _$_SessionHistoryModel;
+      final String? token}) = _$SessionHistoryModelImpl;
 
   factory _SessionHistoryModel.fromJson(Map<String, dynamic> json) =
-      _$_SessionHistoryModel.fromJson;
+      _$SessionHistoryModelImpl.fromJson;
 
   @override
   int get id;
@@ -823,6 +823,6 @@ abstract class _SessionHistoryModel implements SessionHistoryModel {
   String? get token;
   @override
   @JsonKey(ignore: true)
-  _$$_SessionHistoryModelCopyWith<_$_SessionHistoryModel> get copyWith =>
+  _$$SessionHistoryModelImplCopyWith<_$SessionHistoryModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

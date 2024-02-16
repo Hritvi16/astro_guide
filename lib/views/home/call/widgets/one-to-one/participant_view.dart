@@ -1,8 +1,9 @@
 import 'package:astro_guide/views/home/call/constants/colors.dart';
 import 'package:astro_guide/views/home/call/utils/spacer.dart';
-import 'package:astro_guide/views/home/call/widgets/common/stats/call_stats.dart';
+import 'package:astro_guide/views/home/call/widgets/stats/call_stats.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:videosdk/videosdk.dart';
 
 class ParticipantView extends StatelessWidget {
@@ -50,7 +51,7 @@ class ParticipantView extends StatelessWidget {
                         child: Text(
                           participant.displayName.characters.first
                               .toUpperCase(),
-                          style: TextStyle(fontSize: avatarTextSize),
+                          style: GoogleFonts.manrope(fontSize: avatarTextSize),
                         ),
                       )
                     : Column(
@@ -61,9 +62,9 @@ class ParticipantView extends StatelessWidget {
                               height: 40,
                             ),
                             const VerticalSpacer(20),
-                            const Text(
+                          Text(
                               "You are presenting to everyone",
-                              style: TextStyle(
+                              style: GoogleFonts.manrope(
                                   fontSize: 14, fontWeight: FontWeight.w600),
                             ),
                             const VerticalSpacer(20),
@@ -73,8 +74,8 @@ class ParticipantView extends StatelessWidget {
                                 padding: const EdgeInsets.symmetric(
                                     vertical: 12, horizontal: 30),
                                 color: purple,
-                                child: const Text("Stop Presenting",
-                                    style: TextStyle(fontSize: 16)),
+                                child:  Text("Stop Presenting",
+                                    style: GoogleFonts.manrope(fontSize: 16)),
                                 onPressed: onStopScreeenSharePressed)
                           ])),
         if (!isMicOn)

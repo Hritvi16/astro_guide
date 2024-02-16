@@ -23,6 +23,7 @@ mixin _$SpecModel {
   int get id => throw _privateConstructorUsedError;
   String get spec => throw _privateConstructorUsedError;
   String get icon => throw _privateConstructorUsedError;
+  String get imageFullUrl => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -35,7 +36,7 @@ abstract class $SpecModelCopyWith<$Res> {
   factory $SpecModelCopyWith(SpecModel value, $Res Function(SpecModel) then) =
       _$SpecModelCopyWithImpl<$Res, SpecModel>;
   @useResult
-  $Res call({int id, String spec, String icon});
+  $Res call({int id, String spec, String icon, String imageFullUrl});
 }
 
 /// @nodoc
@@ -54,6 +55,7 @@ class _$SpecModelCopyWithImpl<$Res, $Val extends SpecModel>
     Object? id = null,
     Object? spec = null,
     Object? icon = null,
+    Object? imageFullUrl = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -68,26 +70,31 @@ class _$SpecModelCopyWithImpl<$Res, $Val extends SpecModel>
           ? _value.icon
           : icon // ignore: cast_nullable_to_non_nullable
               as String,
+      imageFullUrl: null == imageFullUrl
+          ? _value.imageFullUrl
+          : imageFullUrl // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$_SpecModelCopyWith<$Res> implements $SpecModelCopyWith<$Res> {
-  factory _$$_SpecModelCopyWith(
-          _$_SpecModel value, $Res Function(_$_SpecModel) then) =
-      __$$_SpecModelCopyWithImpl<$Res>;
+abstract class _$$SpecModelImplCopyWith<$Res>
+    implements $SpecModelCopyWith<$Res> {
+  factory _$$SpecModelImplCopyWith(
+          _$SpecModelImpl value, $Res Function(_$SpecModelImpl) then) =
+      __$$SpecModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, String spec, String icon});
+  $Res call({int id, String spec, String icon, String imageFullUrl});
 }
 
 /// @nodoc
-class __$$_SpecModelCopyWithImpl<$Res>
-    extends _$SpecModelCopyWithImpl<$Res, _$_SpecModel>
-    implements _$$_SpecModelCopyWith<$Res> {
-  __$$_SpecModelCopyWithImpl(
-      _$_SpecModel _value, $Res Function(_$_SpecModel) _then)
+class __$$SpecModelImplCopyWithImpl<$Res>
+    extends _$SpecModelCopyWithImpl<$Res, _$SpecModelImpl>
+    implements _$$SpecModelImplCopyWith<$Res> {
+  __$$SpecModelImplCopyWithImpl(
+      _$SpecModelImpl _value, $Res Function(_$SpecModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -96,8 +103,9 @@ class __$$_SpecModelCopyWithImpl<$Res>
     Object? id = null,
     Object? spec = null,
     Object? icon = null,
+    Object? imageFullUrl = null,
   }) {
-    return _then(_$_SpecModel(
+    return _then(_$SpecModelImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -110,17 +118,25 @@ class __$$_SpecModelCopyWithImpl<$Res>
           ? _value.icon
           : icon // ignore: cast_nullable_to_non_nullable
               as String,
+      imageFullUrl: null == imageFullUrl
+          ? _value.imageFullUrl
+          : imageFullUrl // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$_SpecModel implements _SpecModel {
-  _$_SpecModel({required this.id, required this.spec, required this.icon});
+class _$SpecModelImpl implements _SpecModel {
+  _$SpecModelImpl(
+      {required this.id,
+      required this.spec,
+      required this.icon,
+      required this.imageFullUrl});
 
-  factory _$_SpecModel.fromJson(Map<String, dynamic> json) =>
-      _$$_SpecModelFromJson(json);
+  factory _$SpecModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$SpecModelImplFromJson(json);
 
   @override
   final int id;
@@ -128,35 +144,39 @@ class _$_SpecModel implements _SpecModel {
   final String spec;
   @override
   final String icon;
+  @override
+  final String imageFullUrl;
 
   @override
   String toString() {
-    return 'SpecModel(id: $id, spec: $spec, icon: $icon)';
+    return 'SpecModel(id: $id, spec: $spec, icon: $icon, imageFullUrl: $imageFullUrl)';
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_SpecModel &&
+            other is _$SpecModelImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.spec, spec) || other.spec == spec) &&
-            (identical(other.icon, icon) || other.icon == icon));
+            (identical(other.icon, icon) || other.icon == icon) &&
+            (identical(other.imageFullUrl, imageFullUrl) ||
+                other.imageFullUrl == imageFullUrl));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, spec, icon);
+  int get hashCode => Object.hash(runtimeType, id, spec, icon, imageFullUrl);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_SpecModelCopyWith<_$_SpecModel> get copyWith =>
-      __$$_SpecModelCopyWithImpl<_$_SpecModel>(this, _$identity);
+  _$$SpecModelImplCopyWith<_$SpecModelImpl> get copyWith =>
+      __$$SpecModelImplCopyWithImpl<_$SpecModelImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_SpecModelToJson(
+    return _$$SpecModelImplToJson(
       this,
     );
   }
@@ -166,10 +186,11 @@ abstract class _SpecModel implements SpecModel {
   factory _SpecModel(
       {required final int id,
       required final String spec,
-      required final String icon}) = _$_SpecModel;
+      required final String icon,
+      required final String imageFullUrl}) = _$SpecModelImpl;
 
   factory _SpecModel.fromJson(Map<String, dynamic> json) =
-      _$_SpecModel.fromJson;
+      _$SpecModelImpl.fromJson;
 
   @override
   int get id;
@@ -178,7 +199,9 @@ abstract class _SpecModel implements SpecModel {
   @override
   String get icon;
   @override
+  String get imageFullUrl;
+  @override
   @JsonKey(ignore: true)
-  _$$_SpecModelCopyWith<_$_SpecModel> get copyWith =>
+  _$$SpecModelImplCopyWith<_$SpecModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

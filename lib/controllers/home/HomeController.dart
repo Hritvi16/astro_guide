@@ -1,4 +1,5 @@
 import 'package:astro_guide/essential/Essential.dart';
+import 'package:astro_guide/models/spec/SpecModel.dart';
 import 'package:astro_guide/shared/widgets/bottomNavigation/BottomNavigation.dart';
 import 'package:astro_guide/views/home/chat/Chat.dart';
 import 'package:astro_guide/views/home/dashboard/Dashboard.dart';
@@ -31,15 +32,28 @@ class HomeController extends GetxController {
   ];
 
   List<Widget> screens = [
-    Dashboard(),
+    Container(),
     Container(),
     Container(),
     Container(),
   ];
 
+  late SpecModel spec;
+
   @override
   void onInit() {
     super.onInit();
+
+    if(!Essential.getPlatform()) {
+      size = 3;
+      items.removeAt(0);
+      screens.removeAt(0);
+      spec = Get.arguments['spec'];
+      screens[0] = Talk(null, spec);
+    }
+    else {
+      screens[0] = Dashboard();
+    }
 
     print("Get.arguments");
     print(Get.arguments);
@@ -54,23 +68,42 @@ class HomeController extends GetxController {
   }
 
   void changeTab(int index, {String? title}) {
-    current = index;
-    update();
-    if(current==0) {
-      screens[index] = Dashboard();
-      Dashboard().dashboardController.onInit();
-    }
-    else if(current==1) {
-      screens[index] = Talk(title);
-      Talk(title).talkController.onInit();
-    }
-    else if(current==2) {
-      screens[index] = History();
-      History().historyController.onInit();
-    }
-    else if(current==3) {
-      screens[index] = Setting();
-      Setting().settingController.onInit();
+    if(current!=index) {
+      current = index;
+      update();
+
+      if(Essential.getPlatform()) {
+        if (current == 0) {
+          screens[index] = Dashboard();
+          Dashboard().dashboardController.onInit();
+        }
+        else if (current == 1) {
+          screens[index] = Talk(title, null);
+          Talk(title, null).talkController.onInit();
+        }
+        else if (current == 2) {
+          screens[index] = History();
+          History().historyController.onInit();
+        }
+        else if (current == 3) {
+          screens[index] = Setting();
+          Setting().settingController.onInit();
+        }
+      }
+      else {
+        if (current == 0) {
+          screens[index] = Talk(title, Get.arguments);
+          Talk(title, spec).talkController.onInit();
+        }
+        else if (current == 1) {
+          screens[index] = History();
+          History().historyController.onInit();
+        }
+        else if (current == 2) {
+          screens[index] = Setting();
+          Setting().settingController.onInit();
+        }
+      }
     }
   }
 

@@ -98,11 +98,11 @@ class _$CountryModelCopyWithImpl<$Res, $Val extends CountryModel>
 }
 
 /// @nodoc
-abstract class _$$_CountryModelCopyWith<$Res>
+abstract class _$$CountryModelImplCopyWith<$Res>
     implements $CountryModelCopyWith<$Res> {
-  factory _$$_CountryModelCopyWith(
-          _$_CountryModel value, $Res Function(_$_CountryModel) then) =
-      __$$_CountryModelCopyWithImpl<$Res>;
+  factory _$$CountryModelImplCopyWith(
+          _$CountryModelImpl value, $Res Function(_$CountryModelImpl) then) =
+      __$$CountryModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -115,11 +115,11 @@ abstract class _$$_CountryModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_CountryModelCopyWithImpl<$Res>
-    extends _$CountryModelCopyWithImpl<$Res, _$_CountryModel>
-    implements _$$_CountryModelCopyWith<$Res> {
-  __$$_CountryModelCopyWithImpl(
-      _$_CountryModel _value, $Res Function(_$_CountryModel) _then)
+class __$$CountryModelImplCopyWithImpl<$Res>
+    extends _$CountryModelCopyWithImpl<$Res, _$CountryModelImpl>
+    implements _$$CountryModelImplCopyWith<$Res> {
+  __$$CountryModelImplCopyWithImpl(
+      _$CountryModelImpl _value, $Res Function(_$CountryModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -132,7 +132,7 @@ class __$$_CountryModelCopyWithImpl<$Res>
     Object? code = null,
     Object? imageFullUrl = null,
   }) {
-    return _then(_$_CountryModel(
+    return _then(_$CountryModelImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -163,8 +163,8 @@ class __$$_CountryModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_CountryModel implements _CountryModel {
-  _$_CountryModel(
+class _$CountryModelImpl implements _CountryModel {
+  _$CountryModelImpl(
       {required this.id,
       required this.name,
       required this.nationality,
@@ -172,8 +172,8 @@ class _$_CountryModel implements _CountryModel {
       required this.code,
       required this.imageFullUrl});
 
-  factory _$_CountryModel.fromJson(Map<String, dynamic> json) =>
-      _$$_CountryModelFromJson(json);
+  factory _$CountryModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CountryModelImplFromJson(json);
 
   @override
   final int id;
@@ -194,10 +194,10 @@ class _$_CountryModel implements _CountryModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_CountryModel &&
+            other is _$CountryModelImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.nationality, nationality) ||
@@ -216,12 +216,12 @@ class _$_CountryModel implements _CountryModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_CountryModelCopyWith<_$_CountryModel> get copyWith =>
-      __$$_CountryModelCopyWithImpl<_$_CountryModel>(this, _$identity);
+  _$$CountryModelImplCopyWith<_$CountryModelImpl> get copyWith =>
+      __$$CountryModelImplCopyWithImpl<_$CountryModelImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CountryModelToJson(
+    return _$$CountryModelImplToJson(
       this,
     );
   }
@@ -234,10 +234,10 @@ abstract class _CountryModel implements CountryModel {
       required final String nationality,
       required final String icon,
       required final String code,
-      required final String imageFullUrl}) = _$_CountryModel;
+      required final String imageFullUrl}) = _$CountryModelImpl;
 
   factory _CountryModel.fromJson(Map<String, dynamic> json) =
-      _$_CountryModel.fromJson;
+      _$CountryModelImpl.fromJson;
 
   @override
   int get id;
@@ -253,6 +253,6 @@ abstract class _CountryModel implements CountryModel {
   String get imageFullUrl;
   @override
   @JsonKey(ignore: true)
-  _$$_CountryModelCopyWith<_$_CountryModel> get copyWith =>
+  _$$CountryModelImplCopyWith<_$CountryModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

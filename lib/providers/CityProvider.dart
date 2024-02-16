@@ -6,6 +6,12 @@ class CityProvider {
 
   CityProvider(this.cityRepository);
 
+  Future<CityListModel> fetchAll(String endpoint, String token) async {
+    var cityListResponse = await cityRepository.getAllCities(endpoint, token);
+
+    return CityListModel.fromJson(cityListResponse);
+  }
+
   Future<CityListModel> fetchList(Map<String, dynamic> data, String endpoint, String token) async {
     var cityListResponse = await cityRepository.getCities(data, endpoint, token);
 

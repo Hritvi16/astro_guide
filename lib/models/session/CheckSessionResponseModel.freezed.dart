@@ -191,12 +191,12 @@ class _$CheckSessionResponseModelCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_CheckSessionResponseModelCopyWith<$Res>
+abstract class _$$CheckSessionResponseModelImplCopyWith<$Res>
     implements $CheckSessionResponseModelCopyWith<$Res> {
-  factory _$$_CheckSessionResponseModelCopyWith(
-          _$_CheckSessionResponseModel value,
-          $Res Function(_$_CheckSessionResponseModel) then) =
-      __$$_CheckSessionResponseModelCopyWithImpl<$Res>;
+  factory _$$CheckSessionResponseModelImplCopyWith(
+          _$CheckSessionResponseModelImpl value,
+          $Res Function(_$CheckSessionResponseModelImpl) then) =
+      __$$CheckSessionResponseModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -223,13 +223,13 @@ abstract class _$$_CheckSessionResponseModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_CheckSessionResponseModelCopyWithImpl<$Res>
+class __$$CheckSessionResponseModelImplCopyWithImpl<$Res>
     extends _$CheckSessionResponseModelCopyWithImpl<$Res,
-        _$_CheckSessionResponseModel>
-    implements _$$_CheckSessionResponseModelCopyWith<$Res> {
-  __$$_CheckSessionResponseModelCopyWithImpl(
-      _$_CheckSessionResponseModel _value,
-      $Res Function(_$_CheckSessionResponseModel) _then)
+        _$CheckSessionResponseModelImpl>
+    implements _$$CheckSessionResponseModelImplCopyWith<$Res> {
+  __$$CheckSessionResponseModelImplCopyWithImpl(
+      _$CheckSessionResponseModelImpl _value,
+      $Res Function(_$CheckSessionResponseModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -251,7 +251,7 @@ class __$$_CheckSessionResponseModelCopyWithImpl<$Res>
     Object? session_history = freezed,
     Object? token = freezed,
   }) {
-    return _then(_$_CheckSessionResponseModel(
+    return _then(_$CheckSessionResponseModelImpl(
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -318,8 +318,8 @@ class __$$_CheckSessionResponseModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_CheckSessionResponseModel implements _CheckSessionResponseModel {
-  _$_CheckSessionResponseModel(
+class _$CheckSessionResponseModelImpl implements _CheckSessionResponseModel {
+  _$CheckSessionResponseModelImpl(
       {required this.status,
       required this.code,
       required this.message,
@@ -339,8 +339,8 @@ class _$_CheckSessionResponseModel implements _CheckSessionResponseModel {
         _kundlis = kundlis,
         _relations = relations;
 
-  factory _$_CheckSessionResponseModel.fromJson(Map<String, dynamic> json) =>
-      _$$_CheckSessionResponseModelFromJson(json);
+  factory _$CheckSessionResponseModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CheckSessionResponseModelImplFromJson(json);
 
   @override
   final String status;
@@ -403,10 +403,10 @@ class _$_CheckSessionResponseModel implements _CheckSessionResponseModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_CheckSessionResponseModel &&
+            other is _$CheckSessionResponseModelImpl &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.code, code) || other.code == code) &&
             (identical(other.message, message) || other.message == message) &&
@@ -450,13 +450,13 @@ class _$_CheckSessionResponseModel implements _CheckSessionResponseModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_CheckSessionResponseModelCopyWith<_$_CheckSessionResponseModel>
-      get copyWith => __$$_CheckSessionResponseModelCopyWithImpl<
-          _$_CheckSessionResponseModel>(this, _$identity);
+  _$$CheckSessionResponseModelImplCopyWith<_$CheckSessionResponseModelImpl>
+      get copyWith => __$$CheckSessionResponseModelImplCopyWithImpl<
+          _$CheckSessionResponseModelImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CheckSessionResponseModelToJson(
+    return _$$CheckSessionResponseModelImplToJson(
       this,
     );
   }
@@ -478,10 +478,10 @@ abstract class _CheckSessionResponseModel implements CheckSessionResponseModel {
       final double? wallet,
       final int? sess_id,
       final SessionHistoryModel? session_history,
-      final String? token}) = _$_CheckSessionResponseModel;
+      final String? token}) = _$CheckSessionResponseModelImpl;
 
   factory _CheckSessionResponseModel.fromJson(Map<String, dynamic> json) =
-      _$_CheckSessionResponseModel.fromJson;
+      _$CheckSessionResponseModelImpl.fromJson;
 
   @override
   String get status;
@@ -515,6 +515,6 @@ abstract class _CheckSessionResponseModel implements CheckSessionResponseModel {
   String? get token;
   @override
   @JsonKey(ignore: true)
-  _$$_CheckSessionResponseModelCopyWith<_$_CheckSessionResponseModel>
+  _$$CheckSessionResponseModelImplCopyWith<_$CheckSessionResponseModelImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

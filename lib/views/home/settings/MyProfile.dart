@@ -1,13 +1,12 @@
 import 'dart:io';
 import 'package:astro_guide/constants/UserConstants.dart';
+import 'package:astro_guide/essential/Essential.dart';
 import 'package:astro_guide/services/networking/ApiConstants.dart';
 import 'package:astro_guide/shared/CustomClipPath.dart';
 import 'package:astro_guide/shared/widgets/button/Button.dart';
 import 'package:astro_guide/shared/widgets/customAppBar/CustomAppBar.dart';
 import 'package:astro_guide/shared/widgets/label/Label.dart';
 import 'package:astro_guide/models/city/CityModel.dart';
-import 'package:astro_guide/models/country/CountryModel.dart';
-import 'package:astro_guide/models/state/StateModel.dart';
 import 'package:astro_guide/size/Spacing.dart';
 import 'package:astro_guide/size/WidgetSize.dart';
 import 'package:astro_guide/views/loadingScreen/LoadingScreen.dart';
@@ -55,11 +54,12 @@ class MyProfile extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                   color: MyColors.colorPrimary,
-                  image: const DecorationImage(
+                  image: Essential.getPlatform() ?
+                  const DecorationImage(
                       image: AssetImage(
                           "assets/essential/upper_bg_s.png"
                       )
-                  )
+                  ) : null
               ),
               child: SafeArea(
                 child: CustomAppBar("My Profile".tr),
@@ -73,9 +73,10 @@ class MyProfile extends StatelessWidget {
             height: MySize.sizeh100(context) - standardUpperFixedDesignHeight,
             padding: EdgeInsets.symmetric(vertical: 15),
             decoration: BoxDecoration(
-                image: DecorationImage(
+                image: Essential.getPlatform() ?
+                DecorationImage(
                     image: AssetImage("assets/essential/bg.png")
-                )
+                ) : null
             ),
             child: SingleChildScrollView(
               child: Container(
@@ -247,7 +248,7 @@ class MyProfile extends StatelessWidget {
               ],
             ),
           ),
-          standardTFLabel(text: 'Full Name', optional: '*', optionalColor: MyColors.red, optionalFontSize: 16),
+          standardTFLabel(text: 'Name', optional: '*', optionalColor: MyColors.red, optionalFontSize: 16),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 5),
             child: TextFormField(
@@ -266,7 +267,7 @@ class MyProfile extends StatelessWidget {
                     ),
                     borderRadius: BorderRadius.circular(16),
                   ),
-                  hintText: "Enter Full Name",
+                  hintText: "Enter Name",
                   contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                   prefixIcon: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 14.0),
@@ -286,7 +287,9 @@ class MyProfile extends StatelessWidget {
               },
             ),
           ),
-          standardTFLabel(text: 'Mobile Number', optional: '*', optionalColor: MyColors.red, optionalFontSize: 16),
+          myProfileController.user.joined_via=="CUSTOM" ?
+          standardTFLabel(text: 'Mobile Number', optional: '*', optionalColor: MyColors.red, optionalFontSize: 16)
+          : standardTFLabel(text: 'Mobile Number', optional: '\t(Optional)', optionalFontSize: 11),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 5),
             child: TextFormField(
@@ -317,9 +320,9 @@ class MyProfile extends StatelessWidget {
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(left: 14),
-                        child: myProfileController.code.imageFullUrl.startsWith("http") ?
+                        child: (myProfileController.code?.imageFullUrl??"").startsWith("http") ?
                         Image.network(
-                          myProfileController.code.imageFullUrl,
+                          myProfileController.code?.imageFullUrl??"",
                           height: 24,
                           width: 33,
                         )
@@ -332,7 +335,7 @@ class MyProfile extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 5),
                         child: Text(
-                          myProfileController.code.code,
+                          myProfileController.code?.code??"+91",
                           style: GoogleFonts.manrope(
                             fontSize: 16.0,
                             color: MyColors.black,
@@ -352,7 +355,7 @@ class MyProfile extends StatelessWidget {
               ),
 
               validator: (value) {
-                if ((value??"").isEmpty) {
+                if ((value??"").isEmpty && myProfileController.user.joined_via=="CUSTOM") {
                   return "* Required";
                 }  else {
                   return null;
@@ -360,10 +363,14 @@ class MyProfile extends StatelessWidget {
               },
             ),
           ),
-          standardTFLabel(text: 'Email Address', optional: '\t(Optional)', optionalFontSize: 11),
+          myProfileController.user.joined_via!="CUSTOM" ?
+          standardTFLabel(text: 'Email Address', optional: '*', optionalColor: MyColors.red, optionalFontSize: 16)
+          : standardTFLabel(text: 'Email Address', optional: '\t(Optional)', optionalFontSize: 11),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 5),
             child: TextFormField(
+              readOnly: myProfileController.user.joined_via!="CUSTOM",
+              enabled: myProfileController.user.joined_via=="CUSTOM",
               keyboardType: TextInputType.name,
               style: GoogleFonts.manrope(
                 fontSize: 16.0,
@@ -396,6 +403,14 @@ class MyProfile extends StatelessWidget {
                     ),
                   )
               ),
+
+              validator: (value) {
+                if ((value??"").isEmpty && myProfileController.user.joined_via!="CUSTOM") {
+                  return "* Required";
+                }  else {
+                  return null;
+                }
+              },
             ),
           ),
         ],
@@ -410,91 +425,91 @@ class MyProfile extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          standardTFLabel(text: 'Nationality', optional: '*', optionalColor: MyColors.red, optionalFontSize: 16),
-          Padding(
-              padding: const EdgeInsets.symmetric(vertical: 5),
-              child: DropdownSearch<CountryModel>(
-                popupProps: PopupProps.menu(
-                  showSearchBox: true,
-                  searchFieldProps: TextFieldProps(
-                    decoration: InputDecoration(
-                      hintText: "Search Nationality",
-                    ),
-                  ),
-                  itemBuilder: (buildContext, country, isSelected) {
-                    return Padding(
-                      padding:  EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                      child: Row(
-                        children: [
-                          Image.network(
-                            ApiConstants.countryUrl+country.icon,
-                            height: 24,
-                            width: 33,
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            country.nationality,
-                            style: GoogleFonts.manrope(
-                              fontSize: 16.0,
-                            ),
-                          )
-                        ],
-                      ),
-                    );
-                  }
-                ),
-                itemAsString: (CountryModel country) => country.nationality,
-                items: myProfileController.countries,
-                selectedItem: myProfileController.nationality,
-                dropdownDecoratorProps:  DropDownDecoratorProps(
-                    baseStyle: GoogleFonts.manrope(
-                      fontSize: 16.0,
-                      color: MyColors.labelColor(),
-                      letterSpacing: 0,
-                      fontWeight: FontWeight.w400,
-                    ),
-                    dropdownSearchDecoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: MyColors.colorButton,
-                          ),
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                        hintText: "Enter Nationality",
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-                        prefixIcon: myProfileController.nationality==null
-                            ? Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 14),
-                            child: Image.asset(
-                              "assets/sign_up/location.png",
-                              height: 10,
-                              color: MyColors.colorButton,
-                            )
-                        ) :
-                        Padding(
-                          padding: const EdgeInsets.only(left: 14, right: 10),
-                          child: Image.network(
-                            ApiConstants.countryUrl+myProfileController.nationality!.icon,
-                            height: 24,
-                            width: 33,
-                          ),
-                        )
-                    )
-                ),
-                onChanged: (value) {
-                  myProfileController.changeNationality(value);
-                },
-                validator: (value) {
-                  if (value==null) {
-                    return "* Required";
-                  }  else {
-                    return null;
-                  }
-                },
-              )
-          ),
+          // standardTFLabel(text: 'Nationality', optional: '*', optionalColor: MyColors.red, optionalFontSize: 16),
+          // Padding(
+          //     padding: const EdgeInsets.symmetric(vertical: 5),
+          //     child: DropdownSearch<CountryModel>(
+          //       popupProps: PopupProps.menu(
+          //         showSearchBox: true,
+          //         searchFieldProps: TextFieldProps(
+          //           decoration: InputDecoration(
+          //             hintText: "Search Nationality",
+          //           ),
+          //         ),
+          //         itemBuilder: (buildContext, country, isSelected) {
+          //           return Padding(
+          //             padding:  EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+          //             child: Row(
+          //               children: [
+          //                 Image.network(
+          //                   ApiConstants.countryUrl+country.icon,
+          //                   height: 24,
+          //                   width: 33,
+          //                 ),
+          //                 SizedBox(
+          //                   width: 10,
+          //                 ),
+          //                 Text(
+          //                   country.nationality,
+          //                   style: GoogleFonts.manrope(
+          //                     fontSize: 16.0,
+          //                   ),
+          //                 )
+          //               ],
+          //             ),
+          //           );
+          //         }
+          //       ),
+          //       itemAsString: (CountryModel country) => country.nationality,
+          //       items: myProfileController.countries,
+          //       selectedItem: myProfileController.nationality,
+          //       dropdownDecoratorProps:  DropDownDecoratorProps(
+          //           baseStyle: GoogleFonts.manrope(
+          //             fontSize: 16.0,
+          //             color: MyColors.labelColor(),
+          //             letterSpacing: 0,
+          //             fontWeight: FontWeight.w400,
+          //           ),
+          //           dropdownSearchDecoration: InputDecoration(
+          //               border: OutlineInputBorder(
+          //                 borderSide: BorderSide(
+          //                   color: MyColors.colorButton,
+          //                 ),
+          //                 borderRadius: BorderRadius.circular(16),
+          //               ),
+          //               hintText: "Enter Nationality",
+          //               contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+          //               prefixIcon: myProfileController.nationality==null
+          //                   ? Padding(
+          //                   padding: const EdgeInsets.symmetric(vertical: 14),
+          //                   child: Image.asset(
+          //                     "assets/sign_up/location.png",
+          //                     height: 10,
+          //                     color: MyColors.colorButton,
+          //                   )
+          //               ) :
+          //               Padding(
+          //                 padding: const EdgeInsets.only(left: 14, right: 10),
+          //                 child: Image.network(
+          //                   ApiConstants.countryUrl+myProfileController.nationality!.icon,
+          //                   height: 24,
+          //                   width: 33,
+          //                 ),
+          //               )
+          //           )
+          //       ),
+          //       onChanged: (value) {
+          //         myProfileController.changeNationality(value);
+          //       },
+          //       validator: (value) {
+          //         if (value==null) {
+          //           return "* Required";
+          //         }  else {
+          //           return null;
+          //         }
+          //       },
+          //     )
+          // ),
           standardTFLabel(text: 'Date of Birth', optional: '*', optionalColor: MyColors.red, optionalFontSize: 16),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 5),
@@ -516,20 +531,22 @@ class MyProfile extends StatelessWidget {
                     myProfileController.setDOB(value);
                   },
                   bottomPickerTheme:  BottomPickerTheme.plumPlate,
-                  buttonText: "Done",
-                  buttonTextStyle: GoogleFonts.manrope(
-                    fontSize: 16.0,
-                    color: MyColors.labelColor(),
-                    letterSpacing: 0,
-                    fontWeight: FontWeight.w600,
-                  ),
                   pickerTextStyle: GoogleFonts.manrope(
                     fontSize: 14.0,
                     color: MyColors.labelColor(),
                     letterSpacing: 0,
                   ),
+                  buttonContent: Text(
+                    "Done",
+                    style: GoogleFonts.manrope(
+                      fontSize: 16.0,
+                      color: MyColors.black,
+                      letterSpacing: 0,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
                   buttonSingleColor: Colors.transparent,
-                  displayButtonIcon: false,
+                  displaySubmitButton: true,
                 ).show(context);
               },
               controller: myProfileController.dob,
@@ -616,150 +633,153 @@ class MyProfile extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          standardTFLabel(text: 'Country', optional: '*', optionalColor: MyColors.red, optionalFontSize: 16),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 5),
-            child: DropdownSearch<CountryModel>(
-              popupProps: PopupProps.menu(
-                  showSearchBox: true,
-                  searchFieldProps: TextFieldProps(
-                    decoration: InputDecoration(
-                      hintText: "Search Country",
-                    ),
-                  ),
-                  itemBuilder: (buildContext, country, isSelected) {
-                    return Padding(
-                      padding:  EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                      child: Row(
-                        children: [
-                          Image.network(
-                            ApiConstants.countryUrl+country.icon,
-                            height: 24,
-                            width: 33,
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            country.name,
-                            style: GoogleFonts.manrope(
-                              fontSize: 16.0,
-                            ),
-                          )
-                        ],
-                      ),
-                    );
-                  }
-              ),
-              itemAsString: (CountryModel country) => country.name,
-              items: myProfileController.countries,
-              selectedItem: myProfileController.country,
-              dropdownDecoratorProps:  DropDownDecoratorProps(
-                baseStyle: GoogleFonts.manrope(
-                  fontSize: 16.0,
-                  color: MyColors.labelColor(),
-                  letterSpacing: 0,
-                  fontWeight: FontWeight.w400,
-                ),
-                dropdownSearchDecoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: MyColors.colorButton,
-                      ),
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    hintText: "Enter Country",
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-                    prefixIcon: myProfileController.country==null
-                    ? Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                      child: Image.asset(
-                        "assets/sign_up/location.png",
-                        height: 10,
-                        color: MyColors.colorButton,
-                      )
-                    ) :
-                    Padding(
-                      padding: const EdgeInsets.only(left: 14, right: 10),
-                      child: Image.network(
-                        ApiConstants.countryUrl+myProfileController.country!.icon,
-                        height: 24,
-                        width: 33,
-                      ),
-                    )
-                )
-              ),
-              onChanged: (value) {
-                myProfileController.changeCountry(value);
-              },
-              validator: (value) {
-                if (value==null) {
-                  return "* Required";
-                }  else {
-                  return null;
-                }
-              },
-            )
-          ),
-          standardTFLabel(text: 'State', optional: '*', optionalColor: MyColors.red, optionalFontSize: 16),
-          Padding(
-              padding: const EdgeInsets.symmetric(vertical: 5),
-              child: DropdownSearch<StateModel>(
-                enabled: myProfileController.country!=null,
-                popupProps:  const PopupProps.menu(
-                    showSearchBox: true,
-                    searchFieldProps: TextFieldProps(
-                      decoration: InputDecoration(
-                        hintText: "Search State",
-                      ),
-                    )
-                ),
-                itemAsString: (StateModel state) => state.name??"",
-                items: myProfileController.states,
-                selectedItem: myProfileController.state,
-                dropdownDecoratorProps:  DropDownDecoratorProps(
-                    baseStyle: GoogleFonts.manrope(
-                      fontSize: 16.0,
-                      color: MyColors.labelColor(),
-                      letterSpacing: 0,
-                      fontWeight: FontWeight.w400,
-                    ),
-                    dropdownSearchDecoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: MyColors.colorButton,
-                          ),
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                        hintText: "Enter State",
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-                        prefixIcon: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 14.0),
-                          child: Image.asset(
-                            "assets/sign_up/location.png",
-                            height: 10,
-                            color: MyColors.colorButton,
-                          ),
-                        )
-                    )
-                ),
-                onChanged: (value) {
-                  myProfileController.changeState(value);
-                },
-                validator: (value) {
-                  if (value==null) {
-                    return "* Required";
-                  }  else {
-                    return null;
-                  }
-                },
-              )
-          ),
+          // standardTFLabel(text: 'Country', optional: '*', optionalColor: MyColors.red, optionalFontSize: 16),
+          // Padding(
+          //   padding: const EdgeInsets.symmetric(vertical: 5),
+          //   child: DropdownSearch<CountryModel>(
+          //     popupProps: PopupProps.menu(
+          //         showSearchBox: true,
+          //         searchFieldProps: TextFieldProps(
+          //           decoration: InputDecoration(
+          //             hintText: "Search Country",
+          //           ),
+          //         ),
+          //         itemBuilder: (buildContext, country, isSelected) {
+          //           return Padding(
+          //             padding:  EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+          //             child: Row(
+          //               crossAxisAlignment: CrossAxisAlignment.start,
+          //               children: [
+          //                 Image.network(
+          //                   ApiConstants.countryUrl+country.icon,
+          //                   height: 24,
+          //                   width: 33,
+          //                 ),
+          //                 SizedBox(
+          //                   width: 10,
+          //                 ),
+          //                 Flexible(
+          //                   child: Text(
+          //                     country.name,
+          //                     style: GoogleFonts.manrope(
+          //                       fontSize: 16.0,
+          //                     ),
+          //                   ),
+          //                 )
+          //               ],
+          //             ),
+          //           );
+          //         }
+          //     ),
+          //     itemAsString: (CountryModel country) => country.name,
+          //     items: myProfileController.countries,
+          //     selectedItem: myProfileController.country,
+          //     dropdownDecoratorProps:  DropDownDecoratorProps(
+          //       baseStyle: GoogleFonts.manrope(
+          //         fontSize: 16.0,
+          //         color: MyColors.labelColor(),
+          //         letterSpacing: 0,
+          //         fontWeight: FontWeight.w400,
+          //       ),
+          //       dropdownSearchDecoration: InputDecoration(
+          //           border: OutlineInputBorder(
+          //             borderSide: BorderSide(
+          //               color: MyColors.colorButton,
+          //             ),
+          //             borderRadius: BorderRadius.circular(16),
+          //           ),
+          //           hintText: "Enter Country",
+          //           contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+          //           prefixIcon: myProfileController.country==null
+          //           ? Padding(
+          //             padding: const EdgeInsets.symmetric(vertical: 14),
+          //             child: Image.asset(
+          //               "assets/sign_up/location.png",
+          //               height: 10,
+          //               color: MyColors.colorButton,
+          //             )
+          //           ) :
+          //           Padding(
+          //             padding: const EdgeInsets.only(left: 14, right: 10),
+          //             child: Image.network(
+          //               ApiConstants.countryUrl+myProfileController.country!.icon,
+          //               height: 24,
+          //               width: 33,
+          //             ),
+          //           )
+          //       )
+          //     ),
+          //     onChanged: (value) {
+          //       myProfileController.changeCountry(value);
+          //     },
+          //     validator: (value) {
+          //       if (value==null) {
+          //         return "* Required";
+          //       }  else {
+          //         return null;
+          //       }
+          //     },
+          //   )
+          // ),
+          // standardTFLabel(text: 'State', optional: '*', optionalColor: MyColors.red, optionalFontSize: 16),
+          // Padding(
+          //     padding: const EdgeInsets.symmetric(vertical: 5),
+          //     child: DropdownSearch<StateModel>(
+          //       enabled: myProfileController.country!=null,
+          //       popupProps:  const PopupProps.menu(
+          //           showSearchBox: true,
+          //           searchFieldProps: TextFieldProps(
+          //             decoration: InputDecoration(
+          //               hintText: "Search State",
+          //             ),
+          //           )
+          //       ),
+          //       itemAsString: (StateModel state) => state.name??"",
+          //       items: myProfileController.states,
+          //       selectedItem: myProfileController.state,
+          //       dropdownDecoratorProps:  DropDownDecoratorProps(
+          //           baseStyle: GoogleFonts.manrope(
+          //             fontSize: 16.0,
+          //             color: MyColors.labelColor(),
+          //             letterSpacing: 0,
+          //             fontWeight: FontWeight.w400,
+          //           ),
+          //           dropdownSearchDecoration: InputDecoration(
+          //               border: OutlineInputBorder(
+          //                 borderSide: BorderSide(
+          //                   color: MyColors.colorButton,
+          //                 ),
+          //                 borderRadius: BorderRadius.circular(16),
+          //               ),
+          //               hintText: "Enter State",
+          //               contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+          //               prefixIcon: Padding(
+          //                 padding: const EdgeInsets.symmetric(vertical: 14.0),
+          //                 child: Image.asset(
+          //                   "assets/sign_up/location.png",
+          //                   height: 10,
+          //                   color: MyColors.colorButton,
+          //                 ),
+          //               )
+          //           )
+          //       ),
+          //       onChanged: (value) {
+          //         myProfileController.changeState(value);
+          //       },
+          //       validator: (value) {
+          //         if (value==null) {
+          //           return "* Required";
+          //         }  else {
+          //           return null;
+          //         }
+          //       },
+          //     )
+          // ),
           standardTFLabel(text: 'City', optional: '*', optionalColor: MyColors.red, optionalFontSize: 16),
           Padding(
               padding: const EdgeInsets.symmetric(vertical: 5),
               child: DropdownSearch<CityModel>(
-                enabled: myProfileController.state!=null,
+                // enabled: myProfileController.state!=null,
                 popupProps:  const PopupProps.menu(
                     showSearchBox: true,
                     searchFieldProps: TextFieldProps(
@@ -768,7 +788,7 @@ class MyProfile extends StatelessWidget {
                       ),
                     )
                 ),
-                itemAsString: (CityModel city) => city.name??"",
+                itemAsString: (CityModel city) => "${city.name}, ${city.state??""}, ${city.country??""}",
                 items: myProfileController.cities,
                 selectedItem: myProfileController.city,
                 dropdownDecoratorProps:  DropDownDecoratorProps(
@@ -809,38 +829,38 @@ class MyProfile extends StatelessWidget {
                 },
               )
           ),
-          standardTFLabel(text: 'Postal Code', optional: '\t(Optional)', optionalFontSize: 11),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 5),
-            child: TextFormField(
-              keyboardType: TextInputType.name,
-              controller: myProfileController.pincode,
-              style: GoogleFonts.manrope(
-                fontSize: 16.0,
-                color: MyColors.labelColor(),
-                letterSpacing: 0,
-                fontWeight: FontWeight.w400,
-              ),
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: MyColors.colorButton,
-                    ),
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  hintText: "Enter Postal Code",
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-                  prefixIcon: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 14.0),
-                    child: Image.asset(
-                      "assets/sign_up/location.png",
-                      height: 10,
-                      color: MyColors.colorButton,
-                    ),
-                  )
-              ),
-            ),
-          ),
+          // standardTFLabel(text: 'Postal Code', optional: '\t(Optional)', optionalFontSize: 11),
+          // Padding(
+          //   padding: const EdgeInsets.symmetric(vertical: 5),
+          //   child: TextFormField(
+          //     keyboardType: TextInputType.name,
+          //     controller: myProfileController.pincode,
+          //     style: GoogleFonts.manrope(
+          //       fontSize: 16.0,
+          //       color: MyColors.labelColor(),
+          //       letterSpacing: 0,
+          //       fontWeight: FontWeight.w400,
+          //     ),
+          //     decoration: InputDecoration(
+          //         border: OutlineInputBorder(
+          //           borderSide: BorderSide(
+          //             color: MyColors.colorButton,
+          //           ),
+          //           borderRadius: BorderRadius.circular(16),
+          //         ),
+          //         hintText: "Enter Postal Code",
+          //         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+          //         prefixIcon: Padding(
+          //           padding: const EdgeInsets.symmetric(vertical: 14.0),
+          //           child: Image.asset(
+          //             "assets/sign_up/location.png",
+          //             height: 10,
+          //             color: MyColors.colorButton,
+          //           ),
+          //         )
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );
@@ -874,7 +894,7 @@ class MyProfile extends StatelessWidget {
   getConnector(int step) {
     return step!=2 ? Text(
       "-------------",
-      style: TextStyle(
+      style: GoogleFonts.manrope(
           color: getColor(step)
       ),
     ) : Container();
@@ -961,7 +981,7 @@ class MyProfile extends StatelessWidget {
                 context: context,
                 backgroundColor: myProfileController.current==2
                 ? myProfileController.eval1==1 && myProfileController.eval2==1
-                  ? myProfileController.country==null
+                  ? myProfileController.city==null
                     ? MyColors.borderColor()
                     : MyColors.colorButton
                   : MyColors.borderColor()
@@ -977,7 +997,7 @@ class MyProfile extends StatelessWidget {
                           fontSize: 16.0,
                           color: myProfileController.current==2
                             ? myProfileController.eval1==1 && myProfileController.eval2==1
-                              ? myProfileController.country==null
+                              ? myProfileController.city==null
                                 ? MyColors.labelColor()
                               : MyColors.white
                             : MyColors.labelColor()
@@ -993,7 +1013,7 @@ class MyProfile extends StatelessWidget {
                       width: standardArrowW,
                       color: myProfileController.current==2
                         ? myProfileController.eval1==1 && myProfileController.eval2==1
-                          ? myProfileController.country==null
+                          ? myProfileController.city==null
                             ? MyColors.labelColor()
                           : MyColors.white
                         : MyColors.labelColor()

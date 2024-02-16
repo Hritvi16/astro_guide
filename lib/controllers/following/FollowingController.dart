@@ -31,6 +31,7 @@ class FollowingController extends GetxController {
   Timer? countdownTimer;
   late bool free;
   late double wallet;
+  late bool load;
 
   @override
   void onInit() {
@@ -38,6 +39,7 @@ class FollowingController extends GetxController {
     print("init");
     free = storage.read("free")??false;
     wallet = double.parse((storage.read("wallet")??0.0).toString());
+    load = false;
 
     start();
   }
@@ -64,6 +66,7 @@ class FollowingController extends GetxController {
         astrologers = [];
         astrologers.addAll(response.data??[]);
       }
+      load = true;
       update();
     });
   }
@@ -99,7 +102,7 @@ class FollowingController extends GetxController {
     print(data);
 
     astrologerProvider.add(storage.read("access"), ApiConstants.followAPI+(astrologers[index].follow==1 ? ApiConstants.remove : ApiConstants.add), data).then((response) {
-      Essential.showSnackBar(response.message, time: 1);
+      Essential.showSnackBar(response.message, time: 1, code: response.code);
       if(response.code==1) {
         astrologers.remove(astrologers[index]);
         // astrologers[index] = astrologers[index].copyWith(fav: astrologers[index].fav==1 ? 0 : 1);

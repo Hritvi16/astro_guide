@@ -2,6 +2,7 @@
 import 'package:astro_guide/colors/MyColors.dart';
 import 'package:astro_guide/constants/CommonConstants.dart';
 import 'package:astro_guide/controllers/language/LanguageController.dart';
+import 'package:astro_guide/essential/Essential.dart';
 import 'package:astro_guide/models/astrologer/AstrologerModel.dart';
 import 'package:astro_guide/models/package/PackageModel.dart';
 import 'package:astro_guide/services/networking/ApiConstants.dart';
@@ -48,11 +49,11 @@ class Language extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                   color: MyColors.colorPrimary,
-                  image: const DecorationImage(
+                  image: Essential.getPlatform() ? const DecorationImage(
                       image: AssetImage(
                           "assets/essential/upper_bg.png"
                       )
-                  )
+                  ) : null
               ),
               child: SafeArea(
                 child: CustomAppBar('Choose Language'.tr),
@@ -64,9 +65,10 @@ class Language extends StatelessWidget {
           width: MySize.size100(context),
           height: MySize.sizeh100(context) - standardUpperFixedDesignHeight,
           decoration: BoxDecoration(
-            image: DecorationImage(
+            image: Essential.getPlatform() ?
+            DecorationImage(
               image: AssetImage("assets/essential/bg.png")
-            )
+            ) : null
           ),
           child: GridView.custom(
             shrinkWrap: true,

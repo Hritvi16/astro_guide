@@ -14,6 +14,8 @@ class TransactionResponseModel with _$TransactionResponseModel {
     required String message,
     int? id,
     String? transaction_id,
+    String? body,
+    String? checksum,
     // double? amount,
     // List<PackageModel>? data,
   }) = _TransactionResponseModel;

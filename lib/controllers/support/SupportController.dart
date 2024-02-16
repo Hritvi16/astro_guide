@@ -22,12 +22,14 @@ class SupportController extends GetxController {
 
 
   Timer? countdownTimer;
+  late bool load;
 
   @override
   void onInit() {
     super.onInit();
     supportProvider = Get.put(SupportProvider(supportRepository));
     supports = [];
+    load = false;
     
     start();
   }
@@ -43,6 +45,7 @@ class SupportController extends GetxController {
         supports = [];
         supports.addAll(response.data??[]);
       }
+      load = true;
       update();
     });
   }

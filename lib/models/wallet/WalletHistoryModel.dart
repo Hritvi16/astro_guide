@@ -11,7 +11,7 @@ class WalletHistoryModel with _$WalletHistoryModel {
     required int id,
     int? user_id,
     int? astro_id,
-    required String order_id,
+    String? order_id,
     String? invoice_id,
     String? transaction_id,
     int? p_id,

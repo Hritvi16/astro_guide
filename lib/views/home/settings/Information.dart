@@ -1,5 +1,6 @@
 import 'package:astro_guide/colors/MyColors.dart';
 import 'package:astro_guide/controllers/information/InformationController.dart';
+import 'package:astro_guide/essential/Essential.dart';
 import 'package:astro_guide/shared/CustomClipPath.dart';
 import 'package:astro_guide/shared/widgets/customAppBar/CustomAppBar.dart';
 import 'package:astro_guide/size/MySize.dart';
@@ -37,11 +38,12 @@ class Information extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                   color: MyColors.colorPrimary,
-                  image: const DecorationImage(
+                  image: Essential.getPlatform() ?
+                  const DecorationImage(
                       image: AssetImage(
                           "assets/essential/upper_bg_s.png"
                       )
-                  )
+                  ) : null
               ),
               child: SafeArea(
                 child: CustomAppBar("${Get.arguments['title']}".tr),

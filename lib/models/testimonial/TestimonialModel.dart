@@ -13,7 +13,7 @@ class TestimonialModel with _$TestimonialModel {
     required String description,
     required String created_at,
     required String name,
-    required String profile,
+    String? profile,
     required String state,
     required String country,
   }) = _TestimonialModel;

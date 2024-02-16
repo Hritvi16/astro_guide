@@ -26,6 +26,7 @@ mixin _$MyProfileResponseModel {
   String get message => throw _privateConstructorUsedError;
   UserModel? get data => throw _privateConstructorUsedError;
   List<CountryModel>? get countries => throw _privateConstructorUsedError;
+  List<CityModel>? get cities => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -44,7 +45,8 @@ abstract class $MyProfileResponseModelCopyWith<$Res> {
       int code,
       String message,
       UserModel? data,
-      List<CountryModel>? countries});
+      List<CountryModel>? countries,
+      List<CityModel>? cities});
 
   $UserModelCopyWith<$Res>? get data;
 }
@@ -68,6 +70,7 @@ class _$MyProfileResponseModelCopyWithImpl<$Res,
     Object? message = null,
     Object? data = freezed,
     Object? countries = freezed,
+    Object? cities = freezed,
   }) {
     return _then(_value.copyWith(
       status: null == status
@@ -90,6 +93,10 @@ class _$MyProfileResponseModelCopyWithImpl<$Res,
           ? _value.countries
           : countries // ignore: cast_nullable_to_non_nullable
               as List<CountryModel>?,
+      cities: freezed == cities
+          ? _value.cities
+          : cities // ignore: cast_nullable_to_non_nullable
+              as List<CityModel>?,
     ) as $Val);
   }
 
@@ -107,11 +114,12 @@ class _$MyProfileResponseModelCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_MyProfileResponseModelCopyWith<$Res>
+abstract class _$$MyProfileResponseModelImplCopyWith<$Res>
     implements $MyProfileResponseModelCopyWith<$Res> {
-  factory _$$_MyProfileResponseModelCopyWith(_$_MyProfileResponseModel value,
-          $Res Function(_$_MyProfileResponseModel) then) =
-      __$$_MyProfileResponseModelCopyWithImpl<$Res>;
+  factory _$$MyProfileResponseModelImplCopyWith(
+          _$MyProfileResponseModelImpl value,
+          $Res Function(_$MyProfileResponseModelImpl) then) =
+      __$$MyProfileResponseModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -119,19 +127,21 @@ abstract class _$$_MyProfileResponseModelCopyWith<$Res>
       int code,
       String message,
       UserModel? data,
-      List<CountryModel>? countries});
+      List<CountryModel>? countries,
+      List<CityModel>? cities});
 
   @override
   $UserModelCopyWith<$Res>? get data;
 }
 
 /// @nodoc
-class __$$_MyProfileResponseModelCopyWithImpl<$Res>
+class __$$MyProfileResponseModelImplCopyWithImpl<$Res>
     extends _$MyProfileResponseModelCopyWithImpl<$Res,
-        _$_MyProfileResponseModel>
-    implements _$$_MyProfileResponseModelCopyWith<$Res> {
-  __$$_MyProfileResponseModelCopyWithImpl(_$_MyProfileResponseModel _value,
-      $Res Function(_$_MyProfileResponseModel) _then)
+        _$MyProfileResponseModelImpl>
+    implements _$$MyProfileResponseModelImplCopyWith<$Res> {
+  __$$MyProfileResponseModelImplCopyWithImpl(
+      _$MyProfileResponseModelImpl _value,
+      $Res Function(_$MyProfileResponseModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -142,8 +152,9 @@ class __$$_MyProfileResponseModelCopyWithImpl<$Res>
     Object? message = null,
     Object? data = freezed,
     Object? countries = freezed,
+    Object? cities = freezed,
   }) {
-    return _then(_$_MyProfileResponseModel(
+    return _then(_$MyProfileResponseModelImpl(
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -164,23 +175,29 @@ class __$$_MyProfileResponseModelCopyWithImpl<$Res>
           ? _value._countries
           : countries // ignore: cast_nullable_to_non_nullable
               as List<CountryModel>?,
+      cities: freezed == cities
+          ? _value._cities
+          : cities // ignore: cast_nullable_to_non_nullable
+              as List<CityModel>?,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$_MyProfileResponseModel implements _MyProfileResponseModel {
-  _$_MyProfileResponseModel(
+class _$MyProfileResponseModelImpl implements _MyProfileResponseModel {
+  _$MyProfileResponseModelImpl(
       {required this.status,
       required this.code,
       required this.message,
       this.data,
-      final List<CountryModel>? countries})
-      : _countries = countries;
+      final List<CountryModel>? countries,
+      final List<CityModel>? cities})
+      : _countries = countries,
+        _cities = cities;
 
-  factory _$_MyProfileResponseModel.fromJson(Map<String, dynamic> json) =>
-      _$$_MyProfileResponseModelFromJson(json);
+  factory _$MyProfileResponseModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$MyProfileResponseModelImplFromJson(json);
 
   @override
   final String status;
@@ -200,39 +217,56 @@ class _$_MyProfileResponseModel implements _MyProfileResponseModel {
     return EqualUnmodifiableListView(value);
   }
 
+  final List<CityModel>? _cities;
   @override
-  String toString() {
-    return 'MyProfileResponseModel(status: $status, code: $code, message: $message, data: $data, countries: $countries)';
+  List<CityModel>? get cities {
+    final value = _cities;
+    if (value == null) return null;
+    if (_cities is EqualUnmodifiableListView) return _cities;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
   }
 
   @override
-  bool operator ==(dynamic other) {
+  String toString() {
+    return 'MyProfileResponseModel(status: $status, code: $code, message: $message, data: $data, countries: $countries, cities: $cities)';
+  }
+
+  @override
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_MyProfileResponseModel &&
+            other is _$MyProfileResponseModelImpl &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.code, code) || other.code == code) &&
             (identical(other.message, message) || other.message == message) &&
             (identical(other.data, data) || other.data == data) &&
             const DeepCollectionEquality()
-                .equals(other._countries, _countries));
+                .equals(other._countries, _countries) &&
+            const DeepCollectionEquality().equals(other._cities, _cities));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, status, code, message, data,
-      const DeepCollectionEquality().hash(_countries));
+  int get hashCode => Object.hash(
+      runtimeType,
+      status,
+      code,
+      message,
+      data,
+      const DeepCollectionEquality().hash(_countries),
+      const DeepCollectionEquality().hash(_cities));
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_MyProfileResponseModelCopyWith<_$_MyProfileResponseModel> get copyWith =>
-      __$$_MyProfileResponseModelCopyWithImpl<_$_MyProfileResponseModel>(
-          this, _$identity);
+  _$$MyProfileResponseModelImplCopyWith<_$MyProfileResponseModelImpl>
+      get copyWith => __$$MyProfileResponseModelImplCopyWithImpl<
+          _$MyProfileResponseModelImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_MyProfileResponseModelToJson(
+    return _$$MyProfileResponseModelImplToJson(
       this,
     );
   }
@@ -244,10 +278,11 @@ abstract class _MyProfileResponseModel implements MyProfileResponseModel {
       required final int code,
       required final String message,
       final UserModel? data,
-      final List<CountryModel>? countries}) = _$_MyProfileResponseModel;
+      final List<CountryModel>? countries,
+      final List<CityModel>? cities}) = _$MyProfileResponseModelImpl;
 
   factory _MyProfileResponseModel.fromJson(Map<String, dynamic> json) =
-      _$_MyProfileResponseModel.fromJson;
+      _$MyProfileResponseModelImpl.fromJson;
 
   @override
   String get status;
@@ -260,7 +295,9 @@ abstract class _MyProfileResponseModel implements MyProfileResponseModel {
   @override
   List<CountryModel>? get countries;
   @override
+  List<CityModel>? get cities;
+  @override
   @JsonKey(ignore: true)
-  _$$_MyProfileResponseModelCopyWith<_$_MyProfileResponseModel> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$MyProfileResponseModelImplCopyWith<_$MyProfileResponseModelImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

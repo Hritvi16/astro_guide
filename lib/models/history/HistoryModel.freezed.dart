@@ -112,11 +112,11 @@ class _$HistoryModelCopyWithImpl<$Res, $Val extends HistoryModel>
 }
 
 /// @nodoc
-abstract class _$$_HistoryModelCopyWith<$Res>
+abstract class _$$HistoryModelImplCopyWith<$Res>
     implements $HistoryModelCopyWith<$Res> {
-  factory _$$_HistoryModelCopyWith(
-          _$_HistoryModel value, $Res Function(_$_HistoryModel) then) =
-      __$$_HistoryModelCopyWithImpl<$Res>;
+  factory _$$HistoryModelImplCopyWith(
+          _$HistoryModelImpl value, $Res Function(_$HistoryModelImpl) then) =
+      __$$HistoryModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -131,11 +131,11 @@ abstract class _$$_HistoryModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_HistoryModelCopyWithImpl<$Res>
-    extends _$HistoryModelCopyWithImpl<$Res, _$_HistoryModel>
-    implements _$$_HistoryModelCopyWith<$Res> {
-  __$$_HistoryModelCopyWithImpl(
-      _$_HistoryModel _value, $Res Function(_$_HistoryModel) _then)
+class __$$HistoryModelImplCopyWithImpl<$Res>
+    extends _$HistoryModelCopyWithImpl<$Res, _$HistoryModelImpl>
+    implements _$$HistoryModelImplCopyWith<$Res> {
+  __$$HistoryModelImplCopyWithImpl(
+      _$HistoryModelImpl _value, $Res Function(_$HistoryModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -150,7 +150,7 @@ class __$$_HistoryModelCopyWithImpl<$Res>
     Object? call = freezed,
     Object? chat = freezed,
   }) {
-    return _then(_$_HistoryModel(
+    return _then(_$HistoryModelImpl(
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -189,8 +189,8 @@ class __$$_HistoryModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_HistoryModel implements _HistoryModel {
-  _$_HistoryModel(
+class _$HistoryModelImpl implements _HistoryModel {
+  _$HistoryModelImpl(
       {required this.status,
       required this.code,
       required this.message,
@@ -204,8 +204,8 @@ class _$_HistoryModel implements _HistoryModel {
         _call = call,
         _chat = chat;
 
-  factory _$_HistoryModel.fromJson(Map<String, dynamic> json) =>
-      _$$_HistoryModelFromJson(json);
+  factory _$HistoryModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$HistoryModelImplFromJson(json);
 
   @override
   final String status;
@@ -261,10 +261,10 @@ class _$_HistoryModel implements _HistoryModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_HistoryModel &&
+            other is _$HistoryModelImpl &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.code, code) || other.code == code) &&
             (identical(other.message, message) || other.message == message) &&
@@ -291,12 +291,12 @@ class _$_HistoryModel implements _HistoryModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_HistoryModelCopyWith<_$_HistoryModel> get copyWith =>
-      __$$_HistoryModelCopyWithImpl<_$_HistoryModel>(this, _$identity);
+  _$$HistoryModelImplCopyWith<_$HistoryModelImpl> get copyWith =>
+      __$$HistoryModelImplCopyWithImpl<_$HistoryModelImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_HistoryModelToJson(
+    return _$$HistoryModelImplToJson(
       this,
     );
   }
@@ -311,10 +311,10 @@ abstract class _HistoryModel implements HistoryModel {
       final List<WalletHistoryModel>? wallet,
       final List<WalletHistoryModel>? payment,
       final List<SessionHistoryModel>? call,
-      final List<SessionHistoryModel>? chat}) = _$_HistoryModel;
+      final List<SessionHistoryModel>? chat}) = _$HistoryModelImpl;
 
   factory _HistoryModel.fromJson(Map<String, dynamic> json) =
-      _$_HistoryModel.fromJson;
+      _$HistoryModelImpl.fromJson;
 
   @override
   String get status;
@@ -334,6 +334,6 @@ abstract class _HistoryModel implements HistoryModel {
   List<SessionHistoryModel>? get chat;
   @override
   @JsonKey(ignore: true)
-  _$$_HistoryModelCopyWith<_$_HistoryModel> get copyWith =>
+  _$$HistoryModelImplCopyWith<_$HistoryModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

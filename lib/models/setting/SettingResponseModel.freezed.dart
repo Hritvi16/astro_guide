@@ -119,11 +119,11 @@ class _$SettingResponseModelCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_SettingResponseModelCopyWith<$Res>
+abstract class _$$SettingResponseModelImplCopyWith<$Res>
     implements $SettingResponseModelCopyWith<$Res> {
-  factory _$$_SettingResponseModelCopyWith(_$_SettingResponseModel value,
-          $Res Function(_$_SettingResponseModel) then) =
-      __$$_SettingResponseModelCopyWithImpl<$Res>;
+  factory _$$SettingResponseModelImplCopyWith(_$SettingResponseModelImpl value,
+          $Res Function(_$SettingResponseModelImpl) then) =
+      __$$SettingResponseModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -140,11 +140,11 @@ abstract class _$$_SettingResponseModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_SettingResponseModelCopyWithImpl<$Res>
-    extends _$SettingResponseModelCopyWithImpl<$Res, _$_SettingResponseModel>
-    implements _$$_SettingResponseModelCopyWith<$Res> {
-  __$$_SettingResponseModelCopyWithImpl(_$_SettingResponseModel _value,
-      $Res Function(_$_SettingResponseModel) _then)
+class __$$SettingResponseModelImplCopyWithImpl<$Res>
+    extends _$SettingResponseModelCopyWithImpl<$Res, _$SettingResponseModelImpl>
+    implements _$$SettingResponseModelImplCopyWith<$Res> {
+  __$$SettingResponseModelImplCopyWithImpl(_$SettingResponseModelImpl _value,
+      $Res Function(_$SettingResponseModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -156,7 +156,7 @@ class __$$_SettingResponseModelCopyWithImpl<$Res>
     Object? data = freezed,
     Object? user = freezed,
   }) {
-    return _then(_$_SettingResponseModel(
+    return _then(_$SettingResponseModelImpl(
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -183,16 +183,16 @@ class __$$_SettingResponseModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_SettingResponseModel implements _SettingResponseModel {
-  _$_SettingResponseModel(
+class _$SettingResponseModelImpl implements _SettingResponseModel {
+  _$SettingResponseModelImpl(
       {required this.status,
       required this.code,
       required this.message,
       this.data,
       this.user});
 
-  factory _$_SettingResponseModel.fromJson(Map<String, dynamic> json) =>
-      _$$_SettingResponseModelFromJson(json);
+  factory _$SettingResponseModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$SettingResponseModelImplFromJson(json);
 
   @override
   final String status;
@@ -211,10 +211,10 @@ class _$_SettingResponseModel implements _SettingResponseModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_SettingResponseModel &&
+            other is _$SettingResponseModelImpl &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.code, code) || other.code == code) &&
             (identical(other.message, message) || other.message == message) &&
@@ -230,13 +230,14 @@ class _$_SettingResponseModel implements _SettingResponseModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_SettingResponseModelCopyWith<_$_SettingResponseModel> get copyWith =>
-      __$$_SettingResponseModelCopyWithImpl<_$_SettingResponseModel>(
-          this, _$identity);
+  _$$SettingResponseModelImplCopyWith<_$SettingResponseModelImpl>
+      get copyWith =>
+          __$$SettingResponseModelImplCopyWithImpl<_$SettingResponseModelImpl>(
+              this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_SettingResponseModelToJson(
+    return _$$SettingResponseModelImplToJson(
       this,
     );
   }
@@ -248,10 +249,10 @@ abstract class _SettingResponseModel implements SettingResponseModel {
       required final int code,
       required final String message,
       final SettingModel? data,
-      final UserModel? user}) = _$_SettingResponseModel;
+      final UserModel? user}) = _$SettingResponseModelImpl;
 
   factory _SettingResponseModel.fromJson(Map<String, dynamic> json) =
-      _$_SettingResponseModel.fromJson;
+      _$SettingResponseModelImpl.fromJson;
 
   @override
   String get status;
@@ -265,6 +266,6 @@ abstract class _SettingResponseModel implements SettingResponseModel {
   UserModel? get user;
   @override
   @JsonKey(ignore: true)
-  _$$_SettingResponseModelCopyWith<_$_SettingResponseModel> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$SettingResponseModelImplCopyWith<_$SettingResponseModelImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

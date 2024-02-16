@@ -45,6 +45,8 @@ class RequestSupportController extends GetxController {
   
   Future<void> request() async {
     if(formKey.currentState!.validate()) {
+      Essential.showLoadingDialog();
+
       final SupportRepository supportRepository = Get.put(
           SupportRepository(Get.put(ApiService(Get.find()), permanent: true)));
       late SupportProvider supportProvider = Get.put(
@@ -57,6 +59,7 @@ class RequestSupportController extends GetxController {
 
       await supportProvider.request(storage.read("access"), ApiConstants.request, data).then((response) async {
         print(response.toJson());
+        Get.back();
         if (response.code == 1) {
           back(result: response.id);
         }

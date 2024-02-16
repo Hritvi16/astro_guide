@@ -10,7 +10,7 @@ class UserModel with _$UserModel {
   factory UserModel({
     required int id,
     required String name,
-    required String mobile,
+    String? mobile,
     String? email,
     String? gender,
     String? dob,
@@ -21,6 +21,7 @@ class UserModel with _$UserModel {
     int? st_id,
     int? co_id,
     String? postal_code,
+    required String joined_via,
     double? amount
   }) = _UserModel;
 

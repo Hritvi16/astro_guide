@@ -6,9 +6,9 @@ part of 'SessionHistoryModel.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_SessionHistoryModel _$$_SessionHistoryModelFromJson(
+_$SessionHistoryModelImpl _$$SessionHistoryModelImplFromJson(
         Map<String, dynamic> json) =>
-    _$_SessionHistoryModel(
+    _$SessionHistoryModelImpl(
       id: json['id'] as int,
       sess_id: json['sess_id'] as int,
       session_id: json['session_id'] as String?,
@@ -43,8 +43,8 @@ _$_SessionHistoryModel _$$_SessionHistoryModelFromJson(
       token: json['token'] as String?,
     );
 
-Map<String, dynamic> _$$_SessionHistoryModelToJson(
-        _$_SessionHistoryModel instance) =>
+Map<String, dynamic> _$$SessionHistoryModelImplToJson(
+        _$SessionHistoryModelImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'sess_id': instance.sess_id,

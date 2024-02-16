@@ -6,9 +6,9 @@ part of 'SessionResponseModel.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_SessionResponseModel _$$_SessionResponseModelFromJson(
+_$SessionResponseModelImpl _$$SessionResponseModelImplFromJson(
         Map<String, dynamic> json) =>
-    _$_SessionResponseModel(
+    _$SessionResponseModelImpl(
       status: json['status'] as String,
       code: json['code'] as int,
       message: json['message'] as String,
@@ -23,8 +23,8 @@ _$_SessionResponseModel _$$_SessionResponseModelFromJson(
       wallet: (json['wallet'] as num?)?.toDouble(),
     );
 
-Map<String, dynamic> _$$_SessionResponseModelToJson(
-        _$_SessionResponseModel instance) =>
+Map<String, dynamic> _$$SessionResponseModelImplToJson(
+        _$SessionResponseModelImpl instance) =>
     <String, dynamic>{
       'status': instance.status,
       'code': instance.code,

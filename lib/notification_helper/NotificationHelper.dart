@@ -179,28 +179,29 @@ class NotificationHelper {
     print(message.data['category']);
     print(message.data['path']);
     bool go = true;
+    // if(message.data['category']=="chat" || message.data['category']=="call") {
+    //   go = false;
+    //   Get.toNamed(
+    //       message.data['path'] ?? "/splash",
+    //       arguments: {
+    //         "astrologer": AstrologerModel(
+    //           id: int.parse(message.data['astro_id'] ?? "-1"),
+    //           name: message.data['name'] ?? "",
+    //           profile: message.data['profile'] ?? "",
+    //           mobile: '', email: '', experience: '', about: '',
+    //         ),
+    //         "ch_id": int.parse(message.data['ch_id'] ?? "-1"),
+    //         "type": "RECONNECT",
+    //         "action" : "NOT DECIDED",
+    //         "chat_type" : message.data['chat_type'],
+    //         "meeting_id" : message.data['meeting_id'],
+    //         "session_id" : message.data['session_id'],
+    //         "rate" : message.data['rate'],
+    //       }
+    //   );
+    // }
     if(message.data['category']=="chat" || message.data['category']=="call") {
-      go = false;
-      Get.toNamed(
-          message.data['path'] ?? "/splash",
-          arguments: {
-            "astrologer": AstrologerModel(
-              id: int.parse(message.data['astro_id'] ?? "-1"),
-              name: message.data['name'] ?? "",
-              profile: message.data['profile'] ?? "",
-              mobile: '', email: '', experience: 0, about: '',
-            ),
-            "ch_id": int.parse(message.data['ch_id'] ?? "-1"),
-            "type": "RECONNECT",
-            "action" : "NOT DECIDED",
-            "chat_type" : message.data['chat_type'],
-            "meeting_id" : message.data['meeting_id'],
-            "session_id" : message.data['session_id'],
-            "rate" : message.data['rate'],
-          }
-      );
-    }
-    if(message.data['category']=="chat" || message.data['category']=="call") {
+      print("hellooooo");
       go = false;
       session(message.data);
     }
@@ -212,6 +213,11 @@ class NotificationHelper {
         print(storage.read("calling"));
         if(storage.read("calling")!=null) {
           CallController callController = storage.read("calling");
+
+          if(callController.meeting!=null) {
+            callController.meeting?.end();
+            callController.meeting?.leave();
+          }
           callController.back();
           storage.remove("calling");
         }
@@ -223,6 +229,11 @@ class NotificationHelper {
         print(storage.read("calling"));
         if(storage.read("calling")!=null) {
           CallController callController = storage.read("calling");
+
+          if(callController.meeting!=null) {
+            callController.meeting?.end();
+            callController.meeting?.leave();
+          }
           callController.back();
           storage.remove("calling");
         }
@@ -247,7 +258,7 @@ class NotificationHelper {
           // pass payload to the notification card so you can use it (when user click on notification)
           notificationLayout: NotificationLayout.BigText,
           category: message.data['category'] == "call" ? NotificationCategory
-              .Call : message.data['category'] == "cancelled"
+              .Call : message.data['category'] == "cancelled" || message.data['category'] == "rejected"
               ? NotificationCategory.MissedCall
               : null
       );
@@ -262,7 +273,7 @@ class NotificationHelper {
         id: int.parse(data['astro_id'] ?? "-1"),
         name: data['name'] ?? "",
         profile: data['profile'] ?? "",
-        mobile: '', email: '', experience: 0, about: '',
+        mobile: '', email: '', experience: '', about: '',
       ),
       "ch_id": int.parse(data['ch_id'] ?? "-1"),
       "type": "RECONNECT",
@@ -292,7 +303,8 @@ class NotificationHelper {
   }
   //display notification for user with sound
   static _showNotification(
-      {required String title,
+      {
+        required String title,
         required String body,
         required int id,
         String? channelKey,
@@ -302,6 +314,8 @@ class NotificationHelper {
         String? summary,
         Map<String, String>? payload,
         String? largeIcon}) async {
+    print("payloadddd");
+    print(payload);
     awesomeNotifications.isNotificationAllowed().then((isAllowed) {
       if (!isAllowed) {
         awesomeNotifications.requestPermissionToSendNotifications();
@@ -469,7 +483,7 @@ class NotificationController {
                 id: int.parse(payload?['astro_id'] ?? "-1"),
                 name: payload?['name'] ?? "",
                 profile: payload?['profile'] ?? "",
-                mobile: '', email: '', experience: 0, about: '',
+                mobile: '', email: '', experience: '', about: '',
               ),
               "ch_id": int.parse(payload?['ch_id'] ?? "-1"),
               "chat_type": payload?['chat_type'] ?? "",
@@ -491,7 +505,7 @@ class NotificationController {
                 id: int.parse(payload?['astro_id'] ?? "-1"),
                 name: payload?['name'] ?? "",
                 profile: payload?['profile'] ?? "",
-                mobile: '', email: '', experience: 0, about: '',
+                mobile: '', email: '', experience: '', about: '',
               ),
               "ch_id": int.parse(payload?['ch_id'] ?? "-1"),
               "chat_type": payload?['chat_type'] ?? "",
@@ -511,7 +525,7 @@ class NotificationController {
                 id: int.parse(payload?['astro_id'] ?? "-1"),
                 name: payload?['name'] ?? "",
                 profile: payload?['profile'] ?? "",
-                mobile: '', email: '', experience: 0, about: '',
+                mobile: '', email: '', experience: '', about: '',
               ),
               "ch_id": int.parse(payload?['ch_id'] ?? "-1"),
               "meet_id": payload?['meet_id'] ?? "",
@@ -534,7 +548,7 @@ class NotificationController {
                 id: int.parse(payload?['astro_id'] ?? "-1"),
                 name: payload?['name'] ?? "",
                 profile: payload?['profile'] ?? "",
-                mobile: '', email: '', experience: 0, about: '',
+                mobile: '', email: '', experience: '', about: '',
               ),
               "ch_id": int.parse(payload?['ch_id'] ?? "-1"),
               "chat_type": payload?['chat_type'] ?? "",

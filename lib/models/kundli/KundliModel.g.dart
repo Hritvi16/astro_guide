@@ -6,8 +6,8 @@ part of 'KundliModel.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_KundliModel _$$_KundliModelFromJson(Map<String, dynamic> json) =>
-    _$_KundliModel(
+_$KundliModelImpl _$$KundliModelImplFromJson(Map<String, dynamic> json) =>
+    _$KundliModelImpl(
       id: json['id'] as int,
       user_id: json['user_id'] as int,
       name: json['name'] as String,
@@ -25,7 +25,7 @@ _$_KundliModel _$$_KundliModelFromJson(Map<String, dynamic> json) =>
       relation: json['relation'] as String?,
     );
 
-Map<String, dynamic> _$$_KundliModelToJson(_$_KundliModel instance) =>
+Map<String, dynamic> _$$KundliModelImplToJson(_$KundliModelImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'user_id': instance.user_id,

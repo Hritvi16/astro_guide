@@ -80,22 +80,22 @@ class _$BlogListModelCopyWithImpl<$Res, $Val extends BlogListModel>
 }
 
 /// @nodoc
-abstract class _$$_BlogListModelCopyWith<$Res>
+abstract class _$$BlogListModelImplCopyWith<$Res>
     implements $BlogListModelCopyWith<$Res> {
-  factory _$$_BlogListModelCopyWith(
-          _$_BlogListModel value, $Res Function(_$_BlogListModel) then) =
-      __$$_BlogListModelCopyWithImpl<$Res>;
+  factory _$$BlogListModelImplCopyWith(
+          _$BlogListModelImpl value, $Res Function(_$BlogListModelImpl) then) =
+      __$$BlogListModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String status, int code, String message, List<BlogModel>? data});
 }
 
 /// @nodoc
-class __$$_BlogListModelCopyWithImpl<$Res>
-    extends _$BlogListModelCopyWithImpl<$Res, _$_BlogListModel>
-    implements _$$_BlogListModelCopyWith<$Res> {
-  __$$_BlogListModelCopyWithImpl(
-      _$_BlogListModel _value, $Res Function(_$_BlogListModel) _then)
+class __$$BlogListModelImplCopyWithImpl<$Res>
+    extends _$BlogListModelCopyWithImpl<$Res, _$BlogListModelImpl>
+    implements _$$BlogListModelImplCopyWith<$Res> {
+  __$$BlogListModelImplCopyWithImpl(
+      _$BlogListModelImpl _value, $Res Function(_$BlogListModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -106,7 +106,7 @@ class __$$_BlogListModelCopyWithImpl<$Res>
     Object? message = null,
     Object? data = freezed,
   }) {
-    return _then(_$_BlogListModel(
+    return _then(_$BlogListModelImpl(
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -129,16 +129,16 @@ class __$$_BlogListModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_BlogListModel implements _BlogListModel {
-  _$_BlogListModel(
+class _$BlogListModelImpl implements _BlogListModel {
+  _$BlogListModelImpl(
       {required this.status,
       required this.code,
       required this.message,
       final List<BlogModel>? data})
       : _data = data;
 
-  factory _$_BlogListModel.fromJson(Map<String, dynamic> json) =>
-      _$$_BlogListModelFromJson(json);
+  factory _$BlogListModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$BlogListModelImplFromJson(json);
 
   @override
   final String status;
@@ -162,10 +162,10 @@ class _$_BlogListModel implements _BlogListModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_BlogListModel &&
+            other is _$BlogListModelImpl &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.code, code) || other.code == code) &&
             (identical(other.message, message) || other.message == message) &&
@@ -180,12 +180,12 @@ class _$_BlogListModel implements _BlogListModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_BlogListModelCopyWith<_$_BlogListModel> get copyWith =>
-      __$$_BlogListModelCopyWithImpl<_$_BlogListModel>(this, _$identity);
+  _$$BlogListModelImplCopyWith<_$BlogListModelImpl> get copyWith =>
+      __$$BlogListModelImplCopyWithImpl<_$BlogListModelImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_BlogListModelToJson(
+    return _$$BlogListModelImplToJson(
       this,
     );
   }
@@ -196,10 +196,10 @@ abstract class _BlogListModel implements BlogListModel {
       {required final String status,
       required final int code,
       required final String message,
-      final List<BlogModel>? data}) = _$_BlogListModel;
+      final List<BlogModel>? data}) = _$BlogListModelImpl;
 
   factory _BlogListModel.fromJson(Map<String, dynamic> json) =
-      _$_BlogListModel.fromJson;
+      _$BlogListModelImpl.fromJson;
 
   @override
   String get status;
@@ -211,6 +211,6 @@ abstract class _BlogListModel implements BlogListModel {
   List<BlogModel>? get data;
   @override
   @JsonKey(ignore: true)
-  _$$_BlogListModelCopyWith<_$_BlogListModel> get copyWith =>
+  _$$BlogListModelImplCopyWith<_$BlogListModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

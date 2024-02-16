@@ -98,7 +98,7 @@ class SendDocScreen extends StatelessWidget {
                       children: [
                         Text(
                           Essential.getDateTime(chat.sent_at),
-                          style: TextStyle(
+                          style: GoogleFonts.manrope(
                               fontSize: 10
                           ),
                         ),

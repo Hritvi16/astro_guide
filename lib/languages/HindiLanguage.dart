@@ -1,4 +1,10 @@
 Map<String, String> hindi = {
+  //Sign In
+  'Sign In' : 'लॉग इन करें',
+  'Continue With Mobile' : 'मोबाइल के साथ जारी रखें',
+  'You will receive a 6 digit code for verification' : 'सत्यापन के लिए आपको 6 अंकों का कोड प्राप्त होगा',
+  'Enter Mobile No.' : 'मोबाइल नंबर दर्ज करें',
+
   //Sign Up
   'Name' : 'नाम',
   'Mobile No.' : 'मोबाइल नंबर',
@@ -26,6 +32,7 @@ Map<String, String> hindi = {
   'Free Kundali' : 'मुफ़्त कुंडली',
   'Match Kundali' : 'कुंडली मिलान करें',
   'Daily Horoscope' : 'दैनिक भविष्यफल',
+  'Live Astrologers' : 'लाइव ज्योतिषी',
   'Currently Live Astrologers' : 'वर्तमान में लाइव ज्योतिषी',
   'New Arrival Astrologers' : 'नव आगमन ज्योतिषी',
   'New Updates and Blogs' : 'नए अपडेट और ब्लॉग',
@@ -41,11 +48,28 @@ Map<String, String> hindi = {
   'View all' : 'सभी को देखें',
   'Live' : 'लाइव',
   'min' : 'मिनट',
+  'AstroGuide Astrology Services' : 'एस्ट्रोगाइड ज्योतिष सेवाएँ',
+  'Consult Astrologer' : 'ज्योतिषी से परामर्श लें',
+  'Indian(City - Wise)' : 'भारतीय(शहर-वार)',
+  'International' : 'अंतरराष्ट्रीय',
+  'Category Wise' : 'श्रेणी वार',
+  'AstroGuide shows the live astrologer whom with you can connect.' : 'एस्ट्रोगाइड लाइव ज्योतिषी दिखाता है जिससे आप जुड़ सकते हैं।',
+  'AstroGuide shows the new astrologer whom with you can connect.' : 'एस्ट्रोगाइड नए ज्योतिषी को दिखाता है जिनसे आप जुड़ सकते हैं।',
+  'Hear about us from our customers' : 'हमारे ग्राहकों से हमारे बारे में सुनें',
+  'FAQs' : 'पूछे जाने वाले प्रश्न',
+  'Online Advice' : 'ऑनलाइन सलाह',
+  'Quick Links' : 'त्वरित सम्पक',
+  'Reach Us' : 'हम तक पहुंचें',
+  'Install App' : 'एप्लिकेशन इंस्टॉल करो',
+  'Astrologer Registration' : 'ज्योतिषी रजिस्ट्रेशन',
+  'Refund & Cancellation Policy' : 'धनवापसी एवं रद्दीकरण नीति',
+  'Add Money to Wallet' : 'वॉलेट में पैसे जोड़ें',
 
   //Blog
   'Written by' : 'लिखित द्वारा',
 
   //Talk
+  'Chat with Astrologer' : 'ज्योतिषी से चैट करें',
   'Talk with Astrologer' : 'ज्योतिषी से बात करें',
   'Reviews' : 'समीक्षा',
 
@@ -199,4 +223,24 @@ Map<String, String> hindi = {
   "Message" : "संदेश",
   "Write your query" : "अपनी क्वेरी लिखें",
   "You have not asked for any support yet!" : "आपने अभी तक कोई समर्थन नहीं मांगा है!",
+
+
+  //Website
+  "Consult Now" : "अभी परामर्श लें",
+  "Hear about us from our customers" : "हमारे ग्राहकों से हमारे बारे में सुनें",
+  "Generate your free online kundli report from AstroGuide. Our kundli software can help you predict the future for yourself by reading the birth chart." : "एस्ट्रोगाइड से अपनी निःशुल्क ऑनलाइन कुंडली रिपोर्ट तैयार करें। हमारा कुंडली सॉफ़्टवेयर जन्म कुंडली पढ़कर आपके लिए भविष्य की भविष्यवाणी करने में आपकी सहायता कर सकता है।",
+  "Love could be confusing, but only until you haven’t found how compatible you two are for each other." : "प्यार भ्रमित करने वाला हो सकता है, लेकिन केवल तब तक जब तक आप यह नहीं जान लेते कि आप दोनों एक-दूसरे के लिए कितने अनुकूल हैं।",
+  "Get free daily horoscope prediction today online from the best astrologer. Read your Zodiac Sign horoscope today!" : "सर्वश्रेष्ठ ज्योतिषी से आज ही निःशुल्क दैनिक राशिफल भविष्यवाणी ऑनलाइन प्राप्त करें। आज अपना राशि चक्र पढ़ें!",
+  "Total Astrologers" : "कुल ज्योतिषी",
+  "Total Chat/Call minutes" : "कुल चैट/कॉल मिनट",
+  "Total Customers" : "कुल ग्राहक",
+  "Find Best Astrologers" : "सर्वश्रेष्ठ ज्योतिषी खोजें",
+  "Videos" : "वीडियो",
+  "Astrologer Gallery" : "ज्योतिषी गैलरी",
+  "Check Similar Consultants" : "समान सलाहकार की जाँच करें",
+  "Load More" : "और लोड करें",
+  "Hide More" : "अधिक छिपाएँ",
+  "Mobile pattern does not match" : "मोबाइल का पैटर्न मेल नहीं खाता",
+  "Login" : "लॉग इन करें",
+  "Otp Sent To" : "ओटीपी भेजा गया",
 };

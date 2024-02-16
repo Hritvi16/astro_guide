@@ -28,8 +28,7 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 import 'package:path/path.dart';
-import 'package:audioplayers/audioplayers.dart' as ap;
-import 'package:audioplayers/audioplayers.dart';
+// import 'package:audioplayers/audioplayers.dart' as ap;
 import 'package:record/record.dart' as r;
 import 'package:just_audio/just_audio.dart' as p;
 
@@ -50,10 +49,6 @@ class ChatController extends GetxController {
   StreamSubscription<r.Amplitude>? amplitudeSub;
   r.Amplitude? amplitude;
 
-  final audioPlayer = ap.AudioPlayer()..setReleaseMode(ReleaseMode.stop);
-  late StreamSubscription<void> playerStateChangedSubscription;
-  late StreamSubscription<Duration?> durationChangedSubscription;
-  late StreamSubscription<Duration> positionChangedSubscription;
   Duration? position;
   Duration? duration;
 
@@ -74,7 +69,8 @@ class ChatController extends GetxController {
   late IO.Socket socket;
 
   int cnt = 0;
-  Timer? timer;
+  static Timer? timer;
+  static String? timer_type;
   late tz.TZDateTime started_at;
   late int seconds;
   late int max;
@@ -94,6 +90,9 @@ class ChatController extends GetxController {
 
   final player = p.AudioPlayer();
 
+  late bool recording;
+  late String playerUrl;
+
   @override
   void onInit() {
     super.onInit();
@@ -102,7 +101,9 @@ class ChatController extends GetxController {
 
     cancel = false;
     reject = false;
+    recording = false;
     load = true;
+    playerUrl = "";
     tz.initializeTimeZones();
     location = tz.getLocation("GMT");
     type = Get.arguments['type'];
@@ -122,7 +123,7 @@ class ChatController extends GetxController {
       sessionHistory = Get.arguments['session_history'];
       ch_id = sessionHistory.id;
       print("viewwww");
-      astrologer = AstrologerModel(id: Get.arguments['astro_id'], name: "", mobile: "", email: "", experience: 0, profile: "", about: "");
+      astrologer = AstrologerModel(id: Get.arguments['astro_id'], name: "", mobile: "", email: "", experience: '', profile: "", about: "");
 
     }
     else {
@@ -148,24 +149,24 @@ class ChatController extends GetxController {
       update();
     });
 
-    playerStateChangedSubscription =
-        audioPlayer.onPlayerComplete.listen((state) async {
-          await stop();
-          update();
-        });
-    positionChangedSubscription = audioPlayer.onPositionChanged.listen(
-            (position) {
-
-          this.position = position;
-          update();
-        }
-    );
-    durationChangedSubscription = audioPlayer.onDurationChanged.listen(
-            (duration) {
-          this.duration = duration;
-          update();
-        }
-    );
+    // playerStateChangedSubscription =
+    //     audioPlayer.onPlayerComplete.listen((state) async {
+    //       await stop();
+    //       update();
+    //     });
+    // positionChangedSubscription = audioPlayer.onPositionChanged.listen(
+    //         (position) {
+    //
+    //       this.position = position;
+    //       update();
+    //     }
+    // );
+    // durationChangedSubscription = audioPlayer.onDurationChanged.listen(
+    //         (duration) {
+    //       this.duration = duration;
+    //       update();
+    //     }
+    // );
   }
 
 
@@ -263,6 +264,7 @@ class ChatController extends GetxController {
 
 
     await chatProvider.fetchByID(storage.read("access"), ApiConstants.id, data).then((response) async {
+      print("response.session_history?.toJson()");
       print(response.session_history?.toJson());
       if(response.code==1) {
         chats.addAll(response.data ?? []);
@@ -310,6 +312,9 @@ class ChatController extends GetxController {
     socket.onConnect((data) => print('Connection established'));
     socket.onConnectError((data) => print('Connect Error: $data'));
     socket.onDisconnect((data) => print('Socket.IO server disconnected'));
+    socket.onError((data) {
+      print('Socket.IO server error');
+    });
     socket.on(
       'initiate', (data) async {
         CheckSessionResponseModel checkSessionResponse = CheckSessionResponseModel.fromJson(json.decode(data));
@@ -612,6 +617,7 @@ class ChatController extends GetxController {
 
 
   Future<void> sendImage(ImageSource source) async {
+    Get.back();
     final ImagePicker picker = ImagePicker();
     final XFile? image = await picker.pickImage(
       imageQuality: 100, source: source,
@@ -634,13 +640,8 @@ class ChatController extends GetxController {
 
       data.addAll({SessionConstants.message : MultipartFile(File(file!.path), filename: image!.name), SessionConstants.ext : image.name.substring(image.name.lastIndexOf(".")+1)});
       // data.addAll({SessionConstants.message : fileBytes, SessionConstants.ext : image.name.substring(image.name.lastIndexOf(".")+1)});
-      print("dataaaaaa");
-      print(image.name.substring(image.name.lastIndexOf(".")+1));
-      print(image.mimeType);
-      int size = await file.length();
-      print(size);
-      print('${size / 1024} KB');
 
+      int size = await file.length();
       sendMessage(data, file.path);
     }
   }
@@ -670,6 +671,7 @@ class ChatController extends GetxController {
   }
 
   Future<void> sendDocument() async {
+    Get.back();
     FilePickerResult? result = await FilePicker.platform.pickFiles(type: FileType.custom,
       allowedExtensions: ['pdf']);
 
@@ -724,8 +726,8 @@ class ChatController extends GetxController {
     super.dispose();
   }
 
-  void goto(String page) {
-    Get.toNamed(page)?.then((value) {
+  void goto(String page, {dynamic? arguments}) {
+    Get.toNamed(page, arguments: arguments)?.then((value) {
       show = true;
       wallet = double.parse((storage.read("wallet")??0.0).toString());
       update();
@@ -798,8 +800,12 @@ class ChatController extends GetxController {
       SessionConstants.reason : "Chat was cancelled by user",
     };
 
+    print(data);
+
 
     socket.emit('cancel', data);
+    print("hello cancel");
+
     back();
   }
 
@@ -844,22 +850,22 @@ class ChatController extends GetxController {
     tz.TZDateTime now = tz.TZDateTime.now(gmt);
     Duration duration = now.difference(started_at);
     print("startedddddd");
+    print(timer);
     print(now);
     print(started_at);
     print(duration);
     seconds = duration.inSeconds;
     update();
-    timer = Timer.periodic(const Duration(seconds: 1), (_) => setCountDown());
+    if(timer==null || (timer!=null && timer_type=="ring")) {
+      timer_type = "chat";
+      timer = Timer.periodic(const Duration(seconds: 1), (_) => setCountDown());
+    }
     update();
   }
 
   void setCountDown() {
     seconds+=1;
     update();
-    print("max");
-    print(max);
-    print("total");
-    print(seconds);
     if(max<=seconds) {
       endChat(true);
     }
@@ -935,9 +941,12 @@ class ChatController extends GetxController {
       });
     }
     update();
-    timer = Timer.periodic(const Duration(seconds: 1), (_) {
-      setRing();
-    });
+    if(timer==null) {
+      timer_type = "ring";
+      timer = Timer.periodic(const Duration(seconds: 1), (_) {
+        setRing();
+      });
+    }
     update();
   }
 
@@ -1052,21 +1061,21 @@ class ChatController extends GetxController {
                 title: Text("Camera", style: theme.textTheme.bodyText1),
                 onTap: () {
                   sendImage(ImageSource.camera);
-                  back();
+                  // back();
                 },
               ),
               ListTile(
                 title: Text("Photo Gallery", style: theme.textTheme.bodyText1),
                 onTap: () {
                   sendImage(ImageSource.gallery);
-                  back();
+                  // back();
                 },
               ),
               ListTile(
                 title: Text("Document", style: theme.textTheme.bodyText1),
                 onTap: () {
                   sendDocument();
-                  back();
+                  // back();
                 },
               ),
             ],
@@ -1092,33 +1101,30 @@ class ChatController extends GetxController {
 
         print("broadcast");
         print(broadcast);
+        // socket.emit('broadcast', broadcast);
         socket.emit('broadcastFile', broadcast);
-        print("emiteddd");
+        print("image emiteddd");
 
         for (int i=0; i<chats.length; i++) {
-          print(chats[i].id);
-          print(chatResponseModel.m_id);
-          print(chats[i].id==chatResponseModel.m_id);
           if(chats[i].id==chatResponseModel.m_id) {
             chats[i] = chatResponseModel.data!;
             update();
+            print(chats[i]);
             break;
           }
         }
 
+        print(chats);
+
       }
       else {
-
-      for (int i=0; i<chats.length; i++) {
-        print(chats[i].id);
-        print(response.m_id);
-        print(chats[i].id==response.m_id);
-        if(chats[i].id==response.m_id) {
-          chats[i] = chats[i].copyWith(error: 1);
-          update();
-          break;
+        for (int i=0; i<chats.length; i++) {
+          if(chats[i].id==response.m_id) {
+            chats[i] = chats[i].copyWith(error: 1);
+            update();
+            break;
+          }
         }
-      }
         Essential.showSnackBar(response.message);
       }
     });
@@ -1152,22 +1158,8 @@ class ChatController extends GetxController {
         );
         await audioRecorder.start(path: path);
 
-        // Record to stream
-        // final file = File(path);
-        // final stream = await _audioRecorder.startStream(config);
-        // stream.listen(
-        //   (data) {
-        //     // ignore: avoid_print
-        //     print(
-        //       _audioRecorder.convertBytesToInt16(Uint8List.fromList(data)),
-        //     );
-        //     file.writeAsBytesSync(data, mode: FileMode.append);
-        //   },
-        //   // ignore: avoid_print
-        //   onDone: () => print('End of stream'),
-        // );
-
         recordDuration = 0;
+        recording = true;
         update();
 
         startRecordTimer();
@@ -1242,7 +1234,7 @@ class ChatController extends GetxController {
     });
   }
 
-  Future<void> stop() => audioPlayer.stop();
+  // Future<void> stop() => audioPlayer.stop();
 
   String getTime(int seconds) {
     // return "${seconds} secs";
@@ -1262,16 +1254,88 @@ class ChatController extends GetxController {
 
   void disposeObjects() {
     print("disposeeee objectsss");
-    recordTimer?.cancel();
-    recordSub?.cancel();
-    amplitudeSub?.cancel();
-    audioRecorder.dispose();
-    // message.dispose();
-    audioPlayer.dispose();
-    playerStateChangedSubscription.cancel();
-    durationChangedSubscription.cancel();
-    positionChangedSubscription.cancel();
-    socket.close();
-    socket.dispose();
+    timer = null;
+    timer_type = null;
+    update();
+    print(timer);
+    try {
+      recordTimer?.cancel();
+      recordSub?.cancel();
+      amplitudeSub?.cancel();
+      audioRecorder.dispose();
+      // message.dispose();
+      try {
+        if(player!=null) {
+          print("disposeddd it");
+          player.dispose();
+        }
+        else {
+          print("disposeddd");
+        }
+      }
+      catch(ex) {
+        print("disposeddd erroeee");
+      }
+      Future.delayed(const Duration(seconds: 3), () {
+        socket.close();
+        socket.dispose();
+      });
+    }
+    catch(ex) {
+
+    }
+  }
+
+  void recordingAction() {
+    if(recording) {
+      stopRecording(true);
+      recording = false;
+      update();
+    }
+    else {
+      startRecording();
+    }
+  }
+
+  void playAudio(String url) {
+    print(url);
+    try {
+      if(url!=playerUrl) {
+        player.setUrl(url);
+        player.play();
+        player.processingStateStream.listen((processingState) {
+          print("processingState");
+          print(processingState);
+          if (processingState == ProcessingState.completed) {
+            // player.seek(Duration.zero);
+            player.stop();
+            update();
+            print("completed");
+          }
+        });
+        playerUrl = url;
+      }
+      else {
+        if(player.processingState==ProcessingState.ready) {
+          player.play();
+        }
+        else {
+          player.seek(Duration.zero);
+          player.play();
+        }
+      }
+      // audioPlayer.play(UrlSource(url));
+    }
+    catch(ex) {
+      print("errorrr");
+      print(ex);
+    }
+    update();
+  }
+
+  void pauseAudio() {
+    player.pause();
+    // playerUrl = "";
+    update();
   }
 }

@@ -81,11 +81,11 @@ class _$GalleryListModelCopyWithImpl<$Res, $Val extends GalleryListModel>
 }
 
 /// @nodoc
-abstract class _$$_GalleryListModelCopyWith<$Res>
+abstract class _$$GalleryListModelImplCopyWith<$Res>
     implements $GalleryListModelCopyWith<$Res> {
-  factory _$$_GalleryListModelCopyWith(
-          _$_GalleryListModel value, $Res Function(_$_GalleryListModel) then) =
-      __$$_GalleryListModelCopyWithImpl<$Res>;
+  factory _$$GalleryListModelImplCopyWith(_$GalleryListModelImpl value,
+          $Res Function(_$GalleryListModelImpl) then) =
+      __$$GalleryListModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -93,11 +93,11 @@ abstract class _$$_GalleryListModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_GalleryListModelCopyWithImpl<$Res>
-    extends _$GalleryListModelCopyWithImpl<$Res, _$_GalleryListModel>
-    implements _$$_GalleryListModelCopyWith<$Res> {
-  __$$_GalleryListModelCopyWithImpl(
-      _$_GalleryListModel _value, $Res Function(_$_GalleryListModel) _then)
+class __$$GalleryListModelImplCopyWithImpl<$Res>
+    extends _$GalleryListModelCopyWithImpl<$Res, _$GalleryListModelImpl>
+    implements _$$GalleryListModelImplCopyWith<$Res> {
+  __$$GalleryListModelImplCopyWithImpl(_$GalleryListModelImpl _value,
+      $Res Function(_$GalleryListModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -108,7 +108,7 @@ class __$$_GalleryListModelCopyWithImpl<$Res>
     Object? message = null,
     Object? data = freezed,
   }) {
-    return _then(_$_GalleryListModel(
+    return _then(_$GalleryListModelImpl(
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -131,16 +131,16 @@ class __$$_GalleryListModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_GalleryListModel implements _GalleryListModel {
-  _$_GalleryListModel(
+class _$GalleryListModelImpl implements _GalleryListModel {
+  _$GalleryListModelImpl(
       {required this.status,
       required this.code,
       required this.message,
       final List<GalleryModel>? data})
       : _data = data;
 
-  factory _$_GalleryListModel.fromJson(Map<String, dynamic> json) =>
-      _$$_GalleryListModelFromJson(json);
+  factory _$GalleryListModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$GalleryListModelImplFromJson(json);
 
   @override
   final String status;
@@ -164,10 +164,10 @@ class _$_GalleryListModel implements _GalleryListModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_GalleryListModel &&
+            other is _$GalleryListModelImpl &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.code, code) || other.code == code) &&
             (identical(other.message, message) || other.message == message) &&
@@ -182,12 +182,13 @@ class _$_GalleryListModel implements _GalleryListModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_GalleryListModelCopyWith<_$_GalleryListModel> get copyWith =>
-      __$$_GalleryListModelCopyWithImpl<_$_GalleryListModel>(this, _$identity);
+  _$$GalleryListModelImplCopyWith<_$GalleryListModelImpl> get copyWith =>
+      __$$GalleryListModelImplCopyWithImpl<_$GalleryListModelImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_GalleryListModelToJson(
+    return _$$GalleryListModelImplToJson(
       this,
     );
   }
@@ -198,10 +199,10 @@ abstract class _GalleryListModel implements GalleryListModel {
       {required final String status,
       required final int code,
       required final String message,
-      final List<GalleryModel>? data}) = _$_GalleryListModel;
+      final List<GalleryModel>? data}) = _$GalleryListModelImpl;
 
   factory _GalleryListModel.fromJson(Map<String, dynamic> json) =
-      _$_GalleryListModel.fromJson;
+      _$GalleryListModelImpl.fromJson;
 
   @override
   String get status;
@@ -213,6 +214,6 @@ abstract class _GalleryListModel implements GalleryListModel {
   List<GalleryModel>? get data;
   @override
   @JsonKey(ignore: true)
-  _$$_GalleryListModelCopyWith<_$_GalleryListModel> get copyWith =>
+  _$$GalleryListModelImplCopyWith<_$GalleryListModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

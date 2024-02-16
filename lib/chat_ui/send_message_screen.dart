@@ -3,6 +3,7 @@ import 'package:astro_guide/colors/MyColors.dart';
 import 'package:astro_guide/essential/Essential.dart';
 import 'package:astro_guide/models/chat/ChatModel.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 class SentMessageScreen extends StatelessWidget {
@@ -50,9 +51,9 @@ class SentMessageScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
-                      chat.message,
+                      Essential.getPlatformReplace(chat.message),
                       textAlign: TextAlign.left,
-                      style: TextStyle(color: color, fontSize: 14),
+                      style: GoogleFonts.manrope(color: color, fontSize: 14),
                     ),
                     SizedBox(
                       height: 2,
@@ -63,8 +64,9 @@ class SentMessageScreen extends StatelessWidget {
                       children: [
                         Text(
                           Essential.getDateTime(chat.sent_at),
-                          style: TextStyle(
-                              fontSize: 10
+                          style: GoogleFonts.manrope(
+                              fontSize: 10,
+                              color: MyColors.colorInfo
                           ),
                         ),
                         SizedBox(

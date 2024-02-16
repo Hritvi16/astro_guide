@@ -2,6 +2,7 @@
 import 'package:astro_guide/colors/MyColors.dart';
 import 'package:astro_guide/constants/CommonConstants.dart';
 import 'package:astro_guide/controllers/wallet/WalletController.dart';
+import 'package:astro_guide/essential/Essential.dart';
 import 'package:astro_guide/models/astrologer/AstrologerModel.dart';
 import 'package:astro_guide/models/package/PackageModel.dart';
 import 'package:astro_guide/services/networking/ApiConstants.dart';
@@ -52,11 +53,11 @@ class Wallet extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                   color: MyColors.colorPrimary,
-                  image: const DecorationImage(
+                  image: Essential.getPlatform() ? const DecorationImage(
                       image: AssetImage(
                         "assets/essential/upper_bg.png",
                       ),
-                  )
+                  ) : null
               ),
               child: SafeArea(
                 child: CustomAppBar('My Wallet'),
@@ -70,7 +71,7 @@ class Wallet extends StatelessWidget {
             builder: MaterialIndicatorDelegate(
               builder: (context, controller) {
                 return Image.asset(
-                  "assets/essential/loading.png",
+                  Essential.getPlatform() ? "assets/essential/loading.png" : "assets/app_icon/ios_icon.jpg",
                   height: 30,
                 );
               },
@@ -292,10 +293,14 @@ class Wallet extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Image.asset(
+                  Essential.getPlatform() ? Image.asset(
                     "assets/signs/"+((ind+1)%3==1 ? "star.png" : (ind+1)%3==2 ? "swastik.png" : "om.png"),
                     color: walletController.package==package ? MyColors.colorOrange : MyColors.colorGrey,
                     height: (ind+1)%3==1 ? standardPackageStarHeight : (ind+1)%3==2 ? standardPackageSwastikHeight : standardPackageOmHeight,
+                  )
+                  : Image.asset(
+                    "assets/app_icon/ios_icon.jpg",
+                    height: standardPackageOmHeight,
                   ),
                   Text(
                     "${package.amount.toString()} ${CommonConstants.rupee}",

@@ -6,8 +6,8 @@ part of 'RatingModel.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_RatingModel _$$_RatingModelFromJson(Map<String, dynamic> json) =>
-    _$_RatingModel(
+_$RatingModelImpl _$$RatingModelImplFromJson(Map<String, dynamic> json) =>
+    _$RatingModelImpl(
       rating1: json['rating1'] as int,
       rating2: json['rating2'] as int,
       rating3: json['rating3'] as int,
@@ -15,7 +15,7 @@ _$_RatingModel _$$_RatingModelFromJson(Map<String, dynamic> json) =>
       rating5: json['rating5'] as int,
     );
 
-Map<String, dynamic> _$$_RatingModelToJson(_$_RatingModel instance) =>
+Map<String, dynamic> _$$RatingModelImplToJson(_$RatingModelImpl instance) =>
     <String, dynamic>{
       'rating1': instance.rating1,
       'rating2': instance.rating2,

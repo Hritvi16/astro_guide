@@ -80,22 +80,22 @@ class _$TypeListModelCopyWithImpl<$Res, $Val extends TypeListModel>
 }
 
 /// @nodoc
-abstract class _$$_TypeListModelCopyWith<$Res>
+abstract class _$$TypeListModelImplCopyWith<$Res>
     implements $TypeListModelCopyWith<$Res> {
-  factory _$$_TypeListModelCopyWith(
-          _$_TypeListModel value, $Res Function(_$_TypeListModel) then) =
-      __$$_TypeListModelCopyWithImpl<$Res>;
+  factory _$$TypeListModelImplCopyWith(
+          _$TypeListModelImpl value, $Res Function(_$TypeListModelImpl) then) =
+      __$$TypeListModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String status, int code, String message, List<TypeModel>? data});
 }
 
 /// @nodoc
-class __$$_TypeListModelCopyWithImpl<$Res>
-    extends _$TypeListModelCopyWithImpl<$Res, _$_TypeListModel>
-    implements _$$_TypeListModelCopyWith<$Res> {
-  __$$_TypeListModelCopyWithImpl(
-      _$_TypeListModel _value, $Res Function(_$_TypeListModel) _then)
+class __$$TypeListModelImplCopyWithImpl<$Res>
+    extends _$TypeListModelCopyWithImpl<$Res, _$TypeListModelImpl>
+    implements _$$TypeListModelImplCopyWith<$Res> {
+  __$$TypeListModelImplCopyWithImpl(
+      _$TypeListModelImpl _value, $Res Function(_$TypeListModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -106,7 +106,7 @@ class __$$_TypeListModelCopyWithImpl<$Res>
     Object? message = null,
     Object? data = freezed,
   }) {
-    return _then(_$_TypeListModel(
+    return _then(_$TypeListModelImpl(
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -129,16 +129,16 @@ class __$$_TypeListModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_TypeListModel implements _TypeListModel {
-  _$_TypeListModel(
+class _$TypeListModelImpl implements _TypeListModel {
+  _$TypeListModelImpl(
       {required this.status,
       required this.code,
       required this.message,
       final List<TypeModel>? data})
       : _data = data;
 
-  factory _$_TypeListModel.fromJson(Map<String, dynamic> json) =>
-      _$$_TypeListModelFromJson(json);
+  factory _$TypeListModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$TypeListModelImplFromJson(json);
 
   @override
   final String status;
@@ -162,10 +162,10 @@ class _$_TypeListModel implements _TypeListModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_TypeListModel &&
+            other is _$TypeListModelImpl &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.code, code) || other.code == code) &&
             (identical(other.message, message) || other.message == message) &&
@@ -180,12 +180,12 @@ class _$_TypeListModel implements _TypeListModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_TypeListModelCopyWith<_$_TypeListModel> get copyWith =>
-      __$$_TypeListModelCopyWithImpl<_$_TypeListModel>(this, _$identity);
+  _$$TypeListModelImplCopyWith<_$TypeListModelImpl> get copyWith =>
+      __$$TypeListModelImplCopyWithImpl<_$TypeListModelImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_TypeListModelToJson(
+    return _$$TypeListModelImplToJson(
       this,
     );
   }
@@ -196,10 +196,10 @@ abstract class _TypeListModel implements TypeListModel {
       {required final String status,
       required final int code,
       required final String message,
-      final List<TypeModel>? data}) = _$_TypeListModel;
+      final List<TypeModel>? data}) = _$TypeListModelImpl;
 
   factory _TypeListModel.fromJson(Map<String, dynamic> json) =
-      _$_TypeListModel.fromJson;
+      _$TypeListModelImpl.fromJson;
 
   @override
   String get status;
@@ -211,6 +211,6 @@ abstract class _TypeListModel implements TypeListModel {
   List<TypeModel>? get data;
   @override
   @JsonKey(ignore: true)
-  _$$_TypeListModelCopyWith<_$_TypeListModel> get copyWith =>
+  _$$TypeListModelImplCopyWith<_$TypeListModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

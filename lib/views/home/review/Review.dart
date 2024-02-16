@@ -1,5 +1,6 @@
 import 'package:astro_guide/colors/MyColors.dart';
 import 'package:astro_guide/controllers/review/ReviewController.dart';
+import 'package:astro_guide/essential/Essential.dart';
 import 'package:astro_guide/models/review/ReviewModel.dart';
 import 'package:astro_guide/services/networking/ApiConstants.dart';
 import 'package:astro_guide/shared/CustomClipPath.dart';
@@ -66,33 +67,29 @@ class Review extends StatelessWidget {
             builder: MaterialIndicatorDelegate(
               builder: (context, controller) {
                 return Image.asset(
-                  "assets/essential/loading.png",
+                  Essential.getPlatform() ? "assets/essential/loading.png" : "assets/app_icon/ios_icon.jpg",
                   height: 30,
                 );
               },
             ),
-            child: SizedBox(
-              height: MySize.sizeh100(context) - standardUpperFixedDesignHeight,
+            child: SingleChildScrollView(
               child: Column(
                 children: [
                   getRatings(),
-                  reviewController.reviews.isNotEmpty ? SingleChildScrollView(
-                    physics: AlwaysScrollableScrollPhysics(),
-                    child: ListView.separated(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      padding: EdgeInsets.symmetric(horizontal: standardHorizontalPagePadding, vertical: standardVerticalGap),
-                      itemCount: reviewController.reviews.length,
-                      // itemCount: reviewController.reviews.length,
-                      separatorBuilder: (buildContext, index) {
-                        return SizedBox(
-                          height: standardVerticalGap,
-                        );
-                      },
-                      itemBuilder: (buildContext, index) {
-                        return getReviewDesign(reviewController.reviews[index]);
-                      },
-                    )
+                  reviewController.reviews.isNotEmpty ? ListView.separated(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    padding: EdgeInsets.symmetric(horizontal: standardHorizontalPagePadding, vertical: standardVerticalGap),
+                    itemCount: reviewController.reviews.length,
+                    // itemCount: reviewController.reviews.length,
+                    separatorBuilder: (buildContext, index) {
+                      return SizedBox(
+                        height: standardVerticalGap,
+                      );
+                    },
+                    itemBuilder: (buildContext, index) {
+                      return getReviewDesign(reviewController.reviews[index]);
+                    },
                   ) : Container(
                     height: MySize.sizeh100(context) - standardUpperFixedDesignHeight,
                     alignment: Alignment.center,
@@ -314,7 +311,7 @@ class Review extends StatelessWidget {
                     Column(
                       children: [
                         Text(
-                          reviewController.astrologer.name,
+                          review.anonymous==1 ? "Anonymous" : review.user??"",
                           style: GoogleFonts.manrope(
                             fontSize: 18.0,
                             letterSpacing: 0,

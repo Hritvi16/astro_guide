@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:astro_guide/colors/MyColors.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 
 class BasicDialog extends StatelessWidget {
@@ -17,7 +18,7 @@ class BasicDialog extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             new Text(text,
-              style: TextStyle(
+              style: GoogleFonts.manrope(
                   fontSize: 16
               ),
             ),
@@ -30,7 +31,7 @@ class BasicDialog extends StatelessWidget {
                       Navigator.pop(context, btn1);
                     },
                     child: Text(btn1,
-                      style: TextStyle(
+                      style: GoogleFonts.manrope(
                           color: MyColors.colorPrimary
                       ),
                     )
@@ -40,7 +41,7 @@ class BasicDialog extends StatelessWidget {
                       Navigator.pop(context, btn2);
                     },
                     child: Text(btn2,
-                      style: TextStyle(
+                      style: GoogleFonts.manrope(
                           color: MyColors.colorPrimary
                       ),
                     )

@@ -6,9 +6,9 @@ part of 'CheckSessionResponseModel.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_CheckSessionResponseModel _$$_CheckSessionResponseModelFromJson(
+_$CheckSessionResponseModelImpl _$$CheckSessionResponseModelImplFromJson(
         Map<String, dynamic> json) =>
-    _$_CheckSessionResponseModel(
+    _$CheckSessionResponseModelImpl(
       status: json['status'] as String,
       code: json['code'] as int,
       message: json['message'] as String,
@@ -37,8 +37,8 @@ _$_CheckSessionResponseModel _$$_CheckSessionResponseModelFromJson(
       token: json['token'] as String?,
     );
 
-Map<String, dynamic> _$$_CheckSessionResponseModelToJson(
-        _$_CheckSessionResponseModel instance) =>
+Map<String, dynamic> _$$CheckSessionResponseModelImplToJson(
+        _$CheckSessionResponseModelImpl instance) =>
     <String, dynamic>{
       'status': instance.status,
       'code': instance.code,

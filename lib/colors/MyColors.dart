@@ -13,7 +13,8 @@ class MyColors
 
   static Color colorWalletBG = Color(0xffFEFDE8);
 
-  static Color receiverColor = Color(0xff2d2d2d);
+  static Color receiverLColor = Color(0xffE4E4E7);
+  static Color receiverDColor = Color(0xff2d2d2d);
 
   static Color blackM = Color(0xff1a1b1d);
 
@@ -24,6 +25,8 @@ class MyColors
   static Color colorBlueBG = Color(0xffDBEAFE);
 
   static Color colorIconBG = Color(0xff3F3F46);
+
+  static Color colorInfo = Color(0xffa9a8ac);
 
   static Color colorBG = Color(0xffF4F4F5);
   static Color colorButton = Color(0xffF4C23E);
@@ -89,6 +92,9 @@ class MyColors
   static Color blue300 = Color(0xff64B5F6);
   static Color blue800 = Color(0xff1565C0);
   static Color blue900 = Color(0xff0D47A1);
+
+  static Color male = Color(0xff5496e6);
+  static Color female = Color(0xffd60032);
 
 
   // static Color colorPrimaryLight = Color(0x56832343);
@@ -179,6 +185,33 @@ class MyColors
   static Color pastelBlue = Color(0xffb5e2f4);
   static Color pastelPurple = Color(0xffd1d5f9);
   static Color pastelYellow = Color(0xfff9e2af);
+
+
+  static Color requested = Color(0xff2563EB);
+  static Color waitlist = Color(0xffEC8526);
+  static Color active = Color(0xffF4C23E);
+  static Color completed = Color(0xff22C55E);
+  static Color missed = Color(0xffdc0100);
+  static Color rejected = Color(0xff8797a6);
+  static Color cancelled = Color(0xff263238);
+  static Color reconnect = Color(0xff621c8a);
+
+  static Color personal = Color(0xfff3881e);
+  static Color health = Color(0xffc02437);
+  static Color profession = Color(0xfffec417);
+  static Color emotions = Color(0xff08a24f);
+  static Color travel = Color(0xff6a3499);
+  static Color luck = Color(0xffd80c8f);
+
+  static Color varna = Color(0xfff3881e);
+  static Color vashya = Color(0xffd80c8f);
+  static Color tara = Color(0xff08a24f);
+  static Color yoni = Color(0xff6a3499);
+  // static Color yoni = Color(0xff6760FE);
+  static Color graha_maitri = Color(0xffc02437);
+  static Color gana = Color(0xffffa726);
+  static Color bhakoota = Color(0xff039be5);
+  static Color nadi = Color(0xfffec417);
 
   static List<Color> pastels = [
     pastelGreen,
@@ -284,6 +317,98 @@ class MyColors
 
   static Color pcBorder() {
     return Get.isDarkMode ? colorBorderDark : colorPCBorder;
+  }
+
+  static Color receiverColor() {
+    return Get.isDarkMode ? receiverDColor : receiverLColor;
+  }
+
+  static Color statusColor(String status) {
+    if(status=="REQUESTED") {
+      return MyColors.requested;
+    }
+    else if(status=="ACTIVE") {
+      return MyColors.active;
+    }
+    else if(status=="WAITLISTED") {
+      return MyColors.waitlist;
+    }
+    else if(status=="CANCELLED") {
+      return MyColors.cancelled;
+    }
+    else if(status=="MISSED") {
+      return MyColors.missed;
+    }
+    else if(status=="REJECTED") {
+      return MyColors.rejected;
+    }
+    else if(status=="COMPLETED") {
+      return MyColors.completed;
+    }
+    else if(status=="RECONNECT") {
+      return MyColors.reconnect;
+    }
+    return black;
+  }
+
+  static Color horoscopeColor(String title) {
+    if(title=="personal") {
+      return MyColors.personal;
+    }
+    else if(title=="health") {
+      return MyColors.health;
+    }
+    else if(title=="profession") {
+      return MyColors.profession;
+    }
+    else if(title=="emotions") {
+      return MyColors.emotions;
+    }
+    else if(title=="travel") {
+      return MyColors.travel;
+    }
+    else if(title=="luck") {
+      return MyColors.luck;
+    }
+    return black;
+  }
+
+  static Color ashtakootColor(String title) {
+    if(title=="varna") {
+      return MyColors.varna;
+    }
+    else if(title=="vashya") {
+      return MyColors.vashya;
+    }
+    else if(title=="tara") {
+      return MyColors.tara;
+    }
+    else if(title=="yoni") {
+      return MyColors.yoni;
+    }
+    else if(title=="graha_maitri") {
+      return MyColors.graha_maitri;
+    }
+    else if(title=="gana") {
+      return MyColors.gana;
+    }
+    else if(title=="bhakoota") {
+      return MyColors.bhakoota;
+    }
+    else if(title=="nadi") {
+      return MyColors.nadi;
+    }
+    return black;
+  }
+
+  static Color genderColor(String title) {
+    if(title=="MALE") {
+      return MyColors.male;
+    }
+    else if(title=="FEMALE") {
+      return MyColors.female;
+    }
+    return black;
   }
 
 }

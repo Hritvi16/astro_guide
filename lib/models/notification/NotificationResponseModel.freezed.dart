@@ -96,12 +96,12 @@ class _$NotificationResponseModelCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_NotificationResponseModelCopyWith<$Res>
+abstract class _$$NotificationResponseModelImplCopyWith<$Res>
     implements $NotificationResponseModelCopyWith<$Res> {
-  factory _$$_NotificationResponseModelCopyWith(
-          _$_NotificationResponseModel value,
-          $Res Function(_$_NotificationResponseModel) then) =
-      __$$_NotificationResponseModelCopyWithImpl<$Res>;
+  factory _$$NotificationResponseModelImplCopyWith(
+          _$NotificationResponseModelImpl value,
+          $Res Function(_$NotificationResponseModelImpl) then) =
+      __$$NotificationResponseModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -115,13 +115,13 @@ abstract class _$$_NotificationResponseModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_NotificationResponseModelCopyWithImpl<$Res>
+class __$$NotificationResponseModelImplCopyWithImpl<$Res>
     extends _$NotificationResponseModelCopyWithImpl<$Res,
-        _$_NotificationResponseModel>
-    implements _$$_NotificationResponseModelCopyWith<$Res> {
-  __$$_NotificationResponseModelCopyWithImpl(
-      _$_NotificationResponseModel _value,
-      $Res Function(_$_NotificationResponseModel) _then)
+        _$NotificationResponseModelImpl>
+    implements _$$NotificationResponseModelImplCopyWith<$Res> {
+  __$$NotificationResponseModelImplCopyWithImpl(
+      _$NotificationResponseModelImpl _value,
+      $Res Function(_$NotificationResponseModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -132,7 +132,7 @@ class __$$_NotificationResponseModelCopyWithImpl<$Res>
     Object? message = null,
     Object? notification = null,
   }) {
-    return _then(_$_NotificationResponseModel(
+    return _then(_$NotificationResponseModelImpl(
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -155,15 +155,15 @@ class __$$_NotificationResponseModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_NotificationResponseModel implements _NotificationResponseModel {
-  _$_NotificationResponseModel(
+class _$NotificationResponseModelImpl implements _NotificationResponseModel {
+  _$NotificationResponseModelImpl(
       {required this.status,
       required this.code,
       required this.message,
       required this.notification});
 
-  factory _$_NotificationResponseModel.fromJson(Map<String, dynamic> json) =>
-      _$$_NotificationResponseModelFromJson(json);
+  factory _$NotificationResponseModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$NotificationResponseModelImplFromJson(json);
 
   @override
   final String status;
@@ -180,10 +180,10 @@ class _$_NotificationResponseModel implements _NotificationResponseModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_NotificationResponseModel &&
+            other is _$NotificationResponseModelImpl &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.code, code) || other.code == code) &&
             (identical(other.message, message) || other.message == message) &&
@@ -199,13 +199,13 @@ class _$_NotificationResponseModel implements _NotificationResponseModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_NotificationResponseModelCopyWith<_$_NotificationResponseModel>
-      get copyWith => __$$_NotificationResponseModelCopyWithImpl<
-          _$_NotificationResponseModel>(this, _$identity);
+  _$$NotificationResponseModelImplCopyWith<_$NotificationResponseModelImpl>
+      get copyWith => __$$NotificationResponseModelImplCopyWithImpl<
+          _$NotificationResponseModelImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_NotificationResponseModelToJson(
+    return _$$NotificationResponseModelImplToJson(
       this,
     );
   }
@@ -217,10 +217,10 @@ abstract class _NotificationResponseModel implements NotificationResponseModel {
           required final int code,
           required final String message,
           required final NotificationModel notification}) =
-      _$_NotificationResponseModel;
+      _$NotificationResponseModelImpl;
 
   factory _NotificationResponseModel.fromJson(Map<String, dynamic> json) =
-      _$_NotificationResponseModel.fromJson;
+      _$NotificationResponseModelImpl.fromJson;
 
   @override
   String get status;
@@ -232,6 +232,6 @@ abstract class _NotificationResponseModel implements NotificationResponseModel {
   NotificationModel get notification;
   @override
   @JsonKey(ignore: true)
-  _$$_NotificationResponseModelCopyWith<_$_NotificationResponseModel>
+  _$$NotificationResponseModelImplCopyWith<_$NotificationResponseModelImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

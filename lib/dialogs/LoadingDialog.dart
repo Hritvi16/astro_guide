@@ -1,6 +1,5 @@
 import 'package:astro_guide/views/loadingScreen/LoadingScreen.dart';
 import 'package:flutter/material.dart';
-import 'package:astro_guide/colors/MyColors.dart';
 
 
 class LoadingDialog extends StatelessWidget {

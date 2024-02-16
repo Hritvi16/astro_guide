@@ -5,10 +5,11 @@ import 'package:astro_guide/essential/Essential.dart';
 import 'package:astro_guide/services/StorageService.dart';
 import 'package:astro_guide/services/networking/ApiConstants.dart';
 import 'package:astro_guide/shared/CustomClipPath.dart';
+import 'package:astro_guide/shared/helpers/extensions/StringExtension.dart';
 import 'package:astro_guide/shared/widgets/customAppBar/CustomAppBar.dart';
 import 'package:astro_guide/size/MySize.dart';
 import 'package:astro_guide/size/WidgetSize.dart';
-import 'package:astro_guide/views/home/call/widgets/common/joining/waiting_to_join.dart';
+import 'package:astro_guide/views/home/call/widgets/joining/waiting_to_join.dart';
 import 'package:astro_guide/views/home/call/widgets/one-to-one/one_to_one_meeting_container.dart';
 import 'package:astro_guide/views/loadingScreen/LoadingScreen.dart';
 import 'package:flutter/cupertino.dart';
@@ -27,20 +28,17 @@ class Call extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final statusBarHeight = MediaQuery.of(context).padding.top;
-    StorageService.storeCalling(callController);
-    print(callController.type);
-    print("callController.type");
+    callController.storeCalling(callController);
     return GetBuilder<CallController>(
       builder: (controller) {
         return WillPopScope(
           onWillPop: callController.onWillPopScope,
           child: callController.load ? callController.type!="ACTIVE" && callController.type!="COMPLETED" ?
-          WaitingToJoin(callController.astrologer.name, callController.astrologer.profile, callController.cancelMeeting, callController.type, callController.action, callController.accept,  callController.reject, callController.back) :
-            Scaffold(
-              body: callController.type=="COMPLETED" ? getCompletedDesign(context) : getActiveDesign(context),
-              bottomNavigationBar: callController.type=="COMPLETED" ? getBottom(context) : null,
-            ) : LoadingScreen()
-          // : WaitingToJoin(callController.astrologer.name),
+          WaitingToJoin(callController.astrologer.name, callController.astrologer.profile, callController.cancelMeeting, callController.type, callController.action, callController.accept,  callController.reject, callController.back)
+          : Scaffold(
+            body: callController.type=="COMPLETED" ? getCompletedDesign(context) : getActiveDesign(context),
+            bottomNavigationBar: callController.type=="COMPLETED" ? getBottom(context) : null,
+          ) : LoadingScreen()
         );
       },
     );
@@ -60,11 +58,12 @@ class Call extends StatelessWidget {
               height: standardUpperFixedDesignHeight,
               decoration: BoxDecoration(
                   color: MyColors.colorPrimary,
-                  image: const DecorationImage(
+                  image: Essential.getPlatform() ?
+                  const DecorationImage(
                       image: AssetImage(
                           "assets/essential/upper_bg_s.png"
                       )
-                  )
+                  ) : null
               ),
               child: SafeArea(
                 child: CustomAppBar('Call Detail'.tr),
@@ -78,7 +77,7 @@ class Call extends StatelessWidget {
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    getTitleInfo("${'Astrologer'.tr} ${'Name'.tr}", callController.astrologer.name),
+                    getTitleInfo("${Essential.getPlatformWord().toTitleCase().tr} ${'Name'.tr}", callController.astrologer.name),
                     SizedBox(
                       height: 5,
                     ),
@@ -94,17 +93,23 @@ class Call extends StatelessWidget {
                     SizedBox(
                       height: 10,
                     ),
-                    getIconInfo("assets/common/info.png", callController.sessionHistory.reason??""),
+                    getIconInfo("assets/common/info.png", Essential.getPlatformReplace(callController.sessionHistory.reason??"")),
                     SizedBox(
                       height: 10,
                     ),
                     Row(
                       children: [
-                        getIconInfo("assets/sign_up/calendar.png", Essential.getDate(Essential.getDTByStatus(callController.sessionHistory))),
+                        Flexible(
+                          flex: 1,
+                            fit: FlexFit.tight,
+                            child: getIconInfo("assets/sign_up/calendar.png", Essential.getDate(Essential.getDTByStatus(callController.sessionHistory)))),
                         SizedBox(
                           width: 10,
                         ),
-                        getIconInfo("assets/sign_up/time.png", Essential.getTime(Essential.getDTByStatus(callController.sessionHistory))),
+                        Flexible(
+                            flex: 1,
+                            fit: FlexFit.tight,
+                            child: getIconInfo("assets/sign_up/time.png", Essential.getTime(Essential.getDTByStatus(callController.sessionHistory)))),
                       ],
                     ),
                     SizedBox(
@@ -113,7 +118,7 @@ class Call extends StatelessWidget {
                     SizedBox(
                       height: 5,
                     ),
-                    getTitleInfo("Amount".tr, "${CommonConstants.rupee}${callController.sessionHistory.amount}"),
+                    getTitleInfo("Amount".tr, "${CommonConstants.rupee}${callController.sessionHistory.amount??""}"),
                   ]
               ),
             )
@@ -134,7 +139,9 @@ class Call extends StatelessWidget {
                   callController.updateFullScreen();
                 },
                 // child: callController.joined ?
-                child: OneToOneMeetingContainer(callController: callController, meeting: callController.meeting, token: callController.token, timer: Duration(seconds: callController.seconds),)
+                child: callController.meeting!=null ?
+                OneToOneMeetingContainer(callController: callController, meeting: callController.meeting!, token: callController.sessionHistory.token??"", timer: Duration(seconds: callController.seconds),)
+                    : LoadingScreen()
               // : WaitingToJoin(callController.astrologer.name, callController.astrologer.profile, callController.endMeeting, callController.type, callController.back, callController.accept,  callController.end)
             ),
           ),
@@ -178,13 +185,19 @@ class Call extends StatelessWidget {
         SizedBox(
           width: 5,
         ),
-        Text(
-          info,
-          style: GoogleFonts.manrope(
-            fontSize: 14.0,
-            color: MyColors.labelColor(),
-            letterSpacing: 0,
-            fontWeight: FontWeight.w600,
+        Flexible(
+          child: Column(
+            children: [
+              Text(
+                info,
+                style: GoogleFonts.manrope(
+                  fontSize: 14.0,
+                  color: MyColors.labelColor(),
+                  letterSpacing: 0,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
           ),
         )
       ],
@@ -280,7 +293,7 @@ class Call extends StatelessWidget {
               height: 5,
             ),
             Text(
-              "Please let us know your genuine and honest feedback about the astrologer. So we can serve you the best.".tr,
+              "Please let us know your genuine and honest feedback about the ${Essential.getPlatformWord()}. So we can serve you the best.".tr,
               textAlign: TextAlign.center,
               style: GoogleFonts.manrope(
                   fontSize: 12,
@@ -379,7 +392,7 @@ class Call extends StatelessWidget {
               height: 10,
             ),
             Text(
-              callController.sessionHistory.review??"",
+              Essential.getPlatformReplace(callController.sessionHistory.review??""),
               style: GoogleFonts.manrope(
                   fontSize: 14,
                   color: MyColors.colorInfoGrey,

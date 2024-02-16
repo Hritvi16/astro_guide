@@ -11,6 +11,7 @@ class SpecModel with _$SpecModel {
     required int id,
     required String spec,
     required String icon,
+    required String imageFullUrl,
   }) = _SpecModel;
 
   factory SpecModel.fromJson(JSON json) => _$SpecModelFromJson(json);

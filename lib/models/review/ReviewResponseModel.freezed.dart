@@ -101,11 +101,11 @@ class _$ReviewResponseModelCopyWithImpl<$Res, $Val extends ReviewResponseModel>
 }
 
 /// @nodoc
-abstract class _$$_ReviewResponseModelCopyWith<$Res>
+abstract class _$$ReviewResponseModelImplCopyWith<$Res>
     implements $ReviewResponseModelCopyWith<$Res> {
-  factory _$$_ReviewResponseModelCopyWith(_$_ReviewResponseModel value,
-          $Res Function(_$_ReviewResponseModel) then) =
-      __$$_ReviewResponseModelCopyWithImpl<$Res>;
+  factory _$$ReviewResponseModelImplCopyWith(_$ReviewResponseModelImpl value,
+          $Res Function(_$ReviewResponseModelImpl) then) =
+      __$$ReviewResponseModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -116,11 +116,11 @@ abstract class _$$_ReviewResponseModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_ReviewResponseModelCopyWithImpl<$Res>
-    extends _$ReviewResponseModelCopyWithImpl<$Res, _$_ReviewResponseModel>
-    implements _$$_ReviewResponseModelCopyWith<$Res> {
-  __$$_ReviewResponseModelCopyWithImpl(_$_ReviewResponseModel _value,
-      $Res Function(_$_ReviewResponseModel) _then)
+class __$$ReviewResponseModelImplCopyWithImpl<$Res>
+    extends _$ReviewResponseModelCopyWithImpl<$Res, _$ReviewResponseModelImpl>
+    implements _$$ReviewResponseModelImplCopyWith<$Res> {
+  __$$ReviewResponseModelImplCopyWithImpl(_$ReviewResponseModelImpl _value,
+      $Res Function(_$ReviewResponseModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -132,7 +132,7 @@ class __$$_ReviewResponseModelCopyWithImpl<$Res>
     Object? data = freezed,
     Object? m_id = freezed,
   }) {
-    return _then(_$_ReviewResponseModel(
+    return _then(_$ReviewResponseModelImpl(
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -159,16 +159,16 @@ class __$$_ReviewResponseModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_ReviewResponseModel implements _ReviewResponseModel {
-  _$_ReviewResponseModel(
+class _$ReviewResponseModelImpl implements _ReviewResponseModel {
+  _$ReviewResponseModelImpl(
       {required this.status,
       required this.code,
       required this.message,
       this.data,
       this.m_id});
 
-  factory _$_ReviewResponseModel.fromJson(Map<String, dynamic> json) =>
-      _$$_ReviewResponseModelFromJson(json);
+  factory _$ReviewResponseModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ReviewResponseModelImplFromJson(json);
 
   @override
   final String status;
@@ -187,10 +187,10 @@ class _$_ReviewResponseModel implements _ReviewResponseModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ReviewResponseModel &&
+            other is _$ReviewResponseModelImpl &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.code, code) || other.code == code) &&
             (identical(other.message, message) || other.message == message) &&
@@ -206,13 +206,13 @@ class _$_ReviewResponseModel implements _ReviewResponseModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ReviewResponseModelCopyWith<_$_ReviewResponseModel> get copyWith =>
-      __$$_ReviewResponseModelCopyWithImpl<_$_ReviewResponseModel>(
+  _$$ReviewResponseModelImplCopyWith<_$ReviewResponseModelImpl> get copyWith =>
+      __$$ReviewResponseModelImplCopyWithImpl<_$ReviewResponseModelImpl>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ReviewResponseModelToJson(
+    return _$$ReviewResponseModelImplToJson(
       this,
     );
   }
@@ -224,10 +224,10 @@ abstract class _ReviewResponseModel implements ReviewResponseModel {
       required final int code,
       required final String message,
       final ReviewModel? data,
-      final int? m_id}) = _$_ReviewResponseModel;
+      final int? m_id}) = _$ReviewResponseModelImpl;
 
   factory _ReviewResponseModel.fromJson(Map<String, dynamic> json) =
-      _$_ReviewResponseModel.fromJson;
+      _$ReviewResponseModelImpl.fromJson;
 
   @override
   String get status;
@@ -241,6 +241,6 @@ abstract class _ReviewResponseModel implements ReviewResponseModel {
   int? get m_id;
   @override
   @JsonKey(ignore: true)
-  _$$_ReviewResponseModelCopyWith<_$_ReviewResponseModel> get copyWith =>
+  _$$ReviewResponseModelImplCopyWith<_$ReviewResponseModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

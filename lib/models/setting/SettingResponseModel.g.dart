@@ -6,9 +6,9 @@ part of 'SettingResponseModel.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_SettingResponseModel _$$_SettingResponseModelFromJson(
+_$SettingResponseModelImpl _$$SettingResponseModelImplFromJson(
         Map<String, dynamic> json) =>
-    _$_SettingResponseModel(
+    _$SettingResponseModelImpl(
       status: json['status'] as String,
       code: json['code'] as int,
       message: json['message'] as String,
@@ -20,8 +20,8 @@ _$_SettingResponseModel _$$_SettingResponseModelFromJson(
           : UserModel.fromJson(json['user'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$_SettingResponseModelToJson(
-        _$_SettingResponseModel instance) =>
+Map<String, dynamic> _$$SettingResponseModelImplToJson(
+        _$SettingResponseModelImpl instance) =>
     <String, dynamic>{
       'status': instance.status,
       'code': instance.code,

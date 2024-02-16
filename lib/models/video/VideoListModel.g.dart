@@ -6,8 +6,8 @@ part of 'VideoListModel.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_VideoListModel _$$_VideoListModelFromJson(Map<String, dynamic> json) =>
-    _$_VideoListModel(
+_$VideoListModelImpl _$$VideoListModelImplFromJson(Map<String, dynamic> json) =>
+    _$VideoListModelImpl(
       status: json['status'] as String,
       code: json['code'] as int,
       message: json['message'] as String,
@@ -16,7 +16,8 @@ _$_VideoListModel _$$_VideoListModelFromJson(Map<String, dynamic> json) =>
           .toList(),
     );
 
-Map<String, dynamic> _$$_VideoListModelToJson(_$_VideoListModel instance) =>
+Map<String, dynamic> _$$VideoListModelImplToJson(
+        _$VideoListModelImpl instance) =>
     <String, dynamic>{
       'status': instance.status,
       'code': instance.code,

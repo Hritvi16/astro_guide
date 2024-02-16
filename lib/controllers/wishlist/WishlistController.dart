@@ -24,13 +24,14 @@ class WishlistController extends GetxController {
 
   final AstrologerProvider astrologerProvider = Get.find();
 
-  List<AstrologerModel> astrologers = [];
+  late List<AstrologerModel> astrologers;
 
   TextEditingController search = TextEditingController();
 
   Timer? countdownTimer;
   late bool free;
   late double wallet;
+  late bool load;
 
   @override
   void onInit() {
@@ -38,7 +39,8 @@ class WishlistController extends GetxController {
     print("init");
     free = storage.read("free")??false;
     wallet = double.parse((storage.read("wallet")??0.0).toString());
-
+    load = false;
+    astrologers = [];
     start();
   }
 
@@ -61,8 +63,10 @@ class WishlistController extends GetxController {
 
     await astrologerProvider.fetchByID(storage.read("access"), ApiConstants.favouriteAPI+ApiConstants.user, data).then((response) async {
       if(response.code==1) {
-        astrologers = response.data??[];
+        astrologers = [];
+        astrologers.addAll(response.data??[]);
       }
+      load = true;
       update();
     });
   }
@@ -98,7 +102,7 @@ class WishlistController extends GetxController {
     print(data);
 
     astrologerProvider.add(storage.read("access"), ApiConstants.favouriteAPI+(astrologers[index].fav==1 ? ApiConstants.remove : ApiConstants.add), data).then((response) {
-      Essential.showSnackBar(response.message, time: 1);
+      Essential.showSnackBar(response.message, time: 1, code: response.code);
       if(response.code==1) {
         astrologers.remove(astrologers[index]);
         // astrologers[index] = astrologers[index].copyWith(fav: astrologers[index].fav==1 ? 0 : 1);

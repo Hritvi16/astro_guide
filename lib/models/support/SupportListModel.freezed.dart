@@ -81,11 +81,11 @@ class _$SupportListModelCopyWithImpl<$Res, $Val extends SupportListModel>
 }
 
 /// @nodoc
-abstract class _$$_SupportListModelCopyWith<$Res>
+abstract class _$$SupportListModelImplCopyWith<$Res>
     implements $SupportListModelCopyWith<$Res> {
-  factory _$$_SupportListModelCopyWith(
-          _$_SupportListModel value, $Res Function(_$_SupportListModel) then) =
-      __$$_SupportListModelCopyWithImpl<$Res>;
+  factory _$$SupportListModelImplCopyWith(_$SupportListModelImpl value,
+          $Res Function(_$SupportListModelImpl) then) =
+      __$$SupportListModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -93,11 +93,11 @@ abstract class _$$_SupportListModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_SupportListModelCopyWithImpl<$Res>
-    extends _$SupportListModelCopyWithImpl<$Res, _$_SupportListModel>
-    implements _$$_SupportListModelCopyWith<$Res> {
-  __$$_SupportListModelCopyWithImpl(
-      _$_SupportListModel _value, $Res Function(_$_SupportListModel) _then)
+class __$$SupportListModelImplCopyWithImpl<$Res>
+    extends _$SupportListModelCopyWithImpl<$Res, _$SupportListModelImpl>
+    implements _$$SupportListModelImplCopyWith<$Res> {
+  __$$SupportListModelImplCopyWithImpl(_$SupportListModelImpl _value,
+      $Res Function(_$SupportListModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -108,7 +108,7 @@ class __$$_SupportListModelCopyWithImpl<$Res>
     Object? message = null,
     Object? data = freezed,
   }) {
-    return _then(_$_SupportListModel(
+    return _then(_$SupportListModelImpl(
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -131,16 +131,16 @@ class __$$_SupportListModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_SupportListModel implements _SupportListModel {
-  _$_SupportListModel(
+class _$SupportListModelImpl implements _SupportListModel {
+  _$SupportListModelImpl(
       {required this.status,
       required this.code,
       required this.message,
       final List<SupportModel>? data})
       : _data = data;
 
-  factory _$_SupportListModel.fromJson(Map<String, dynamic> json) =>
-      _$$_SupportListModelFromJson(json);
+  factory _$SupportListModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$SupportListModelImplFromJson(json);
 
   @override
   final String status;
@@ -164,10 +164,10 @@ class _$_SupportListModel implements _SupportListModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_SupportListModel &&
+            other is _$SupportListModelImpl &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.code, code) || other.code == code) &&
             (identical(other.message, message) || other.message == message) &&
@@ -182,12 +182,13 @@ class _$_SupportListModel implements _SupportListModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_SupportListModelCopyWith<_$_SupportListModel> get copyWith =>
-      __$$_SupportListModelCopyWithImpl<_$_SupportListModel>(this, _$identity);
+  _$$SupportListModelImplCopyWith<_$SupportListModelImpl> get copyWith =>
+      __$$SupportListModelImplCopyWithImpl<_$SupportListModelImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_SupportListModelToJson(
+    return _$$SupportListModelImplToJson(
       this,
     );
   }
@@ -198,10 +199,10 @@ abstract class _SupportListModel implements SupportListModel {
       {required final String status,
       required final int code,
       required final String message,
-      final List<SupportModel>? data}) = _$_SupportListModel;
+      final List<SupportModel>? data}) = _$SupportListModelImpl;
 
   factory _SupportListModel.fromJson(Map<String, dynamic> json) =
-      _$_SupportListModel.fromJson;
+      _$SupportListModelImpl.fromJson;
 
   @override
   String get status;
@@ -213,6 +214,6 @@ abstract class _SupportListModel implements SupportListModel {
   List<SupportModel>? get data;
   @override
   @JsonKey(ignore: true)
-  _$$_SupportListModelCopyWith<_$_SupportListModel> get copyWith =>
+  _$$SupportListModelImplCopyWith<_$SupportListModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

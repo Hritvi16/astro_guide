@@ -6,8 +6,9 @@ part of 'CountryListModel.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_CountryListModel _$$_CountryListModelFromJson(Map<String, dynamic> json) =>
-    _$_CountryListModel(
+_$CountryListModelImpl _$$CountryListModelImplFromJson(
+        Map<String, dynamic> json) =>
+    _$CountryListModelImpl(
       status: json['status'] as String,
       code: json['code'] as int,
       message: json['message'] as String,
@@ -16,7 +17,8 @@ _$_CountryListModel _$$_CountryListModelFromJson(Map<String, dynamic> json) =>
           .toList(),
     );
 
-Map<String, dynamic> _$$_CountryListModelToJson(_$_CountryListModel instance) =>
+Map<String, dynamic> _$$CountryListModelImplToJson(
+        _$CountryListModelImpl instance) =>
     <String, dynamic>{
       'status': instance.status,
       'code': instance.code,

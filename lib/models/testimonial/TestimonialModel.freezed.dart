@@ -25,7 +25,7 @@ mixin _$TestimonialModel {
   String get description => throw _privateConstructorUsedError;
   String get created_at => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  String get profile => throw _privateConstructorUsedError;
+  String? get profile => throw _privateConstructorUsedError;
   String get state => throw _privateConstructorUsedError;
   String get country => throw _privateConstructorUsedError;
 
@@ -47,7 +47,7 @@ abstract class $TestimonialModelCopyWith<$Res> {
       String description,
       String created_at,
       String name,
-      String profile,
+      String? profile,
       String state,
       String country});
 }
@@ -70,7 +70,7 @@ class _$TestimonialModelCopyWithImpl<$Res, $Val extends TestimonialModel>
     Object? description = null,
     Object? created_at = null,
     Object? name = null,
-    Object? profile = null,
+    Object? profile = freezed,
     Object? state = null,
     Object? country = null,
   }) {
@@ -95,10 +95,10 @@ class _$TestimonialModelCopyWithImpl<$Res, $Val extends TestimonialModel>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      profile: null == profile
+      profile: freezed == profile
           ? _value.profile
           : profile // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       state: null == state
           ? _value.state
           : state // ignore: cast_nullable_to_non_nullable
@@ -112,11 +112,11 @@ class _$TestimonialModelCopyWithImpl<$Res, $Val extends TestimonialModel>
 }
 
 /// @nodoc
-abstract class _$$_TestimonialModelCopyWith<$Res>
+abstract class _$$TestimonialModelImplCopyWith<$Res>
     implements $TestimonialModelCopyWith<$Res> {
-  factory _$$_TestimonialModelCopyWith(
-          _$_TestimonialModel value, $Res Function(_$_TestimonialModel) then) =
-      __$$_TestimonialModelCopyWithImpl<$Res>;
+  factory _$$TestimonialModelImplCopyWith(_$TestimonialModelImpl value,
+          $Res Function(_$TestimonialModelImpl) then) =
+      __$$TestimonialModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -125,17 +125,17 @@ abstract class _$$_TestimonialModelCopyWith<$Res>
       String description,
       String created_at,
       String name,
-      String profile,
+      String? profile,
       String state,
       String country});
 }
 
 /// @nodoc
-class __$$_TestimonialModelCopyWithImpl<$Res>
-    extends _$TestimonialModelCopyWithImpl<$Res, _$_TestimonialModel>
-    implements _$$_TestimonialModelCopyWith<$Res> {
-  __$$_TestimonialModelCopyWithImpl(
-      _$_TestimonialModel _value, $Res Function(_$_TestimonialModel) _then)
+class __$$TestimonialModelImplCopyWithImpl<$Res>
+    extends _$TestimonialModelCopyWithImpl<$Res, _$TestimonialModelImpl>
+    implements _$$TestimonialModelImplCopyWith<$Res> {
+  __$$TestimonialModelImplCopyWithImpl(_$TestimonialModelImpl _value,
+      $Res Function(_$TestimonialModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -146,11 +146,11 @@ class __$$_TestimonialModelCopyWithImpl<$Res>
     Object? description = null,
     Object? created_at = null,
     Object? name = null,
-    Object? profile = null,
+    Object? profile = freezed,
     Object? state = null,
     Object? country = null,
   }) {
-    return _then(_$_TestimonialModel(
+    return _then(_$TestimonialModelImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -171,10 +171,10 @@ class __$$_TestimonialModelCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      profile: null == profile
+      profile: freezed == profile
           ? _value.profile
           : profile // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       state: null == state
           ? _value.state
           : state // ignore: cast_nullable_to_non_nullable
@@ -189,19 +189,19 @@ class __$$_TestimonialModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_TestimonialModel implements _TestimonialModel {
-  _$_TestimonialModel(
+class _$TestimonialModelImpl implements _TestimonialModel {
+  _$TestimonialModelImpl(
       {required this.id,
       required this.user_id,
       required this.description,
       required this.created_at,
       required this.name,
-      required this.profile,
+      this.profile,
       required this.state,
       required this.country});
 
-  factory _$_TestimonialModel.fromJson(Map<String, dynamic> json) =>
-      _$$_TestimonialModelFromJson(json);
+  factory _$TestimonialModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$TestimonialModelImplFromJson(json);
 
   @override
   final int id;
@@ -214,7 +214,7 @@ class _$_TestimonialModel implements _TestimonialModel {
   @override
   final String name;
   @override
-  final String profile;
+  final String? profile;
   @override
   final String state;
   @override
@@ -226,10 +226,10 @@ class _$_TestimonialModel implements _TestimonialModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_TestimonialModel &&
+            other is _$TestimonialModelImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.user_id, user_id) || other.user_id == user_id) &&
             (identical(other.description, description) ||
@@ -250,12 +250,13 @@ class _$_TestimonialModel implements _TestimonialModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_TestimonialModelCopyWith<_$_TestimonialModel> get copyWith =>
-      __$$_TestimonialModelCopyWithImpl<_$_TestimonialModel>(this, _$identity);
+  _$$TestimonialModelImplCopyWith<_$TestimonialModelImpl> get copyWith =>
+      __$$TestimonialModelImplCopyWithImpl<_$TestimonialModelImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_TestimonialModelToJson(
+    return _$$TestimonialModelImplToJson(
       this,
     );
   }
@@ -268,12 +269,12 @@ abstract class _TestimonialModel implements TestimonialModel {
       required final String description,
       required final String created_at,
       required final String name,
-      required final String profile,
+      final String? profile,
       required final String state,
-      required final String country}) = _$_TestimonialModel;
+      required final String country}) = _$TestimonialModelImpl;
 
   factory _TestimonialModel.fromJson(Map<String, dynamic> json) =
-      _$_TestimonialModel.fromJson;
+      _$TestimonialModelImpl.fromJson;
 
   @override
   int get id;
@@ -286,13 +287,13 @@ abstract class _TestimonialModel implements TestimonialModel {
   @override
   String get name;
   @override
-  String get profile;
+  String? get profile;
   @override
   String get state;
   @override
   String get country;
   @override
   @JsonKey(ignore: true)
-  _$$_TestimonialModelCopyWith<_$_TestimonialModel> get copyWith =>
+  _$$TestimonialModelImplCopyWith<_$TestimonialModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

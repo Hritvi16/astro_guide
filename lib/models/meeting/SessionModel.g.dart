@@ -6,15 +6,15 @@ part of 'SessionModel.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_SessionModel _$$_SessionModelFromJson(Map<String, dynamic> json) =>
-    _$_SessionModel(
+_$SessionModelImpl _$$SessionModelImplFromJson(Map<String, dynamic> json) =>
+    _$SessionModelImpl(
       code: json['code'] as int,
       status: json['status'] as String,
       message: json['message'] as String,
       data: json['data'] as String?,
     );
 
-Map<String, dynamic> _$$_SessionModelToJson(_$_SessionModel instance) =>
+Map<String, dynamic> _$$SessionModelImplToJson(_$SessionModelImpl instance) =>
     <String, dynamic>{
       'code': instance.code,
       'status': instance.status,

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:astro_guide/constants/CommonConstants.dart';
+import 'package:astro_guide/essential/Essential.dart';
 import 'package:astro_guide/models/astrologer/AstrologerModel.dart';
 import 'package:astro_guide/models/country/CountryModel.dart';
 import 'package:astro_guide/models/language/LanguageModel.dart';
@@ -50,6 +51,10 @@ class AstroFilterController extends GetxController {
 
     filters = CommonConstants.filters;
     filter = filters.first;
+
+    if(!Essential.getPlatform()) {
+      filters.remove("Expertise");
+    }
 
     types = [];
     stypes = [];

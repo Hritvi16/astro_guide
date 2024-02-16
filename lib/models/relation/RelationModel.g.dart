@@ -6,13 +6,13 @@ part of 'RelationModel.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_RelationModel _$$_RelationModelFromJson(Map<String, dynamic> json) =>
-    _$_RelationModel(
+_$RelationModelImpl _$$RelationModelImplFromJson(Map<String, dynamic> json) =>
+    _$RelationModelImpl(
       id: json['id'] as int,
       name: json['name'] as String,
     );
 
-Map<String, dynamic> _$$_RelationModelToJson(_$_RelationModel instance) =>
+Map<String, dynamic> _$$RelationModelImplToJson(_$RelationModelImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,

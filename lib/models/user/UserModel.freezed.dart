@@ -22,7 +22,7 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) {
 mixin _$UserModel {
   int get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  String get mobile => throw _privateConstructorUsedError;
+  String? get mobile => throw _privateConstructorUsedError;
   String? get email => throw _privateConstructorUsedError;
   String? get gender => throw _privateConstructorUsedError;
   String? get dob => throw _privateConstructorUsedError;
@@ -33,6 +33,7 @@ mixin _$UserModel {
   int? get st_id => throw _privateConstructorUsedError;
   int? get co_id => throw _privateConstructorUsedError;
   String? get postal_code => throw _privateConstructorUsedError;
+  String get joined_via => throw _privateConstructorUsedError;
   double? get amount => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -49,7 +50,7 @@ abstract class $UserModelCopyWith<$Res> {
   $Res call(
       {int id,
       String name,
-      String mobile,
+      String? mobile,
       String? email,
       String? gender,
       String? dob,
@@ -60,6 +61,7 @@ abstract class $UserModelCopyWith<$Res> {
       int? st_id,
       int? co_id,
       String? postal_code,
+      String joined_via,
       double? amount});
 }
 
@@ -78,7 +80,7 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
   $Res call({
     Object? id = null,
     Object? name = null,
-    Object? mobile = null,
+    Object? mobile = freezed,
     Object? email = freezed,
     Object? gender = freezed,
     Object? dob = freezed,
@@ -89,6 +91,7 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
     Object? st_id = freezed,
     Object? co_id = freezed,
     Object? postal_code = freezed,
+    Object? joined_via = null,
     Object? amount = freezed,
   }) {
     return _then(_value.copyWith(
@@ -100,10 +103,10 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      mobile: null == mobile
+      mobile: freezed == mobile
           ? _value.mobile
           : mobile // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
@@ -144,6 +147,10 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
           ? _value.postal_code
           : postal_code // ignore: cast_nullable_to_non_nullable
               as String?,
+      joined_via: null == joined_via
+          ? _value.joined_via
+          : joined_via // ignore: cast_nullable_to_non_nullable
+              as String,
       amount: freezed == amount
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
@@ -153,16 +160,17 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
 }
 
 /// @nodoc
-abstract class _$$_UserModelCopyWith<$Res> implements $UserModelCopyWith<$Res> {
-  factory _$$_UserModelCopyWith(
-          _$_UserModel value, $Res Function(_$_UserModel) then) =
-      __$$_UserModelCopyWithImpl<$Res>;
+abstract class _$$UserModelImplCopyWith<$Res>
+    implements $UserModelCopyWith<$Res> {
+  factory _$$UserModelImplCopyWith(
+          _$UserModelImpl value, $Res Function(_$UserModelImpl) then) =
+      __$$UserModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
       {int id,
       String name,
-      String mobile,
+      String? mobile,
       String? email,
       String? gender,
       String? dob,
@@ -173,15 +181,16 @@ abstract class _$$_UserModelCopyWith<$Res> implements $UserModelCopyWith<$Res> {
       int? st_id,
       int? co_id,
       String? postal_code,
+      String joined_via,
       double? amount});
 }
 
 /// @nodoc
-class __$$_UserModelCopyWithImpl<$Res>
-    extends _$UserModelCopyWithImpl<$Res, _$_UserModel>
-    implements _$$_UserModelCopyWith<$Res> {
-  __$$_UserModelCopyWithImpl(
-      _$_UserModel _value, $Res Function(_$_UserModel) _then)
+class __$$UserModelImplCopyWithImpl<$Res>
+    extends _$UserModelCopyWithImpl<$Res, _$UserModelImpl>
+    implements _$$UserModelImplCopyWith<$Res> {
+  __$$UserModelImplCopyWithImpl(
+      _$UserModelImpl _value, $Res Function(_$UserModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -189,7 +198,7 @@ class __$$_UserModelCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? name = null,
-    Object? mobile = null,
+    Object? mobile = freezed,
     Object? email = freezed,
     Object? gender = freezed,
     Object? dob = freezed,
@@ -200,9 +209,10 @@ class __$$_UserModelCopyWithImpl<$Res>
     Object? st_id = freezed,
     Object? co_id = freezed,
     Object? postal_code = freezed,
+    Object? joined_via = null,
     Object? amount = freezed,
   }) {
-    return _then(_$_UserModel(
+    return _then(_$UserModelImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -211,10 +221,10 @@ class __$$_UserModelCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      mobile: null == mobile
+      mobile: freezed == mobile
           ? _value.mobile
           : mobile // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
@@ -255,6 +265,10 @@ class __$$_UserModelCopyWithImpl<$Res>
           ? _value.postal_code
           : postal_code // ignore: cast_nullable_to_non_nullable
               as String?,
+      joined_via: null == joined_via
+          ? _value.joined_via
+          : joined_via // ignore: cast_nullable_to_non_nullable
+              as String,
       amount: freezed == amount
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
@@ -265,11 +279,11 @@ class __$$_UserModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_UserModel implements _UserModel {
-  _$_UserModel(
+class _$UserModelImpl implements _UserModel {
+  _$UserModelImpl(
       {required this.id,
       required this.name,
-      required this.mobile,
+      this.mobile,
       this.email,
       this.gender,
       this.dob,
@@ -280,17 +294,18 @@ class _$_UserModel implements _UserModel {
       this.st_id,
       this.co_id,
       this.postal_code,
+      required this.joined_via,
       this.amount});
 
-  factory _$_UserModel.fromJson(Map<String, dynamic> json) =>
-      _$$_UserModelFromJson(json);
+  factory _$UserModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$UserModelImplFromJson(json);
 
   @override
   final int id;
   @override
   final String name;
   @override
-  final String mobile;
+  final String? mobile;
   @override
   final String? email;
   @override
@@ -312,18 +327,20 @@ class _$_UserModel implements _UserModel {
   @override
   final String? postal_code;
   @override
+  final String joined_via;
+  @override
   final double? amount;
 
   @override
   String toString() {
-    return 'UserModel(id: $id, name: $name, mobile: $mobile, email: $email, gender: $gender, dob: $dob, profile: $profile, free: $free, nationality: $nationality, ci_id: $ci_id, st_id: $st_id, co_id: $co_id, postal_code: $postal_code, amount: $amount)';
+    return 'UserModel(id: $id, name: $name, mobile: $mobile, email: $email, gender: $gender, dob: $dob, profile: $profile, free: $free, nationality: $nationality, ci_id: $ci_id, st_id: $st_id, co_id: $co_id, postal_code: $postal_code, joined_via: $joined_via, amount: $amount)';
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_UserModel &&
+            other is _$UserModelImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.mobile, mobile) || other.mobile == mobile) &&
@@ -339,6 +356,8 @@ class _$_UserModel implements _UserModel {
             (identical(other.co_id, co_id) || other.co_id == co_id) &&
             (identical(other.postal_code, postal_code) ||
                 other.postal_code == postal_code) &&
+            (identical(other.joined_via, joined_via) ||
+                other.joined_via == joined_via) &&
             (identical(other.amount, amount) || other.amount == amount));
   }
 
@@ -359,17 +378,18 @@ class _$_UserModel implements _UserModel {
       st_id,
       co_id,
       postal_code,
+      joined_via,
       amount);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_UserModelCopyWith<_$_UserModel> get copyWith =>
-      __$$_UserModelCopyWithImpl<_$_UserModel>(this, _$identity);
+  _$$UserModelImplCopyWith<_$UserModelImpl> get copyWith =>
+      __$$UserModelImplCopyWithImpl<_$UserModelImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_UserModelToJson(
+    return _$$UserModelImplToJson(
       this,
     );
   }
@@ -379,7 +399,7 @@ abstract class _UserModel implements UserModel {
   factory _UserModel(
       {required final int id,
       required final String name,
-      required final String mobile,
+      final String? mobile,
       final String? email,
       final String? gender,
       final String? dob,
@@ -390,17 +410,18 @@ abstract class _UserModel implements UserModel {
       final int? st_id,
       final int? co_id,
       final String? postal_code,
-      final double? amount}) = _$_UserModel;
+      required final String joined_via,
+      final double? amount}) = _$UserModelImpl;
 
   factory _UserModel.fromJson(Map<String, dynamic> json) =
-      _$_UserModel.fromJson;
+      _$UserModelImpl.fromJson;
 
   @override
   int get id;
   @override
   String get name;
   @override
-  String get mobile;
+  String? get mobile;
   @override
   String? get email;
   @override
@@ -422,9 +443,11 @@ abstract class _UserModel implements UserModel {
   @override
   String? get postal_code;
   @override
+  String get joined_via;
+  @override
   double? get amount;
   @override
   @JsonKey(ignore: true)
-  _$$_UserModelCopyWith<_$_UserModel> get copyWith =>
+  _$$UserModelImplCopyWith<_$UserModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

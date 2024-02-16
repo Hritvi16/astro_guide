@@ -6,8 +6,9 @@ part of 'SupportListModel.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_SupportListModel _$$_SupportListModelFromJson(Map<String, dynamic> json) =>
-    _$_SupportListModel(
+_$SupportListModelImpl _$$SupportListModelImplFromJson(
+        Map<String, dynamic> json) =>
+    _$SupportListModelImpl(
       status: json['status'] as String,
       code: json['code'] as int,
       message: json['message'] as String,
@@ -16,7 +17,8 @@ _$_SupportListModel _$$_SupportListModelFromJson(Map<String, dynamic> json) =>
           .toList(),
     );
 
-Map<String, dynamic> _$$_SupportListModelToJson(_$_SupportListModel instance) =>
+Map<String, dynamic> _$$SupportListModelImplToJson(
+        _$SupportListModelImpl instance) =>
     <String, dynamic>{
       'status': instance.status,
       'code': instance.code,

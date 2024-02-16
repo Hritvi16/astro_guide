@@ -14,6 +14,7 @@ class SettingModel with _$SettingModel {
     required String about_64,
     required String tc_64,
     required String privacy_64,
+    required String cr_64,
     required String mobile,
     required String email,
     required String address,

@@ -80,22 +80,22 @@ class _$SpecListModelCopyWithImpl<$Res, $Val extends SpecListModel>
 }
 
 /// @nodoc
-abstract class _$$_SpecListModelCopyWith<$Res>
+abstract class _$$SpecListModelImplCopyWith<$Res>
     implements $SpecListModelCopyWith<$Res> {
-  factory _$$_SpecListModelCopyWith(
-          _$_SpecListModel value, $Res Function(_$_SpecListModel) then) =
-      __$$_SpecListModelCopyWithImpl<$Res>;
+  factory _$$SpecListModelImplCopyWith(
+          _$SpecListModelImpl value, $Res Function(_$SpecListModelImpl) then) =
+      __$$SpecListModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String status, int code, String message, List<SpecModel>? data});
 }
 
 /// @nodoc
-class __$$_SpecListModelCopyWithImpl<$Res>
-    extends _$SpecListModelCopyWithImpl<$Res, _$_SpecListModel>
-    implements _$$_SpecListModelCopyWith<$Res> {
-  __$$_SpecListModelCopyWithImpl(
-      _$_SpecListModel _value, $Res Function(_$_SpecListModel) _then)
+class __$$SpecListModelImplCopyWithImpl<$Res>
+    extends _$SpecListModelCopyWithImpl<$Res, _$SpecListModelImpl>
+    implements _$$SpecListModelImplCopyWith<$Res> {
+  __$$SpecListModelImplCopyWithImpl(
+      _$SpecListModelImpl _value, $Res Function(_$SpecListModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -106,7 +106,7 @@ class __$$_SpecListModelCopyWithImpl<$Res>
     Object? message = null,
     Object? data = freezed,
   }) {
-    return _then(_$_SpecListModel(
+    return _then(_$SpecListModelImpl(
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -129,16 +129,16 @@ class __$$_SpecListModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_SpecListModel implements _SpecListModel {
-  _$_SpecListModel(
+class _$SpecListModelImpl implements _SpecListModel {
+  _$SpecListModelImpl(
       {required this.status,
       required this.code,
       required this.message,
       final List<SpecModel>? data})
       : _data = data;
 
-  factory _$_SpecListModel.fromJson(Map<String, dynamic> json) =>
-      _$$_SpecListModelFromJson(json);
+  factory _$SpecListModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$SpecListModelImplFromJson(json);
 
   @override
   final String status;
@@ -162,10 +162,10 @@ class _$_SpecListModel implements _SpecListModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_SpecListModel &&
+            other is _$SpecListModelImpl &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.code, code) || other.code == code) &&
             (identical(other.message, message) || other.message == message) &&
@@ -180,12 +180,12 @@ class _$_SpecListModel implements _SpecListModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_SpecListModelCopyWith<_$_SpecListModel> get copyWith =>
-      __$$_SpecListModelCopyWithImpl<_$_SpecListModel>(this, _$identity);
+  _$$SpecListModelImplCopyWith<_$SpecListModelImpl> get copyWith =>
+      __$$SpecListModelImplCopyWithImpl<_$SpecListModelImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_SpecListModelToJson(
+    return _$$SpecListModelImplToJson(
       this,
     );
   }
@@ -196,10 +196,10 @@ abstract class _SpecListModel implements SpecListModel {
       {required final String status,
       required final int code,
       required final String message,
-      final List<SpecModel>? data}) = _$_SpecListModel;
+      final List<SpecModel>? data}) = _$SpecListModelImpl;
 
   factory _SpecListModel.fromJson(Map<String, dynamic> json) =
-      _$_SpecListModel.fromJson;
+      _$SpecListModelImpl.fromJson;
 
   @override
   String get status;
@@ -211,6 +211,6 @@ abstract class _SpecListModel implements SpecListModel {
   List<SpecModel>? get data;
   @override
   @JsonKey(ignore: true)
-  _$$_SpecListModelCopyWith<_$_SpecListModel> get copyWith =>
+  _$$SpecListModelImplCopyWith<_$SpecListModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

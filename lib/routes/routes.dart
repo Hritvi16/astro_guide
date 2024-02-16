@@ -2,8 +2,6 @@ import 'package:astro_guide/controllers/astrologerDetail/AstrologerDetailBinding
 import 'package:astro_guide/controllers/blog/BlogBinding.dart';
 import 'package:astro_guide/controllers/blog/BlogsBinding.dart';
 import 'package:astro_guide/controllers/call/CallBinding.dart';
-import 'package:astro_guide/controllers/call/JoinScreenBinding.dart';
-import 'package:astro_guide/controllers/call/OneToOneMeetBinding.dart';
 import 'package:astro_guide/controllers/changeMobile/ChangeMobileBinding.dart';
 import 'package:astro_guide/controllers/chat/ChatBinding.dart';
 import 'package:astro_guide/controllers/contactUs/ContactUsBinding.dart';
@@ -11,6 +9,7 @@ import 'package:astro_guide/controllers/custom/CustomBinding.dart';
 import 'package:astro_guide/controllers/customPDFViewer/CustomPDFViewerBinding.dart';
 import 'package:astro_guide/controllers/custom_youtube_player/CustomYoutubePlayerBinding.dart';
 import 'package:astro_guide/controllers/following/FollowingBinding.dart';
+import 'package:astro_guide/controllers/home/PreHomeBinding.dart';
 import 'package:astro_guide/controllers/information/InformationBinding.dart';
 import 'package:astro_guide/controllers/language/LanguageBinding.dart';
 import 'package:astro_guide/controllers/myProfile/MyProfileBinding.dart';
@@ -42,16 +41,18 @@ import 'package:astro_guide/views/Splash.dart';
 import 'package:astro_guide/views/authentication/OTP.dart';
 import 'package:astro_guide/views/authentication/SignUp.dart';
 import 'package:astro_guide/views/home/Home.dart';
+import 'package:astro_guide/views/home/PreHome.dart';
 import 'package:astro_guide/views/home/astrologerDetail/AstrologerDetail.dart';
 import 'package:astro_guide/views/home/call/Call.dart';
-import 'package:astro_guide/views/home/call/OneToOneMeet.dart';
-import 'package:astro_guide/views/home/call/join_screen.dart';
 import 'package:astro_guide/views/home/chat/Chat.dart';
 import 'package:astro_guide/views/home/chat/CheckSession.dart';
 import 'package:astro_guide/views/home/dashboard/blog/Blog.dart';
 import 'package:astro_guide/views/home/dashboard/blog/Blogs.dart';
 import 'package:astro_guide/views/home/dashboard/custom/Custom.dart';
+import 'package:astro_guide/views/home/dashboard/services/FreeKundli.dart';
 import 'package:astro_guide/views/home/dashboard/services/Horoscope.dart';
+import 'package:astro_guide/views/home/dashboard/services/Kundli.dart';
+import 'package:astro_guide/views/home/dashboard/services/MatchKundli.dart';
 import 'package:astro_guide/views/home/dashboard/testimonial/ManageTestimonial.dart';
 import 'package:astro_guide/views/home/dashboard/testimonial/MyTestimonial.dart';
 import 'package:astro_guide/views/home/dashboard/testimonial/Testimonial.dart';
@@ -66,6 +67,7 @@ import 'package:astro_guide/views/home/settings/MyProfile.dart';
 import 'package:astro_guide/views/home/support/Support.dart';
 import 'package:astro_guide/views/home/support/SupportChat.dart';
 import 'package:astro_guide/views/home/wallet/Invoice.dart';
+import 'package:astro_guide/views/home/wallet/PaymentMethod.dart';
 import 'package:astro_guide/views/home/wallet/Wallet.dart';
 import 'package:astro_guide/views/home/wishlist/Wishlist.dart';
 import 'package:astro_guide/views/language/Language.dart';
@@ -100,21 +102,31 @@ class Routes {
       binding: SignUpBinding()
     ),
     GetPage(
+        name: '/preHome',
+        page: () => PreHome(),
+        binding: PreHomeBinding(),
+        // middlewares: [InternetMiddleware()]
+    ),
+    GetPage(
         name: '/home',
         page: () => Home(),
         binding: HomeBinding(),
-        middlewares: [InternetMiddleware()]
+        // middlewares: [InternetMiddleware()]
     ),
     GetPage(
         name: '/language',
         page: () => Language(),
         binding: LanguageBinding(),
-        middlewares: [InternetMiddleware()]
+        // middlewares: [InternetMiddleware()]
     ),
     GetPage(
         name: '/wallet',
         page: () => Wallet(),
         binding: WalletBinding(),
+    ),
+    GetPage(
+        name: '/paymentMethod',
+        page: () => PaymentMethod(),
     ),
     GetPage(
         name: '/checkSession',
@@ -139,16 +151,16 @@ class Routes {
         page: () => Call(),
         binding: CallBinding(),
     ),
-    GetPage(
-        name: '/oneToOneMeet',
-        page: () => OneToOneMeet(),
-        binding: OneToOneMeetBinding(),
-    ),
-    GetPage(
-        name: '/joinScreen',
-        page: () => JoinScreen(),
-        binding: JoinScreenBinding(),
-    ),
+    // GetPage(
+    //     name: '/oneToOneMeet',
+    //     page: () => OneToOneMeet(),
+    //     binding: OneToOneMeetBinding(),
+    // ),
+    // GetPage(
+    //     name: '/joinScreen',
+    //     page: () => JoinScreen(),
+    //     binding: JoinScreenBinding(),
+    // ),
     GetPage(
         name: '/information',
         page: () => Information(),
@@ -212,6 +224,21 @@ class Routes {
     GetPage(
         name: '/horoscope',
         page: () => Horoscope(),
+      binding: HoroscopeBinding()
+    ),
+    GetPage(
+        name: '/freeKundli',
+        page: () => FreeKundli(),
+      binding: HoroscopeBinding()
+    ),
+    GetPage(
+        name: '/matchKundli',
+        page: () => MatchKundli(),
+      binding: HoroscopeBinding()
+    ),
+    GetPage(
+        name: '/kundli',
+        page: () => Kundli(),
       binding: HoroscopeBinding()
     ),
     GetPage(

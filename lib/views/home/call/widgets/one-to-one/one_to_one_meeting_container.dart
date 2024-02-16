@@ -1,12 +1,13 @@
+import 'package:astro_guide/callview/widgets/one-to-one/participant_view.dart';
 import 'package:astro_guide/colors/MyColors.dart';
 import 'package:astro_guide/controllers/call/CallController.dart';
 import 'package:astro_guide/views/home/call/constants/colors.dart';
-import 'package:astro_guide/views/home/call/widgets/common/app_bar/meeting_appbar.dart';
-import 'package:astro_guide/views/home/call/widgets/common/meeting_controls/meeting_action_bar.dart';
-import 'package:astro_guide/views/home/call/widgets/one-to-one/participant_view.dart';
+import 'package:astro_guide/views/home/call/widgets/meeting_controls/meeting_action_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:videosdk/videosdk.dart';
+
 
 class OneToOneMeetingContainer extends StatefulWidget {
   final Room meeting;
@@ -109,7 +110,7 @@ class _OneToOneMeetingContainerState extends State<OneToOneMeetingContainer> {
                     widget.timer == null
                         ? "00:00:00"
                         : (widget.timer!.inHours>9 ? "" : "0")+widget.timer.toString().split(".").first,
-                    style: TextStyle(
+                    style: GoogleFonts.manrope(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
                         color: MyColors.white),
@@ -181,19 +182,20 @@ class _OneToOneMeetingContainerState extends State<OneToOneMeetingContainer> {
                     : CrossFadeState.showSecond,
                 secondChild: const SizedBox.shrink(),
                 firstChild: widget.callController.joined ? MeetingActionBar(
-                  meeting: widget.callController.meeting,
+                  meeting: widget.callController.meeting!,
                   isMicEnabled: widget.callController.audioStream != null,
                   isCamEnabled: widget.callController.videoStream != null,
                   isSpeakerEnabled: widget.callController.speakerEnabled,
-                  recordingState: "RECORDING_STOPPED",
+                  recordingState: widget.callController.meeting?.recordingState??"RECORDING_STOPPED",
                   // Called when Call End button is pressed
                   onCallEndButtonPressed: () {
+                    print("ssweb: end pressedddddd");
                     widget.callController.end(false);
                     // Get.back();
                   },
 
                   onCallLeaveButtonPressed: () {
-                    widget.callController.meeting.leave();
+                    widget.callController.meeting?.leave();
                   },
                   // Called when mic button is pressed
                   onMicButtonPressed: () {
@@ -201,6 +203,7 @@ class _OneToOneMeetingContainerState extends State<OneToOneMeetingContainer> {
                   },
                   // Called when camera button is pressed
                   onCameraButtonPressed: () {
+                    print("ssweb: hiiiii");
                     widget.callController.updateCamera();
                   },
                   // Called when speaker button is pressed

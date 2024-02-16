@@ -6,9 +6,9 @@ part of 'TestimonialListModel.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_TestimonialListModel _$$_TestimonialListModelFromJson(
+_$TestimonialListModelImpl _$$TestimonialListModelImplFromJson(
         Map<String, dynamic> json) =>
-    _$_TestimonialListModel(
+    _$TestimonialListModelImpl(
       status: json['status'] as String,
       code: json['code'] as int,
       message: json['message'] as String,
@@ -17,8 +17,8 @@ _$_TestimonialListModel _$$_TestimonialListModelFromJson(
           .toList(),
     );
 
-Map<String, dynamic> _$$_TestimonialListModelToJson(
-        _$_TestimonialListModel instance) =>
+Map<String, dynamic> _$$TestimonialListModelImplToJson(
+        _$TestimonialListModelImpl instance) =>
     <String, dynamic>{
       'status': instance.status,
       'code': instance.code,

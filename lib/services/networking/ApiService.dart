@@ -1,8 +1,10 @@
 import 'dart:convert';
 
 import 'package:astro_guide/constants/CommonConstants.dart';
+import 'package:astro_guide/controllers/connectivity/ConnectivityController.dart';
 import 'package:astro_guide/essential/Essential.dart';
 import 'package:astro_guide/services/networking/ApiConstants.dart';
+import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/multipart/form_data.dart';
 import 'package:astro_guide/services/networking/BaseProvider.dart';
 import 'package:astro_guide/shared/typedef.dart';
@@ -14,6 +16,8 @@ class ApiService {
   ApiService(this.baseProvider);
   static final storage = GetStorage();
 
+  final ConnectivityController connectivityController = Get.put<ConnectivityController>(ConnectivityController());
+
   Future<JSON> get<T>({
     required String endpoint,
     JSON? query,
@@ -21,51 +25,57 @@ class ApiService {
     int cnt = 0,
     int cntf = 0
   }) async {
-    final response = await baseProvider.get(
-        endpoint,
-        query: query,
-        headers: {ApiConstants.token : token}
-    );
+    if(connectivityController.isOnline) {
+      final response = await baseProvider.get(
+          endpoint,
+          query: query,
+          headers: {ApiConstants.token : token}
+      );
 
-    if(response==null) {
-      Future.delayed(Duration(seconds: 3), () {
-      });
-      if(cntf>3) {
-        return {"code": -2, "status": "Failure", "message": "Not Reachable"};
+      if(response==null) {
+        Future.delayed(Duration(seconds: 3), () {
+        });
+        if(cntf>3) {
+          return {"code": -2, "status": "Failure", "message": "Not Reachable"};
+        }
+        else {
+          return await get(endpoint: endpoint, token: storage.read("access")??CommonConstants.essential, query: query, cnt: cnt, cntf: cntf+1);
+        }
       }
-      else {
-        return await get(endpoint: endpoint, token: storage.read("access")??CommonConstants.essential, query: query, cnt: cnt, cntf: cntf+1);
-      }
-    }
 
-    print(response.body);
-    if(response.statusCode==403) {
-      Essential.logout();
-    }
-    else if(response.statusCode==401) {
-      print(cnt);
-      Future.delayed(Duration(seconds: 3), () {
-      });
-      return await Essential.getNewAccessToken().then((value) async {
-        if(value==true) {
-          print(cnt);
-          if(cnt<=3) {
-            print("helluuuuuu");
-            // print(await get(endpoint: endpoint, token: token, query: query, cnt: cnt+1));
-            return await get(endpoint: endpoint, token: storage.read("access")??CommonConstants.essential, query: query, cnt: cnt+1);
+      print(response.body);
+      if(response.statusCode==403) {
+        print("403 get");
+        Essential.logout();
+      }
+      else if(response.statusCode==401) {
+        print(cnt);
+        Future.delayed(Duration(seconds: 3), () {
+        });
+        return await Essential.getNewAccessToken().then((value) async {
+          if(value==true) {
+            print(cnt);
+            if(cnt<=3) {
+              print("helluuuuuu");
+              // print(await get(endpoint: endpoint, token: token, query: query, cnt: cnt+1));
+              return await get(endpoint: endpoint, token: storage.read("access")??CommonConstants.essential, query: query, cnt: cnt+1);
+            }
+            else {
+              print("helluuuuuu logg");
+              Essential.logout();
+              return response.body is String ? json.decode(response.body) : response.body;
+            }
           }
           else {
+            print("helluuuuuu logg 2");
             Essential.logout();
             return response.body is String ? json.decode(response.body) : response.body;
           }
-        }
-        else {
-          Essential.logout();
-          return response.body is String ? json.decode(response.body) : response.body;
-        }
-      });
+        });
+      }
+      return response.body is String ? json.decode(response.body) : response.body;
     }
-    return response.body is String ? json.decode(response.body) : response.body;
+    return {"code" : -3, "status" : "Failure", "message" : "No Internet Available"};
   }
 
   Future<JSON> post<T>({
@@ -77,57 +87,76 @@ class ApiService {
     int cnt = 0,
     int cntf = 0
   }) async {
-    final response = await baseProvider.post(
-        endpoint,
-        body,
-        query: query,
-        headers: {ApiConstants.token : token}
-    );
 
-    if(response==null) {
-      Future.delayed(Duration(seconds: 3), () {
-      });
-      if(cntf>3) {
-        return {"code": -2, "status": "Failure", "message": "Not Reachable"};
-      }
-      else {
-        return await post(endpoint: endpoint, token: token, body: body, query: query, cnt: cnt, cntf: cntf+1);
-      }
-    }
+    if(connectivityController.isOnline) {
+      final response = await baseProvider.post(
+          endpoint,
+          body,
+          query: query,
+          headers: {ApiConstants.token: token}
+      );
 
-    print("response.statusCode");
-    print(response.statusCode);
-    print(response.body);
-
-    if(response.statusCode==403) {
-      Essential.logout();
-    }
-    else if(response.statusCode==401) {
-      print(cnt);
-      await Future.delayed(const Duration(seconds: 3), () async {
-
-      });
-      return await Essential.getNewAccessToken().then((value) async {
-        if(value==true) {
-          print(cnt);
-          if(cnt<=3) {
-            print("helluuuuuu posttttt");
-            // print(await post(endpoint: endpoint, token: storage.read("access")??CommonConstants.essential, body: body, query: query, cnt: cnt+1));
-            return await post(endpoint: endpoint, token: token, body: body, query: query, cnt: cnt+1);
-          }
-          else {
-            Essential.logout();
-            return response.body is String ? json.decode(response.body) : response.body;
-          }
+      if (response == null) {
+        Future.delayed(Duration(seconds: 3), () {});
+        if (cntf > 3) {
+          return {"code": -2, "status": "Failure", "message": "Not Reachable"};
         }
         else {
-          Essential.logout();
-          return response.body is String ? json.decode(response.body) : response.body;
+          return await post(endpoint: endpoint,
+              token: token,
+              body: body,
+              query: query,
+              cnt: cnt,
+              cntf: cntf + 1);
         }
-      });
-    }
+      }
 
-    return response.body is String ? json.decode(response.body) : response.body;
+      print("response.statusCode");
+      print(response.statusCode);
+      print(response.body);
+
+      if (response.statusCode == 403) {
+        print("403 post");
+        Essential.logout();
+      }
+      else if (response.statusCode == 401) {
+        print(cnt);
+        await Future.delayed(const Duration(seconds: 3), () async {
+
+        });
+        return await Essential.getNewAccessToken().then((value) async {
+          if (value == true) {
+            print(cnt);
+            if (cnt <= 3) {
+              print("helluuuuuu posttttt");
+              // print(await post(endpoint: endpoint, token: storage.read("access")??CommonConstants.essential, body: body, query: query, cnt: cnt+1));
+              return await post(endpoint: endpoint,
+                  token: token,
+                  body: body,
+                  query: query,
+                  cnt: cnt + 1);
+            }
+            else {
+              print("helluuuuuu posttttt loggg");
+              Essential.logout();
+              return response.body is String
+                  ? json.decode(response.body)
+                  : response.body;
+            }
+          }
+          else {
+            print("helluuuuuu posttttt loggg 2");
+            Essential.logout();
+            return response.body is String
+                ? json.decode(response.body)
+                : response.body;
+          }
+        });
+      }
+
+      return response.body is String ? json.decode(response.body) : response.body;
+    }
+    return {"code" : -3, "status" : "Failure", "message" : "No Internet Available"};
   }
 
   Future<JSON> file<T>({

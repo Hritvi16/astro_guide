@@ -3,14 +3,13 @@ import 'package:astro_guide/constants/CommonConstants.dart';
 import 'package:astro_guide/controllers/wishlist/WishlistController.dart';
 import 'package:astro_guide/essential/Essential.dart';
 import 'package:astro_guide/models/astrologer/AstrologerModel.dart';
-import 'package:astro_guide/models/spec/SpecModel.dart';
 import 'package:astro_guide/services/networking/ApiConstants.dart';
 import 'package:astro_guide/shared/CustomClipPath.dart';
 import 'package:astro_guide/shared/widgets/customAppBar/CustomAppBar.dart';
 import 'package:astro_guide/size/MySize.dart';
 import 'package:astro_guide/size/WidgetSize.dart';
+import 'package:astro_guide/views/loadingScreen/LoadingScreen.dart';
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
-import 'package:drop_shadow_image/drop_shadow_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +29,7 @@ class Wishlist extends StatelessWidget {
     return GetBuilder<WishlistController>(
       builder: (controller) {
         return Scaffold(
-          body: getBody(context),
+          body: wishlistController.load ? getBody(context) : LoadingScreen(),
         );
       },
     );
@@ -47,11 +46,12 @@ class Wishlist extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                   color: MyColors.colorPrimary,
-                  image: const DecorationImage(
+                  image: Essential.getPlatform() ?
+                  const DecorationImage(
                       image: AssetImage(
                           "assets/essential/upper_bg_s.png"
                       )
-                  )
+                  ) : null
               ),
               child: SafeArea(
                 child: CustomAppBar('Wishlist'.tr)
@@ -65,7 +65,7 @@ class Wishlist extends StatelessWidget {
             builder: MaterialIndicatorDelegate(
               builder: (context, controller) {
                 return Image.asset(
-                  "assets/essential/loading.png",
+                  Essential.getPlatform() ? "assets/essential/loading.png" : "assets/app_icon/ios_icon.jpg",
                   height: 30,
                 );
               },
@@ -90,7 +90,8 @@ class Wishlist extends StatelessWidget {
 
             ) : Center(
               child: Text(
-                "You have not wishlisted any astrologer",
+                "You have not wishlisted any ${Essential.getPlatformWord()}",
+                textAlign: TextAlign.center,
                 style: GoogleFonts.manrope(
                   fontSize: 20,
                   fontWeight: FontWeight.w500,
@@ -267,14 +268,15 @@ class Wishlist extends StatelessWidget {
                     SizedBox(
                       height: 2,
                     ),
-                    Text(
-                      "Vedic Astrologer",
-                      style: GoogleFonts.manrope(
-                        fontSize: 12.0,
-                        color: MyColors.colorGrey,
-                        fontWeight: FontWeight.w500,
+                    if(Essential.getPlatform())
+                      Text(
+                        astrologer.types??"-",
+                        style: GoogleFonts.manrope(
+                          fontSize: 12.0,
+                          color: MyColors.colorGrey,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
-                    ),
                   ],
                 ),
               ),
@@ -291,7 +293,7 @@ class Wishlist extends StatelessWidget {
             ],
           ),
           SizedBox(
-            height: 12,
+            height: 7,
           ),
           Row(
             children: [

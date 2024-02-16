@@ -4,55 +4,20 @@ import 'package:astro_guide/models/chat/ChatModel.dart';
 import 'package:astro_guide/services/networking/ApiConstants.dart';
 import 'package:astro_guide/size/MySize.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'dart:math' as math;
 
 import 'package:intl/intl.dart';
 import 'package:just_audio/just_audio.dart';
 
 
-class ReceivedVoiceScreen extends StatefulWidget {
+class ReceivedVoiceScreen extends StatelessWidget {
   final ChatModel chat;
-  const ReceivedVoiceScreen({
-    Key? key, required this.chat,
-  }) : super(key: key);
+  final dynamic play, pause;
+  final dynamic player;
+  final String playerUrl;
+  const ReceivedVoiceScreen({super.key, required this.chat, this.play, this.pause, this.player, required this.playerUrl});
 
-  @override
-  State<ReceivedVoiceScreen> createState() => _ReceivedVoiceScreenState();
-}
-
-class _ReceivedVoiceScreenState extends State<ReceivedVoiceScreen> {
-  late ChatModel chat;
-
-  final player = AudioPlayer();
-  late Duration duration;
-
-
-  @override
-  void initState() {
-    super.initState();
-    chat = widget.chat;
-    start();
-  }
-
-  Future<void> start() async {
-    duration = await player.setUrl(ApiConstants.chatUrl+chat.message) ?? Duration();
-
-    player.durationStream.listen((duration) {
-      // Update UI with total audio duration
-      print('Total Duration: $duration');
-    });
-
-    player.processingStateStream.listen((processingState) {
-      if (processingState == ProcessingState.completed) {
-        player.seek(Duration.zero);
-        player.pause();
-        setState(() {
-
-        });
-        print("completed");
-      }
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +27,7 @@ class _ReceivedVoiceScreenState extends State<ReceivedVoiceScreen> {
     );
   }
 
-  getMessageTextGroup(BuildContext context) {
+  Widget getMessageTextGroup(BuildContext context) {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -70,8 +35,7 @@ class _ReceivedVoiceScreenState extends State<ReceivedVoiceScreen> {
           child: Container(
             padding: EdgeInsets.all(5),
             decoration: BoxDecoration(
-              color: Colors.grey[300],
-              // color: MyColors.receiverColor,
+              color: MyColors.receiverColor(),
               borderRadius: BorderRadius.only(
                 topRight: Radius.circular(18),
                 bottomLeft: Radius.circular(18),
@@ -81,13 +45,10 @@ class _ReceivedVoiceScreenState extends State<ReceivedVoiceScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                player.playing ?
+                player.playing && playerUrl==ApiConstants.chatUrl+chat.message  ?
                 GestureDetector(
                   onTap: () async {
-                    player.pause();
-                    setState(() {
-
-                    });
+                    pause();
                   },
                   child: Icon(
                       Icons.pause
@@ -95,10 +56,7 @@ class _ReceivedVoiceScreenState extends State<ReceivedVoiceScreen> {
                 )
                     : GestureDetector(
                   onTap: () async {
-                    player.play();
-                    setState(() {
-
-                    });
+                    play(ApiConstants.chatUrl+chat.message);
                   },
                   child: Icon(
                       Icons.play_arrow
@@ -109,9 +67,9 @@ class _ReceivedVoiceScreenState extends State<ReceivedVoiceScreen> {
                   child: Text(
                     Essential.getDateTime(chat.sent_at),
                     textAlign: TextAlign.right,
-                    style: TextStyle(
+                    style: GoogleFonts.manrope(
                       fontSize: 10,
-                      // color: MyColors.colorInfo,
+                      color: MyColors.colorInfo,
                     ),
                   ),
                 ),
@@ -123,4 +81,3 @@ class _ReceivedVoiceScreenState extends State<ReceivedVoiceScreen> {
     );
   }
 }
-

@@ -81,22 +81,22 @@ class _$SupportResponseModelCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_SupportResponseModelCopyWith<$Res>
+abstract class _$$SupportResponseModelImplCopyWith<$Res>
     implements $SupportResponseModelCopyWith<$Res> {
-  factory _$$_SupportResponseModelCopyWith(_$_SupportResponseModel value,
-          $Res Function(_$_SupportResponseModel) then) =
-      __$$_SupportResponseModelCopyWithImpl<$Res>;
+  factory _$$SupportResponseModelImplCopyWith(_$SupportResponseModelImpl value,
+          $Res Function(_$SupportResponseModelImpl) then) =
+      __$$SupportResponseModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String status, int code, String message, int? id});
 }
 
 /// @nodoc
-class __$$_SupportResponseModelCopyWithImpl<$Res>
-    extends _$SupportResponseModelCopyWithImpl<$Res, _$_SupportResponseModel>
-    implements _$$_SupportResponseModelCopyWith<$Res> {
-  __$$_SupportResponseModelCopyWithImpl(_$_SupportResponseModel _value,
-      $Res Function(_$_SupportResponseModel) _then)
+class __$$SupportResponseModelImplCopyWithImpl<$Res>
+    extends _$SupportResponseModelCopyWithImpl<$Res, _$SupportResponseModelImpl>
+    implements _$$SupportResponseModelImplCopyWith<$Res> {
+  __$$SupportResponseModelImplCopyWithImpl(_$SupportResponseModelImpl _value,
+      $Res Function(_$SupportResponseModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -107,7 +107,7 @@ class __$$_SupportResponseModelCopyWithImpl<$Res>
     Object? message = null,
     Object? id = freezed,
   }) {
-    return _then(_$_SupportResponseModel(
+    return _then(_$SupportResponseModelImpl(
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -130,15 +130,15 @@ class __$$_SupportResponseModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_SupportResponseModel implements _SupportResponseModel {
-  _$_SupportResponseModel(
+class _$SupportResponseModelImpl implements _SupportResponseModel {
+  _$SupportResponseModelImpl(
       {required this.status,
       required this.code,
       required this.message,
       this.id});
 
-  factory _$_SupportResponseModel.fromJson(Map<String, dynamic> json) =>
-      _$$_SupportResponseModelFromJson(json);
+  factory _$SupportResponseModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$SupportResponseModelImplFromJson(json);
 
   @override
   final String status;
@@ -155,10 +155,10 @@ class _$_SupportResponseModel implements _SupportResponseModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_SupportResponseModel &&
+            other is _$SupportResponseModelImpl &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.code, code) || other.code == code) &&
             (identical(other.message, message) || other.message == message) &&
@@ -172,13 +172,14 @@ class _$_SupportResponseModel implements _SupportResponseModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_SupportResponseModelCopyWith<_$_SupportResponseModel> get copyWith =>
-      __$$_SupportResponseModelCopyWithImpl<_$_SupportResponseModel>(
-          this, _$identity);
+  _$$SupportResponseModelImplCopyWith<_$SupportResponseModelImpl>
+      get copyWith =>
+          __$$SupportResponseModelImplCopyWithImpl<_$SupportResponseModelImpl>(
+              this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_SupportResponseModelToJson(
+    return _$$SupportResponseModelImplToJson(
       this,
     );
   }
@@ -189,10 +190,10 @@ abstract class _SupportResponseModel implements SupportResponseModel {
       {required final String status,
       required final int code,
       required final String message,
-      final int? id}) = _$_SupportResponseModel;
+      final int? id}) = _$SupportResponseModelImpl;
 
   factory _SupportResponseModel.fromJson(Map<String, dynamic> json) =
-      _$_SupportResponseModel.fromJson;
+      _$SupportResponseModelImpl.fromJson;
 
   @override
   String get status;
@@ -204,6 +205,6 @@ abstract class _SupportResponseModel implements SupportResponseModel {
   int? get id;
   @override
   @JsonKey(ignore: true)
-  _$$_SupportResponseModelCopyWith<_$_SupportResponseModel> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$SupportResponseModelImplCopyWith<_$SupportResponseModelImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

@@ -74,18 +74,28 @@ class Testimonial extends StatelessWidget {
               Image.asset(
                 "assets/astrology/galaxy.png",
                 fit: BoxFit.fitHeight,
-                color: MyColors.colorButton,
+                color: (testimonialController.testimonial.id)%2==0 ? MyColors.colorBlueBG : MyColors.colorLightPrimary,
               ),
-              Positioned(
-                top: MySize.sizeh5_3(context),
-                left: MySize.sizeh4_7(context),
-                child: CircleAvatar(
-                  radius: MySize.sizeh5_5(context),
-                  backgroundImage: NetworkImage(
-                      ApiConstants.userUrl+testimonialController.testimonial.profile
+                Positioned(
+                  top: MySize.sizeh5_3(context),
+                  left: MySize.sizeh4_7(context),
+                  child: (testimonialController.testimonial.profile??"").isEmpty ?
+                    CircleAvatar(
+                      radius: MySize.sizeh5_5(context),
+                      child: Icon(
+                        Icons.person,
+                        color: (testimonialController.testimonial.id)%2==0 ? MyColors.colorBlueBorder : MyColors.colorButton,
+                        size: 50,
+                      ),
+                      backgroundColor: (testimonialController.testimonial.id)%2==0 ? MyColors.colorBlueBG : MyColors.colorLightPrimary,
+                    )
+                    : CircleAvatar(
+                    radius: MySize.sizeh5_5(context),
+                    backgroundImage: NetworkImage(
+                        ApiConstants.userUrl+testimonialController.testimonial.profile!
+                    ),
                   ),
                 ),
-              ),
             ],
           ),
         ),

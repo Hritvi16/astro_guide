@@ -81,11 +81,11 @@ class _$AstrologerListModelCopyWithImpl<$Res, $Val extends AstrologerListModel>
 }
 
 /// @nodoc
-abstract class _$$_AstrologerListModelCopyWith<$Res>
+abstract class _$$AstrologerListModelImplCopyWith<$Res>
     implements $AstrologerListModelCopyWith<$Res> {
-  factory _$$_AstrologerListModelCopyWith(_$_AstrologerListModel value,
-          $Res Function(_$_AstrologerListModel) then) =
-      __$$_AstrologerListModelCopyWithImpl<$Res>;
+  factory _$$AstrologerListModelImplCopyWith(_$AstrologerListModelImpl value,
+          $Res Function(_$AstrologerListModelImpl) then) =
+      __$$AstrologerListModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -93,11 +93,11 @@ abstract class _$$_AstrologerListModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_AstrologerListModelCopyWithImpl<$Res>
-    extends _$AstrologerListModelCopyWithImpl<$Res, _$_AstrologerListModel>
-    implements _$$_AstrologerListModelCopyWith<$Res> {
-  __$$_AstrologerListModelCopyWithImpl(_$_AstrologerListModel _value,
-      $Res Function(_$_AstrologerListModel) _then)
+class __$$AstrologerListModelImplCopyWithImpl<$Res>
+    extends _$AstrologerListModelCopyWithImpl<$Res, _$AstrologerListModelImpl>
+    implements _$$AstrologerListModelImplCopyWith<$Res> {
+  __$$AstrologerListModelImplCopyWithImpl(_$AstrologerListModelImpl _value,
+      $Res Function(_$AstrologerListModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -108,7 +108,7 @@ class __$$_AstrologerListModelCopyWithImpl<$Res>
     Object? message = null,
     Object? data = freezed,
   }) {
-    return _then(_$_AstrologerListModel(
+    return _then(_$AstrologerListModelImpl(
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -131,16 +131,16 @@ class __$$_AstrologerListModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_AstrologerListModel implements _AstrologerListModel {
-  _$_AstrologerListModel(
+class _$AstrologerListModelImpl implements _AstrologerListModel {
+  _$AstrologerListModelImpl(
       {required this.status,
       required this.code,
       required this.message,
       final List<AstrologerModel>? data})
       : _data = data;
 
-  factory _$_AstrologerListModel.fromJson(Map<String, dynamic> json) =>
-      _$$_AstrologerListModelFromJson(json);
+  factory _$AstrologerListModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$AstrologerListModelImplFromJson(json);
 
   @override
   final String status;
@@ -164,10 +164,10 @@ class _$_AstrologerListModel implements _AstrologerListModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_AstrologerListModel &&
+            other is _$AstrologerListModelImpl &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.code, code) || other.code == code) &&
             (identical(other.message, message) || other.message == message) &&
@@ -182,13 +182,13 @@ class _$_AstrologerListModel implements _AstrologerListModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_AstrologerListModelCopyWith<_$_AstrologerListModel> get copyWith =>
-      __$$_AstrologerListModelCopyWithImpl<_$_AstrologerListModel>(
+  _$$AstrologerListModelImplCopyWith<_$AstrologerListModelImpl> get copyWith =>
+      __$$AstrologerListModelImplCopyWithImpl<_$AstrologerListModelImpl>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_AstrologerListModelToJson(
+    return _$$AstrologerListModelImplToJson(
       this,
     );
   }
@@ -199,10 +199,10 @@ abstract class _AstrologerListModel implements AstrologerListModel {
       {required final String status,
       required final int code,
       required final String message,
-      final List<AstrologerModel>? data}) = _$_AstrologerListModel;
+      final List<AstrologerModel>? data}) = _$AstrologerListModelImpl;
 
   factory _AstrologerListModel.fromJson(Map<String, dynamic> json) =
-      _$_AstrologerListModel.fromJson;
+      _$AstrologerListModelImpl.fromJson;
 
   @override
   String get status;
@@ -214,6 +214,6 @@ abstract class _AstrologerListModel implements AstrologerListModel {
   List<AstrologerModel>? get data;
   @override
   @JsonKey(ignore: true)
-  _$$_AstrologerListModelCopyWith<_$_AstrologerListModel> get copyWith =>
+  _$$AstrologerListModelImplCopyWith<_$AstrologerListModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

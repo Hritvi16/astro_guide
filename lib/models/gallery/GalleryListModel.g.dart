@@ -6,8 +6,9 @@ part of 'GalleryListModel.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_GalleryListModel _$$_GalleryListModelFromJson(Map<String, dynamic> json) =>
-    _$_GalleryListModel(
+_$GalleryListModelImpl _$$GalleryListModelImplFromJson(
+        Map<String, dynamic> json) =>
+    _$GalleryListModelImpl(
       status: json['status'] as String,
       code: json['code'] as int,
       message: json['message'] as String,
@@ -16,7 +17,8 @@ _$_GalleryListModel _$$_GalleryListModelFromJson(Map<String, dynamic> json) =>
           .toList(),
     );
 
-Map<String, dynamic> _$$_GalleryListModelToJson(_$_GalleryListModel instance) =>
+Map<String, dynamic> _$$GalleryListModelImplToJson(
+        _$GalleryListModelImpl instance) =>
     <String, dynamic>{
       'status': instance.status,
       'code': instance.code,

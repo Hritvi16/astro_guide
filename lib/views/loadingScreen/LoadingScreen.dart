@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:astro_guide/colors/MyColors.dart';
+import 'package:astro_guide/essential/Essential.dart';
 import 'package:astro_guide/size/MySize.dart';
 import 'package:flutter/material.dart';
 
@@ -59,25 +60,27 @@ class _LoadingScreenState extends State<LoadingScreen>
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: MySize.size100(context),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          CircleAvatar(
-            backgroundColor: MyColors.colorOrange.withOpacity(0.1),
-            radius: 30,
-            child: RotationTransition(
-              turns: Tween(begin: 0.0, end: 1.0).animate(animationController),
-              child: Image.asset(
-                "assets/signs/"+getIcon(),
-                height: 40,
-                fit: BoxFit.fill,
+    return Scaffold(
+      body: Container(
+        width: MySize.size100(context),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            CircleAvatar(
+              backgroundColor: Essential.getPlatform() ? MyColors.colorOrange.withOpacity(0.1) : Colors.transparent,
+              radius: 30,
+              child: RotationTransition(
+                turns: Tween(begin: 0.0, end: 1.0).animate(animationController),
+                child: Image.asset(
+                  Essential.getPlatform() ? "assets/signs/${getIcon()}" : "assets/app_icon/ios_icon.jpg",
+                  height: 40,
+                  fit: BoxFit.fill,
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

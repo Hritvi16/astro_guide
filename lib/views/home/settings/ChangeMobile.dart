@@ -116,10 +116,15 @@ class ChangeMobile extends StatelessWidget {
                                   if(value=="") {
                                     return "* Required";
                                   }
-                                  else if(value==changeMobileController.mobile.text) {
-                                    return "* You cannot enter same mobile no. as your old";
-                                  }
                                   else {
+                                    if(changeMobileController.country.code=="+91") {
+                                      if(value!.length!=10) {
+                                        return "* Invalid Mobile No.";
+                                      }
+                                    }
+                                    else if(value==changeMobileController.mobile.text) {
+                                      return "* You cannot enter same mobile no. as your old";
+                                    }
                                     return null;
                                   }
                                 },

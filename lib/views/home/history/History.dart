@@ -10,18 +10,16 @@ import 'package:astro_guide/shared/CustomClipPath.dart';
 import 'package:astro_guide/shared/widgets/button/Button.dart';
 import 'package:astro_guide/shared/widgets/customAppBar/CustomAppBar.dart';
 import 'package:astro_guide/size/MySize.dart';
-import 'package:astro_guide/size/Spacing.dart';
 import 'package:astro_guide/size/WidgetSize.dart';
 import 'package:astro_guide/themes/Themes.dart';
+import 'package:astro_guide/views/loadingScreen/LoadingScreen.dart';
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'dart:math' as math;
 
-import 'package:intl/intl.dart';
 
 
 class History extends StatelessWidget  {
@@ -42,7 +40,7 @@ class History extends StatelessWidget  {
           home: DefaultTabController(
             length: 2,
             child: Scaffold(
-              body: getBody(context),
+              body: historyController.load ? getBody(context) : LoadingScreen(),
             ),
           ),
         );
@@ -61,11 +59,12 @@ class History extends StatelessWidget  {
             child: Container(
               decoration: BoxDecoration(
                   color: MyColors.colorPrimary,
-                  image: const DecorationImage(
+                  image: Essential.getPlatform() ?
+                  const DecorationImage(
                       image: AssetImage(
-                          "assets/essential/upper_bg.png"
+                          "assets/essential/upper_bg_s.png"
                       )
-                  )
+                  ) : null
               ),
               child: SafeArea(
                 child: CustomAppBar('History'.tr, options: Row(
@@ -108,27 +107,36 @@ class History extends StatelessWidget  {
         ),
         Flexible(
           flex: 1,
-          child: CustomRefreshIndicator(
-            onRefresh: historyController.onRefresh,
-            builder: MaterialIndicatorDelegate(
-              builder: (context, controller) {
-                return Image.asset(
-                  "assets/essential/loading.png",
-                  height: 30,
-                );
-              },
-            ),
-            child: Column(
-              children: [
-                getTabs(),
-                Flexible(
-                  flex: 1,
-                  child: SingleChildScrollView(
-                    physics: AlwaysScrollableScrollPhysics(),
-                    child: getTabBody(context),
-                  ),
-                )
-              ],
+          child: NotificationListener<ScrollNotification>(
+            onNotification: (ScrollNotification scrollInfo) {
+              if (scrollInfo.metrics.pixels == scrollInfo.metrics.maxScrollExtent) {
+                historyController.getUpdate();
+              }
+              return true;
+            },
+            child: CustomRefreshIndicator(
+              onRefresh: historyController.onRefresh,
+              builder: MaterialIndicatorDelegate(
+                builder: (context, controller) {
+                  return Image.asset(
+                    Essential.getPlatform() ? "assets/essential/loading.png" : "assets/app_icon/ios_icon.jpg",
+                    height: 30,
+                  );
+                },
+              ),
+              child: Column(
+                children: [
+                  getTabs(),
+                  Flexible(
+                    flex: 1,
+                    child: SingleChildScrollView(
+                      controller: historyController.scrollController,
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      child: getTabBody(context),
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         )
@@ -138,16 +146,16 @@ class History extends StatelessWidget  {
 
   Widget getTabs() {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           getTabDesign(0, "Wallet".tr),
-          SizedBox(
+          const SizedBox(
             width: 8,
           ),
           getTabDesign(1, "Call".tr),
-          SizedBox(
+          const SizedBox(
             width: 8,
           ),
           getTabDesign(2, "Chat".tr),
@@ -155,7 +163,6 @@ class History extends StatelessWidget  {
       ),
     );
   }
-
 
   Widget getTabDesign(int index, String title) {
     return Flexible(
@@ -210,7 +217,7 @@ class History extends StatelessWidget  {
       mainAxisSize: MainAxisSize.min,
       children: [
         getMyAmountDesign(),
-        SizedBox(
+        const SizedBox(
           height: 28,
         ),
         Divider(
@@ -244,43 +251,107 @@ class History extends StatelessWidget  {
   }
 
   Widget getCallView(BuildContext context) {
-    return historyController.call.isNotEmpty
-        ? ListView.separated(
-      // itemCount: 1,
-        itemCount: historyController.call.length,
-        shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-        separatorBuilder: (buildContext, index) {
-          return SizedBox(
-            height: 10,
-          );
-        },
-        itemBuilder: (buildContext, index) {
-          return getCallDesign(index, context);
-        }
-    )
-        : getNoDataWidget("You've not taken any call consultations yet!".tr);
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        SizedBox(
+          height: 42,
+          child: ListView.separated(
+              itemCount: CommonConstants.session_status.length,
+              shrinkWrap: true,
+              scrollDirection: Axis.horizontal,
+              padding: EdgeInsets.zero,
+              separatorBuilder: (buildContext, index) {
+                return Container(
+                  width: 10,
+                  decoration: BoxDecoration(
+                      border: Border(
+                          bottom: BorderSide(
+                              color: MyColors.colorBorder,
+                              width: 1.5
+                          )
+                      )
+                  ),
+                );
+              },
+              itemBuilder: (buildContext, index) {
+                return getStatusDesign(index);
+              }
+          ),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        historyController.scall.isNotEmpty
+            ? ListView.separated(
+            itemCount: historyController.scall.length,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+            separatorBuilder: (buildContext, index) {
+              return const SizedBox(
+                height: 10,
+              );
+            },
+            itemBuilder: (buildContext, index) {
+              return getCallDesign(index, context);
+            }
+        )
+            : getNoDataWidget("You've not taken any call consultations yet!".tr)
+      ],
+    );
   }
 
   Widget getChatView(BuildContext context) {
-    return historyController.chat.isNotEmpty
-        ? ListView.separated(
-        // itemCount: 1,
-        itemCount: historyController.chat.length,
-        shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-        separatorBuilder: (buildContext, index) {
-          return SizedBox(
-            height: 10,
-          );
-        },
-        itemBuilder: (buildContext, index) {
-          return getChatDesign(index, context);
-        }
-    )
-        : getNoDataWidget("You've not taken any chat consultations yet!".tr);
+    return Column(
+      children: [
+        SizedBox(
+          height: 42,
+          child: ListView.separated(
+              itemCount: CommonConstants.session_status.length,
+              shrinkWrap: true,
+              scrollDirection: Axis.horizontal,
+              padding: EdgeInsets.zero,
+              separatorBuilder: (buildContext, index) {
+                return Container(
+                  width: 10,
+                  decoration: BoxDecoration(
+                      border: Border(
+                          bottom: BorderSide(
+                              color: MyColors.colorBorder,
+                              width: 1.5
+                          )
+                      )
+                  ),
+                );
+              },
+              itemBuilder: (buildContext, index) {
+                return getStatusDesign(index);
+              }
+          ),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        historyController.schat.isNotEmpty
+            ? ListView.separated(
+          // itemCount: 1,
+            itemCount: historyController.schat.length,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+            separatorBuilder: (buildContext, index) {
+              return const SizedBox(
+                height: 10,
+              );
+            },
+            itemBuilder: (buildContext, index) {
+              return getChatDesign(index, context);
+            }
+        )
+            : getNoDataWidget("You've not taken any chat consultations yet!".tr)
+      ],
+    );
   }
 
   Widget getMyAmountDesign() {
@@ -292,7 +363,7 @@ class History extends StatelessWidget  {
           Row(
             children: [
               Container(
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 color: MyColors.colorWalletBG,
                 child: Image.asset(
                   "assets/common/my_wallet.png",
@@ -300,7 +371,7 @@ class History extends StatelessWidget  {
                   width: 30,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 16,
               ),
               Column(
@@ -369,14 +440,14 @@ class History extends StatelessWidget  {
   }
 
   Widget getWalletTransactions(BuildContext context) {
-    return historyController.wallet.isNotEmpty
+    return historyController.swallet.isNotEmpty
     ? ListView.separated(
-      itemCount: historyController.wallet.length,
+      itemCount: historyController.swallet.length,
       shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+      physics: const NeverScrollableScrollPhysics(),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       separatorBuilder: (buildContext, index) {
-        return SizedBox(
+        return const SizedBox(
           height: 10,
         );
       },
@@ -388,14 +459,14 @@ class History extends StatelessWidget  {
   }
 
   Widget getPaymentLogs(BuildContext context) {
-    return historyController.payment.isNotEmpty ?
+    return historyController.spayment.isNotEmpty ?
     ListView.separated(
-        itemCount: historyController.payment.length,
+        itemCount: historyController.spayment.length,
         shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        physics: const NeverScrollableScrollPhysics(),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         separatorBuilder: (buildContext, index) {
-          return SizedBox(
+          return const SizedBox(
             height: 10,
           );
         },
@@ -407,9 +478,9 @@ class History extends StatelessWidget  {
   }
 
   Widget getWTDesign(int index, BuildContext context) {
-    WalletHistoryModel walletHistory = historyController.wallet[index];
+    WalletHistoryModel walletHistory = historyController.swallet[index];
     return Container(
-      padding: EdgeInsets.all(12),
+      padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
           color: MyColors.white,
           borderRadius: BorderRadius.circular(14),
@@ -426,7 +497,7 @@ class History extends StatelessWidget  {
             children: [
               Flexible(
                 child: Text(
-                  walletHistory.description,
+                  Essential.getPlatformReplace(walletHistory.description),
                   style: GoogleFonts.manrope(
                     fontSize: 14.0,
                     color: MyColors.black,
@@ -435,7 +506,7 @@ class History extends StatelessWidget  {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 16,
               ),
               Text(
@@ -449,7 +520,7 @@ class History extends StatelessWidget  {
               )
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 5,
           ),
           Row(
@@ -457,13 +528,13 @@ class History extends StatelessWidget  {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               getIconInfo("assets/sign_up/calendar.png", Essential.getDate(walletHistory.created_at)),
-              SizedBox(
+              const SizedBox(
                 width: 10,
               ),
               getIconInfo("assets/sign_up/time.png", Essential.getTime(walletHistory.created_at)),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 5,
           ),
           Row(
@@ -503,7 +574,7 @@ class History extends StatelessWidget  {
           if(walletHistory.invoice_id!=null)
             Column(
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 5,
                 ),
                 Row(
@@ -543,7 +614,7 @@ class History extends StatelessWidget  {
                 if(walletHistory.transaction_id!=null)
                   Column(
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                       Row(
@@ -574,7 +645,7 @@ class History extends StatelessWidget  {
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 5,
                           ),
                           GestureDetector(
@@ -596,7 +667,7 @@ class History extends StatelessWidget  {
                     context: context,
                     height: 40,
                     backgroundColor: MyColors.colorButton,
-                    margin: EdgeInsets.only(top: 12),
+                    margin: const EdgeInsets.only(top: 12),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -621,9 +692,9 @@ class History extends StatelessWidget  {
   }
 
   Widget getPLDesign(int index, BuildContext context) {
-    WalletHistoryModel transaction = historyController.payment[index];
+    WalletHistoryModel transaction = historyController.spayment[index];
     return Container(
-      padding: EdgeInsets.all(12),
+      padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
           color: MyColors.cardColor(),
           borderRadius: BorderRadius.circular(14),
@@ -648,7 +719,7 @@ class History extends StatelessWidget  {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 16,
               ),
               Text(
@@ -662,7 +733,7 @@ class History extends StatelessWidget  {
               )
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 5,
           ),
           Row(
@@ -670,13 +741,13 @@ class History extends StatelessWidget  {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               getIconInfo("assets/sign_up/calendar.png", Essential.getDate(DateTime.now().toString())),
-              SizedBox(
+              const SizedBox(
                 width: 10,
               ),
               getIconInfo("assets/sign_up/time.png", Essential.getTime(DateTime.now().toString())),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 5,
           ),
           Row(
@@ -693,7 +764,7 @@ class History extends StatelessWidget  {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 5,
               ),
               GestureDetector(
@@ -712,7 +783,7 @@ class History extends StatelessWidget  {
               context: context,
               height: 40,
               backgroundColor: index%3==0 ? MyColors.colorSuccess : MyColors.colorError,
-              margin: EdgeInsets.only(top: 12),
+              margin: const EdgeInsets.only(top: 12),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -721,7 +792,7 @@ class History extends StatelessWidget  {
                     height: 18,
                     width: 18,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 11,
                   ),
                   Text(
@@ -754,7 +825,7 @@ class History extends StatelessWidget  {
             letterSpacing: 0,
           ),
         ),
-        SizedBox(
+        const SizedBox(
           width: 3,
         ),
         Text(
@@ -781,7 +852,7 @@ class History extends StatelessWidget  {
           width: 15,
           color: color??MyColors.colorButton,
         ),
-        SizedBox(
+        const SizedBox(
           width: 3,
         ),
         flex ?
@@ -821,7 +892,7 @@ class History extends StatelessWidget  {
             height: 240,
             width: 240,
           ),
-          SizedBox(
+          const SizedBox(
             height: 24,
           ),
           Text(
@@ -832,7 +903,7 @@ class History extends StatelessWidget  {
               fontWeight: FontWeight.w600,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 4,
           ),
           Text(
@@ -851,9 +922,9 @@ class History extends StatelessWidget  {
   }
 
   Widget getChatDesign(int index, BuildContext context) {
-    SessionHistoryModel sessionHistory = historyController.chat[index];
+    SessionHistoryModel sessionHistory = historyController.schat[index];
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 6, horizontal: 12),
+      padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
       decoration: BoxDecoration(
           color: MyColors.cardColor(),
           borderRadius: BorderRadius.circular(14),
@@ -876,7 +947,7 @@ class History extends StatelessWidget  {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 2,
           ),
           Row(
@@ -896,7 +967,7 @@ class History extends StatelessWidget  {
               if(sessionHistory.status=="COMPLETED")
                 Row(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     width: 16,
                   ),
                   Text(
@@ -912,7 +983,7 @@ class History extends StatelessWidget  {
               )
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 5,
           ),
           Text(
@@ -924,22 +995,22 @@ class History extends StatelessWidget  {
               fontWeight: FontWeight.w600,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 5,
           ),
           getTitleInfo("Session Type".tr, sessionHistory.type, color: Essential.getSessionTypeColor(sessionHistory.type), flex: true),
-          SizedBox(
+          const SizedBox(
             height: 5,
           ),
           getTitleInfo("Rate".tr, "${CommonConstants.rupee}${sessionHistory.type=="FREE"  ? 0 : sessionHistory.rate}/${'min'.tr}", flex: true),
-          SizedBox(
+          const SizedBox(
             height: 5,
           ),
           if((sessionHistory.reason??"").isNotEmpty)
             Column(
               children: [
-                getIconInfo("assets/common/info.png", sessionHistory.reason??"", color: Essential.getStatusColor(sessionHistory.status), flex: true),
-                SizedBox(
+                getIconInfo("assets/common/info.png", Essential.getPlatformReplace(sessionHistory.reason??""), color: Essential.getStatusColor(sessionHistory.status), flex: true),
+                const SizedBox(
                   height: 5,
                 ),
               ],
@@ -950,7 +1021,7 @@ class History extends StatelessWidget  {
             children: [
               getIconInfo("assets/sign_up/calendar.png", Essential.getDate(historyController.getDTByStatus(sessionHistory)), color: Essential.getStatusColor(sessionHistory.status)),
               // getIconInfo("assets/sign_up/calendar.png", DateFormat("dd MMM, yy").format(DateTime.parse(historyController.getDate(sessionHistory)))),
-              SizedBox(
+              const SizedBox(
                 width: 10,
               ),
               getIconInfo("assets/sign_up/time.png", Essential.getTime(historyController.getDTByStatus(sessionHistory)), color: Essential.getStatusColor(sessionHistory.status)),
@@ -964,7 +1035,7 @@ class History extends StatelessWidget  {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                       Text(
@@ -985,7 +1056,7 @@ class History extends StatelessWidget  {
                     context: context,
                     height: 40,
                     backgroundColor: MyColors.colorButton,
-                    margin: EdgeInsets.only(top: 12),
+                    margin: const EdgeInsets.only(top: 12),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -1010,9 +1081,9 @@ class History extends StatelessWidget  {
   }
 
   Widget getCallDesign(int index, BuildContext context) {
-    SessionHistoryModel sessionHistory = historyController.call[index];
+    SessionHistoryModel sessionHistory = historyController.scall[index];
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 6, horizontal: 12),
+      padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
       decoration: BoxDecoration(
           color: MyColors.cardColor(),
           borderRadius: BorderRadius.circular(14),
@@ -1035,7 +1106,7 @@ class History extends StatelessWidget  {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 2,
           ),
           Row(
@@ -1055,7 +1126,7 @@ class History extends StatelessWidget  {
               if(sessionHistory.status=="COMPLETED")
                 Row(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     width: 16,
                   ),
                   Text(
@@ -1071,7 +1142,7 @@ class History extends StatelessWidget  {
               )
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 5,
           ),
           Text(
@@ -1083,22 +1154,22 @@ class History extends StatelessWidget  {
               fontWeight: FontWeight.w600,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 5,
           ),
           getTitleInfo("Session Type".tr, sessionHistory.type, color: Essential.getSessionTypeColor(sessionHistory.type), flex: true),
-          SizedBox(
+          const SizedBox(
             height: 5,
           ),
           getTitleInfo("Rate".tr, "${CommonConstants.rupee}${sessionHistory.type=="FREE"  ? 0 : sessionHistory.rate}/${'min'.tr}", flex: true),
-          SizedBox(
+          const SizedBox(
             height: 5,
           ),
           if((sessionHistory.reason??"").isNotEmpty)
             Column(
               children: [
-                getIconInfo("assets/common/info.png", sessionHistory.reason??"", color: Essential.getStatusColor(sessionHistory.status), flex: true),
-                SizedBox(
+                getIconInfo("assets/common/info.png", Essential.getPlatformReplace(sessionHistory.reason??""), color: Essential.getStatusColor(sessionHistory.status), flex: true),
+                const SizedBox(
                   height: 5,
                 ),
               ],
@@ -1109,13 +1180,13 @@ class History extends StatelessWidget  {
             children: [
               getIconInfo("assets/sign_up/calendar.png", Essential.getDate(historyController.getDTByStatus(sessionHistory)), color: Essential.getStatusColor(sessionHistory.status)),
               // getIconInfo("assets/sign_up/calendar.png", DateFormat("dd MMM, yy").format(DateTime.parse(historyController.getDate(sessionHistory)))),
-              SizedBox(
+              const SizedBox(
                 width: 10,
               ),
               getIconInfo("assets/sign_up/time.png", Essential.getTime(historyController.getDTByStatus(sessionHistory)), color: Essential.getStatusColor(sessionHistory.status)),
             ],
           ),
-          if(sessionHistory.status=='ACTIVE' || sessionHistory.status=='COMPLETED')
+          if(sessionHistory.status=='ACTIVE' || sessionHistory.status=='COMPLETED' || sessionHistory.status=='REQUESTED')
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -1123,7 +1194,7 @@ class History extends StatelessWidget  {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                       Text(
@@ -1140,8 +1211,10 @@ class History extends StatelessWidget  {
                   onTap: () {
                     // if (sessionHistory.status == 'ACTIVE') {
                       historyController.goto("/call", arguments: {
+                        "ch_id": sessionHistory.id,
+                        "chat_type" : sessionHistory.type,
                         "type": sessionHistory.status,
-                        "action": sessionHistory.status == "ACTIVE"
+                        "action": sessionHistory.status != "VIEW"
                             ? sessionHistory.status
                             : "VIEW",
                         "astro_id": sessionHistory.astro_id,
@@ -1152,7 +1225,7 @@ class History extends StatelessWidget  {
                             profile: sessionHistory.astro_profile ?? "",
                             mobile: '',
                             email: '',
-                            experience: 0,
+                            experience: '',
                             about: '')
                       });
                     // }
@@ -1161,12 +1234,12 @@ class History extends StatelessWidget  {
                     context: context,
                     height: 40,
                     backgroundColor: MyColors.colorButton,
-                    margin: EdgeInsets.only(top: 12),
+                    margin: const EdgeInsets.only(top: 12),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          sessionHistory.status=='ACTIVE' ? 'RESUME CALL'.tr : 'SHOW DETAILS'.tr,
+                          sessionHistory.status=='ACTIVE' ? 'RESUME CALL'.tr : sessionHistory.status=='REQUESTED' ? "SHOW" : 'SHOW DETAILS'.tr,
                           style: GoogleFonts.manrope(
                             fontSize: 16.0,
                             color: MyColors.white,
@@ -1181,6 +1254,64 @@ class History extends StatelessWidget  {
               ],
             ),
         ],
+      ),
+    );
+  }
+
+  Widget getStatusDesign(int index) {
+    Color bg = MyColors.white;
+    Color border = MyColors.borderColor();
+    Color text = MyColors.black;
+
+    if(historyController.selected==index) {
+      if(index==0) {
+        bg = MyColors.colorLightPrimary;
+        border = MyColors.colorButton;
+        text = border;
+      }
+      else {
+        border = MyColors.statusColor(CommonConstants.session_status[index]);
+        text = border;
+        bg = border.withOpacity(0.3);
+      }
+    }
+
+    return GestureDetector(
+      onTap: () {
+        historyController.changeSelected(index);
+      },
+      child: Container(
+        decoration: BoxDecoration(
+            border: Border(
+                bottom: BorderSide(
+                    color: MyColors.borderColor(),
+                    width: 1.5
+                )
+            )
+        ),
+        child: Container(
+          alignment: Alignment.center,
+          height: 42,
+          margin: EdgeInsets.only(left: index==0 ? 10 : 0, right: CommonConstants.session_status.length==index+1 ? 10 : 0),
+          padding: EdgeInsets.only(left: 12, right: 12),
+          decoration: historyController.selected==index ? BoxDecoration(
+            border: Border(
+              bottom: BorderSide(
+                color: border,
+                width: 3
+              )
+            )
+          ) : null,
+          child: Text(
+            CommonConstants.session_status[index],
+            style: GoogleFonts.manrope(
+              fontSize: 16.0,
+              letterSpacing: 0,
+              color: text,
+              fontWeight: historyController.selected==index ? FontWeight.w700 : FontWeight.w600,
+            ),
+          ),
+        ),
       ),
     );
   }

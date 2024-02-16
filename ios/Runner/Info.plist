@@ -7,7 +7,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Astro Guide</string>
+	<string>BRYD</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -15,7 +15,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>astro_guide</string>
+	<string>bryd</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -29,8 +29,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.170894307366-8viag128kkui1l8ngqea77i3he3e5tq2</string>
-				<string>fb1550141028840658</string>
+				<string>com.googleusercontent.apps.170894307366-9vqg9qe0hj02naicvgbqslt8clch78gl</string>
 			</array>
 		</dict>
 	</array>
@@ -41,12 +40,14 @@
 	<key>FacebookClientToken</key>
 	<string>356fc703111f3737a9485e2026b17ff2</string>
 	<key>FacebookDisplayName</key>
-	<string>AstroGuide</string>
+	<string>BRYD</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
-		<string>fbapi</string>
-		<string>fb-messenger-share-api</string>
-		<string>fbauth</string>
+		<string>ppemerchantsdkv1</string>
+		<string>ppemerchantsdkv2</string>
+		<string>ppemerchantsdkv3</string>
+		<string>paytmmp</string>
+		<string>gpay</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
@@ -55,15 +56,11 @@
             Our app is a social group application so it requires user's image to verify their identity.
     </string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>App require access to photo library for profile image of users.
-            Our app is a social group application so it requires user's image to verify their identity.
-    </string>
+	<string>We need to access to the microphone to record audio file</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>App require access to photo library for profile image of users.
             Our app is a social group application so it requires user's image to verify their identity.
     </string>
-    <key>NSMicrophoneUsageDescription</key>
-    <string>We need to access to the microphone to record audio file</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UIBackgroundModes</key>

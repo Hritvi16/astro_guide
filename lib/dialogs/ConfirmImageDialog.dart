@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:astro_guide/colors/MyColors.dart';
 import 'package:astro_guide/size/MySize.dart';
@@ -37,7 +38,7 @@ class ConfirmImageDialog extends StatelessWidget {
                   height: 10,
                 ),
                 new Text(text,
-                  style: TextStyle(
+                  style: GoogleFonts.manrope(
                       fontSize: 16,
                     color: MyColors.black
                   ),
@@ -51,7 +52,7 @@ class ConfirmImageDialog extends StatelessWidget {
                           Navigator.pop(context, btn1);
                         },
                         child: Text(btn1,
-                          style: TextStyle(
+                          style: GoogleFonts.manrope(
                               color: MyColors.colorPrimary
                           ),
                         )
@@ -63,7 +64,7 @@ class ConfirmImageDialog extends StatelessWidget {
                           }
                         },
                         child: Text(btn2,
-                          style: TextStyle(
+                          style: GoogleFonts.manrope(
                               color: MyColors.colorPrimary
                           ),
                         )

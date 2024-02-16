@@ -81,11 +81,11 @@ class _$LanguageListModelCopyWithImpl<$Res, $Val extends LanguageListModel>
 }
 
 /// @nodoc
-abstract class _$$_LanguageListModelCopyWith<$Res>
+abstract class _$$LanguageListModelImplCopyWith<$Res>
     implements $LanguageListModelCopyWith<$Res> {
-  factory _$$_LanguageListModelCopyWith(_$_LanguageListModel value,
-          $Res Function(_$_LanguageListModel) then) =
-      __$$_LanguageListModelCopyWithImpl<$Res>;
+  factory _$$LanguageListModelImplCopyWith(_$LanguageListModelImpl value,
+          $Res Function(_$LanguageListModelImpl) then) =
+      __$$LanguageListModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -93,11 +93,11 @@ abstract class _$$_LanguageListModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_LanguageListModelCopyWithImpl<$Res>
-    extends _$LanguageListModelCopyWithImpl<$Res, _$_LanguageListModel>
-    implements _$$_LanguageListModelCopyWith<$Res> {
-  __$$_LanguageListModelCopyWithImpl(
-      _$_LanguageListModel _value, $Res Function(_$_LanguageListModel) _then)
+class __$$LanguageListModelImplCopyWithImpl<$Res>
+    extends _$LanguageListModelCopyWithImpl<$Res, _$LanguageListModelImpl>
+    implements _$$LanguageListModelImplCopyWith<$Res> {
+  __$$LanguageListModelImplCopyWithImpl(_$LanguageListModelImpl _value,
+      $Res Function(_$LanguageListModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -108,7 +108,7 @@ class __$$_LanguageListModelCopyWithImpl<$Res>
     Object? message = null,
     Object? data = null,
   }) {
-    return _then(_$_LanguageListModel(
+    return _then(_$LanguageListModelImpl(
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -131,16 +131,16 @@ class __$$_LanguageListModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_LanguageListModel implements _LanguageListModel {
-  _$_LanguageListModel(
+class _$LanguageListModelImpl implements _LanguageListModel {
+  _$LanguageListModelImpl(
       {required this.status,
       required this.code,
       required this.message,
       required final List<LanguageModel> data})
       : _data = data;
 
-  factory _$_LanguageListModel.fromJson(Map<String, dynamic> json) =>
-      _$$_LanguageListModelFromJson(json);
+  factory _$LanguageListModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$LanguageListModelImplFromJson(json);
 
   @override
   final String status;
@@ -162,10 +162,10 @@ class _$_LanguageListModel implements _LanguageListModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_LanguageListModel &&
+            other is _$LanguageListModelImpl &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.code, code) || other.code == code) &&
             (identical(other.message, message) || other.message == message) &&
@@ -180,13 +180,13 @@ class _$_LanguageListModel implements _LanguageListModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_LanguageListModelCopyWith<_$_LanguageListModel> get copyWith =>
-      __$$_LanguageListModelCopyWithImpl<_$_LanguageListModel>(
+  _$$LanguageListModelImplCopyWith<_$LanguageListModelImpl> get copyWith =>
+      __$$LanguageListModelImplCopyWithImpl<_$LanguageListModelImpl>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_LanguageListModelToJson(
+    return _$$LanguageListModelImplToJson(
       this,
     );
   }
@@ -197,10 +197,10 @@ abstract class _LanguageListModel implements LanguageListModel {
       {required final String status,
       required final int code,
       required final String message,
-      required final List<LanguageModel> data}) = _$_LanguageListModel;
+      required final List<LanguageModel> data}) = _$LanguageListModelImpl;
 
   factory _LanguageListModel.fromJson(Map<String, dynamic> json) =
-      _$_LanguageListModel.fromJson;
+      _$LanguageListModelImpl.fromJson;
 
   @override
   String get status;
@@ -212,6 +212,6 @@ abstract class _LanguageListModel implements LanguageListModel {
   List<LanguageModel> get data;
   @override
   @JsonKey(ignore: true)
-  _$$_LanguageListModelCopyWith<_$_LanguageListModel> get copyWith =>
+  _$$LanguageListModelImplCopyWith<_$LanguageListModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

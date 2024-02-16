@@ -82,11 +82,11 @@ class _$TestimonialListModelCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_TestimonialListModelCopyWith<$Res>
+abstract class _$$TestimonialListModelImplCopyWith<$Res>
     implements $TestimonialListModelCopyWith<$Res> {
-  factory _$$_TestimonialListModelCopyWith(_$_TestimonialListModel value,
-          $Res Function(_$_TestimonialListModel) then) =
-      __$$_TestimonialListModelCopyWithImpl<$Res>;
+  factory _$$TestimonialListModelImplCopyWith(_$TestimonialListModelImpl value,
+          $Res Function(_$TestimonialListModelImpl) then) =
+      __$$TestimonialListModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -94,11 +94,11 @@ abstract class _$$_TestimonialListModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_TestimonialListModelCopyWithImpl<$Res>
-    extends _$TestimonialListModelCopyWithImpl<$Res, _$_TestimonialListModel>
-    implements _$$_TestimonialListModelCopyWith<$Res> {
-  __$$_TestimonialListModelCopyWithImpl(_$_TestimonialListModel _value,
-      $Res Function(_$_TestimonialListModel) _then)
+class __$$TestimonialListModelImplCopyWithImpl<$Res>
+    extends _$TestimonialListModelCopyWithImpl<$Res, _$TestimonialListModelImpl>
+    implements _$$TestimonialListModelImplCopyWith<$Res> {
+  __$$TestimonialListModelImplCopyWithImpl(_$TestimonialListModelImpl _value,
+      $Res Function(_$TestimonialListModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -109,7 +109,7 @@ class __$$_TestimonialListModelCopyWithImpl<$Res>
     Object? message = null,
     Object? data = freezed,
   }) {
-    return _then(_$_TestimonialListModel(
+    return _then(_$TestimonialListModelImpl(
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -132,16 +132,16 @@ class __$$_TestimonialListModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_TestimonialListModel implements _TestimonialListModel {
-  _$_TestimonialListModel(
+class _$TestimonialListModelImpl implements _TestimonialListModel {
+  _$TestimonialListModelImpl(
       {required this.status,
       required this.code,
       required this.message,
       final List<TestimonialModel>? data})
       : _data = data;
 
-  factory _$_TestimonialListModel.fromJson(Map<String, dynamic> json) =>
-      _$$_TestimonialListModelFromJson(json);
+  factory _$TestimonialListModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$TestimonialListModelImplFromJson(json);
 
   @override
   final String status;
@@ -165,10 +165,10 @@ class _$_TestimonialListModel implements _TestimonialListModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_TestimonialListModel &&
+            other is _$TestimonialListModelImpl &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.code, code) || other.code == code) &&
             (identical(other.message, message) || other.message == message) &&
@@ -183,13 +183,14 @@ class _$_TestimonialListModel implements _TestimonialListModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_TestimonialListModelCopyWith<_$_TestimonialListModel> get copyWith =>
-      __$$_TestimonialListModelCopyWithImpl<_$_TestimonialListModel>(
-          this, _$identity);
+  _$$TestimonialListModelImplCopyWith<_$TestimonialListModelImpl>
+      get copyWith =>
+          __$$TestimonialListModelImplCopyWithImpl<_$TestimonialListModelImpl>(
+              this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_TestimonialListModelToJson(
+    return _$$TestimonialListModelImplToJson(
       this,
     );
   }
@@ -200,10 +201,10 @@ abstract class _TestimonialListModel implements TestimonialListModel {
       {required final String status,
       required final int code,
       required final String message,
-      final List<TestimonialModel>? data}) = _$_TestimonialListModel;
+      final List<TestimonialModel>? data}) = _$TestimonialListModelImpl;
 
   factory _TestimonialListModel.fromJson(Map<String, dynamic> json) =
-      _$_TestimonialListModel.fromJson;
+      _$TestimonialListModelImpl.fromJson;
 
   @override
   String get status;
@@ -215,6 +216,6 @@ abstract class _TestimonialListModel implements TestimonialListModel {
   List<TestimonialModel>? get data;
   @override
   @JsonKey(ignore: true)
-  _$$_TestimonialListModelCopyWith<_$_TestimonialListModel> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$TestimonialListModelImplCopyWith<_$TestimonialListModelImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

@@ -1,4 +1,5 @@
 import 'package:astro_guide/constants/CommonConstants.dart';
+import 'package:astro_guide/controllers/connectivity/ConnectivityController.dart';
 import 'package:astro_guide/essential/Essential.dart';
 import 'package:astro_guide/models/astrologer/AstrologerModel.dart';
 import 'package:astro_guide/models/gallery/GalleryModel.dart';
@@ -6,6 +7,7 @@ import 'package:astro_guide/models/review/ReviewModel.dart';
 import 'package:astro_guide/services/networking/ApiConstants.dart';
 import 'package:astro_guide/shared/CustomClipPath.dart';
 import 'package:astro_guide/shared/helpers/extensions/StringExtension.dart';
+import 'package:astro_guide/shared/widgets/NoInternetPage.dart';
 import 'package:astro_guide/shared/widgets/button/Button.dart';
 import 'package:astro_guide/shared/widgets/customAppBar/CustomAppBar.dart';
 import 'package:astro_guide/size/MySize.dart';
@@ -26,21 +28,31 @@ class AstrologerDetail extends StatelessWidget {
   }
 
   final AstrologerDetailController astrologerDetailController = Get.find();
+  final ConnectivityController connectivityController = Get.find();
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return GetBuilder<AstrologerDetailController>(
-      builder: (controller) {
-        return astrologerDetailController.load ? Scaffold(
-          // bottomNavigationBar: getBottomDesign(),
-          body : getBody(context),
-        ) : LoadingScreen();
-      },
+    return GetBuilder<ConnectivityController>(
+        builder: (cController) {
+          return astrologerDetailController.load==false && connectivityController.isOnline==false ? NoInternetPage()
+          : GetBuilder<AstrologerDetailController>(
+          builder: (controller) {
+            print(astrologerDetailController.load);
+            if(!astrologerDetailController.load) {
+              astrologerDetailController.getAstrologer();
+            }
+            return astrologerDetailController.load ? Scaffold(
+              // bottomNavigationBar: getBottomDesign(),
+              body : getBody(context),
+            ) : LoadingScreen();
+          },
+        );
+      }
     );
   }
 
-  Widget getBody(BuildContext context) {
+  Widget  getBody(BuildContext context) {
     return Column(
       children: [
         Container(
@@ -53,14 +65,15 @@ class AstrologerDetail extends StatelessWidget {
               height: standardUpperFixedDesignHeight,
               decoration: BoxDecoration(
                   color: MyColors.colorPrimary,
-                  image: const DecorationImage(
+                  image: Essential.getPlatform() ?
+                  const DecorationImage(
                       image: AssetImage(
                           "assets/essential/upper_bg_s.png"
                       )
-                  )
+                  ) : null
               ),
               child: SafeArea(
-                child: CustomAppBar('Astrologer Profile'.tr, options: getOptions()),
+                child: CustomAppBar('${Essential.getPlatformWord().toTitleCase()} Profile'.tr, options: getOptions()),
               ),
             ),
           ),
@@ -71,7 +84,7 @@ class AstrologerDetail extends StatelessWidget {
             builder: MaterialIndicatorDelegate(
               builder: (context, controller) {
                 return Image.asset(
-                  "assets/essential/loading.png",
+                  Essential.getPlatform() ? "assets/essential/loading.png" : "assets/app_icon/ios_icon.jpg",
                   height: 30,
                 );
               },
@@ -88,8 +101,10 @@ class AstrologerDetail extends StatelessWidget {
                           Container(
                             color: MyColors.colorAstroBG,
                             width: MySize.size100(context),
+                            height: standardAstroBGHeight,
+                            padding: Essential.getPlatform() ? null : EdgeInsets.symmetric(vertical: 30),
                             child: Image.asset(
-                              "assets/backgrounds/astro_bg.png",
+                              Essential.getPlatform() ? "assets/backgrounds/astro_bg.png" : "assets/app_icon/ios_icon.jpg",
                               height: standardAstroBGHeight,
                             ),
                           ),
@@ -391,7 +406,7 @@ class AstrologerDetail extends StatelessWidget {
                     Column(
                       children: [
                         Text(
-                          review.user??"",
+                          review.anonymous==1 ? "Anonymous" : review.user??"",
                           style: GoogleFonts.manrope(
                             fontSize: 18.0,
                             letterSpacing: 0,
@@ -410,7 +425,7 @@ class AstrologerDetail extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(top: 5.0),
                     child: Text(
-                      review.review??"",
+                      Essential.getPlatformReplace(review.review??""),
                       style: GoogleFonts.manrope(
                         fontSize: 14.0,
                         letterSpacing: 0,
@@ -489,20 +504,23 @@ class AstrologerDetail extends StatelessWidget {
             const SizedBox(
               height: 5,
             ),
-            Text(
-              astrologerDetailController.getTypes(),
-              style: GoogleFonts.manrope(
-                fontSize: 14.0,
-                color: MyColors.colorGrey,
-                fontWeight: FontWeight.w500,
+
+            if(Essential.getPlatform())
+              Text(
+                astrologerDetailController.getTypes(),
+                style: GoogleFonts.manrope(
+                  fontSize: 14.0,
+                  color: MyColors.colorGrey,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
-            ),
-            const SizedBox(
-              height: 5,
-            ),
+            // if(Essential.getPlatform())
+              SizedBox(
+                height: Essential.getPlatform() ? 5: 25,
+              ),
             RichText(
               text: TextSpan(
-                  text: astrologerDetailController.astrologer.experience.toStringAsFixed(1)+" ${'Years'.tr}",
+                  text: (DateTime.now().difference(DateTime.parse(astrologerDetailController.astrologer.experience)).inDays/365).toStringAsFixed(1)+" ${'Years'.tr}",
                   style: GoogleFonts.manrope(
                     fontSize: 14.0,
                     color: MyColors.colorButton,
@@ -604,7 +622,7 @@ class AstrologerDetail extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "About Astrologer".tr,
+            "About ${Essential.getPlatformWord().toTitleCase()}".tr,
             style: GoogleFonts.manrope(
               fontSize: 18.0,
               fontWeight: FontWeight.w600,
@@ -614,7 +632,7 @@ class AstrologerDetail extends StatelessWidget {
             getGallery(),
           astrologerDetailController.read ? RichText(
             text: TextSpan(
-              text: astrologerDetailController.astrologer.about,
+              text: Essential.getPlatformReplace(astrologerDetailController.astrologer.about),
               style: GoogleFonts.manrope(
                 fontSize: 16.0,
                 color: MyColors.colorInfoGrey,
@@ -623,7 +641,7 @@ class AstrologerDetail extends StatelessWidget {
             ),
           )
               : Text(
-            astrologerDetailController.astrologer.about,
+            Essential.getPlatformReplace(astrologerDetailController.astrologer.about),
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             style: GoogleFonts.manrope(
@@ -990,7 +1008,7 @@ class AstrologerDetail extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Similar Astrologers".tr,
+              "Similar ${Essential.getPlatformWord().toTitleCase()}s".tr,
               style: GoogleFonts.manrope(
                 fontSize: 18.0,
                 fontWeight: FontWeight.w600,
@@ -1034,7 +1052,7 @@ class AstrologerDetail extends StatelessWidget {
     int rate = 0;
     return GestureDetector(
       onTap: () {
-        astrologerDetailController.goto("/astrologerDetail", arguments: astrologer.id.toString());
+        astrologerDetailController.goto("/astrologerDetail", arguments: astrologer.id.toString(), id: astrologerDetailController.astrologer.id.toString());
       },
       child: Container(
         padding: const EdgeInsets.all(8),
@@ -1203,16 +1221,17 @@ class AstrologerDetail extends StatelessWidget {
                     SizedBox(
                       height: 2,
                     ),
-                    Text(
-                      astrologer.types??"-",
-                      // "Vedic Astrologer",
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: GoogleFonts.manrope(
-                        fontSize: 12.0,
-                        color: MyColors.colorGrey,
-                        fontWeight: FontWeight.w500,
-                      ),
+                    if(Essential.getPlatform())
+                      Text(
+                        astrologer.types??"-",
+                        // "Vedic Astrologer",
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: GoogleFonts.manrope(
+                          fontSize: 12.0,
+                          color: MyColors.colorGrey,
+                          fontWeight: FontWeight.w500,
+                        ),
                     ),
                   ],
                 ),
@@ -1230,7 +1249,7 @@ class AstrologerDetail extends StatelessWidget {
             ],
           ),
           SizedBox(
-            height: 12,
+            height: 7,
           ),
           Row(
             children: [

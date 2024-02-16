@@ -80,22 +80,22 @@ class _$StateListModelCopyWithImpl<$Res, $Val extends StateListModel>
 }
 
 /// @nodoc
-abstract class _$$_StateListModelCopyWith<$Res>
+abstract class _$$StateListModelImplCopyWith<$Res>
     implements $StateListModelCopyWith<$Res> {
-  factory _$$_StateListModelCopyWith(
-          _$_StateListModel value, $Res Function(_$_StateListModel) then) =
-      __$$_StateListModelCopyWithImpl<$Res>;
+  factory _$$StateListModelImplCopyWith(_$StateListModelImpl value,
+          $Res Function(_$StateListModelImpl) then) =
+      __$$StateListModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String status, int code, String message, List<StateModel> data});
 }
 
 /// @nodoc
-class __$$_StateListModelCopyWithImpl<$Res>
-    extends _$StateListModelCopyWithImpl<$Res, _$_StateListModel>
-    implements _$$_StateListModelCopyWith<$Res> {
-  __$$_StateListModelCopyWithImpl(
-      _$_StateListModel _value, $Res Function(_$_StateListModel) _then)
+class __$$StateListModelImplCopyWithImpl<$Res>
+    extends _$StateListModelCopyWithImpl<$Res, _$StateListModelImpl>
+    implements _$$StateListModelImplCopyWith<$Res> {
+  __$$StateListModelImplCopyWithImpl(
+      _$StateListModelImpl _value, $Res Function(_$StateListModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -106,7 +106,7 @@ class __$$_StateListModelCopyWithImpl<$Res>
     Object? message = null,
     Object? data = null,
   }) {
-    return _then(_$_StateListModel(
+    return _then(_$StateListModelImpl(
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -129,16 +129,16 @@ class __$$_StateListModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_StateListModel implements _StateListModel {
-  _$_StateListModel(
+class _$StateListModelImpl implements _StateListModel {
+  _$StateListModelImpl(
       {required this.status,
       required this.code,
       required this.message,
       required final List<StateModel> data})
       : _data = data;
 
-  factory _$_StateListModel.fromJson(Map<String, dynamic> json) =>
-      _$$_StateListModelFromJson(json);
+  factory _$StateListModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$StateListModelImplFromJson(json);
 
   @override
   final String status;
@@ -160,10 +160,10 @@ class _$_StateListModel implements _StateListModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_StateListModel &&
+            other is _$StateListModelImpl &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.code, code) || other.code == code) &&
             (identical(other.message, message) || other.message == message) &&
@@ -178,12 +178,13 @@ class _$_StateListModel implements _StateListModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_StateListModelCopyWith<_$_StateListModel> get copyWith =>
-      __$$_StateListModelCopyWithImpl<_$_StateListModel>(this, _$identity);
+  _$$StateListModelImplCopyWith<_$StateListModelImpl> get copyWith =>
+      __$$StateListModelImplCopyWithImpl<_$StateListModelImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_StateListModelToJson(
+    return _$$StateListModelImplToJson(
       this,
     );
   }
@@ -194,10 +195,10 @@ abstract class _StateListModel implements StateListModel {
       {required final String status,
       required final int code,
       required final String message,
-      required final List<StateModel> data}) = _$_StateListModel;
+      required final List<StateModel> data}) = _$StateListModelImpl;
 
   factory _StateListModel.fromJson(Map<String, dynamic> json) =
-      _$_StateListModel.fromJson;
+      _$StateListModelImpl.fromJson;
 
   @override
   String get status;
@@ -209,6 +210,6 @@ abstract class _StateListModel implements StateListModel {
   List<StateModel> get data;
   @override
   @JsonKey(ignore: true)
-  _$$_StateListModelCopyWith<_$_StateListModel> get copyWith =>
+  _$$StateListModelImplCopyWith<_$StateListModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

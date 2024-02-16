@@ -96,12 +96,12 @@ class _$TestimonialResponseModelCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_TestimonialResponseModelCopyWith<$Res>
+abstract class _$$TestimonialResponseModelImplCopyWith<$Res>
     implements $TestimonialResponseModelCopyWith<$Res> {
-  factory _$$_TestimonialResponseModelCopyWith(
-          _$_TestimonialResponseModel value,
-          $Res Function(_$_TestimonialResponseModel) then) =
-      __$$_TestimonialResponseModelCopyWithImpl<$Res>;
+  factory _$$TestimonialResponseModelImplCopyWith(
+          _$TestimonialResponseModelImpl value,
+          $Res Function(_$TestimonialResponseModelImpl) then) =
+      __$$TestimonialResponseModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String status, int code, String message, TestimonialModel? data});
@@ -111,12 +111,13 @@ abstract class _$$_TestimonialResponseModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_TestimonialResponseModelCopyWithImpl<$Res>
+class __$$TestimonialResponseModelImplCopyWithImpl<$Res>
     extends _$TestimonialResponseModelCopyWithImpl<$Res,
-        _$_TestimonialResponseModel>
-    implements _$$_TestimonialResponseModelCopyWith<$Res> {
-  __$$_TestimonialResponseModelCopyWithImpl(_$_TestimonialResponseModel _value,
-      $Res Function(_$_TestimonialResponseModel) _then)
+        _$TestimonialResponseModelImpl>
+    implements _$$TestimonialResponseModelImplCopyWith<$Res> {
+  __$$TestimonialResponseModelImplCopyWithImpl(
+      _$TestimonialResponseModelImpl _value,
+      $Res Function(_$TestimonialResponseModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -127,7 +128,7 @@ class __$$_TestimonialResponseModelCopyWithImpl<$Res>
     Object? message = null,
     Object? data = freezed,
   }) {
-    return _then(_$_TestimonialResponseModel(
+    return _then(_$TestimonialResponseModelImpl(
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -150,15 +151,15 @@ class __$$_TestimonialResponseModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_TestimonialResponseModel implements _TestimonialResponseModel {
-  _$_TestimonialResponseModel(
+class _$TestimonialResponseModelImpl implements _TestimonialResponseModel {
+  _$TestimonialResponseModelImpl(
       {required this.status,
       required this.code,
       required this.message,
       this.data});
 
-  factory _$_TestimonialResponseModel.fromJson(Map<String, dynamic> json) =>
-      _$$_TestimonialResponseModelFromJson(json);
+  factory _$TestimonialResponseModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$TestimonialResponseModelImplFromJson(json);
 
   @override
   final String status;
@@ -175,10 +176,10 @@ class _$_TestimonialResponseModel implements _TestimonialResponseModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_TestimonialResponseModel &&
+            other is _$TestimonialResponseModelImpl &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.code, code) || other.code == code) &&
             (identical(other.message, message) || other.message == message) &&
@@ -192,13 +193,13 @@ class _$_TestimonialResponseModel implements _TestimonialResponseModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_TestimonialResponseModelCopyWith<_$_TestimonialResponseModel>
-      get copyWith => __$$_TestimonialResponseModelCopyWithImpl<
-          _$_TestimonialResponseModel>(this, _$identity);
+  _$$TestimonialResponseModelImplCopyWith<_$TestimonialResponseModelImpl>
+      get copyWith => __$$TestimonialResponseModelImplCopyWithImpl<
+          _$TestimonialResponseModelImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_TestimonialResponseModelToJson(
+    return _$$TestimonialResponseModelImplToJson(
       this,
     );
   }
@@ -209,10 +210,10 @@ abstract class _TestimonialResponseModel implements TestimonialResponseModel {
       {required final String status,
       required final int code,
       required final String message,
-      final TestimonialModel? data}) = _$_TestimonialResponseModel;
+      final TestimonialModel? data}) = _$TestimonialResponseModelImpl;
 
   factory _TestimonialResponseModel.fromJson(Map<String, dynamic> json) =
-      _$_TestimonialResponseModel.fromJson;
+      _$TestimonialResponseModelImpl.fromJson;
 
   @override
   String get status;
@@ -224,6 +225,6 @@ abstract class _TestimonialResponseModel implements TestimonialResponseModel {
   TestimonialModel? get data;
   @override
   @JsonKey(ignore: true)
-  _$$_TestimonialResponseModelCopyWith<_$_TestimonialResponseModel>
+  _$$TestimonialResponseModelImplCopyWith<_$TestimonialResponseModelImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

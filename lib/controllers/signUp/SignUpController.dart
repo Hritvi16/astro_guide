@@ -42,12 +42,12 @@ class SignUpController extends GetxController {
   DateTime? date;
   late String gender;
 
-  List<CountryModel> countries = [];
-  CountryModel? country;
+  // List<CountryModel> countries = [];
+  // CountryModel? country;
   CountryModel? nationality;
   late CountryModel code;
-  List<StateModel> states = [];
-  StateModel? state;
+  // List<StateModel> states = [];
+  // StateModel? state;
   List<CityModel> cities = [];
   CityModel? city;
   late TextEditingController pincode = TextEditingController();
@@ -70,7 +70,7 @@ class SignUpController extends GetxController {
     step3 = GlobalKey<FormState>();
 
     name = TextEditingController();
-    mobile = TextEditingController();
+    mobile = TextEditingController(text: Get.arguments['mobile']);
     email = TextEditingController();
 
     dob = TextEditingController();
@@ -78,10 +78,12 @@ class SignUpController extends GetxController {
 
     pincode = TextEditingController();
 
-    countries = [
-      CountryModel(id: -1, name: "India", nationality: "Indian", icon: "assets/country/India.png", code: "+91", imageFullUrl: "assets/country/India.png")
-    ];
-    code = countries.first;
+    // countries = [
+    //   CountryModel(id: -1, name: "India", nationality: "Indian", icon: "assets/country/India.png", code: "+91", imageFullUrl: "assets/country/India.png")
+    // ];
+    // code = countries.first;
+    code = Get.arguments['nationality'];
+    nationality = Get.arguments['nationality'];
 
 
     process = false;
@@ -91,45 +93,54 @@ class SignUpController extends GetxController {
   }
 
   start() {
-    getCountries();
+    getCities();
   }
 
-  void getCountries() {
-    Map<String, dynamic> data = {
-      ApiConstants.act : ApiConstants.all,
-    };
-    countryProvider.fetchList(storage.read("access")).then((response) {
-      print(response.toJson());
-      if(response.code==1) {
-        countries = response.data??[];
-        for (var value in countries) {
-          if(value.name.toUpperCase()=="INDIA") {
-            code = value;
-            break;
-          }
-        }
-      }
-      update();
-    });
-  }
+  // void getCountries() {
+  //   Map<String, dynamic> data = {
+  //     ApiConstants.act : ApiConstants.all,
+  //   };
+  //   countryProvider.fetchList(storage.read("access")).then((response) {
+  //     print(response.toJson());
+  //     if(response.code==1) {
+  //       countries = response.data??[];
+  //       for (var value in countries) {
+  //         if(value.code.toUpperCase()==Get.arguments['code']) {
+  //           code = value;
+  //           break;
+  //         }
+  //       }
+  //     }
+  //     update();
+  //   });
+  // }
 
-  void getStates(String id) {
-    Map<String, dynamic> data = {
-      StateConstant().co_id : id
-    };
-    stateProvider.fetchList(data, ApiConstants.country, storage.read("access")??CommonConstants.essential).then((response) {
-      if(response.code==1) {
-        states = response.data??[];
-      }
-      update();
-    });
-  }
+  // void getStates(String id) {
+  //   Map<String, dynamic> data = {
+  //     StateConstant().co_id : id
+  //   };
+  //   stateProvider.fetchList(data, ApiConstants.country, storage.read("access")??CommonConstants.essential).then((response) {
+  //     if(response.code==1) {
+  //       states = response.data??[];
+  //     }
+  //     update();
+  //   });
+  // }
 
-  void getCities(String id) {
-    Map<String, dynamic> data = {
-      CityConstant().st_id : id
-    };
-    cityProvider.fetchList(data, ApiConstants.state, storage.read("access")??CommonConstants.essential).then((response) {
+  // void getCities(String id) {
+  //   Map<String, dynamic> data = {
+  //     CityConstant().st_id : id
+  //   };
+  //   cityProvider.fetchList(data, ApiConstants.state, storage.read("access")??CommonConstants.essential).then((response) {
+  //     if(response.code==1) {
+  //       cities = response.data??[];
+  //     }
+  //     update();
+  //   });
+  // }
+
+  void getCities() {
+    cityProvider.fetchAll(ApiConstants.all, storage.read("access")??CommonConstants.essential).then((response) {
       if(response.code==1) {
         cities = response.data??[];
       }
@@ -210,20 +221,20 @@ class SignUpController extends GetxController {
     update();
   }
 
-  void changeCountry(CountryModel? value) {
-    country = value!;
-    state = null;
-    city = null;
-    update();
-    getStates(country!.id.toString());
-  }
+  // void changeCountry(CountryModel? value) {
+    // country = value!;
+    // state = null;
+    // city = null;
+    // update();
+    // getStates(country!.id.toString());
+  // }
 
-  void changeState(StateModel? value) {
-    state = value!;
-    city = null;
-    update();
-    getCities(state!.id.toString());
-  }
+  // void changeState(StateModel? value) {
+  //   state = value!;
+  //   city = null;
+  //   update();
+  //   getCities(state!.id.toString());
+  // }
 
   void changeGender(String gender) {
     this.gender = gender;
@@ -253,8 +264,9 @@ class SignUpController extends GetxController {
   }
 
   Future<void> register() async {
-    process = true;
-    update();
+    // process = true;
+    // update();
+    Essential.showLoadingDialog();
 
     final FormData data = FormData({
       if(image!=null)
@@ -271,16 +283,20 @@ class SignUpController extends GetxController {
       UserConstants.fcm : await NotificationHelper.generateFcmToken()
     });
 
+    print(nationality);
+    print(data.fields);
+
     userProvider.add(data, ApiConstants.add, storage.read("access")).then((response) {
       print(response.toJson());
-      process = false;
-      update();
+      // process = false;
+      // update();
+      Get.back();
 
       if(response.code==1) {
         storage.write("access", response.access_token);
         storage.write("refresh", response.refresh_token);
         storage.write("status", "logged in");
-        Get.offAllNamed("/home");
+        Get.offAllNamed(Essential.getPlatform() ? '/home' : '/preHome');
       }
       else {
         Essential.showSnackBar(response.message);
@@ -334,18 +350,18 @@ class SignUpController extends GetxController {
   }
 
 
-  void changeCode() {
-    Get.bottomSheet(
-        isScrollControlled: true,
-        Country(countries, code)
-    ).then((value) {
-      print(value);
-
-      if(value!=null) {
-        countries = value['countries'];
-        code = value['country'];
-        update();
-      }
-    });
-  }
+  // void changeCode() {
+  //   Get.bottomSheet(
+  //       isScrollControlled: true,
+  //       Country(countries, code)
+  //   ).then((value) {
+  //     print(value);
+  //
+  //     if(value!=null) {
+  //       countries = value['countries'];
+  //       code = value['country'];
+  //       update();
+  //     }
+  //   });
+  // }
 }

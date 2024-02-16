@@ -170,11 +170,11 @@ class _$DashboardModelCopyWithImpl<$Res, $Val extends DashboardModel>
 }
 
 /// @nodoc
-abstract class _$$_DashboardModelCopyWith<$Res>
+abstract class _$$DashboardModelImplCopyWith<$Res>
     implements $DashboardModelCopyWith<$Res> {
-  factory _$$_DashboardModelCopyWith(
-          _$_DashboardModel value, $Res Function(_$_DashboardModel) then) =
-      __$$_DashboardModelCopyWithImpl<$Res>;
+  factory _$$DashboardModelImplCopyWith(_$DashboardModelImpl value,
+          $Res Function(_$DashboardModelImpl) then) =
+      __$$DashboardModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -198,11 +198,11 @@ abstract class _$$_DashboardModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_DashboardModelCopyWithImpl<$Res>
-    extends _$DashboardModelCopyWithImpl<$Res, _$_DashboardModel>
-    implements _$$_DashboardModelCopyWith<$Res> {
-  __$$_DashboardModelCopyWithImpl(
-      _$_DashboardModel _value, $Res Function(_$_DashboardModel) _then)
+class __$$DashboardModelImplCopyWithImpl<$Res>
+    extends _$DashboardModelCopyWithImpl<$Res, _$DashboardModelImpl>
+    implements _$$DashboardModelImplCopyWith<$Res> {
+  __$$DashboardModelImplCopyWithImpl(
+      _$DashboardModelImpl _value, $Res Function(_$DashboardModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -221,7 +221,7 @@ class __$$_DashboardModelCopyWithImpl<$Res>
     Object? user = freezed,
     Object? session = freezed,
   }) {
-    return _then(_$_DashboardModel(
+    return _then(_$DashboardModelImpl(
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -276,8 +276,8 @@ class __$$_DashboardModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_DashboardModel implements _DashboardModel {
-  _$_DashboardModel(
+class _$DashboardModelImpl implements _DashboardModel {
+  _$DashboardModelImpl(
       {required this.status,
       required this.code,
       required this.message,
@@ -298,8 +298,8 @@ class _$_DashboardModel implements _DashboardModel {
         _videos = videos,
         _testimonials = testimonials;
 
-  factory _$_DashboardModel.fromJson(Map<String, dynamic> json) =>
-      _$$_DashboardModelFromJson(json);
+  factory _$DashboardModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$DashboardModelImplFromJson(json);
 
   @override
   final String status;
@@ -389,10 +389,10 @@ class _$_DashboardModel implements _DashboardModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_DashboardModel &&
+            other is _$DashboardModelImpl &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.code, code) || other.code == code) &&
             (identical(other.message, message) || other.message == message) &&
@@ -431,12 +431,13 @@ class _$_DashboardModel implements _DashboardModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_DashboardModelCopyWith<_$_DashboardModel> get copyWith =>
-      __$$_DashboardModelCopyWithImpl<_$_DashboardModel>(this, _$identity);
+  _$$DashboardModelImplCopyWith<_$DashboardModelImpl> get copyWith =>
+      __$$DashboardModelImplCopyWithImpl<_$DashboardModelImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_DashboardModelToJson(
+    return _$$DashboardModelImplToJson(
       this,
     );
   }
@@ -455,10 +456,10 @@ abstract class _DashboardModel implements DashboardModel {
       final List<VideoModel>? videos,
       final List<TestimonialModel>? testimonials,
       final UserModel? user,
-      final SessionHistoryModel? session}) = _$_DashboardModel;
+      final SessionHistoryModel? session}) = _$DashboardModelImpl;
 
   factory _DashboardModel.fromJson(Map<String, dynamic> json) =
-      _$_DashboardModel.fromJson;
+      _$DashboardModelImpl.fromJson;
 
   @override
   String get status;
@@ -486,6 +487,6 @@ abstract class _DashboardModel implements DashboardModel {
   SessionHistoryModel? get session;
   @override
   @JsonKey(ignore: true)
-  _$$_DashboardModelCopyWith<_$_DashboardModel> get copyWith =>
+  _$$DashboardModelImplCopyWith<_$DashboardModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

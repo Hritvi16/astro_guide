@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:astro_guide/constants/CommonConstants.dart';
 import 'package:astro_guide/constants/WalletConstants.dart';
 import 'package:astro_guide/essential/Essential.dart';
@@ -8,6 +9,7 @@ import 'package:astro_guide/services/networking/ApiConstants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:phonepe_payment_sdk/phonepe_payment_sdk.dart';
 import 'package:stripe_checkout/stripe_checkout.dart';
 
 class WalletController extends GetxController {
@@ -23,7 +25,7 @@ class WalletController extends GetxController {
   late double wallet;
   late BuildContext context;
 
-
+  Object? result;
 
 
   @override
@@ -86,7 +88,8 @@ class WalletController extends GetxController {
 
   void proceed() {
     if(amount.text.isNotEmpty) {
-      if(double.parse(amount.text)<50) {
+      // if(double.parse(amount.text)<50) {
+      if(double.parse(amount.text)<1) {
         Essential.showInfoDialog("You have to recharge minimum of Rs. 50");
       }
       else {
@@ -100,7 +103,7 @@ class WalletController extends GetxController {
         // Essential.showBasicDialog("You will get Rs. ${amount.text} of balance. Are you sure you want to proceed?", "Yes", "No").then((value) {
         Essential.showBasicDialog(text, "Yes", "No").then((value) {
           if(value=="Yes") {
-            addToWallet(amount.text, amount.text, 'CUS', "Money added to your wallet on recharge of Rs. ${amount.text}");
+            selectMethod(amount.text, amount.text, 'CUS', "Money added to your wallet on recharge of Rs. ${amount.text}");
           }
         });
       }
@@ -118,7 +121,7 @@ class WalletController extends GetxController {
 
       Essential.showBasicDialog(text, "Yes", "No").then((value) {
         if(value=="Yes") {
-          addToWallet((package?.amount??0).toString(), getOfferAmount(), 'P', "Money added to your wallet on package recharge of Rs. ${package?.amount.toString()}");
+          selectMethod((package?.amount??0).toString(), getOfferAmount(), 'P', "Money added to your wallet on package recharge of Rs. ${package?.amount.toString()}");
         }
       });
     }
@@ -138,8 +141,17 @@ class WalletController extends GetxController {
     }
   }
 
-  void addToWallet(String amount, String wallet_amount, String type, String description) {
+  void selectMethod(String amount, String wallet_amount, String type, String description) {
+    Get.toNamed("/paymentMethod")?.then((value) {
+      if(value!=null) {
+        addToWallet(amount, wallet_amount, type, description, value);
+      }
+    });
+  }
+
+  void addToWallet(String amount, String wallet_amount, String type, String description, String payment_type) {
     Map<String, dynamic> data = {
+      WalletConstants.payment_type : payment_type,
       WalletConstants.amount : amount,
       WalletConstants.wallet_amount : wallet_amount,
       WalletConstants.type : type,
@@ -151,7 +163,12 @@ class WalletController extends GetxController {
     walletProvider.transaction(data, ApiConstants.transactionAPI+ApiConstants.add, storage.read("access")??CommonConstants.essential).then((response) {
       print(response.toJson());
       if(response.code==1) {
-        getCheckout(response.id??-1, response.transaction_id??"");
+        if(payment_type=="STRIPE") {
+          getStripeCheckout(response.id ?? -1, response.transaction_id ?? "");
+        }
+        else if(payment_type=="PHONEPE") {
+          phonePeInit(response.body ?? "", response.checksum ?? "");
+        }
         // package = null;
         // this.amount.text = "";
         // getPackages();
@@ -160,7 +177,7 @@ class WalletController extends GetxController {
     });
   }
 
-  Future<void> getCheckout(int id, String sessionId) async {
+  Future<void> getStripeCheckout(int id, String sessionId) async {
     // final String sessionId = await _createCheckoutSession();
     final result = await redirectToCheckout(
       context: context,
@@ -191,7 +208,7 @@ class WalletController extends GetxController {
     // Essential.showSnackBar(text);
   }
 
-  updateWalletStatus(int status, int id) {
+  void updateWalletStatus(int status, int id) {
     Map<String, dynamic> data = {
       WalletConstants.status : status,
       WalletConstants.id : id,
@@ -200,13 +217,84 @@ class WalletController extends GetxController {
     walletProvider.transaction(data, ApiConstants.transactionAPI+ApiConstants.statuss, storage.read("access")??CommonConstants.essential).then((response) {
       print(response.toJson());
       if(response.code==1) {
-        // getCheckout(response.id??-1, response.transaction_id??"");
         package = null;
         this.amount.text = "";
         getPackages();
       }
       update();
     });
+  }
+
+  void phonePeInit(String body, String checksum) {
+    PhonePePaymentSdk.init(CommonConstants.environment, CommonConstants.appId, CommonConstants.merchantId, CommonConstants.enableLogging)
+        .then((val)
+    {
+      result = '$result \n PhonePe SDK Initialized - $val';
+      update();
+      print("checksum");
+      print(checksum);
+      getPackageSignatureForAndroid(body, checksum);
+    })
+        .catchError((error) {
+      handleError(error);
+      return <dynamic>{};
+    });
+  }
+
+  void getPackageSignatureForAndroid(String body, String checksum) {
+    if (Platform.isAndroid) {
+      PhonePePaymentSdk.getPackageSignatureForAndroid()
+          .then((packageSignature) {
+          print(packageSignature.toString());
+          result = '$result \n Generated Package Signature - $packageSignature';
+          update();
+          startPGTransaction(body, checksum);
+      })
+          .catchError((error) {
+        handleError(error);
+        return <dynamic>{};
+      });
+    }
+  }
+
+  void handleError(error) {
+    result = "$result \n $error ";
+    update();
+  }
+
+  void startPGTransaction(String body, String checksum) async {
+    try {
+      var response = PhonePePaymentSdk.startTransaction(
+          body, CommonConstants.callbackUrl, checksum, CommonConstants.packageName);
+      response
+          .then((val) {
+          if (val != null) {
+            print("valllll");
+            print(val);
+            String status = val['status'].toString();
+            String error = val['error'].toString();
+
+            if (status == 'SUCCESS') {
+              result = "$result \n Flow Complete - STATUS SUCESS";
+            } else {
+              result =
+              "$result \n Flow Complete - STATUS $status and error $error";
+            }
+          } else {
+            result = " $result \n FLOW INCOMPLETE";
+          }
+          update();
+
+          print(result);
+          print(result.toString());
+      })
+          .catchError((error) {
+        handleError(error);
+        return <dynamic>{};
+      });
+    } catch (error) {
+      handleError(error);
+    }
   }
 
   // Future<String> createCheckoutSession() async {

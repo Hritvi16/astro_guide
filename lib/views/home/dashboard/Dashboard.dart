@@ -1,5 +1,6 @@
 import 'package:astro_guide/colors/MyColors.dart';
 import 'package:astro_guide/constants/CommonConstants.dart';
+import 'package:astro_guide/controllers/connectivity/ConnectivityController.dart';
 import 'package:astro_guide/controllers/dashboard/DashboardController.dart';
 import 'package:astro_guide/essential/Essential.dart';
 import 'package:astro_guide/models/astrologer/AstrologerModel.dart';
@@ -11,9 +12,11 @@ import 'package:astro_guide/models/video/VideoModel.dart';
 import 'package:astro_guide/services/networking/ApiConstants.dart';
 import 'package:astro_guide/shared/CustomClipPath.dart';
 import 'package:astro_guide/shared/helpers/extensions/StringExtension.dart';
+import 'package:astro_guide/shared/widgets/NoInternetPage.dart';
 import 'package:astro_guide/shared/widgets/button/Button.dart';
 import 'package:astro_guide/size/MySize.dart';
 import 'package:astro_guide/size/WidgetSize.dart';
+import 'package:astro_guide/views/loadingScreen/LoadingScreen.dart';
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -27,17 +30,24 @@ class Dashboard extends StatelessWidget {
   Dashboard({ Key? key }) : super(key: key);
 
   // final DashboardController dashboardController = Get.find();
+  // final ConnectivityController connectivityController = Get.find();
   final DashboardController dashboardController = Get.put<DashboardController>(DashboardController());
+  final ConnectivityController connectivityController = Get.put<ConnectivityController>(ConnectivityController());
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return GetBuilder<DashboardController>(
-      builder: (controller) {
-        return Scaffold(
-          body: getBody(context),
+    return GetBuilder<ConnectivityController>(
+      builder: (cController) {
+        return dashboardController.load==false && connectivityController.isOnline==false ? NoInternetPage()
+        : GetBuilder<DashboardController>(
+          builder: (controller) {
+            return Scaffold(
+              body: dashboardController.load ? getBody(context) : LoadingScreen(),
+            );
+          },
         );
-      },
+      }
     );
   }
 
@@ -54,11 +64,12 @@ class Dashboard extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: standardHorizontalPagePadding),
               decoration: BoxDecoration(
                   color: MyColors.colorPrimary,
-                  image: const DecorationImage(
+                  image: Essential.getPlatform() ?
+                  const DecorationImage(
                       image: AssetImage(
                           "assets/essential/upper_bg_s.png"
                       )
-                  )
+                  ) : null
               ),
               child: SafeArea(
                 child: Padding(
@@ -177,7 +188,7 @@ class Dashboard extends StatelessWidget {
             builder: MaterialIndicatorDelegate(
               builder: (context, controller) {
                 return Image.asset(
-                  "assets/essential/loading.png",
+                  Essential.getPlatform() ? "assets/essential/loading.png" : "assets/app_icon/ios_icon.jpg",
                   height: 30,
                 );
               },
@@ -204,7 +215,7 @@ class Dashboard extends StatelessWidget {
                         getTestimonials(),
                         getNewVideos(),
                         getAppOptions(),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         )
                       ],
@@ -245,7 +256,7 @@ class Dashboard extends StatelessWidget {
                 profile: dashboardController.session?.astro_profile ?? "",
                 mobile: '',
                 email: '',
-                experience: 0,
+                experience: '',
                 about: ''
             )
           });
@@ -253,7 +264,7 @@ class Dashboard extends StatelessWidget {
       },
       child: Container(
         width: MySize.size100(context),
-        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
         margin: EdgeInsets.only(bottom: 20, top: 10, left: standardHorizontalPagePadding, right: standardHorizontalPagePadding),
         decoration: BoxDecoration(
           color: (dashboardController.session?.category=="CHAT" ? MyColors.colorChat : MyColors.colorSuccess).withOpacity(0.2),
@@ -273,7 +284,7 @@ class Dashboard extends StatelessWidget {
                       ApiConstants.astrologerUrl+(dashboardController.session?.astro_profile??"")
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 10,
                 ),
                 Column(
@@ -310,14 +321,14 @@ class Dashboard extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          getServiceDesign("kundali_circle.png", "Free Kundali".tr, () {
-            // dashboardController.goto("/kundli");
-          }),
-          getServiceDesign("match_circle.png", "Match Kundali".tr, () {
-            // dashboardController.goto("/match_kundli");
-          }),
           getServiceDesign("horoscope_circle.png", "Daily Horoscope".tr, () {
             dashboardController.goto("/horoscope");
+          }),
+          getServiceDesign("kundali_circle.png", "Free Kundali".tr, () {
+            dashboardController.goto("/freeKundli");
+          }),
+          getServiceDesign("match_circle.png", "Match Kundali".tr, () {
+            dashboardController.goto("/matchKundli");
           }),
         ],
       ),
@@ -465,7 +476,7 @@ class Dashboard extends StatelessWidget {
       padding: EdgeInsets.only(top: standardVerticalPadding),
       child: Column(
         children: [
-          getListHeading("Currently Live Astrologers".tr, "/home", arguments: {"index" : 1, "title" : "Live Astrologers"}),
+          getListHeading("Currently Live Astrologers".tr, "/home", arguments: {"index" : 1, "title" : "Live Astrologers",}),
           const SizedBox(
             height: 14,
           ),
@@ -786,7 +797,7 @@ class Dashboard extends StatelessWidget {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 2,
                   ),
                   getNewBottom(astrologer)
@@ -1014,16 +1025,24 @@ class Dashboard extends StatelessWidget {
                     width: standardTestimonialImageBGWidth,
                     color: (ind+1)%2==0 ? MyColors.colorBlueBorder : MyColors.colorButton,
                   ),
-                  Positioned(
+                  // if(testimonial.profile.isNotEmpty)
+                    Positioned(
                     top: 24,
                     left: 24,
-                    child: CircleAvatar(
+                    child: (testimonial.profile??"").isEmpty ?
+                    CircleAvatar(
                       radius: 35,
-                      // backgroundImage: AssetImage(
-                      //   "assets/test/user.jpg"
-                      // ),
+                      child: Icon(
+                        Icons.person,
+                        color: (ind+1)%2==0 ? MyColors.colorBlueBorder : MyColors.colorButton,
+                        size: 50,
+                      ),
+                      backgroundColor: (ind+1)%2==0 ? MyColors.colorBlueBG : MyColors.colorLightPrimary,
+                    )
+                    : CircleAvatar(
+                      radius: 35,
                       backgroundImage: NetworkImage(
-                          ApiConstants.userUrl+testimonial.profile
+                          ApiConstants.userUrl+testimonial.profile!
                       ),
                     ),
                   ),
@@ -1136,7 +1155,7 @@ class Dashboard extends StatelessWidget {
           child: Container(
             height: standardNewVideoHeight,
             width: standardNewVideoWidth,
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
               image: DecorationImage(
                   image: NetworkImage(
@@ -1150,7 +1169,7 @@ class Dashboard extends StatelessWidget {
                 BoxShadow(
                   color: MyColors.black.withOpacity(0.9),
                 ),
-                BoxShadow(
+                const BoxShadow(
                   color: Colors.white70,
                   spreadRadius: -30.0,
                   blurRadius: 20.0,
@@ -1238,7 +1257,7 @@ class Dashboard extends StatelessWidget {
                           width: 46,
                           height: 14,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
                         Image.asset(
@@ -1445,11 +1464,11 @@ class Dashboard extends StatelessWidget {
 
   Widget getAppOptions() {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
         children: [
           Padding(
-            padding: EdgeInsets.symmetric(vertical: 20),
+            padding: const EdgeInsets.symmetric(vertical: 20),
             child: Text(
               'Why AstroGuide?'.tr,
               overflow: TextOverflow.fade,
@@ -1460,7 +1479,7 @@ class Dashboard extends StatelessWidget {
             ),
           ),
           Container(
-            padding: EdgeInsets.only(right: 16),
+            padding: const EdgeInsets.only(right: 16),
             width: double.infinity,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16),
@@ -1509,7 +1528,7 @@ class Dashboard extends StatelessWidget {
                     fontWeight: FontWeight.w700,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 7,
                 ),
                 Text(

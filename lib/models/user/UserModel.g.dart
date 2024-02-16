@@ -6,10 +6,11 @@ part of 'UserModel.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_UserModel _$$_UserModelFromJson(Map<String, dynamic> json) => _$_UserModel(
+_$UserModelImpl _$$UserModelImplFromJson(Map<String, dynamic> json) =>
+    _$UserModelImpl(
       id: json['id'] as int,
       name: json['name'] as String,
-      mobile: json['mobile'] as String,
+      mobile: json['mobile'] as String?,
       email: json['email'] as String?,
       gender: json['gender'] as String?,
       dob: json['dob'] as String?,
@@ -20,10 +21,11 @@ _$_UserModel _$$_UserModelFromJson(Map<String, dynamic> json) => _$_UserModel(
       st_id: json['st_id'] as int?,
       co_id: json['co_id'] as int?,
       postal_code: json['postal_code'] as String?,
+      joined_via: json['joined_via'] as String,
       amount: (json['amount'] as num?)?.toDouble(),
     );
 
-Map<String, dynamic> _$$_UserModelToJson(_$_UserModel instance) =>
+Map<String, dynamic> _$$UserModelImplToJson(_$UserModelImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
@@ -38,5 +40,6 @@ Map<String, dynamic> _$$_UserModelToJson(_$_UserModel instance) =>
       'st_id': instance.st_id,
       'co_id': instance.co_id,
       'postal_code': instance.postal_code,
+      'joined_via': instance.joined_via,
       'amount': instance.amount,
     };

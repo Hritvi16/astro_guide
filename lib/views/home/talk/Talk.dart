@@ -6,8 +6,10 @@ import 'package:astro_guide/models/astrologer/AstrologerModel.dart';
 import 'package:astro_guide/models/spec/SpecModel.dart';
 import 'package:astro_guide/services/networking/ApiConstants.dart';
 import 'package:astro_guide/shared/CustomClipPath.dart';
+import 'package:astro_guide/shared/helpers/extensions/StringExtension.dart';
 import 'package:astro_guide/size/MySize.dart';
 import 'package:astro_guide/size/WidgetSize.dart';
+import 'package:astro_guide/views/loadingScreen/LoadingScreen.dart';
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
@@ -20,8 +22,10 @@ import 'dart:math' as math;
 
 class Talk extends StatelessWidget {
   String? title;
-  Talk(String? title, { Key? key }) {
-    this.title = title;
+  Talk(this.title, SpecModel? spec, { Key? key }) {
+    if(spec!=null) {
+      talkController.spec = spec;
+    }
   }
 
   final TalkController talkController = Get.put<TalkController>(TalkController());
@@ -29,10 +33,12 @@ class Talk extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    print("talkController.load");
+    print(talkController.load);
     return GetBuilder<TalkController>(
       builder: (controller) {
         return Scaffold(
-          body: getBody(context),
+          body: talkController.load ? getBody(context) : LoadingScreen(),
         );
       },
     );
@@ -51,11 +57,12 @@ class Talk extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: standardHorizontalPagePadding),
               decoration: BoxDecoration(
                   color: MyColors.colorPrimary,
-                  image: const DecorationImage(
+                  image: Essential.getPlatform() ?
+                  const DecorationImage(
                       image: AssetImage(
                           "assets/essential/upper_bg_s.png"
                       )
-                  )
+                  ) : null
               ),
               child: SafeArea(
                 child: Padding(
@@ -69,7 +76,7 @@ class Talk extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            title!=null ? title.toString().tr : 'Talk with Astrologer'.tr,
+                            title!=null ? title.toString().tr : 'Talk with ${Essential.getPlatformWord().toTitleCase()}'.tr,
                             style: GoogleFonts.playfairDisplay(
                               fontSize: 22.0,
                               color: MyColors.black,
@@ -136,7 +143,7 @@ class Talk extends StatelessWidget {
                           decoration: InputDecoration(
                             filled: true,
                             fillColor: MyColors.cardColor(),
-                            hintText: "Search Astrologer".tr,
+                            hintText: "Search ${Essential.getPlatformWord().toTitleCase()}".tr,
                             contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                             prefixIcon: Padding(
                               padding: const EdgeInsets.symmetric(vertical: 14.0),
@@ -182,7 +189,7 @@ class Talk extends StatelessWidget {
             builder: MaterialIndicatorDelegate(
               builder: (context, controller) {
                 return Image.asset(
-                  "assets/essential/loading.png",
+                  Essential.getPlatform() ? "assets/essential/loading.png" : "assets/app_icon/ios_icon.jpg",
                   height: 30,
                 );
               },
@@ -191,7 +198,8 @@ class Talk extends StatelessWidget {
               physics: AlwaysScrollableScrollPhysics(),
               child: Column(
                 children: [
-                  getSpecs(),
+                  if(Essential.getPlatform())
+                    getSpecs(),
                   talkController.astrologers.isNotEmpty ?
                   ListView.separated(
                     physics: const NeverScrollableScrollPhysics(),
@@ -204,7 +212,8 @@ class Talk extends StatelessWidget {
                       );
                     },
                     itemBuilder: (buildContext, index) {
-                      return getAstrologerDesign(index, talkController.astrologers[index]);
+                      return
+                        getAstrologerDesign(index, talkController.astrologers[index]);
                     },
                   )
                   : SizedBox(
@@ -450,17 +459,18 @@ class Talk extends StatelessWidget {
                     SizedBox(
                       height: 2,
                     ),
-                    Text(
-                      astrologer.types??"-",
-                      // "Vedic Astrologer",
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: GoogleFonts.manrope(
-                        fontSize: 12.0,
-                        color: MyColors.colorGrey,
-                        fontWeight: FontWeight.w500,
+                    if(Essential.getPlatform())
+                      Text(
+                        astrologer.types??"-",
+                        // "Vedic Astrologer",
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: GoogleFonts.manrope(
+                          fontSize: 12.0,
+                          color: MyColors.colorGrey,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
-                    ),
                   ],
                 ),
               ),
@@ -477,7 +487,7 @@ class Talk extends StatelessWidget {
             ],
           ),
           SizedBox(
-            height: 12,
+            height: 7,
           ),
           Row(
             children: [
@@ -497,7 +507,6 @@ class Talk extends StatelessWidget {
                   fontWeight: FontWeight.w500,
                 ),
               ),
-
             ],
           ),
           SizedBox(

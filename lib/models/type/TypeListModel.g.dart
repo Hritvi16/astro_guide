@@ -6,8 +6,8 @@ part of 'TypeListModel.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_TypeListModel _$$_TypeListModelFromJson(Map<String, dynamic> json) =>
-    _$_TypeListModel(
+_$TypeListModelImpl _$$TypeListModelImplFromJson(Map<String, dynamic> json) =>
+    _$TypeListModelImpl(
       status: json['status'] as String,
       code: json['code'] as int,
       message: json['message'] as String,
@@ -16,7 +16,7 @@ _$_TypeListModel _$$_TypeListModelFromJson(Map<String, dynamic> json) =>
           .toList(),
     );
 
-Map<String, dynamic> _$$_TypeListModelToJson(_$_TypeListModel instance) =>
+Map<String, dynamic> _$$TypeListModelImplToJson(_$TypeListModelImpl instance) =>
     <String, dynamic>{
       'status': instance.status,
       'code': instance.code,

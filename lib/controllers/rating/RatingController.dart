@@ -43,6 +43,8 @@ class RatingController extends GetxController {
   }
 
   void manageRating() {
+    Essential.showLoadingDialog();
+
     final ChatRepository chatRepository = Get.put(ChatRepository(Get.put(ApiService(Get.find()), permanent: true)));
     final ChatProvider chatProvider = Get.put(ChatProvider(chatRepository));
 
@@ -56,6 +58,7 @@ class RatingController extends GetxController {
     print(data);
 
     chatProvider.manage(storage.read("access"), ApiConstants.rating, data).then((response) async {
+      Get.back();
       if(response.code==1) {
         back(result: sessionHistory.copyWith(review: review.text.trim()));
       }

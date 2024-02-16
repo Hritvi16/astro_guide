@@ -6,9 +6,9 @@ part of 'MyProfileResponseModel.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_MyProfileResponseModel _$$_MyProfileResponseModelFromJson(
+_$MyProfileResponseModelImpl _$$MyProfileResponseModelImplFromJson(
         Map<String, dynamic> json) =>
-    _$_MyProfileResponseModel(
+    _$MyProfileResponseModelImpl(
       status: json['status'] as String,
       code: json['code'] as int,
       message: json['message'] as String,
@@ -18,14 +18,18 @@ _$_MyProfileResponseModel _$$_MyProfileResponseModelFromJson(
       countries: (json['countries'] as List<dynamic>?)
           ?.map((e) => CountryModel.fromJson(e as Map<String, dynamic>))
           .toList(),
+      cities: (json['cities'] as List<dynamic>?)
+          ?.map((e) => CityModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
-Map<String, dynamic> _$$_MyProfileResponseModelToJson(
-        _$_MyProfileResponseModel instance) =>
+Map<String, dynamic> _$$MyProfileResponseModelImplToJson(
+        _$MyProfileResponseModelImpl instance) =>
     <String, dynamic>{
       'status': instance.status,
       'code': instance.code,
       'message': instance.message,
       'data': instance.data,
       'countries': instance.countries,
+      'cities': instance.cities,
     };

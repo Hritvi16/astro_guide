@@ -1,17 +1,13 @@
 import 'package:astro_guide/colors/MyColors.dart';
 import 'package:astro_guide/controllers/testimonial/ManageTestimonialController.dart';
-import 'package:astro_guide/controllers/testimonial/TestimonialController.dart';
 import 'package:astro_guide/essential/Essential.dart';
-import 'package:astro_guide/services/networking/ApiConstants.dart';
 import 'package:astro_guide/shared/CustomClipPath.dart';
-import 'package:astro_guide/shared/helpers/extensions/StringExtension.dart';
 import 'package:astro_guide/shared/widgets/button/Button.dart';
 import 'package:astro_guide/shared/widgets/customAppBar/CustomAppBar.dart';
 import 'package:astro_guide/shared/widgets/label/Label.dart';
 import 'package:astro_guide/size/MySize.dart';
 import 'package:astro_guide/size/Spacing.dart';
 import 'package:astro_guide/size/WidgetSize.dart';
-import 'package:astro_guide/views/loadingScreen/LoadingScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -47,11 +43,12 @@ class ManageTestimonial extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                   color: MyColors.colorPrimary,
-                  image: const DecorationImage(
+                  image: Essential.getPlatform() ?
+                  const DecorationImage(
                       image: AssetImage(
                           "assets/essential/upper_bg_s.png"
                       )
-                  )
+                  ) : null
               ),
               child: SafeArea(
                   child: CustomAppBar('${manageTestimonialController.testimonial==null ? 'Add'.tr : 'Update'.tr} ${'Testimonial'.tr}')
@@ -76,7 +73,8 @@ class ManageTestimonial extends StatelessWidget {
                         textInputAction: TextInputAction.newline,
                         controller: manageTestimonialController.description,
                         maxLines: 10,
-                        style: GoogleFonts.notoColorEmoji(
+                        // style: GoogleFonts.notoColorEmoji(
+                        style: GoogleFonts.manrope(
                           fontSize: 16.0,
                           letterSpacing: 0,
                           fontWeight: FontWeight.w400,

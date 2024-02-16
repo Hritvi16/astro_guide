@@ -80,22 +80,22 @@ class _$SessionModelCopyWithImpl<$Res, $Val extends SessionModel>
 }
 
 /// @nodoc
-abstract class _$$_SessionModelCopyWith<$Res>
+abstract class _$$SessionModelImplCopyWith<$Res>
     implements $SessionModelCopyWith<$Res> {
-  factory _$$_SessionModelCopyWith(
-          _$_SessionModel value, $Res Function(_$_SessionModel) then) =
-      __$$_SessionModelCopyWithImpl<$Res>;
+  factory _$$SessionModelImplCopyWith(
+          _$SessionModelImpl value, $Res Function(_$SessionModelImpl) then) =
+      __$$SessionModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int code, String status, String message, String? data});
 }
 
 /// @nodoc
-class __$$_SessionModelCopyWithImpl<$Res>
-    extends _$SessionModelCopyWithImpl<$Res, _$_SessionModel>
-    implements _$$_SessionModelCopyWith<$Res> {
-  __$$_SessionModelCopyWithImpl(
-      _$_SessionModel _value, $Res Function(_$_SessionModel) _then)
+class __$$SessionModelImplCopyWithImpl<$Res>
+    extends _$SessionModelCopyWithImpl<$Res, _$SessionModelImpl>
+    implements _$$SessionModelImplCopyWith<$Res> {
+  __$$SessionModelImplCopyWithImpl(
+      _$SessionModelImpl _value, $Res Function(_$SessionModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -106,7 +106,7 @@ class __$$_SessionModelCopyWithImpl<$Res>
     Object? message = null,
     Object? data = freezed,
   }) {
-    return _then(_$_SessionModel(
+    return _then(_$SessionModelImpl(
       code: null == code
           ? _value.code
           : code // ignore: cast_nullable_to_non_nullable
@@ -129,15 +129,15 @@ class __$$_SessionModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_SessionModel implements _SessionModel {
-  _$_SessionModel(
+class _$SessionModelImpl implements _SessionModel {
+  _$SessionModelImpl(
       {required this.code,
       required this.status,
       required this.message,
       this.data});
 
-  factory _$_SessionModel.fromJson(Map<String, dynamic> json) =>
-      _$$_SessionModelFromJson(json);
+  factory _$SessionModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$SessionModelImplFromJson(json);
 
   @override
   final int code;
@@ -154,10 +154,10 @@ class _$_SessionModel implements _SessionModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_SessionModel &&
+            other is _$SessionModelImpl &&
             (identical(other.code, code) || other.code == code) &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.message, message) || other.message == message) &&
@@ -171,12 +171,12 @@ class _$_SessionModel implements _SessionModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_SessionModelCopyWith<_$_SessionModel> get copyWith =>
-      __$$_SessionModelCopyWithImpl<_$_SessionModel>(this, _$identity);
+  _$$SessionModelImplCopyWith<_$SessionModelImpl> get copyWith =>
+      __$$SessionModelImplCopyWithImpl<_$SessionModelImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_SessionModelToJson(
+    return _$$SessionModelImplToJson(
       this,
     );
   }
@@ -187,10 +187,10 @@ abstract class _SessionModel implements SessionModel {
       {required final int code,
       required final String status,
       required final String message,
-      final String? data}) = _$_SessionModel;
+      final String? data}) = _$SessionModelImpl;
 
   factory _SessionModel.fromJson(Map<String, dynamic> json) =
-      _$_SessionModel.fromJson;
+      _$SessionModelImpl.fromJson;
 
   @override
   int get code;
@@ -202,6 +202,6 @@ abstract class _SessionModel implements SessionModel {
   String? get data;
   @override
   @JsonKey(ignore: true)
-  _$$_SessionModelCopyWith<_$_SessionModel> get copyWith =>
+  _$$SessionModelImplCopyWith<_$SessionModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

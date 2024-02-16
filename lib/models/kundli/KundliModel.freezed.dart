@@ -161,11 +161,11 @@ class _$KundliModelCopyWithImpl<$Res, $Val extends KundliModel>
 }
 
 /// @nodoc
-abstract class _$$_KundliModelCopyWith<$Res>
+abstract class _$$KundliModelImplCopyWith<$Res>
     implements $KundliModelCopyWith<$Res> {
-  factory _$$_KundliModelCopyWith(
-          _$_KundliModel value, $Res Function(_$_KundliModel) then) =
-      __$$_KundliModelCopyWithImpl<$Res>;
+  factory _$$KundliModelImplCopyWith(
+          _$KundliModelImpl value, $Res Function(_$KundliModelImpl) then) =
+      __$$KundliModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -187,11 +187,11 @@ abstract class _$$_KundliModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_KundliModelCopyWithImpl<$Res>
-    extends _$KundliModelCopyWithImpl<$Res, _$_KundliModel>
-    implements _$$_KundliModelCopyWith<$Res> {
-  __$$_KundliModelCopyWithImpl(
-      _$_KundliModel _value, $Res Function(_$_KundliModel) _then)
+class __$$KundliModelImplCopyWithImpl<$Res>
+    extends _$KundliModelCopyWithImpl<$Res, _$KundliModelImpl>
+    implements _$$KundliModelImplCopyWith<$Res> {
+  __$$KundliModelImplCopyWithImpl(
+      _$KundliModelImpl _value, $Res Function(_$KundliModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -213,7 +213,7 @@ class __$$_KundliModelCopyWithImpl<$Res>
     Object? country = freezed,
     Object? relation = freezed,
   }) {
-    return _then(_$_KundliModel(
+    return _then(_$KundliModelImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -280,8 +280,8 @@ class __$$_KundliModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_KundliModel implements _KundliModel {
-  _$_KundliModel(
+class _$KundliModelImpl implements _KundliModel {
+  _$KundliModelImpl(
       {required this.id,
       required this.user_id,
       required this.name,
@@ -298,8 +298,8 @@ class _$_KundliModel implements _KundliModel {
       this.country,
       this.relation});
 
-  factory _$_KundliModel.fromJson(Map<String, dynamic> json) =>
-      _$$_KundliModelFromJson(json);
+  factory _$KundliModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$KundliModelImplFromJson(json);
 
   @override
   final int id;
@@ -338,10 +338,10 @@ class _$_KundliModel implements _KundliModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_KundliModel &&
+            other is _$KundliModelImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.user_id, user_id) || other.user_id == user_id) &&
             (identical(other.name, name) || other.name == name) &&
@@ -386,12 +386,12 @@ class _$_KundliModel implements _KundliModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_KundliModelCopyWith<_$_KundliModel> get copyWith =>
-      __$$_KundliModelCopyWithImpl<_$_KundliModel>(this, _$identity);
+  _$$KundliModelImplCopyWith<_$KundliModelImpl> get copyWith =>
+      __$$KundliModelImplCopyWithImpl<_$KundliModelImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_KundliModelToJson(
+    return _$$KundliModelImplToJson(
       this,
     );
   }
@@ -413,10 +413,10 @@ abstract class _KundliModel implements KundliModel {
       final String? city,
       final String? state,
       final String? country,
-      final String? relation}) = _$_KundliModel;
+      final String? relation}) = _$KundliModelImpl;
 
   factory _KundliModel.fromJson(Map<String, dynamic> json) =
-      _$_KundliModel.fromJson;
+      _$KundliModelImpl.fromJson;
 
   @override
   int get id;
@@ -450,6 +450,6 @@ abstract class _KundliModel implements KundliModel {
   String? get relation;
   @override
   @JsonKey(ignore: true)
-  _$$_KundliModelCopyWith<_$_KundliModel> get copyWith =>
+  _$$KundliModelImplCopyWith<_$KundliModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

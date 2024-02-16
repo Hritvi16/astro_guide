@@ -6,8 +6,8 @@ part of 'BlogListModel.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_BlogListModel _$$_BlogListModelFromJson(Map<String, dynamic> json) =>
-    _$_BlogListModel(
+_$BlogListModelImpl _$$BlogListModelImplFromJson(Map<String, dynamic> json) =>
+    _$BlogListModelImpl(
       status: json['status'] as String,
       code: json['code'] as int,
       message: json['message'] as String,
@@ -16,7 +16,7 @@ _$_BlogListModel _$$_BlogListModelFromJson(Map<String, dynamic> json) =>
           .toList(),
     );
 
-Map<String, dynamic> _$$_BlogListModelToJson(_$_BlogListModel instance) =>
+Map<String, dynamic> _$$BlogListModelImplToJson(_$BlogListModelImpl instance) =>
     <String, dynamic>{
       'status': instance.status,
       'code': instance.code,

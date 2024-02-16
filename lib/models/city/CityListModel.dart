@@ -12,7 +12,7 @@ class CityListModel with _$CityListModel {
     required String status,
     required int code,
     required String message,
-    required List<CityModel> data,
+    List<CityModel>? data,
   }) = _CityListModel;
 
   factory CityListModel.fromJson(JSON json) => _$CityListModelFromJson(json);

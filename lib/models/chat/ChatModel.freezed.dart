@@ -127,10 +127,11 @@ class _$ChatModelCopyWithImpl<$Res, $Val extends ChatModel>
 }
 
 /// @nodoc
-abstract class _$$_ChatModelCopyWith<$Res> implements $ChatModelCopyWith<$Res> {
-  factory _$$_ChatModelCopyWith(
-          _$_ChatModel value, $Res Function(_$_ChatModel) then) =
-      __$$_ChatModelCopyWithImpl<$Res>;
+abstract class _$$ChatModelImplCopyWith<$Res>
+    implements $ChatModelCopyWith<$Res> {
+  factory _$$ChatModelImplCopyWith(
+          _$ChatModelImpl value, $Res Function(_$ChatModelImpl) then) =
+      __$$ChatModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -147,11 +148,11 @@ abstract class _$$_ChatModelCopyWith<$Res> implements $ChatModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_ChatModelCopyWithImpl<$Res>
-    extends _$ChatModelCopyWithImpl<$Res, _$_ChatModel>
-    implements _$$_ChatModelCopyWith<$Res> {
-  __$$_ChatModelCopyWithImpl(
-      _$_ChatModel _value, $Res Function(_$_ChatModel) _then)
+class __$$ChatModelImplCopyWithImpl<$Res>
+    extends _$ChatModelCopyWithImpl<$Res, _$ChatModelImpl>
+    implements _$$ChatModelImplCopyWith<$Res> {
+  __$$ChatModelImplCopyWithImpl(
+      _$ChatModelImpl _value, $Res Function(_$ChatModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -168,7 +169,7 @@ class __$$_ChatModelCopyWithImpl<$Res>
     Object? seen_at = freezed,
     Object? error = freezed,
   }) {
-    return _then(_$_ChatModel(
+    return _then(_$ChatModelImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -215,8 +216,8 @@ class __$$_ChatModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_ChatModel implements _ChatModel {
-  _$_ChatModel(
+class _$ChatModelImpl implements _ChatModel {
+  _$ChatModelImpl(
       {required this.id,
       required this.ch_id,
       required this.message,
@@ -228,8 +229,8 @@ class _$_ChatModel implements _ChatModel {
       this.seen_at,
       this.error});
 
-  factory _$_ChatModel.fromJson(Map<String, dynamic> json) =>
-      _$$_ChatModelFromJson(json);
+  factory _$ChatModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ChatModelImplFromJson(json);
 
   @override
   final int id;
@@ -260,10 +261,10 @@ class _$_ChatModel implements _ChatModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ChatModel &&
+            other is _$ChatModelImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.ch_id, ch_id) || other.ch_id == ch_id) &&
             (identical(other.message, message) || other.message == message) &&
@@ -285,12 +286,12 @@ class _$_ChatModel implements _ChatModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ChatModelCopyWith<_$_ChatModel> get copyWith =>
-      __$$_ChatModelCopyWithImpl<_$_ChatModel>(this, _$identity);
+  _$$ChatModelImplCopyWith<_$ChatModelImpl> get copyWith =>
+      __$$ChatModelImplCopyWithImpl<_$ChatModelImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ChatModelToJson(
+    return _$$ChatModelImplToJson(
       this,
     );
   }
@@ -307,10 +308,10 @@ abstract class _ChatModel implements ChatModel {
       required final String sent_at,
       final String? received_at,
       final String? seen_at,
-      final int? error}) = _$_ChatModel;
+      final int? error}) = _$ChatModelImpl;
 
   factory _ChatModel.fromJson(Map<String, dynamic> json) =
-      _$_ChatModel.fromJson;
+      _$ChatModelImpl.fromJson;
 
   @override
   int get id;
@@ -335,6 +336,6 @@ abstract class _ChatModel implements ChatModel {
   int? get error;
   @override
   @JsonKey(ignore: true)
-  _$$_ChatModelCopyWith<_$_ChatModel> get copyWith =>
+  _$$ChatModelImplCopyWith<_$ChatModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

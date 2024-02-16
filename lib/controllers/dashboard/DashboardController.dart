@@ -1,5 +1,6 @@
 import 'package:astro_guide/constants/AstrologerConstants.dart';
 import 'package:astro_guide/constants/CommonConstants.dart';
+import 'package:astro_guide/controllers/connectivity/ConnectivityController.dart';
 import 'package:astro_guide/essential/Essential.dart';
 import 'package:astro_guide/models/astrologer/AstrologerModel.dart';
 import 'package:astro_guide/models/banner/BannerModel.dart';
@@ -39,6 +40,9 @@ class DashboardController extends GetxController {
   List<SpecModel> specs = [];
   late SpecModel spec;
 
+
+  final ConnectivityController connectivityController = Get.put<ConnectivityController>(ConnectivityController());
+
   List<AstrologerModel> astrologers = [];
   List<AstrologerModel> live = [];
   List<AstrologerModel> news = [];
@@ -54,13 +58,16 @@ class DashboardController extends GetxController {
   late UserModel user;
   SessionHistoryModel? session;
 
+  late bool load;
+
   @override
   void onInit() {
     super.onInit();
+    load = false;
 
     specProvider = Get.put(SpecProvider(specRepository));
     specs.add(
-        SpecModel(id: -1, spec: "All", icon: "all.png")
+        SpecModel(id: -1, spec: "All", icon: "all.png", imageFullUrl: '')
     );
     spec = specs.first;
 
@@ -75,44 +82,47 @@ class DashboardController extends GetxController {
   }
 
   Future<void> getDashboard() async {
-    await dashboardProvider.fetch(storage.read("access"), "").then((response) async {
-      print(response.toJson());
-      print(response.user?.free);
-      print(response.user?.amount);
+    // if(connectivityController.isOnline) {
+      await dashboardProvider.fetch(storage.read("access"), "").then((response) async {
 
-      storage.write("free", (response.user?.free??1)==0);
-      storage.write("wallet", response.user?.amount??0);
-      free = (response.user?.free??1)==0;
-      wallet = response.user?.amount??0;
-      print(free);
-      update();
+        print("response ${response.toJson()}");
 
-      if(response.code==1) {
-        banners = response.banners??[];
-        await setSpecs(response.specifications);
-        live = response.live_astrologers??[];
-        news = response.new_astrologers??[];
-        blogs = response.blogs??[];
-        videos = response.videos??[];
-        testimonials = response.testimonials??[];
-        user = response.user!;
-        session = response.session;
-        storage.write("user", user);
+        storage.write("free", (response.user?.free ?? 1) == 0);
+        storage.write("wallet", response.user?.amount ?? 0);
+        free = (response.user?.free ?? 1) == 0;
+        wallet = response.user?.amount ?? 0;
+        print(free);
         update();
-      }
-      else if(response.code!=-1){
-        Essential.showSnackBar(response.message);
-      }
-    });
+        if (response.code == 1) {
+          banners = response.banners ?? [];
+          await setSpecs(response.specifications);
+          live = response.live_astrologers ?? [];
+          news = response.new_astrologers ?? [];
+          blogs = response.blogs ?? [];
+          videos = response.videos ?? [];
+          testimonials = response.testimonials ?? [];
+          user = response.user!;
+          session = response.session;
+          storage.write("user", user);
+        }
+        else if (response.code != -1) {
+          Essential.showSnackBar(response.message, code: response.code, time: response.code==-3 ? 3 : null);
+        }
+        load = true;
+        update();
+      });
+    // }
+    // else {
+    //   Essential.showSnackBar("No internet connection");
+    // }
   }
 
   Future<void> getSpecs() async {
     await specProvider.fetch(storage.read("access")??CommonConstants.essential, ApiConstants.all).then((response) async {
-      print(response.toJson());
       if(response.code==1) {
         specs = [];
         specs.add(
-            SpecModel(id: -1, spec: "All", icon: "all.png")
+            SpecModel(id: -1, spec: "All", icon: "all.png", imageFullUrl: '')
         );
         specs.addAll(response.data??[]);
 
@@ -245,7 +255,7 @@ class DashboardController extends GetxController {
   Future<void> setSpecs(List<SpecModel>? list) async {
     specs = [];
     specs.add(
-        SpecModel(id: -1, spec: "All", icon: "all.png")
+        SpecModel(id: -1, spec: "All", icon: "all.png", imageFullUrl: '')
     );
     specs.addAll(list??[]);
 

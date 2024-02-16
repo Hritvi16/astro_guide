@@ -1,3 +1,4 @@
+import 'package:astro_guide/models/session/SessionHistoryModel.dart';
 import 'package:astro_guide/shared/typedef.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -14,6 +15,7 @@ class CreateModel with _$CreateModel {
     String? meetingID,
     String? sessionID,
     int? meet_id,
+    SessionHistoryModel? data
   }) = _CreateModel;
 
   factory CreateModel.fromJson(JSON json) => _$CreateModelFromJson(json);

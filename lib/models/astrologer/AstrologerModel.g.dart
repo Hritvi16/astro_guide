@@ -6,13 +6,14 @@ part of 'AstrologerModel.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_AstrologerModel _$$_AstrologerModelFromJson(Map<String, dynamic> json) =>
-    _$_AstrologerModel(
+_$AstrologerModelImpl _$$AstrologerModelImplFromJson(
+        Map<String, dynamic> json) =>
+    _$AstrologerModelImpl(
       id: json['id'] as int,
       name: json['name'] as String,
       mobile: json['mobile'] as String,
       email: json['email'] as String,
-      experience: (json['experience'] as num).toDouble(),
+      experience: json['experience'] as String,
       profile: json['profile'] as String,
       about: json['about'] as String,
       fav: json['fav'] as int?,
@@ -40,7 +41,8 @@ _$_AstrologerModel _$$_AstrologerModelFromJson(Map<String, dynamic> json) =>
       languages: json['languages'] as String?,
     );
 
-Map<String, dynamic> _$$_AstrologerModelToJson(_$_AstrologerModel instance) =>
+Map<String, dynamic> _$$AstrologerModelImplToJson(
+        _$AstrologerModelImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,

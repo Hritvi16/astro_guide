@@ -112,11 +112,11 @@ class _$CheckSessionModelCopyWithImpl<$Res, $Val extends CheckSessionModel>
 }
 
 /// @nodoc
-abstract class _$$_CheckSessionModelCopyWith<$Res>
+abstract class _$$CheckSessionModelImplCopyWith<$Res>
     implements $CheckSessionModelCopyWith<$Res> {
-  factory _$$_CheckSessionModelCopyWith(_$_CheckSessionModel value,
-          $Res Function(_$_CheckSessionModel) then) =
-      __$$_CheckSessionModelCopyWithImpl<$Res>;
+  factory _$$CheckSessionModelImplCopyWith(_$CheckSessionModelImpl value,
+          $Res Function(_$CheckSessionModelImpl) then) =
+      __$$CheckSessionModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -131,11 +131,11 @@ abstract class _$$_CheckSessionModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_CheckSessionModelCopyWithImpl<$Res>
-    extends _$CheckSessionModelCopyWithImpl<$Res, _$_CheckSessionModel>
-    implements _$$_CheckSessionModelCopyWith<$Res> {
-  __$$_CheckSessionModelCopyWithImpl(
-      _$_CheckSessionModel _value, $Res Function(_$_CheckSessionModel) _then)
+class __$$CheckSessionModelImplCopyWithImpl<$Res>
+    extends _$CheckSessionModelCopyWithImpl<$Res, _$CheckSessionModelImpl>
+    implements _$$CheckSessionModelImplCopyWith<$Res> {
+  __$$CheckSessionModelImplCopyWithImpl(_$CheckSessionModelImpl _value,
+      $Res Function(_$CheckSessionModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -150,7 +150,7 @@ class __$$_CheckSessionModelCopyWithImpl<$Res>
     Object? type = freezed,
     Object? info = null,
   }) {
-    return _then(_$_CheckSessionModel(
+    return _then(_$CheckSessionModelImpl(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -189,8 +189,8 @@ class __$$_CheckSessionModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_CheckSessionModel implements _CheckSessionModel {
-  _$_CheckSessionModel(
+class _$CheckSessionModelImpl implements _CheckSessionModel {
+  _$CheckSessionModelImpl(
       {required this.name,
       required this.mobile,
       required this.gender,
@@ -200,8 +200,8 @@ class _$_CheckSessionModel implements _CheckSessionModel {
       this.type,
       required this.info});
 
-  factory _$_CheckSessionModel.fromJson(Map<String, dynamic> json) =>
-      _$$_CheckSessionModelFromJson(json);
+  factory _$CheckSessionModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CheckSessionModelImplFromJson(json);
 
   @override
   final String name;
@@ -226,10 +226,10 @@ class _$_CheckSessionModel implements _CheckSessionModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_CheckSessionModel &&
+            other is _$CheckSessionModelImpl &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.mobile, mobile) || other.mobile == mobile) &&
             (identical(other.gender, gender) || other.gender == gender) &&
@@ -249,13 +249,13 @@ class _$_CheckSessionModel implements _CheckSessionModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_CheckSessionModelCopyWith<_$_CheckSessionModel> get copyWith =>
-      __$$_CheckSessionModelCopyWithImpl<_$_CheckSessionModel>(
+  _$$CheckSessionModelImplCopyWith<_$CheckSessionModelImpl> get copyWith =>
+      __$$CheckSessionModelImplCopyWithImpl<_$CheckSessionModelImpl>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CheckSessionModelToJson(
+    return _$$CheckSessionModelImplToJson(
       this,
     );
   }
@@ -270,10 +270,10 @@ abstract class _CheckSessionModel implements CheckSessionModel {
       final int? ci_id,
       final String? marital_status,
       final String? type,
-      required final String info}) = _$_CheckSessionModel;
+      required final String info}) = _$CheckSessionModelImpl;
 
   factory _CheckSessionModel.fromJson(Map<String, dynamic> json) =
-      _$_CheckSessionModel.fromJson;
+      _$CheckSessionModelImpl.fromJson;
 
   @override
   String get name;
@@ -293,6 +293,6 @@ abstract class _CheckSessionModel implements CheckSessionModel {
   String get info;
   @override
   @JsonKey(ignore: true)
-  _$$_CheckSessionModelCopyWith<_$_CheckSessionModel> get copyWith =>
+  _$$CheckSessionModelImplCopyWith<_$CheckSessionModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

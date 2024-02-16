@@ -16,6 +16,7 @@ class Country extends StatelessWidget {
 
   Country(List<CountryModel> countries, CountryModel country, { Key? key }) {
     countryController.countries = countries;
+    countryController.show = countryController.countries;
     countryController.country = country;
     countryController.onInit();
   }
@@ -37,6 +38,7 @@ class Country extends StatelessWidget {
       height: MySize.sizeh60(context),
       color: MyColors.cardColor(),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -55,6 +57,35 @@ class Country extends StatelessWidget {
               ),
             ],
           ),
+          SizedBox(
+            height: 10,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+            child: TextFormField(
+              controller: countryController.search,
+              onChanged: (value) {
+                countryController.searchCountry();
+              },
+              keyboardType: TextInputType.name,
+              style: GoogleFonts.manrope(
+                fontSize: 16.0,
+                color: MyColors.black,
+                letterSpacing: 0,
+                fontWeight: FontWeight.w400,
+              ),
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: MyColors.colorButton,
+                  ),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                hintText: "Search Country",
+                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+              ),
+            ),
+          ),
           Flexible(
             child: getListView(),
           ),
@@ -68,15 +99,15 @@ class Country extends StatelessWidget {
       child: ListView.separated(
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
-        padding: EdgeInsets.symmetric(horizontal: standardHorizontalPagePadding, vertical: standardVerticalGap),
-        itemCount: countryController.countries.length,
+        padding: EdgeInsets.symmetric(horizontal: standardHorizontalPagePadding, vertical: 5),
+        itemCount: countryController.show.length,
         separatorBuilder: (buildContext, index) {
           return SizedBox(
-            height: standardVerticalGap,
+            height: 5,
           );
         },
         itemBuilder: (buildContext, index) {
-          return getDesign(countryController.countries[index]);
+          return getDesign(countryController.show[index]);
         },
       ),
     );
@@ -98,23 +129,25 @@ class Country extends StatelessWidget {
             SizedBox(
               width: 15,
             ),
-            RichText(
-              text: TextSpan(
-                  text: country.code+"  ",
-                style: GoogleFonts.manrope(
-                  fontSize: 16,
-                  letterSpacing: 0,
-                  fontWeight: FontWeight.w600,
-                  color: MyColors.black
-                ),
-                children: [
-                  TextSpan(
-                    text: country.name.toTitleCase(),
-                    style: GoogleFonts.manrope(
-                      fontWeight: FontWeight.w400,
-                    ),
+            Flexible(
+              child: RichText(
+                text: TextSpan(
+                    text: country.code+"  ",
+                  style: GoogleFonts.manrope(
+                    fontSize: 16,
+                    letterSpacing: 0,
+                    fontWeight: FontWeight.w600,
+                    color: MyColors.black
                   ),
-                ]
+                  children: [
+                    TextSpan(
+                      text: country.name.toTitleCase(),
+                      style: GoogleFonts.manrope(
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ]
+                ),
               ),
             ),
           ],

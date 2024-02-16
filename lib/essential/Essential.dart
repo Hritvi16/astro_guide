@@ -108,8 +108,8 @@ class Essential {
     Share.share("https://play.google.com/store/apps/details?id=com.ss.astro_guide", subject: 'Hey, looking for an app to grow your income?\n Here it is!');
   }
 
-  static showSnackBar(String message, {int? time}) {
-    Get.snackbar( "", message, snackPosition: SnackPosition.BOTTOM, backgroundColor: MyColors.black, margin: EdgeInsets.all(5),  colorText: MyColors.white, duration: Duration(seconds: time??2));
+  static showSnackBar(String message, {int? time, int? code}) {
+    Get.snackbar( "", message, snackPosition: SnackPosition.BOTTOM, backgroundColor: code==null ? MyColors.black : code==1 ? MyColors.colorSuccess : MyColors.colorError, margin: EdgeInsets.all(5),  colorText: MyColors.white, duration: Duration(seconds: time??2));
   }
 
   Future<bool> popUp(String text, String btn1, String btn2) {
@@ -181,7 +181,7 @@ class Essential {
       }
       else {
         print("logout");
-        await logout();
+        // await logout();
       }
     });
   }
@@ -276,7 +276,7 @@ class Essential {
   }
 
   static String getDate(String datetime) {
-    return DateFormat("dd MMM, yy").format(Essential.getConvertedDate(datetime));
+    return DateFormat("dd MMM, yyyy").format(Essential.getConvertedDate(datetime));
   }
 
   static String getTime(String datetime) {
@@ -446,5 +446,71 @@ class Essential {
     //   _isCreatingLink = false;
     // });
   }
+
+  static bool getPlatform() {
+    return Platform.isAndroid;
+  }
+
+  static String getPlatformAppName() {
+    return Platform.isAndroid ? "AstroGuide" : "BRYD";
+  }
+
+  static String getPlatformWord() {
+    return Platform.isAndroid ? "astrologer" : "counsellor";
+  }
+
+  static String getPlatformKundli() {
+    return Platform.isAndroid ? "Kundli" : "Profile";
+  }
+
+  static String getPlatformReplace(String text) {
+    if (Platform.isAndroid) {
+      return text;
+    }
+    else {
+      String temp = text.replaceAll("AstroGuide", "BRYD");
+      temp = temp.replaceAll("Kundli", "Profile");
+      temp = temp.replaceAll("kundli", "profile");
+      temp = temp.replaceAll("astrologer", "counsellor");
+      return temp.replaceAll("Astrologer", "Counsellor");
+    }
+  }
+
+  static getPlatformLogo() {
+    return Platform.isAndroid ? "icon_box.png" : "ios_icon.jpg";
+  }
+
+  // static bool getPlatform() {
+  //   return Platform.isIOS;
+  // }
+  //
+  // static String getPlatformAppName() {
+  //   return Platform.isIOS ? "AstroGuide" : "BRYD";
+  // }
+  //
+  // static String getPlatformWord() {
+  //   return Platform.isIOS ? "astrologer" : "counsellor";
+  // }
+  //
+  // static String getPlatformKundli() {
+  //   return Platform.isIOS ? "Kundli" : "Profile";
+  // }
+  //
+  // static String getPlatformReplace(String text) {
+  //   if (Platform.isIOS) {
+  //     return text;
+  //   }
+  //   else {
+  //     String temp = text.replaceAll("AstroGuide", "BRYD");
+  //     temp = temp.replaceAll("Kundli", "Profile");
+  //     temp = temp.replaceAll("kundli", "profile");
+  //     temp = temp.replaceAll("astrologer", "counsellor");
+  //     return temp.replaceAll("Astrologer", "Counsellor");
+  //   }
+  // }
+  //
+  // static getPlatformLogo() {
+  //   return Platform.isIOS ? "icon_box.png" : "ios_icon.jpg";
+  // }
 
 }

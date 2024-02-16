@@ -1,4 +1,10 @@
 Map<String, String> english = {
+  //Sign In
+  'Sign In' : 'Sign In',
+  'Continue With Mobile' : 'Continue With Mobile',
+  'You will receive a 6 digit code for verification' : 'You will receive a 6 digit code for verification',
+  'Enter Mobile No.' : 'Enter Mobile No.',
+
   //Sign Up
   'Name' : 'Name',
   'Mobile No.' : 'Mobile No.',
@@ -28,6 +34,7 @@ Map<String, String> english = {
   'Free Kundali' : 'Free Kundli',
   'Match Kundali' : 'Match Kundli',
   'Daily Horoscope' : 'Daily Horoscope',
+  'Live Astrologers' : 'Live Astrologers',
   'Currently Live Astrologers' : 'Currently Live Astrologers',
   'New Arrival Astrologers' : 'New Arrival Astrologers',
   'New Updates and Blogs' : 'New Updates and Blogs',
@@ -43,11 +50,28 @@ Map<String, String> english = {
   'View all' : 'View all',
   'Live' : 'Live',
   'min' : 'min',
+  'AstroGuide Astrology Services' : 'AstroGuide Astrology Services',
+  'Consult Astrologer' : 'Consult Astrologer',
+  'Indian(City - Wise)' : 'Indian(City - Wise)',
+  'International' : 'International',
+  'Category Wise' : 'Category Wise',
+  'AstroGuide shows the live astrologer whom with you can connect.' : 'AstroGuide shows the live astrologer whom with you can connect.',
+  'AstroGuide shows the new astrologer whom with you can connect.' : 'AstroGuide shows the new astrologer whom with you can connect.',
+  'Hear about us from our customers' : 'Hear about us from our customers',
+  'FAQs' : 'FAQs',
+  'Online Advice' : 'Online Advice',
+  'Quick Links' : 'Quick Links',
+  'Reach Us' : 'Reach Us',
+  'Install App' : 'Install App',
+  'Astrologer Registration' : 'Astrologer Registration',
+  'Refund & Cancellation Policy' : 'Refund & Cancellation Policy',
+  'Add Money to Wallet' : 'Add Money to Wallet',
 
   //Blog
   'Written by' : 'Written by',
 
   //Talk
+  'Chat with Astrologer' : 'Chat with Astrologer',
   'Talk with Astrologer' : 'Talk with Astrologer',
   'Reviews' : 'Reviews',
 
@@ -200,4 +224,23 @@ Map<String, String> english = {
   "Message" : "Message",
   "Write your query" : "Write your query",
   "You have not asked for any support yet!" : "You have not asked for any support yet!",
+
+  //Website
+  "Consult Now" : "Consult Now",
+  "Hear about us from our customers" : "Hear about us from our customers",
+  "Generate your free online kundli report from AstroGuide. Our kundli software can help you predict the future for yourself by reading the birth chart." : "Generate your free online kundli report from AstroGuide. Our kundli software can help you predict the future for yourself by reading the birth chart.",
+  "Love could be confusing, but only until you haven’t found how compatible you two are for each other." : "Love could be confusing, but only until you haven’t found how compatible you two are for each other.",
+  "Get free daily horoscope prediction today online from the best astrologer. Read your Zodiac Sign horoscope today!" : "Get free daily horoscope prediction today online from the best astrologer. Read your Zodiac Sign horoscope today!",
+  "Total Astrologers" : "Total Astrologers",
+  "Total Chat/Call minutes" : "Total Chat/Call minutes",
+  "Total Customers" : "Total Customers",
+  "Find Best Astrologers" : "Find Best Astrologers",
+  "Videos" : "Videos",
+  "Astrologer Gallery" : "Astrologer Gallery",
+  "Check Similar Consultants" : "Check Similar Consultants",
+  "Load More" : "Load More",
+  "Hide More" : "Hide More",
+  "Mobile pattern does not match" : "Mobile pattern does not match",
+  "Login" : "Login",
+  "Otp Sent To" : "Otp Sent To",
 };

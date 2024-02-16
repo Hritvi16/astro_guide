@@ -6,13 +6,13 @@ part of 'WalletHistoryModel.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_WalletHistoryModel _$$_WalletHistoryModelFromJson(
+_$WalletHistoryModelImpl _$$WalletHistoryModelImplFromJson(
         Map<String, dynamic> json) =>
-    _$_WalletHistoryModel(
+    _$WalletHistoryModelImpl(
       id: json['id'] as int,
       user_id: json['user_id'] as int?,
       astro_id: json['astro_id'] as int?,
-      order_id: json['order_id'] as String,
+      order_id: json['order_id'] as String?,
       invoice_id: json['invoice_id'] as String?,
       transaction_id: json['transaction_id'] as String?,
       p_id: json['p_id'] as int?,
@@ -26,8 +26,8 @@ _$_WalletHistoryModel _$$_WalletHistoryModelFromJson(
       status: json['status'] as int,
     );
 
-Map<String, dynamic> _$$_WalletHistoryModelToJson(
-        _$_WalletHistoryModel instance) =>
+Map<String, dynamic> _$$WalletHistoryModelImplToJson(
+        _$WalletHistoryModelImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'user_id': instance.user_id,

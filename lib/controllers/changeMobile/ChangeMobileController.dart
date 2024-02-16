@@ -37,10 +37,20 @@ class ChangeMobileController extends GetxController {
   @override
   void onInit() {
     // taketo();
-    String mob = Get.arguments;
-    mobile.text = mob.substring(mob.indexOf("-")+1);
-    ocountry = CountryModel(id: -1, name: "", nationality: "", icon: "", code: mob.substring(0, mob.indexOf("-")), imageFullUrl: "");
-    verified = false;
+    if(Get.arguments!=null) {
+      String mob = Get.arguments;
+      mobile.text = mob.substring(mob.indexOf("-") + 1);
+      ocountry = CountryModel(id: -1,
+          name: "",
+          nationality: "",
+          icon: "",
+          code: mob.substring(0, mob.indexOf("-")),
+          imageFullUrl: "");
+      verified = false;
+    }
+    else {
+      verified = true;
+    }
     formKey = GlobalKey<FormState>();
     load = false;
     getCountries();
@@ -58,10 +68,18 @@ class ChangeMobileController extends GetxController {
       if(response.code==1) {
         countries = response.data??[];
         for (var value in countries) {
-          if(value.code.toUpperCase()==ocountry.code) {
-            country = value;
-            ocountry = value;
-            break;
+          if(verified==false) {
+            if (value.code.toUpperCase() == ocountry.code) {
+              country = value;
+              ocountry = value;
+              break;
+            }
+          }
+          else {
+            if (value.name.toUpperCase() == "INDIA") {
+              country = value;
+              break;
+            }
           }
         }
         load = true;

@@ -97,10 +97,11 @@ class _$BlogModelCopyWithImpl<$Res, $Val extends BlogModel>
 }
 
 /// @nodoc
-abstract class _$$_BlogModelCopyWith<$Res> implements $BlogModelCopyWith<$Res> {
-  factory _$$_BlogModelCopyWith(
-          _$_BlogModel value, $Res Function(_$_BlogModel) then) =
-      __$$_BlogModelCopyWithImpl<$Res>;
+abstract class _$$BlogModelImplCopyWith<$Res>
+    implements $BlogModelCopyWith<$Res> {
+  factory _$$BlogModelImplCopyWith(
+          _$BlogModelImpl value, $Res Function(_$BlogModelImpl) then) =
+      __$$BlogModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -113,11 +114,11 @@ abstract class _$$_BlogModelCopyWith<$Res> implements $BlogModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_BlogModelCopyWithImpl<$Res>
-    extends _$BlogModelCopyWithImpl<$Res, _$_BlogModel>
-    implements _$$_BlogModelCopyWith<$Res> {
-  __$$_BlogModelCopyWithImpl(
-      _$_BlogModel _value, $Res Function(_$_BlogModel) _then)
+class __$$BlogModelImplCopyWithImpl<$Res>
+    extends _$BlogModelCopyWithImpl<$Res, _$BlogModelImpl>
+    implements _$$BlogModelImplCopyWith<$Res> {
+  __$$BlogModelImplCopyWithImpl(
+      _$BlogModelImpl _value, $Res Function(_$BlogModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -130,7 +131,7 @@ class __$$_BlogModelCopyWithImpl<$Res>
     Object? name = null,
     Object? created_at = null,
   }) {
-    return _then(_$_BlogModel(
+    return _then(_$BlogModelImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -161,8 +162,8 @@ class __$$_BlogModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_BlogModel implements _BlogModel {
-  _$_BlogModel(
+class _$BlogModelImpl implements _BlogModel {
+  _$BlogModelImpl(
       {required this.id,
       required this.title,
       required this.description,
@@ -170,8 +171,8 @@ class _$_BlogModel implements _BlogModel {
       required this.name,
       required this.created_at});
 
-  factory _$_BlogModel.fromJson(Map<String, dynamic> json) =>
-      _$$_BlogModelFromJson(json);
+  factory _$BlogModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$BlogModelImplFromJson(json);
 
   @override
   final int id;
@@ -192,10 +193,10 @@ class _$_BlogModel implements _BlogModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_BlogModel &&
+            other is _$BlogModelImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.description, description) ||
@@ -214,12 +215,12 @@ class _$_BlogModel implements _BlogModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_BlogModelCopyWith<_$_BlogModel> get copyWith =>
-      __$$_BlogModelCopyWithImpl<_$_BlogModel>(this, _$identity);
+  _$$BlogModelImplCopyWith<_$BlogModelImpl> get copyWith =>
+      __$$BlogModelImplCopyWithImpl<_$BlogModelImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_BlogModelToJson(
+    return _$$BlogModelImplToJson(
       this,
     );
   }
@@ -232,10 +233,10 @@ abstract class _BlogModel implements BlogModel {
       required final String description,
       required final String image,
       required final String name,
-      required final String created_at}) = _$_BlogModel;
+      required final String created_at}) = _$BlogModelImpl;
 
   factory _BlogModel.fromJson(Map<String, dynamic> json) =
-      _$_BlogModel.fromJson;
+      _$BlogModelImpl.fromJson;
 
   @override
   int get id;
@@ -251,6 +252,6 @@ abstract class _BlogModel implements BlogModel {
   String get created_at;
   @override
   @JsonKey(ignore: true)
-  _$$_BlogModelCopyWith<_$_BlogModel> get copyWith =>
+  _$$BlogModelImplCopyWith<_$BlogModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

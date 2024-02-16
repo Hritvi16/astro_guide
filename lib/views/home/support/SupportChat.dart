@@ -218,6 +218,8 @@ class SupportChat extends StatelessWidget {
                   fontWeight: FontWeight.w400,
                 ),
                 controller: supportChatController.message,
+                maxLines: 4,
+                minLines: 1,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderSide: BorderSide(

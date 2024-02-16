@@ -175,11 +175,11 @@ class _$SupportModelCopyWithImpl<$Res, $Val extends SupportModel>
 }
 
 /// @nodoc
-abstract class _$$_SupportModelCopyWith<$Res>
+abstract class _$$SupportModelImplCopyWith<$Res>
     implements $SupportModelCopyWith<$Res> {
-  factory _$$_SupportModelCopyWith(
-          _$_SupportModel value, $Res Function(_$_SupportModel) then) =
-      __$$_SupportModelCopyWithImpl<$Res>;
+  factory _$$SupportModelImplCopyWith(
+          _$SupportModelImpl value, $Res Function(_$SupportModelImpl) then) =
+      __$$SupportModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -203,11 +203,11 @@ abstract class _$$_SupportModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_SupportModelCopyWithImpl<$Res>
-    extends _$SupportModelCopyWithImpl<$Res, _$_SupportModel>
-    implements _$$_SupportModelCopyWith<$Res> {
-  __$$_SupportModelCopyWithImpl(
-      _$_SupportModel _value, $Res Function(_$_SupportModel) _then)
+class __$$SupportModelImplCopyWithImpl<$Res>
+    extends _$SupportModelCopyWithImpl<$Res, _$SupportModelImpl>
+    implements _$$SupportModelImplCopyWith<$Res> {
+  __$$SupportModelImplCopyWithImpl(
+      _$SupportModelImpl _value, $Res Function(_$SupportModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -231,7 +231,7 @@ class __$$_SupportModelCopyWithImpl<$Res>
     Object? sender = freezed,
     Object? sent_at = freezed,
   }) {
-    return _then(_$_SupportModel(
+    return _then(_$SupportModelImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -306,8 +306,8 @@ class __$$_SupportModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_SupportModel implements _SupportModel {
-  _$_SupportModel(
+class _$SupportModelImpl implements _SupportModel {
+  _$SupportModelImpl(
       {required this.id,
       required this.type,
       required this.reason,
@@ -326,8 +326,8 @@ class _$_SupportModel implements _SupportModel {
       this.sender,
       this.sent_at});
 
-  factory _$_SupportModel.fromJson(Map<String, dynamic> json) =>
-      _$$_SupportModelFromJson(json);
+  factory _$SupportModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$SupportModelImplFromJson(json);
 
   @override
   final int id;
@@ -370,10 +370,10 @@ class _$_SupportModel implements _SupportModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_SupportModel &&
+            other is _$SupportModelImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.type, type) || other.type == type) &&
             (identical(other.reason, reason) || other.reason == reason) &&
@@ -424,12 +424,12 @@ class _$_SupportModel implements _SupportModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_SupportModelCopyWith<_$_SupportModel> get copyWith =>
-      __$$_SupportModelCopyWithImpl<_$_SupportModel>(this, _$identity);
+  _$$SupportModelImplCopyWith<_$SupportModelImpl> get copyWith =>
+      __$$SupportModelImplCopyWithImpl<_$SupportModelImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_SupportModelToJson(
+    return _$$SupportModelImplToJson(
       this,
     );
   }
@@ -453,10 +453,10 @@ abstract class _SupportModel implements SupportModel {
       required final String status,
       final String? message,
       final String? sender,
-      final String? sent_at}) = _$_SupportModel;
+      final String? sent_at}) = _$SupportModelImpl;
 
   factory _SupportModel.fromJson(Map<String, dynamic> json) =
-      _$_SupportModel.fromJson;
+      _$SupportModelImpl.fromJson;
 
   @override
   int get id;
@@ -494,6 +494,6 @@ abstract class _SupportModel implements SupportModel {
   String? get sent_at;
   @override
   @JsonKey(ignore: true)
-  _$$_SupportModelCopyWith<_$_SupportModel> get copyWith =>
+  _$$SupportModelImplCopyWith<_$SupportModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

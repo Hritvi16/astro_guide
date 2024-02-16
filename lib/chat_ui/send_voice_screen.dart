@@ -5,57 +5,17 @@ import 'package:astro_guide/essential/Essential.dart';
 import 'package:astro_guide/models/chat/ChatModel.dart';
 import 'package:astro_guide/services/networking/ApiConstants.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:just_audio/just_audio.dart';
 
-
-class SentVoiceScreen extends StatefulWidget {
+class SentVoiceScreen extends StatelessWidget {
   final Color color;
   final ChatModel chat;
-  const SentVoiceScreen({
-    Key? key, required this.chat, required this.color,
-  }) : super(key: key);
-
-  @override
-  State<SentVoiceScreen> createState() => _SentVoiceScreenState();
-}
-
-class _SentVoiceScreenState extends State<SentVoiceScreen> {
-
-  late Color color;
-  late ChatModel chat;
-
-  final player = AudioPlayer();
-  late Duration duration;
-
-
-  @override
-  void initState() {
-    super.initState();
-    color = widget.color;
-    chat = widget.chat;
-    start();
-  }
-
-  Future<void> start() async {
-    duration = await player.setUrl(ApiConstants.chatUrl+chat.message) ?? Duration();
-
-    player.durationStream.listen((duration) {
-      // Update UI with total audio duration
-      print('Total Duration: $duration');
-    });
-
-    player.processingStateStream.listen((processingState) {
-      if (processingState == ProcessingState.completed) {
-        player.seek(Duration.zero);
-        player.pause();
-        setState(() {
-
-        });
-        print("completed");
-      }
-    });
-  }
+  final dynamic play, pause;
+  final dynamic player;
+  final String playerUrl;
+  const SentVoiceScreen({super.key, required this.color, required this.chat, this.play, this.pause, this.player, required this.playerUrl});
 
   @override
   Widget build(BuildContext context) {
@@ -70,6 +30,7 @@ class _SentVoiceScreenState extends State<SentVoiceScreen> {
       ),
     );
   }
+
 
   getMessageTextGroup(BuildContext context) {
     return Flexible(
@@ -96,27 +57,25 @@ class _SentVoiceScreenState extends State<SentVoiceScreen> {
                     Icon(
                         Icons.upload
                     )
-                    : player.playing ?
+                        : player.playing && playerUrl==ApiConstants.chatUrl+chat.message ?
                     GestureDetector(
                       onTap: () async {
-                        player.pause();
-                        setState(() {
-
-                        });
+                        pause();
                       },
                       child: Icon(
-                        Icons.pause
+                          Icons.pause
                       ),
                     )
-                    : GestureDetector(
+                        : GestureDetector(
                       onTap: () async {
-                        player.play();
-                        setState(() {
-
-                        });
+                        // player.play();
+                        // setState(() {
+                        //
+                        // });
+                        play(ApiConstants.chatUrl+chat.message);
                       },
                       child: Icon(
-                        Icons.play_arrow
+                          Icons.play_arrow
                       ),
                     ),
                     SizedBox(
@@ -128,8 +87,9 @@ class _SentVoiceScreenState extends State<SentVoiceScreen> {
                       children: [
                         Text(
                           Essential.getDateTime(chat.sent_at),
-                          style: TextStyle(
-                              fontSize: 10
+                          style: GoogleFonts.manrope(
+                              fontSize: 10,
+                              color: MyColors.colorInfo
                           ),
                         ),
                         SizedBox(
@@ -156,6 +116,7 @@ class _SentVoiceScreenState extends State<SentVoiceScreen> {
   }
 
   int getSeenStatus() {
+
     if(chat.seen_at!=null) {
       return 2;
     }

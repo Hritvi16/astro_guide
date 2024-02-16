@@ -236,7 +236,7 @@ class InvoiceController extends GetxController {
       crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           getTitleInfo("Transaction ID", transaction.transaction_id??""),
-          getTitleInfo("Order ID", transaction.order_id),
+          getTitleInfo("Order ID", transaction.order_id??""),
           getTitleInfo("Invoice No.", transaction.invoice_id??""),
           getTitleInfo("Invoice Date", Essential.getDate(transaction.created_at)),
         ]

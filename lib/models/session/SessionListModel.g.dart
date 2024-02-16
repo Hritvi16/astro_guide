@@ -6,8 +6,9 @@ part of 'SessionListModel.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_SessionListModel _$$_SessionListModelFromJson(Map<String, dynamic> json) =>
-    _$_SessionListModel(
+_$SessionListModelImpl _$$SessionListModelImplFromJson(
+        Map<String, dynamic> json) =>
+    _$SessionListModelImpl(
       status: json['status'] as String,
       code: json['code'] as int,
       message: json['message'] as String,
@@ -25,7 +26,8 @@ _$_SessionListModel _$$_SessionListModelFromJson(Map<String, dynamic> json) =>
       wallet: (json['wallet'] as num?)?.toDouble(),
     );
 
-Map<String, dynamic> _$$_SessionListModelToJson(_$_SessionListModel instance) =>
+Map<String, dynamic> _$$SessionListModelImplToJson(
+        _$SessionListModelImpl instance) =>
     <String, dynamic>{
       'status': instance.status,
       'code': instance.code,

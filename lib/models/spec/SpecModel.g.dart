@@ -6,15 +6,18 @@ part of 'SpecModel.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_SpecModel _$$_SpecModelFromJson(Map<String, dynamic> json) => _$_SpecModel(
+_$SpecModelImpl _$$SpecModelImplFromJson(Map<String, dynamic> json) =>
+    _$SpecModelImpl(
       id: json['id'] as int,
       spec: json['spec'] as String,
       icon: json['icon'] as String,
+      imageFullUrl: json['imageFullUrl'] as String,
     );
 
-Map<String, dynamic> _$$_SpecModelToJson(_$_SpecModel instance) =>
+Map<String, dynamic> _$$SpecModelImplToJson(_$SpecModelImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'spec': instance.spec,
       'icon': instance.icon,
+      'imageFullUrl': instance.imageFullUrl,
     };

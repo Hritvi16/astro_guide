@@ -94,11 +94,11 @@ class _$BlogResponseModelCopyWithImpl<$Res, $Val extends BlogResponseModel>
 }
 
 /// @nodoc
-abstract class _$$_BlogResponseModelCopyWith<$Res>
+abstract class _$$BlogResponseModelImplCopyWith<$Res>
     implements $BlogResponseModelCopyWith<$Res> {
-  factory _$$_BlogResponseModelCopyWith(_$_BlogResponseModel value,
-          $Res Function(_$_BlogResponseModel) then) =
-      __$$_BlogResponseModelCopyWithImpl<$Res>;
+  factory _$$BlogResponseModelImplCopyWith(_$BlogResponseModelImpl value,
+          $Res Function(_$BlogResponseModelImpl) then) =
+      __$$BlogResponseModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String status, int code, String message, BlogModel? data});
@@ -108,11 +108,11 @@ abstract class _$$_BlogResponseModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_BlogResponseModelCopyWithImpl<$Res>
-    extends _$BlogResponseModelCopyWithImpl<$Res, _$_BlogResponseModel>
-    implements _$$_BlogResponseModelCopyWith<$Res> {
-  __$$_BlogResponseModelCopyWithImpl(
-      _$_BlogResponseModel _value, $Res Function(_$_BlogResponseModel) _then)
+class __$$BlogResponseModelImplCopyWithImpl<$Res>
+    extends _$BlogResponseModelCopyWithImpl<$Res, _$BlogResponseModelImpl>
+    implements _$$BlogResponseModelImplCopyWith<$Res> {
+  __$$BlogResponseModelImplCopyWithImpl(_$BlogResponseModelImpl _value,
+      $Res Function(_$BlogResponseModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -123,7 +123,7 @@ class __$$_BlogResponseModelCopyWithImpl<$Res>
     Object? message = null,
     Object? data = freezed,
   }) {
-    return _then(_$_BlogResponseModel(
+    return _then(_$BlogResponseModelImpl(
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -146,15 +146,15 @@ class __$$_BlogResponseModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_BlogResponseModel implements _BlogResponseModel {
-  _$_BlogResponseModel(
+class _$BlogResponseModelImpl implements _BlogResponseModel {
+  _$BlogResponseModelImpl(
       {required this.status,
       required this.code,
       required this.message,
       this.data});
 
-  factory _$_BlogResponseModel.fromJson(Map<String, dynamic> json) =>
-      _$$_BlogResponseModelFromJson(json);
+  factory _$BlogResponseModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$BlogResponseModelImplFromJson(json);
 
   @override
   final String status;
@@ -171,10 +171,10 @@ class _$_BlogResponseModel implements _BlogResponseModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_BlogResponseModel &&
+            other is _$BlogResponseModelImpl &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.code, code) || other.code == code) &&
             (identical(other.message, message) || other.message == message) &&
@@ -188,13 +188,13 @@ class _$_BlogResponseModel implements _BlogResponseModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_BlogResponseModelCopyWith<_$_BlogResponseModel> get copyWith =>
-      __$$_BlogResponseModelCopyWithImpl<_$_BlogResponseModel>(
+  _$$BlogResponseModelImplCopyWith<_$BlogResponseModelImpl> get copyWith =>
+      __$$BlogResponseModelImplCopyWithImpl<_$BlogResponseModelImpl>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_BlogResponseModelToJson(
+    return _$$BlogResponseModelImplToJson(
       this,
     );
   }
@@ -205,10 +205,10 @@ abstract class _BlogResponseModel implements BlogResponseModel {
       {required final String status,
       required final int code,
       required final String message,
-      final BlogModel? data}) = _$_BlogResponseModel;
+      final BlogModel? data}) = _$BlogResponseModelImpl;
 
   factory _BlogResponseModel.fromJson(Map<String, dynamic> json) =
-      _$_BlogResponseModel.fromJson;
+      _$BlogResponseModelImpl.fromJson;
 
   @override
   String get status;
@@ -220,6 +220,6 @@ abstract class _BlogResponseModel implements BlogResponseModel {
   BlogModel? get data;
   @override
   @JsonKey(ignore: true)
-  _$$_BlogResponseModelCopyWith<_$_BlogResponseModel> get copyWith =>
+  _$$BlogResponseModelImplCopyWith<_$BlogResponseModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

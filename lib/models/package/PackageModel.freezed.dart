@@ -98,11 +98,11 @@ class _$PackageModelCopyWithImpl<$Res, $Val extends PackageModel>
 }
 
 /// @nodoc
-abstract class _$$_PackageModelCopyWith<$Res>
+abstract class _$$PackageModelImplCopyWith<$Res>
     implements $PackageModelCopyWith<$Res> {
-  factory _$$_PackageModelCopyWith(
-          _$_PackageModel value, $Res Function(_$_PackageModel) then) =
-      __$$_PackageModelCopyWithImpl<$Res>;
+  factory _$$PackageModelImplCopyWith(
+          _$PackageModelImpl value, $Res Function(_$PackageModelImpl) then) =
+      __$$PackageModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -115,11 +115,11 @@ abstract class _$$_PackageModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_PackageModelCopyWithImpl<$Res>
-    extends _$PackageModelCopyWithImpl<$Res, _$_PackageModel>
-    implements _$$_PackageModelCopyWith<$Res> {
-  __$$_PackageModelCopyWithImpl(
-      _$_PackageModel _value, $Res Function(_$_PackageModel) _then)
+class __$$PackageModelImplCopyWithImpl<$Res>
+    extends _$PackageModelCopyWithImpl<$Res, _$PackageModelImpl>
+    implements _$$PackageModelImplCopyWith<$Res> {
+  __$$PackageModelImplCopyWithImpl(
+      _$PackageModelImpl _value, $Res Function(_$PackageModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -132,7 +132,7 @@ class __$$_PackageModelCopyWithImpl<$Res>
     Object? type = freezed,
     Object? amount = null,
   }) {
-    return _then(_$_PackageModel(
+    return _then(_$PackageModelImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -163,8 +163,8 @@ class __$$_PackageModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_PackageModel implements _PackageModel {
-  _$_PackageModel(
+class _$PackageModelImpl implements _PackageModel {
+  _$PackageModelImpl(
       {required this.id,
       required this.title,
       required this.description,
@@ -172,8 +172,8 @@ class _$_PackageModel implements _PackageModel {
       this.type,
       required this.amount});
 
-  factory _$_PackageModel.fromJson(Map<String, dynamic> json) =>
-      _$$_PackageModelFromJson(json);
+  factory _$PackageModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$PackageModelImplFromJson(json);
 
   @override
   final int id;
@@ -194,10 +194,10 @@ class _$_PackageModel implements _PackageModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_PackageModel &&
+            other is _$PackageModelImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.description, description) ||
@@ -216,12 +216,12 @@ class _$_PackageModel implements _PackageModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_PackageModelCopyWith<_$_PackageModel> get copyWith =>
-      __$$_PackageModelCopyWithImpl<_$_PackageModel>(this, _$identity);
+  _$$PackageModelImplCopyWith<_$PackageModelImpl> get copyWith =>
+      __$$PackageModelImplCopyWithImpl<_$PackageModelImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_PackageModelToJson(
+    return _$$PackageModelImplToJson(
       this,
     );
   }
@@ -234,10 +234,10 @@ abstract class _PackageModel implements PackageModel {
       required final String description,
       final int? discount,
       final String? type,
-      required final int amount}) = _$_PackageModel;
+      required final int amount}) = _$PackageModelImpl;
 
   factory _PackageModel.fromJson(Map<String, dynamic> json) =
-      _$_PackageModel.fromJson;
+      _$PackageModelImpl.fromJson;
 
   @override
   int get id;
@@ -253,6 +253,6 @@ abstract class _PackageModel implements PackageModel {
   int get amount;
   @override
   @JsonKey(ignore: true)
-  _$$_PackageModelCopyWith<_$_PackageModel> get copyWith =>
+  _$$PackageModelImplCopyWith<_$PackageModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

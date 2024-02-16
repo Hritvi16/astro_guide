@@ -112,11 +112,11 @@ class _$ValuesModelCopyWithImpl<$Res, $Val extends ValuesModel>
 }
 
 /// @nodoc
-abstract class _$$_ValuesModelCopyWith<$Res>
+abstract class _$$ValuesModelImplCopyWith<$Res>
     implements $ValuesModelCopyWith<$Res> {
-  factory _$$_ValuesModelCopyWith(
-          _$_ValuesModel value, $Res Function(_$_ValuesModel) then) =
-      __$$_ValuesModelCopyWithImpl<$Res>;
+  factory _$$ValuesModelImplCopyWith(
+          _$ValuesModelImpl value, $Res Function(_$ValuesModelImpl) then) =
+      __$$ValuesModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -131,11 +131,11 @@ abstract class _$$_ValuesModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_ValuesModelCopyWithImpl<$Res>
-    extends _$ValuesModelCopyWithImpl<$Res, _$_ValuesModel>
-    implements _$$_ValuesModelCopyWith<$Res> {
-  __$$_ValuesModelCopyWithImpl(
-      _$_ValuesModel _value, $Res Function(_$_ValuesModel) _then)
+class __$$ValuesModelImplCopyWithImpl<$Res>
+    extends _$ValuesModelCopyWithImpl<$Res, _$ValuesModelImpl>
+    implements _$$ValuesModelImplCopyWith<$Res> {
+  __$$ValuesModelImplCopyWithImpl(
+      _$ValuesModelImpl _value, $Res Function(_$ValuesModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -150,7 +150,7 @@ class __$$_ValuesModelCopyWithImpl<$Res>
     Object? specifications = freezed,
     Object? languages = freezed,
   }) {
-    return _then(_$_ValuesModel(
+    return _then(_$ValuesModelImpl(
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -189,8 +189,8 @@ class __$$_ValuesModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_ValuesModel implements _ValuesModel {
-  _$_ValuesModel(
+class _$ValuesModelImpl implements _ValuesModel {
+  _$ValuesModelImpl(
       {required this.status,
       required this.code,
       required this.message,
@@ -205,8 +205,8 @@ class _$_ValuesModel implements _ValuesModel {
         _specifications = specifications,
         _languages = languages;
 
-  factory _$_ValuesModel.fromJson(Map<String, dynamic> json) =>
-      _$$_ValuesModelFromJson(json);
+  factory _$ValuesModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ValuesModelImplFromJson(json);
 
   @override
   final String status;
@@ -270,10 +270,10 @@ class _$_ValuesModel implements _ValuesModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ValuesModel &&
+            other is _$ValuesModelImpl &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.code, code) || other.code == code) &&
             (identical(other.message, message) || other.message == message) &&
@@ -303,12 +303,12 @@ class _$_ValuesModel implements _ValuesModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ValuesModelCopyWith<_$_ValuesModel> get copyWith =>
-      __$$_ValuesModelCopyWithImpl<_$_ValuesModel>(this, _$identity);
+  _$$ValuesModelImplCopyWith<_$ValuesModelImpl> get copyWith =>
+      __$$ValuesModelImplCopyWithImpl<_$ValuesModelImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ValuesModelToJson(
+    return _$$ValuesModelImplToJson(
       this,
     );
   }
@@ -323,10 +323,10 @@ abstract class _ValuesModel implements ValuesModel {
       final List<CityModel>? cities,
       final List<TypeModel>? types,
       final List<SpecModel>? specifications,
-      final List<LanguageModel>? languages}) = _$_ValuesModel;
+      final List<LanguageModel>? languages}) = _$ValuesModelImpl;
 
   factory _ValuesModel.fromJson(Map<String, dynamic> json) =
-      _$_ValuesModel.fromJson;
+      _$ValuesModelImpl.fromJson;
 
   @override
   String get status;
@@ -346,6 +346,6 @@ abstract class _ValuesModel implements ValuesModel {
   List<LanguageModel>? get languages;
   @override
   @JsonKey(ignore: true)
-  _$$_ValuesModelCopyWith<_$_ValuesModel> get copyWith =>
+  _$$ValuesModelImplCopyWith<_$ValuesModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

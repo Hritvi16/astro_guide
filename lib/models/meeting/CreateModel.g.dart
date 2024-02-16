@@ -6,8 +6,8 @@ part of 'CreateModel.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_CreateModel _$$_CreateModelFromJson(Map<String, dynamic> json) =>
-    _$_CreateModel(
+_$CreateModelImpl _$$CreateModelImplFromJson(Map<String, dynamic> json) =>
+    _$CreateModelImpl(
       code: json['code'] as int,
       status: json['status'] as String,
       message: json['message'] as String,
@@ -15,9 +15,12 @@ _$_CreateModel _$$_CreateModelFromJson(Map<String, dynamic> json) =>
       meetingID: json['meetingID'] as String?,
       sessionID: json['sessionID'] as String?,
       meet_id: json['meet_id'] as int?,
+      data: json['data'] == null
+          ? null
+          : SessionHistoryModel.fromJson(json['data'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$_CreateModelToJson(_$_CreateModel instance) =>
+Map<String, dynamic> _$$CreateModelImplToJson(_$CreateModelImpl instance) =>
     <String, dynamic>{
       'code': instance.code,
       'status': instance.status,
@@ -26,4 +29,5 @@ Map<String, dynamic> _$$_CreateModelToJson(_$_CreateModel instance) =>
       'meetingID': instance.meetingID,
       'sessionID': instance.sessionID,
       'meet_id': instance.meet_id,
+      'data': instance.data,
     };

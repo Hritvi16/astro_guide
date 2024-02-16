@@ -30,14 +30,6 @@
           }
         },
         {
-          "client_id": "170894307366-8espv3boeicsuv18pqccb3r7eggj2a2c.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.ss.astro_guide",
-            "certificate_hash": "a9b74d2435b971fbd21281839892425dd6058269"
-          }
-        },
-        {
           "client_id": "170894307366-h9eogdnpk0q6hquuv5fmcck2cdd082mm.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -79,6 +71,22 @@
           "android_info": {
             "package_name": "com.ss.astro_guide_astro",
             "certificate_hash": "c77a599012dd3ea8db5bc5f32f2953006f0b3866"
+          }
+        },
+        {
+          "client_id": "170894307366-a12b1bacsiuefpmkddv4qmq7s9sk9q1b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ss.astro_guide_astro",
+            "certificate_hash": "ac56b5aba841a77754c5389c79d3cadf4ee3ea8f"
+          }
+        },
+        {
+          "client_id": "170894307366-oq9fcri2t5c0oghbqaa8rj48b0rtmhvp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ss.astro_guide_astro",
+            "certificate_hash": "9d9267f2ae4bd1f42030c1699252f17d710616d8"
           }
         },
         {

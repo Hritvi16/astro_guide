@@ -26,6 +26,7 @@ mixin _$SettingModel {
   String get about_64 => throw _privateConstructorUsedError;
   String get tc_64 => throw _privateConstructorUsedError;
   String get privacy_64 => throw _privateConstructorUsedError;
+  String get cr_64 => throw _privateConstructorUsedError;
   String get mobile => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
   String get address => throw _privateConstructorUsedError;
@@ -50,6 +51,7 @@ abstract class $SettingModelCopyWith<$Res> {
       String about_64,
       String tc_64,
       String privacy_64,
+      String cr_64,
       String mobile,
       String email,
       String address,
@@ -75,6 +77,7 @@ class _$SettingModelCopyWithImpl<$Res, $Val extends SettingModel>
     Object? about_64 = null,
     Object? tc_64 = null,
     Object? privacy_64 = null,
+    Object? cr_64 = null,
     Object? mobile = null,
     Object? email = null,
     Object? address = null,
@@ -105,6 +108,10 @@ class _$SettingModelCopyWithImpl<$Res, $Val extends SettingModel>
           ? _value.privacy_64
           : privacy_64 // ignore: cast_nullable_to_non_nullable
               as String,
+      cr_64: null == cr_64
+          ? _value.cr_64
+          : cr_64 // ignore: cast_nullable_to_non_nullable
+              as String,
       mobile: null == mobile
           ? _value.mobile
           : mobile // ignore: cast_nullable_to_non_nullable
@@ -126,11 +133,11 @@ class _$SettingModelCopyWithImpl<$Res, $Val extends SettingModel>
 }
 
 /// @nodoc
-abstract class _$$_SettingModelCopyWith<$Res>
+abstract class _$$SettingModelImplCopyWith<$Res>
     implements $SettingModelCopyWith<$Res> {
-  factory _$$_SettingModelCopyWith(
-          _$_SettingModel value, $Res Function(_$_SettingModel) then) =
-      __$$_SettingModelCopyWithImpl<$Res>;
+  factory _$$SettingModelImplCopyWith(
+          _$SettingModelImpl value, $Res Function(_$SettingModelImpl) then) =
+      __$$SettingModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -140,6 +147,7 @@ abstract class _$$_SettingModelCopyWith<$Res>
       String about_64,
       String tc_64,
       String privacy_64,
+      String cr_64,
       String mobile,
       String email,
       String address,
@@ -147,11 +155,11 @@ abstract class _$$_SettingModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_SettingModelCopyWithImpl<$Res>
-    extends _$SettingModelCopyWithImpl<$Res, _$_SettingModel>
-    implements _$$_SettingModelCopyWith<$Res> {
-  __$$_SettingModelCopyWithImpl(
-      _$_SettingModel _value, $Res Function(_$_SettingModel) _then)
+class __$$SettingModelImplCopyWithImpl<$Res>
+    extends _$SettingModelCopyWithImpl<$Res, _$SettingModelImpl>
+    implements _$$SettingModelImplCopyWith<$Res> {
+  __$$SettingModelImplCopyWithImpl(
+      _$SettingModelImpl _value, $Res Function(_$SettingModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -163,12 +171,13 @@ class __$$_SettingModelCopyWithImpl<$Res>
     Object? about_64 = null,
     Object? tc_64 = null,
     Object? privacy_64 = null,
+    Object? cr_64 = null,
     Object? mobile = null,
     Object? email = null,
     Object? address = null,
     Object? link = null,
   }) {
-    return _then(_$_SettingModel(
+    return _then(_$SettingModelImpl(
       about: null == about
           ? _value.about
           : about // ignore: cast_nullable_to_non_nullable
@@ -193,6 +202,10 @@ class __$$_SettingModelCopyWithImpl<$Res>
           ? _value.privacy_64
           : privacy_64 // ignore: cast_nullable_to_non_nullable
               as String,
+      cr_64: null == cr_64
+          ? _value.cr_64
+          : cr_64 // ignore: cast_nullable_to_non_nullable
+              as String,
       mobile: null == mobile
           ? _value.mobile
           : mobile // ignore: cast_nullable_to_non_nullable
@@ -215,21 +228,22 @@ class __$$_SettingModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_SettingModel implements _SettingModel {
-  _$_SettingModel(
+class _$SettingModelImpl implements _SettingModel {
+  _$SettingModelImpl(
       {required this.about,
       required this.tc,
       required this.privacy_policy,
       required this.about_64,
       required this.tc_64,
       required this.privacy_64,
+      required this.cr_64,
       required this.mobile,
       required this.email,
       required this.address,
       required this.link});
 
-  factory _$_SettingModel.fromJson(Map<String, dynamic> json) =>
-      _$$_SettingModelFromJson(json);
+  factory _$SettingModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$SettingModelImplFromJson(json);
 
   @override
   final String about;
@@ -244,6 +258,8 @@ class _$_SettingModel implements _SettingModel {
   @override
   final String privacy_64;
   @override
+  final String cr_64;
+  @override
   final String mobile;
   @override
   final String email;
@@ -254,14 +270,14 @@ class _$_SettingModel implements _SettingModel {
 
   @override
   String toString() {
-    return 'SettingModel(about: $about, tc: $tc, privacy_policy: $privacy_policy, about_64: $about_64, tc_64: $tc_64, privacy_64: $privacy_64, mobile: $mobile, email: $email, address: $address, link: $link)';
+    return 'SettingModel(about: $about, tc: $tc, privacy_policy: $privacy_policy, about_64: $about_64, tc_64: $tc_64, privacy_64: $privacy_64, cr_64: $cr_64, mobile: $mobile, email: $email, address: $address, link: $link)';
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_SettingModel &&
+            other is _$SettingModelImpl &&
             (identical(other.about, about) || other.about == about) &&
             (identical(other.tc, tc) || other.tc == tc) &&
             (identical(other.privacy_policy, privacy_policy) ||
@@ -271,6 +287,7 @@ class _$_SettingModel implements _SettingModel {
             (identical(other.tc_64, tc_64) || other.tc_64 == tc_64) &&
             (identical(other.privacy_64, privacy_64) ||
                 other.privacy_64 == privacy_64) &&
+            (identical(other.cr_64, cr_64) || other.cr_64 == cr_64) &&
             (identical(other.mobile, mobile) || other.mobile == mobile) &&
             (identical(other.email, email) || other.email == email) &&
             (identical(other.address, address) || other.address == address) &&
@@ -280,17 +297,17 @@ class _$_SettingModel implements _SettingModel {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, about, tc, privacy_policy,
-      about_64, tc_64, privacy_64, mobile, email, address, link);
+      about_64, tc_64, privacy_64, cr_64, mobile, email, address, link);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_SettingModelCopyWith<_$_SettingModel> get copyWith =>
-      __$$_SettingModelCopyWithImpl<_$_SettingModel>(this, _$identity);
+  _$$SettingModelImplCopyWith<_$SettingModelImpl> get copyWith =>
+      __$$SettingModelImplCopyWithImpl<_$SettingModelImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_SettingModelToJson(
+    return _$$SettingModelImplToJson(
       this,
     );
   }
@@ -304,13 +321,14 @@ abstract class _SettingModel implements SettingModel {
       required final String about_64,
       required final String tc_64,
       required final String privacy_64,
+      required final String cr_64,
       required final String mobile,
       required final String email,
       required final String address,
-      required final String link}) = _$_SettingModel;
+      required final String link}) = _$SettingModelImpl;
 
   factory _SettingModel.fromJson(Map<String, dynamic> json) =
-      _$_SettingModel.fromJson;
+      _$SettingModelImpl.fromJson;
 
   @override
   String get about;
@@ -325,6 +343,8 @@ abstract class _SettingModel implements SettingModel {
   @override
   String get privacy_64;
   @override
+  String get cr_64;
+  @override
   String get mobile;
   @override
   String get email;
@@ -334,6 +354,6 @@ abstract class _SettingModel implements SettingModel {
   String get link;
   @override
   @JsonKey(ignore: true)
-  _$$_SettingModelCopyWith<_$_SettingModel> get copyWith =>
+  _$$SettingModelImplCopyWith<_$SettingModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

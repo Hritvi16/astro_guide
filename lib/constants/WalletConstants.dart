@@ -6,6 +6,7 @@ class WalletConstants {
   static String amount = "amount";
   static String wallet_amount = "wallet_amount";
   static String type = "type";
+  static String payment_type = "payment_type";
   static String p_id = "p_id";
   static String description = "description";
   static String status = "status";

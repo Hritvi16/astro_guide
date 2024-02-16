@@ -8,6 +8,7 @@ import 'package:astro_guide/services/networking/ApiConstants.dart';
 import 'package:astro_guide/size/MySize.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 class SendImageScreen extends StatelessWidget {
@@ -103,7 +104,7 @@ class SendImageScreen extends StatelessWidget {
                       children: [
                         Text(
                           Essential.getDateTime(chat.sent_at),
-                          style: TextStyle(
+                          style: GoogleFonts.manrope(
                               fontSize: 10
                           ),
                         ),

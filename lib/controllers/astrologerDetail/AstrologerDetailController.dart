@@ -67,9 +67,9 @@ class AstrologerDetailController extends GetxController {
   }
 
 
-  Future<void> getAstrologer() async {
+  Future<void> getAstrologer({String? id}) async {
     Map <String, String> data = {
-      AstrologerConstants.id : id
+      AstrologerConstants.id : id??this.id
     };
 
     print(data);
@@ -77,19 +77,24 @@ class AstrologerDetailController extends GetxController {
     await astrologerProvider.fetchSingle(storage.read("access"), ApiConstants.id, data).then((response) async {
       print(response.toJson());
       print(response.types);
-      if(response.code==1) {
-        astrologer = response.astrologer!;
-        rating = response.rating!;
-        languages = response.languages??[];
-        specifications = response.specifications??[];
-        types = response.types??[];
-        reviews = response.reviews??[];
-        galleries = response.galleries??[];
-        similar = response.similar??[];
-        wallet = response.wallet??wallet;
+      if(response.code==-3) {
+        Essential.showSnackBar(response.message, code: response.code, time: response.code==-3 ? 3 : null);
       }
-      load = true;
-      update();
+      else {
+        if (response.code == 1) {
+          astrologer = response.astrologer!;
+          rating = response.rating!;
+          languages = response.languages ?? [];
+          specifications = response.specifications ?? [];
+          types = response.types ?? [];
+          reviews = response.reviews ?? [];
+          galleries = response.galleries ?? [];
+          similar = response.similar ?? [];
+          wallet = response.wallet ?? wallet;
+        }
+        load = true;
+        update();
+      }
     });
   }
 
@@ -159,12 +164,12 @@ class AstrologerDetailController extends GetxController {
     return reviews.isNotEmpty ? rating/reviews.length : 0;
   }
 
-  void goto(String page, {dynamic arguments}) {
+  void goto(String page, {dynamic arguments, String? id}) {
     Get.toNamed(page, arguments: arguments, preventDuplicates: false)?.then((value) {
 
       wallet = double.parse((storage.read("wallet")??0.0).toString());
       print("objecttt");
-      getAstrologer();
+      getAstrologer(id: id);
     });
   }
 

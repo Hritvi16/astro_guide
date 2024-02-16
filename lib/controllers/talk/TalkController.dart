@@ -58,6 +58,7 @@ class TalkController extends GetxController {
   late bool free;
   late double wallet;
   late bool load;
+  late String order_by;
 
   @override
   void onInit() {
@@ -67,11 +68,12 @@ class TalkController extends GetxController {
     astrologerProvider = Get.put(AstrologerProvider(astrologerRepository));
     load = false;
 
-    specs = [SpecModel(id: -1, spec: "All", icon: "all.png")];
-    spec = specs.first;
+    specs = [SpecModel(id: -1, spec: "All", icon: "all.png", imageFullUrl: '')];
+    if(Essential.getPlatform()) {
+      spec = specs.first;
+    }
 
     sort = CommonConstants.sort;
-    ssort = sort.first;
 
     gender = CommonConstants.gender;
     sgender = [];
@@ -80,6 +82,18 @@ class TalkController extends GetxController {
     print("gdgdgd${storage.read("wallet")}");
     wallet = double.parse((storage.read("wallet")??0.0).toString());
 
+    if(Get.arguments!=null) {
+      if (Get.arguments['title'] == "New Astrologers") {
+        ssort = "New";
+      }
+      else {
+        ssort = sort.first;
+      }
+    }
+    else {
+      ssort = sort.first;
+    }
+
     start();
   }
 
@@ -87,30 +101,30 @@ class TalkController extends GetxController {
     getValues();
   }
 
-  Future<void> getSpecs() async {
-    await specProvider.fetch(storage.read("access"), ApiConstants.all).then((response) async {
-      print("specssss");
-      print(response.toJson());
-      if(response.code==1) {
-        specs = [];
-        specs.add(
-            SpecModel(id: -1, spec: "All", icon: "all.png")
-        );
-        specs.addAll(response.data??[]);
+  // Future<void> getSpecs() async {
+  //   await specProvider.fetch(storage.read("access"), ApiConstants.all).then((response) async {
+  //     print("specssss");
+  //     print(response.toJson());
+  //     if(response.code==1) {
+  //       specs = [];
+  //       specs.add(
+  //           SpecModel(id: -1, spec: "All", icon: "all.png")
+  //       );
+  //       specs.addAll(response.data??[]);
+  //
+  //       for (var element in specs) {
+  //         if(spec.id==element.id) {
+  //           await changeSpec(element);
+  //         }
+  //       }
+  //     }
+  //     else {
+  //       await getAstrologers(0);
+  //     }
+  //   });
+  // }
 
-        for (var element in specs) {
-          if(spec.id==element.id) {
-            await changeSpec(element);
-          }
-        }
-      }
-      else {
-        await getAstrologers(0);
-      }
-    });
-  }
-
-  void getValues() {
+  Future<void> getValues() async {
     astrologerProvider.fetchValues(storage.read("access"), ApiConstants.values).then((response) async {
       print("valuessss");
       print(response.toJson());
@@ -123,7 +137,7 @@ class TalkController extends GetxController {
 
         specs = [];
         specs.add(
-          SpecModel(id: -1, spec: "All", icon: "all.png")
+          SpecModel(id: -1, spec: "All", icon: "all.png", imageFullUrl: '')
         );
 
         specs.addAll(response.specifications??[]);
@@ -134,12 +148,6 @@ class TalkController extends GetxController {
           }
         }
 
-        for (var element in specs) {
-          if(spec.id==element.id) {
-            await changeSpec(element);
-            break;
-          }
-        }
 
         if(countries.isNotEmpty && scountries.isNotEmpty) {
           List<CountryModel> temp = scountries;
@@ -205,6 +213,10 @@ class TalkController extends GetxController {
     String ob = "";
     String query = " WHERE a.status = 1";
 
+    if(Get.arguments!=null && Get.arguments['title']=="Live Astrologers") {
+      query += " AND sett.online = 1";
+    }
+
     if(spec.id!=-1) {
       query += " AND asp.spec_id = ${spec.id}";
     }
@@ -245,7 +257,9 @@ class TalkController extends GetxController {
         }
         astrologers.addAll(response.data??[]);
       }
-      load = true;
+      if(load==false) {
+        load = true;
+      }
       update();
     });
   }
@@ -260,6 +274,7 @@ class TalkController extends GetxController {
     this.spec = spec;
     update();
 
+    print("hello");
     await getAstrologers(0);
   }
 
@@ -280,7 +295,7 @@ class TalkController extends GetxController {
 
   Future<void> onRefresh() async{
     await Future.delayed(Duration(seconds: 1));
-    await getSpecs();
+    await getValues();
   }
 
   void onLoading() async{
@@ -400,6 +415,10 @@ class TalkController extends GetxController {
     else if(ind==10) {
       query = "rating ASC";
     }
+    else {
+      query = "created_at DESC";
+    }
+
     return "ORDER BY $query";
   }
 

@@ -6,8 +6,8 @@ part of 'HistoryModel.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_HistoryModel _$$_HistoryModelFromJson(Map<String, dynamic> json) =>
-    _$_HistoryModel(
+_$HistoryModelImpl _$$HistoryModelImplFromJson(Map<String, dynamic> json) =>
+    _$HistoryModelImpl(
       status: json['status'] as String,
       code: json['code'] as int,
       message: json['message'] as String,
@@ -26,7 +26,7 @@ _$_HistoryModel _$$_HistoryModelFromJson(Map<String, dynamic> json) =>
           .toList(),
     );
 
-Map<String, dynamic> _$$_HistoryModelToJson(_$_HistoryModel instance) =>
+Map<String, dynamic> _$$HistoryModelImplToJson(_$HistoryModelImpl instance) =>
     <String, dynamic>{
       'status': instance.status,
       'code': instance.code,

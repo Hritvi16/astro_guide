@@ -66,7 +66,7 @@ class CustomController extends GetxController {
     title = Get.arguments;
 
     specs.add(
-        SpecModel(id: -1, spec: "All", icon: "all.png")
+        SpecModel(id: -1, spec: "All", icon: "all.png", imageFullUrl: '')
     );
     spec = specs.first;
 
@@ -98,7 +98,7 @@ class CustomController extends GetxController {
 
         specs = [];
         specs.add(
-            SpecModel(id: -1, spec: "All", icon: "all.png")
+            SpecModel(id: -1, spec: "All", icon: "all.png", imageFullUrl: '')
         );
         specs.addAll(response.specifications??[]);
 

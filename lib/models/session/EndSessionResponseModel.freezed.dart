@@ -107,11 +107,12 @@ class _$EndSessionResponseModelCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_EndSessionResponseModelCopyWith<$Res>
+abstract class _$$EndSessionResponseModelImplCopyWith<$Res>
     implements $EndSessionResponseModelCopyWith<$Res> {
-  factory _$$_EndSessionResponseModelCopyWith(_$_EndSessionResponseModel value,
-          $Res Function(_$_EndSessionResponseModel) then) =
-      __$$_EndSessionResponseModelCopyWithImpl<$Res>;
+  factory _$$EndSessionResponseModelImplCopyWith(
+          _$EndSessionResponseModelImpl value,
+          $Res Function(_$EndSessionResponseModelImpl) then) =
+      __$$EndSessionResponseModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -125,12 +126,13 @@ abstract class _$$_EndSessionResponseModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_EndSessionResponseModelCopyWithImpl<$Res>
+class __$$EndSessionResponseModelImplCopyWithImpl<$Res>
     extends _$EndSessionResponseModelCopyWithImpl<$Res,
-        _$_EndSessionResponseModel>
-    implements _$$_EndSessionResponseModelCopyWith<$Res> {
-  __$$_EndSessionResponseModelCopyWithImpl(_$_EndSessionResponseModel _value,
-      $Res Function(_$_EndSessionResponseModel) _then)
+        _$EndSessionResponseModelImpl>
+    implements _$$EndSessionResponseModelImplCopyWith<$Res> {
+  __$$EndSessionResponseModelImplCopyWithImpl(
+      _$EndSessionResponseModelImpl _value,
+      $Res Function(_$EndSessionResponseModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -144,7 +146,7 @@ class __$$_EndSessionResponseModelCopyWithImpl<$Res>
     Object? wallet = freezed,
     Object? chat_type = freezed,
   }) {
-    return _then(_$_EndSessionResponseModel(
+    return _then(_$EndSessionResponseModelImpl(
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -179,8 +181,8 @@ class __$$_EndSessionResponseModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_EndSessionResponseModel implements _EndSessionResponseModel {
-  _$_EndSessionResponseModel(
+class _$EndSessionResponseModelImpl implements _EndSessionResponseModel {
+  _$EndSessionResponseModelImpl(
       {required this.status,
       required this.code,
       required this.message,
@@ -189,8 +191,8 @@ class _$_EndSessionResponseModel implements _EndSessionResponseModel {
       this.wallet,
       this.chat_type});
 
-  factory _$_EndSessionResponseModel.fromJson(Map<String, dynamic> json) =>
-      _$$_EndSessionResponseModelFromJson(json);
+  factory _$EndSessionResponseModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$EndSessionResponseModelImplFromJson(json);
 
   @override
   final String status;
@@ -213,10 +215,10 @@ class _$_EndSessionResponseModel implements _EndSessionResponseModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_EndSessionResponseModel &&
+            other is _$EndSessionResponseModelImpl &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.code, code) || other.code == code) &&
             (identical(other.message, message) || other.message == message) &&
@@ -235,14 +237,13 @@ class _$_EndSessionResponseModel implements _EndSessionResponseModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_EndSessionResponseModelCopyWith<_$_EndSessionResponseModel>
-      get copyWith =>
-          __$$_EndSessionResponseModelCopyWithImpl<_$_EndSessionResponseModel>(
-              this, _$identity);
+  _$$EndSessionResponseModelImplCopyWith<_$EndSessionResponseModelImpl>
+      get copyWith => __$$EndSessionResponseModelImplCopyWithImpl<
+          _$EndSessionResponseModelImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_EndSessionResponseModelToJson(
+    return _$$EndSessionResponseModelImplToJson(
       this,
     );
   }
@@ -256,10 +257,10 @@ abstract class _EndSessionResponseModel implements EndSessionResponseModel {
       final int? seconds,
       final double? amount,
       final double? wallet,
-      final String? chat_type}) = _$_EndSessionResponseModel;
+      final String? chat_type}) = _$EndSessionResponseModelImpl;
 
   factory _EndSessionResponseModel.fromJson(Map<String, dynamic> json) =
-      _$_EndSessionResponseModel.fromJson;
+      _$EndSessionResponseModelImpl.fromJson;
 
   @override
   String get status;
@@ -277,6 +278,6 @@ abstract class _EndSessionResponseModel implements EndSessionResponseModel {
   String? get chat_type;
   @override
   @JsonKey(ignore: true)
-  _$$_EndSessionResponseModelCopyWith<_$_EndSessionResponseModel>
+  _$$EndSessionResponseModelImplCopyWith<_$EndSessionResponseModelImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

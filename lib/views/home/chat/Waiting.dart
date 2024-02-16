@@ -1,4 +1,5 @@
 import 'package:astro_guide/colors/MyColors.dart';
+import 'package:astro_guide/essential/Essential.dart';
 import 'package:astro_guide/services/networking/ApiConstants.dart';
 import 'package:astro_guide/shared/widgets/button/Button.dart';
 import 'package:astro_guide/size/MySize.dart';
@@ -20,11 +21,10 @@ class Waiting extends StatelessWidget {
         width: MySize.size100(context),
         padding: EdgeInsets.only(top: MySize.sizeh15(context), bottom: MySize.sizeh5(context)),
         decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(
-              "assets/essential/bg.png"
-            )
-          )
+          image: Essential.getPlatform() ?
+            DecorationImage(
+              image: AssetImage("assets/essential/bg.png")
+            ) : null
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

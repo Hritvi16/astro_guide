@@ -1,6 +1,8 @@
 import 'package:astro_guide/chat_ui/CustomShape.dart';
+import 'package:astro_guide/colors/MyColors.dart';
 import 'package:astro_guide/models/support/SupportChatModel.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'dart:math' as math;
 
 import 'package:intl/intl.dart';
@@ -29,7 +31,7 @@ class SReceivedMessageScreen extends StatelessWidget {
           child: Container(
             padding: EdgeInsets.all(14),
             decoration: BoxDecoration(
-              color: Colors.grey[300],
+              color: MyColors.receiverColor(),
               borderRadius: BorderRadius.only(
                 topRight: Radius.circular(18),
                 bottomLeft: Radius.circular(18),
@@ -42,7 +44,7 @@ class SReceivedMessageScreen extends StatelessWidget {
                 RichText(
                   text: TextSpan(
                     text: chat.message,
-                    style: TextStyle(color: Colors.black, fontSize: 14),
+                    style: GoogleFonts.manrope(color: MyColors.labelColor(), fontSize: 14),
                   ),
                 ),
                 SizedBox(
@@ -51,8 +53,9 @@ class SReceivedMessageScreen extends StatelessWidget {
                 Text(
                   DateFormat("dd MMM, yyyy  hh:mm a").format(DateTime.parse(chat.sent_at)),
                   textAlign: TextAlign.right,
-                  style: TextStyle(
-                      fontSize: 10
+                  style: GoogleFonts.manrope(
+                      fontSize: 10,
+                    color: MyColors.colorInfo,
                   ),
                 ),
               ],
@@ -92,12 +95,12 @@ class SReceivedMessageScreen extends StatelessWidget {
                 RichText(
                   text: TextSpan(
                     text: chat.message,
-                    style: TextStyle(color: Colors.black, fontSize: 14),
+                    style: GoogleFonts.manrope(color: Colors.black, fontSize: 14),
                   ),
                 ),
                 // Text(
                 //   chat.message,
-                //   style: TextStyle(color: Colors.black, fontSize: 14),
+                //   style: GoogleFonts.manrope(color: Colors.black, fontSize: 14),
                 // ),
                 SizedBox(
                   height: 2,
@@ -106,7 +109,7 @@ class SReceivedMessageScreen extends StatelessWidget {
                   alignment: Alignment.bottomRight,
                   child: Text(
                     DateFormat("dd MMM, yyyy  hh:mm a").format(DateTime.parse(chat.sent_at)),
-                    style: TextStyle(
+                    style: GoogleFonts.manrope(
                         fontSize: 10
                     ),
                   ),

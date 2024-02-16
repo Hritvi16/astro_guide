@@ -14,6 +14,7 @@ class UserConstants {
   static String M = "MALE";
   static String joined_via = "joined_via";
   static String postal_code = "postal_code";
+  static String image = "image";
   static Map<String, String> jv = {
     "C" : "CUSTOM",
     "G" : "GOOGLE",

@@ -80,22 +80,22 @@ class _$KundliListModelCopyWithImpl<$Res, $Val extends KundliListModel>
 }
 
 /// @nodoc
-abstract class _$$_KundliListModelCopyWith<$Res>
+abstract class _$$KundliListModelImplCopyWith<$Res>
     implements $KundliListModelCopyWith<$Res> {
-  factory _$$_KundliListModelCopyWith(
-          _$_KundliListModel value, $Res Function(_$_KundliListModel) then) =
-      __$$_KundliListModelCopyWithImpl<$Res>;
+  factory _$$KundliListModelImplCopyWith(_$KundliListModelImpl value,
+          $Res Function(_$KundliListModelImpl) then) =
+      __$$KundliListModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String status, int code, String message, List<KundliModel>? data});
 }
 
 /// @nodoc
-class __$$_KundliListModelCopyWithImpl<$Res>
-    extends _$KundliListModelCopyWithImpl<$Res, _$_KundliListModel>
-    implements _$$_KundliListModelCopyWith<$Res> {
-  __$$_KundliListModelCopyWithImpl(
-      _$_KundliListModel _value, $Res Function(_$_KundliListModel) _then)
+class __$$KundliListModelImplCopyWithImpl<$Res>
+    extends _$KundliListModelCopyWithImpl<$Res, _$KundliListModelImpl>
+    implements _$$KundliListModelImplCopyWith<$Res> {
+  __$$KundliListModelImplCopyWithImpl(
+      _$KundliListModelImpl _value, $Res Function(_$KundliListModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -106,7 +106,7 @@ class __$$_KundliListModelCopyWithImpl<$Res>
     Object? message = null,
     Object? data = freezed,
   }) {
-    return _then(_$_KundliListModel(
+    return _then(_$KundliListModelImpl(
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -129,16 +129,16 @@ class __$$_KundliListModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_KundliListModel implements _KundliListModel {
-  _$_KundliListModel(
+class _$KundliListModelImpl implements _KundliListModel {
+  _$KundliListModelImpl(
       {required this.status,
       required this.code,
       required this.message,
       final List<KundliModel>? data})
       : _data = data;
 
-  factory _$_KundliListModel.fromJson(Map<String, dynamic> json) =>
-      _$$_KundliListModelFromJson(json);
+  factory _$KundliListModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$KundliListModelImplFromJson(json);
 
   @override
   final String status;
@@ -162,10 +162,10 @@ class _$_KundliListModel implements _KundliListModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_KundliListModel &&
+            other is _$KundliListModelImpl &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.code, code) || other.code == code) &&
             (identical(other.message, message) || other.message == message) &&
@@ -180,12 +180,13 @@ class _$_KundliListModel implements _KundliListModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_KundliListModelCopyWith<_$_KundliListModel> get copyWith =>
-      __$$_KundliListModelCopyWithImpl<_$_KundliListModel>(this, _$identity);
+  _$$KundliListModelImplCopyWith<_$KundliListModelImpl> get copyWith =>
+      __$$KundliListModelImplCopyWithImpl<_$KundliListModelImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_KundliListModelToJson(
+    return _$$KundliListModelImplToJson(
       this,
     );
   }
@@ -196,10 +197,10 @@ abstract class _KundliListModel implements KundliListModel {
       {required final String status,
       required final int code,
       required final String message,
-      final List<KundliModel>? data}) = _$_KundliListModel;
+      final List<KundliModel>? data}) = _$KundliListModelImpl;
 
   factory _KundliListModel.fromJson(Map<String, dynamic> json) =
-      _$_KundliListModel.fromJson;
+      _$KundliListModelImpl.fromJson;
 
   @override
   String get status;
@@ -211,6 +212,6 @@ abstract class _KundliListModel implements KundliListModel {
   List<KundliModel>? get data;
   @override
   @JsonKey(ignore: true)
-  _$$_KundliListModelCopyWith<_$_KundliListModel> get copyWith =>
+  _$$KundliListModelImplCopyWith<_$KundliListModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

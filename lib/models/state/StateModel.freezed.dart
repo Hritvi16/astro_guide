@@ -74,22 +74,22 @@ class _$StateModelCopyWithImpl<$Res, $Val extends StateModel>
 }
 
 /// @nodoc
-abstract class _$$_StateModelCopyWith<$Res>
+abstract class _$$StateModelImplCopyWith<$Res>
     implements $StateModelCopyWith<$Res> {
-  factory _$$_StateModelCopyWith(
-          _$_StateModel value, $Res Function(_$_StateModel) then) =
-      __$$_StateModelCopyWithImpl<$Res>;
+  factory _$$StateModelImplCopyWith(
+          _$StateModelImpl value, $Res Function(_$StateModelImpl) then) =
+      __$$StateModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int id, String name, int co_id});
 }
 
 /// @nodoc
-class __$$_StateModelCopyWithImpl<$Res>
-    extends _$StateModelCopyWithImpl<$Res, _$_StateModel>
-    implements _$$_StateModelCopyWith<$Res> {
-  __$$_StateModelCopyWithImpl(
-      _$_StateModel _value, $Res Function(_$_StateModel) _then)
+class __$$StateModelImplCopyWithImpl<$Res>
+    extends _$StateModelCopyWithImpl<$Res, _$StateModelImpl>
+    implements _$$StateModelImplCopyWith<$Res> {
+  __$$StateModelImplCopyWithImpl(
+      _$StateModelImpl _value, $Res Function(_$StateModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -99,7 +99,7 @@ class __$$_StateModelCopyWithImpl<$Res>
     Object? name = null,
     Object? co_id = null,
   }) {
-    return _then(_$_StateModel(
+    return _then(_$StateModelImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -118,11 +118,11 @@ class __$$_StateModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_StateModel implements _StateModel {
-  _$_StateModel({required this.id, required this.name, required this.co_id});
+class _$StateModelImpl implements _StateModel {
+  _$StateModelImpl({required this.id, required this.name, required this.co_id});
 
-  factory _$_StateModel.fromJson(Map<String, dynamic> json) =>
-      _$$_StateModelFromJson(json);
+  factory _$StateModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$StateModelImplFromJson(json);
 
   @override
   final int id;
@@ -137,10 +137,10 @@ class _$_StateModel implements _StateModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_StateModel &&
+            other is _$StateModelImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.co_id, co_id) || other.co_id == co_id));
@@ -153,12 +153,12 @@ class _$_StateModel implements _StateModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_StateModelCopyWith<_$_StateModel> get copyWith =>
-      __$$_StateModelCopyWithImpl<_$_StateModel>(this, _$identity);
+  _$$StateModelImplCopyWith<_$StateModelImpl> get copyWith =>
+      __$$StateModelImplCopyWithImpl<_$StateModelImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_StateModelToJson(
+    return _$$StateModelImplToJson(
       this,
     );
   }
@@ -168,10 +168,10 @@ abstract class _StateModel implements StateModel {
   factory _StateModel(
       {required final int id,
       required final String name,
-      required final int co_id}) = _$_StateModel;
+      required final int co_id}) = _$StateModelImpl;
 
   factory _StateModel.fromJson(Map<String, dynamic> json) =
-      _$_StateModel.fromJson;
+      _$StateModelImpl.fromJson;
 
   @override
   int get id;
@@ -181,6 +181,6 @@ abstract class _StateModel implements StateModel {
   int get co_id;
   @override
   @JsonKey(ignore: true)
-  _$$_StateModelCopyWith<_$_StateModel> get copyWith =>
+  _$$StateModelImplCopyWith<_$StateModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

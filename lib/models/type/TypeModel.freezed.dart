@@ -67,21 +67,22 @@ class _$TypeModelCopyWithImpl<$Res, $Val extends TypeModel>
 }
 
 /// @nodoc
-abstract class _$$_TypeModelCopyWith<$Res> implements $TypeModelCopyWith<$Res> {
-  factory _$$_TypeModelCopyWith(
-          _$_TypeModel value, $Res Function(_$_TypeModel) then) =
-      __$$_TypeModelCopyWithImpl<$Res>;
+abstract class _$$TypeModelImplCopyWith<$Res>
+    implements $TypeModelCopyWith<$Res> {
+  factory _$$TypeModelImplCopyWith(
+          _$TypeModelImpl value, $Res Function(_$TypeModelImpl) then) =
+      __$$TypeModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int id, String type});
 }
 
 /// @nodoc
-class __$$_TypeModelCopyWithImpl<$Res>
-    extends _$TypeModelCopyWithImpl<$Res, _$_TypeModel>
-    implements _$$_TypeModelCopyWith<$Res> {
-  __$$_TypeModelCopyWithImpl(
-      _$_TypeModel _value, $Res Function(_$_TypeModel) _then)
+class __$$TypeModelImplCopyWithImpl<$Res>
+    extends _$TypeModelCopyWithImpl<$Res, _$TypeModelImpl>
+    implements _$$TypeModelImplCopyWith<$Res> {
+  __$$TypeModelImplCopyWithImpl(
+      _$TypeModelImpl _value, $Res Function(_$TypeModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -90,7 +91,7 @@ class __$$_TypeModelCopyWithImpl<$Res>
     Object? id = null,
     Object? type = null,
   }) {
-    return _then(_$_TypeModel(
+    return _then(_$TypeModelImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -105,11 +106,11 @@ class __$$_TypeModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_TypeModel implements _TypeModel {
-  _$_TypeModel({required this.id, required this.type});
+class _$TypeModelImpl implements _TypeModel {
+  _$TypeModelImpl({required this.id, required this.type});
 
-  factory _$_TypeModel.fromJson(Map<String, dynamic> json) =>
-      _$$_TypeModelFromJson(json);
+  factory _$TypeModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$TypeModelImplFromJson(json);
 
   @override
   final int id;
@@ -122,10 +123,10 @@ class _$_TypeModel implements _TypeModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_TypeModel &&
+            other is _$TypeModelImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.type, type) || other.type == type));
   }
@@ -137,12 +138,12 @@ class _$_TypeModel implements _TypeModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_TypeModelCopyWith<_$_TypeModel> get copyWith =>
-      __$$_TypeModelCopyWithImpl<_$_TypeModel>(this, _$identity);
+  _$$TypeModelImplCopyWith<_$TypeModelImpl> get copyWith =>
+      __$$TypeModelImplCopyWithImpl<_$TypeModelImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_TypeModelToJson(
+    return _$$TypeModelImplToJson(
       this,
     );
   }
@@ -150,10 +151,10 @@ class _$_TypeModel implements _TypeModel {
 
 abstract class _TypeModel implements TypeModel {
   factory _TypeModel({required final int id, required final String type}) =
-      _$_TypeModel;
+      _$TypeModelImpl;
 
   factory _TypeModel.fromJson(Map<String, dynamic> json) =
-      _$_TypeModel.fromJson;
+      _$TypeModelImpl.fromJson;
 
   @override
   int get id;
@@ -161,6 +162,6 @@ abstract class _TypeModel implements TypeModel {
   String get type;
   @override
   @JsonKey(ignore: true)
-  _$$_TypeModelCopyWith<_$_TypeModel> get copyWith =>
+  _$$TypeModelImplCopyWith<_$TypeModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

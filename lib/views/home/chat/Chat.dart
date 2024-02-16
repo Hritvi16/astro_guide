@@ -28,96 +28,119 @@ class Chat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return GetBuilder<ChatController>(
-      builder: (controller) {
-        return chatController.load ? chatController.type!="ACTIVE" && chatController.type!="COMPLETED" ?
-        Waiting(chatController.astrologer.name, chatController.astrologer.profile, chatController.cancelChat, chatController.type, chatController.back, chatController.initiateChat, chatController.rejectChat)
-        : Scaffold(
-          resizeToAvoidBottomInset: true,
-          appBar: AppBar(
-            backgroundColor: MyColors.colorButton,
-            centerTitle: false,
-            iconTheme: IconThemeData(color: MyColors.black),
-            title: Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    CircleAvatar(
-                      // radius: standardServiceOCRadius,
-                      radius: 25,
-                      // backgroundImage: AssetImage(
-                      //   "assets/test/user.jpg"
-                      // ),
-                      backgroundImage: NetworkImage(
-                        ApiConstants.astrologerUrl+chatController.astrologer.profile
-                      ),
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          chatController.astrologer.name,
-                          style: GoogleFonts.manrope(
-                            fontSize: 16,
-                            color: MyColors.black
-                          ),
+    return WillPopScope(
+      onWillPop: () async {
+        chatController.disposeObjects();
+        return true;
+      },
+      child: GetBuilder<ChatController>(
+        builder: (controller) {
+          return chatController.load ? chatController.type!="ACTIVE" && chatController.type!="COMPLETED" ?
+          Waiting(chatController.astrologer.name, chatController.astrologer.profile, chatController.cancelChat, chatController.type, chatController.back, chatController.initiateChat, chatController.rejectChat)
+          : Scaffold(
+            resizeToAvoidBottomInset: true,
+            appBar: AppBar(
+              backgroundColor: MyColors.colorButton,
+              centerTitle: false,
+              iconTheme: IconThemeData(color: MyColors.black),
+              title: Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      CircleAvatar(
+                        // radius: standardServiceOCRadius,
+                        radius: 25,
+                        // backgroundImage: AssetImage(
+                        //   "assets/test/user.jpg"
+                        // ),
+                        backgroundImage: NetworkImage(
+                          ApiConstants.astrologerUrl+chatController.astrologer.profile
                         ),
-                        if(chatController.type=="ACTIVE")
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
                           Text(
-                            chatController.getChatTime(),
+                            chatController.astrologer.name,
                             style: GoogleFonts.manrope(
-                              fontSize: 12,
-
-                                color: MyColors.black
+                              fontSize: 16,
+                              color: MyColors.black
                             ),
                           ),
-                      ],
-                    )
-                  ],
-                ),
-                if(chatController.type=="ACTIVE")
-                  GestureDetector(
-                    onTap: () {
-                      chatController.endChat(false);
-                    },
-                    child: CircleAvatar(
-                      radius: 15,
-                      backgroundColor: MyColors.colorError,
-                      child: CircleAvatar(
-                        radius: 10,
-                        backgroundColor: MyColors.colorError,
-                        child: Image.asset(
-                          "assets/call/end.png"
-                        ),
-                      ),
-                    ),
+                          if(chatController.type=="ACTIVE")
+                            Text(
+                              chatController.getChatTime(),
+                              style: GoogleFonts.manrope(
+                                fontSize: 12,
+
+                                  color: MyColors.black
+                              ),
+                            ),
+                        ],
+                      )
+                    ],
                   ),
-                if(chatController.type=="COMPLETED")
-                  Icon(
-                    Icons.share
-                  )
-              ],
+                  if(chatController.type=="ACTIVE")
+                    Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            chatController.goto("/freeKundli", arguments: chatController.sessionHistory.k_id);
+                          },
+                          child: Image.asset(
+                              "assets/astrology/kundali.png",
+                            height: 50,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            chatController.endChat(false);
+                          },
+                          child: CircleAvatar(
+                            radius: 15,
+                            backgroundColor: MyColors.colorError,
+                            child: CircleAvatar(
+                              radius: 10,
+                              backgroundColor: MyColors.colorError,
+                              child: Image.asset(
+                                "assets/call/end.png"
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  if(chatController.type=="COMPLETED")
+                    Icon(
+                      Icons.share
+                    )
+                ],
+              ),
             ),
-          ),
-          // bottomNavigationBar: getBottomPage(),
-          body: getBody(context, theme),
-        ) : LoadingScreen();
-      },
+            // bottomNavigationBar: getBottomPage(),
+            body: getBody(context, theme),
+          ) : LoadingScreen();
+        },
+      ),
     );
   }
 
   Widget getBody(BuildContext context, ThemeData theme) {
     return Container(
       decoration: BoxDecoration(
-          image: DecorationImage(
+          image: Essential.getPlatform() ?
+          DecorationImage(
               image: AssetImage("assets/essential/bg.png")
-          )
+          ) : null
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -165,8 +188,8 @@ class Chat extends StatelessWidget {
               SentMessageScreen(chat: chat.copyWith(message: SessionConstants.autoMessage), color: MyColors.red),
           ],
         )
-        : chat.m_type=="V" ? SentVoiceScreen(chat: chat, color: MyColors.black,) : chat.m_type=="I" ? SendImageScreen(chat: chat, color: MyColors.black,) : SendDocScreen(chat: chat, color: MyColors.black,)
-        : chat.m_type=="T" ? ReceivedMessageScreen(chat: chat) : ReceivedVoiceScreen(chat: chat),
+        : chat.m_type=="V" ? SentVoiceScreen(chat: chat, color: MyColors.black, play: chatController.playAudio, pause: chatController.pauseAudio, player: chatController.player, playerUrl: chatController.playerUrl) : chat.m_type=="I" ? SendImageScreen(chat: chat, color: MyColors.black,) : SendDocScreen(chat: chat, color: MyColors.black,)
+        : chat.m_type=="T" ? ReceivedMessageScreen(chat: chat) : ReceivedVoiceScreen(chat: chat, play: chatController.playAudio, pause: chatController.pauseAudio, player: chatController.player, playerUrl: chatController.playerUrl),
       ],
     );
   }
@@ -224,15 +247,23 @@ class Chat extends StatelessWidget {
               ),
             ) :
             GestureDetector(
-              onLongPressStart: (details) {
-                chatController.startRecording();
-              },
-              onLongPressEnd: (details) {
-                chatController.stopRecording(true);
+              // onLongPressStart: (details) {
+              //   chatController.startRecording();
+              // },
+              // onLongPressEnd: (details) {
+              //   chatController.stopRecording(true);
+              // },
+              onTap: () {
+                chatController.recordingAction();
               },
               child: CircleAvatar(
                 backgroundColor: MyColors.colorButton,
-                child: Icon(
+                child: chatController.recording ?
+                Icon(
+                  Icons.stop,
+                  color: MyColors.black,
+                )
+                : Icon(
                   Icons.mic,
                   color: MyColors.black,
                 ),
@@ -256,6 +287,8 @@ class Chat extends StatelessWidget {
         fontWeight: FontWeight.w400,
       ),
       controller: chatController.message,
+      maxLines: 4,
+      minLines: 1,
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderSide: BorderSide(
@@ -388,7 +421,7 @@ class Chat extends StatelessWidget {
               height: 5,
             ),
             Text(
-              "Please let us know your genuine and honest feedback about the astrologer. So we can serve you the best.".tr,
+              "Please let us know your genuine and honest feedback about the ${Essential.getPlatformWord()}. So we can serve you the best.".tr,
               textAlign: TextAlign.center,
               style: GoogleFonts.manrope(
                   fontSize: 12,
@@ -510,7 +543,7 @@ class Chat extends StatelessWidget {
               height: 10,
             ),
             Text(
-              chatController.sessionHistory.review??"",
+              Essential.getPlatformReplace(chatController.sessionHistory.review??""),
               style: GoogleFonts.manrope(
                 fontSize: 14,
                 color: MyColors.colorInfoGrey,

@@ -81,11 +81,11 @@ class _$PackageListModelCopyWithImpl<$Res, $Val extends PackageListModel>
 }
 
 /// @nodoc
-abstract class _$$_PackageListModelCopyWith<$Res>
+abstract class _$$PackageListModelImplCopyWith<$Res>
     implements $PackageListModelCopyWith<$Res> {
-  factory _$$_PackageListModelCopyWith(
-          _$_PackageListModel value, $Res Function(_$_PackageListModel) then) =
-      __$$_PackageListModelCopyWithImpl<$Res>;
+  factory _$$PackageListModelImplCopyWith(_$PackageListModelImpl value,
+          $Res Function(_$PackageListModelImpl) then) =
+      __$$PackageListModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -93,11 +93,11 @@ abstract class _$$_PackageListModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_PackageListModelCopyWithImpl<$Res>
-    extends _$PackageListModelCopyWithImpl<$Res, _$_PackageListModel>
-    implements _$$_PackageListModelCopyWith<$Res> {
-  __$$_PackageListModelCopyWithImpl(
-      _$_PackageListModel _value, $Res Function(_$_PackageListModel) _then)
+class __$$PackageListModelImplCopyWithImpl<$Res>
+    extends _$PackageListModelCopyWithImpl<$Res, _$PackageListModelImpl>
+    implements _$$PackageListModelImplCopyWith<$Res> {
+  __$$PackageListModelImplCopyWithImpl(_$PackageListModelImpl _value,
+      $Res Function(_$PackageListModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -108,7 +108,7 @@ class __$$_PackageListModelCopyWithImpl<$Res>
     Object? message = null,
     Object? data = freezed,
   }) {
-    return _then(_$_PackageListModel(
+    return _then(_$PackageListModelImpl(
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -131,16 +131,16 @@ class __$$_PackageListModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_PackageListModel implements _PackageListModel {
-  _$_PackageListModel(
+class _$PackageListModelImpl implements _PackageListModel {
+  _$PackageListModelImpl(
       {required this.status,
       required this.code,
       required this.message,
       final List<PackageModel>? data})
       : _data = data;
 
-  factory _$_PackageListModel.fromJson(Map<String, dynamic> json) =>
-      _$$_PackageListModelFromJson(json);
+  factory _$PackageListModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$PackageListModelImplFromJson(json);
 
   @override
   final String status;
@@ -164,10 +164,10 @@ class _$_PackageListModel implements _PackageListModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_PackageListModel &&
+            other is _$PackageListModelImpl &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.code, code) || other.code == code) &&
             (identical(other.message, message) || other.message == message) &&
@@ -182,12 +182,13 @@ class _$_PackageListModel implements _PackageListModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_PackageListModelCopyWith<_$_PackageListModel> get copyWith =>
-      __$$_PackageListModelCopyWithImpl<_$_PackageListModel>(this, _$identity);
+  _$$PackageListModelImplCopyWith<_$PackageListModelImpl> get copyWith =>
+      __$$PackageListModelImplCopyWithImpl<_$PackageListModelImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_PackageListModelToJson(
+    return _$$PackageListModelImplToJson(
       this,
     );
   }
@@ -198,10 +199,10 @@ abstract class _PackageListModel implements PackageListModel {
       {required final String status,
       required final int code,
       required final String message,
-      final List<PackageModel>? data}) = _$_PackageListModel;
+      final List<PackageModel>? data}) = _$PackageListModelImpl;
 
   factory _PackageListModel.fromJson(Map<String, dynamic> json) =
-      _$_PackageListModel.fromJson;
+      _$PackageListModelImpl.fromJson;
 
   @override
   String get status;
@@ -213,6 +214,6 @@ abstract class _PackageListModel implements PackageListModel {
   List<PackageModel>? get data;
   @override
   @JsonKey(ignore: true)
-  _$$_PackageListModelCopyWith<_$_PackageListModel> get copyWith =>
+  _$$PackageListModelImplCopyWith<_$PackageListModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

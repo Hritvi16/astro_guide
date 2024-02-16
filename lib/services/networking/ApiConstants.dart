@@ -1,6 +1,8 @@
 class ApiConstants {
-  static const url = "http://192.168.29.244:9000/";
-  static const urlS = "http://192.168.29.244:3000/";
+  // static const url = "http://192.168.29.244:9000/";
+  // static const urlS = "http://192.168.29.244:9000/";
+  static const url = "https://astroguide4u.com:9000/";
+  static const urlS = "https://astroguide4u.com:9000/";
   // static const url = "http://15.206.164.99:9000/";
   // static const urlS = "http://15.206.164.99:3000/";
   // static const url = "http://35.154.148.6:9000/";
@@ -15,6 +17,7 @@ class ApiConstants {
   static const asset = "assets/";
   static const astrologer = "astrologer/";
   static const user = "user/";
+  static const kundli = "kundli/";
   static const specification = "specification/";
   static const events = "events/";
   static const banners = "banner/";
@@ -34,7 +37,7 @@ class ApiConstants {
   static const chatUrl = url+asset+chats;
   static const countryUrl = url+asset+countries;
 
-  static const androidGoogleClientID = "170894307366-1121stmp5mna8q9illqf4r7p7e7okuea.apps.googleusercontent.com";
+  static const androidGoogleClientID = "170894307366-0qd77a7vsh3qgkdidkrach32fs6ljdod.apps.googleusercontent.com";
   static const iOSGoogleClientID = "170894307366-8viag128kkui1l8ngqea77i3he3e5tq2.apps.googleusercontent.com";
 
 
@@ -52,7 +55,7 @@ class ApiConstants {
   static const astrologerAPI = "astrologer/";
   static const blogAPI = "blog/";
   static const videoAPI = "video/";
-  static const serviceAPI = "service/";
+  static const horoscopeAPI = "horoscope/";
   static const testimonialAPI = "testimonial/";
   static const favouriteAPI = "favourite/";
   static const followAPI = "follow/";
@@ -78,6 +81,7 @@ class ApiConstants {
   static const reviewAPI = "review/";
 
 
+  static const otp = "otp/";
   static const all = "all/";
   static const add = "add/";
   static const update = "update/";
@@ -86,7 +90,14 @@ class ApiConstants {
   static const check = "check/";
   static const initiate = "initiate/";
   static const history = "history/";
-  static const horoscope = "horoscope/";
+  static const daily = "daily/";
+  static const basic = "basic/";
+  static const kp = "kp/";
+  static const planet = "planet/";
+  static const vimdasha = "vimdasha/";
+  static const yogini = "yogini/";
+  static const charts = "charts/";
+  static const ashtakoot = "ashtakoot/";
   static const send = "send/";
   static const access = "access";
   static const create = "create/";

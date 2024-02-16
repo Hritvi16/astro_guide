@@ -106,11 +106,11 @@ class _$SupportChatListModelCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_SupportChatListModelCopyWith<$Res>
+abstract class _$$SupportChatListModelImplCopyWith<$Res>
     implements $SupportChatListModelCopyWith<$Res> {
-  factory _$$_SupportChatListModelCopyWith(_$_SupportChatListModel value,
-          $Res Function(_$_SupportChatListModel) then) =
-      __$$_SupportChatListModelCopyWithImpl<$Res>;
+  factory _$$SupportChatListModelImplCopyWith(_$SupportChatListModelImpl value,
+          $Res Function(_$SupportChatListModelImpl) then) =
+      __$$SupportChatListModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -125,11 +125,11 @@ abstract class _$$_SupportChatListModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_SupportChatListModelCopyWithImpl<$Res>
-    extends _$SupportChatListModelCopyWithImpl<$Res, _$_SupportChatListModel>
-    implements _$$_SupportChatListModelCopyWith<$Res> {
-  __$$_SupportChatListModelCopyWithImpl(_$_SupportChatListModel _value,
-      $Res Function(_$_SupportChatListModel) _then)
+class __$$SupportChatListModelImplCopyWithImpl<$Res>
+    extends _$SupportChatListModelCopyWithImpl<$Res, _$SupportChatListModelImpl>
+    implements _$$SupportChatListModelImplCopyWith<$Res> {
+  __$$SupportChatListModelImplCopyWithImpl(_$SupportChatListModelImpl _value,
+      $Res Function(_$SupportChatListModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -141,7 +141,7 @@ class __$$_SupportChatListModelCopyWithImpl<$Res>
     Object? data = freezed,
     Object? support = freezed,
   }) {
-    return _then(_$_SupportChatListModel(
+    return _then(_$SupportChatListModelImpl(
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -168,8 +168,8 @@ class __$$_SupportChatListModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_SupportChatListModel implements _SupportChatListModel {
-  _$_SupportChatListModel(
+class _$SupportChatListModelImpl implements _SupportChatListModel {
+  _$SupportChatListModelImpl(
       {required this.status,
       required this.code,
       required this.message,
@@ -177,8 +177,8 @@ class _$_SupportChatListModel implements _SupportChatListModel {
       this.support})
       : _data = data;
 
-  factory _$_SupportChatListModel.fromJson(Map<String, dynamic> json) =>
-      _$$_SupportChatListModelFromJson(json);
+  factory _$SupportChatListModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$SupportChatListModelImplFromJson(json);
 
   @override
   final String status;
@@ -205,10 +205,10 @@ class _$_SupportChatListModel implements _SupportChatListModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_SupportChatListModel &&
+            other is _$SupportChatListModelImpl &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.code, code) || other.code == code) &&
             (identical(other.message, message) || other.message == message) &&
@@ -224,13 +224,14 @@ class _$_SupportChatListModel implements _SupportChatListModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_SupportChatListModelCopyWith<_$_SupportChatListModel> get copyWith =>
-      __$$_SupportChatListModelCopyWithImpl<_$_SupportChatListModel>(
-          this, _$identity);
+  _$$SupportChatListModelImplCopyWith<_$SupportChatListModelImpl>
+      get copyWith =>
+          __$$SupportChatListModelImplCopyWithImpl<_$SupportChatListModelImpl>(
+              this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_SupportChatListModelToJson(
+    return _$$SupportChatListModelImplToJson(
       this,
     );
   }
@@ -242,10 +243,10 @@ abstract class _SupportChatListModel implements SupportChatListModel {
       required final int code,
       required final String message,
       final List<SupportChatModel>? data,
-      final SupportModel? support}) = _$_SupportChatListModel;
+      final SupportModel? support}) = _$SupportChatListModelImpl;
 
   factory _SupportChatListModel.fromJson(Map<String, dynamic> json) =
-      _$_SupportChatListModel.fromJson;
+      _$SupportChatListModelImpl.fromJson;
 
   @override
   String get status;
@@ -259,6 +260,6 @@ abstract class _SupportChatListModel implements SupportChatListModel {
   SupportModel? get support;
   @override
   @JsonKey(ignore: true)
-  _$$_SupportChatListModelCopyWith<_$_SupportChatListModel> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$SupportChatListModelImplCopyWith<_$SupportChatListModelImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

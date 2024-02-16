@@ -3,6 +3,7 @@ import 'package:astro_guide/colors/MyColors.dart';
 import 'package:astro_guide/essential/Essential.dart';
 import 'package:astro_guide/models/chat/ChatModel.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'dart:math' as math;
 
 import 'package:intl/intl.dart';
@@ -31,7 +32,7 @@ class ReceivedMessageScreen extends StatelessWidget {
           child: Container(
             padding: EdgeInsets.all(14),
             decoration: BoxDecoration(
-              color: MyColors.receiverColor,
+              color: MyColors.receiverColor(),
               borderRadius: BorderRadius.only(
                 topRight: Radius.circular(18),
                 bottomLeft: Radius.circular(18),
@@ -43,8 +44,8 @@ class ReceivedMessageScreen extends StatelessWidget {
               children: [
                 RichText(
                   text: TextSpan(
-                    text: chat.message,
-                    style: TextStyle(color: MyColors.white, fontSize: 14),
+                    text: Essential.getPlatformReplace(chat.message),
+                    style: GoogleFonts.manrope(color: MyColors.labelColor(), fontSize: 14),
                   ),
                 ),
                 SizedBox(
@@ -53,8 +54,9 @@ class ReceivedMessageScreen extends StatelessWidget {
                 Text(
                   Essential.getDateTime(chat.sent_at),
                   textAlign: TextAlign.right,
-                  style: TextStyle(
-                      fontSize: 10
+                  style: GoogleFonts.manrope(
+                    fontSize: 10,
+                    color: MyColors.colorInfo,
                   ),
                 ),
               ],
@@ -93,13 +95,13 @@ class ReceivedMessageScreen extends StatelessWidget {
               children: [
                 RichText(
                   text: TextSpan(
-                    text: chat.message,
-                    style: TextStyle(color: Colors.black, fontSize: 14),
+                    text: Essential.getPlatformReplace(chat.message),
+                    style: GoogleFonts.manrope(color: MyColors.labelColor(), fontSize: 14),
                   ),
                 ),
                 // Text(
                 //   chat.message,
-                //   style: TextStyle(color: Colors.black, fontSize: 14),
+                //   style: GoogleFonts.manrope(color: Colors.black, fontSize: 14),
                 // ),
                 SizedBox(
                   height: 2,
@@ -108,8 +110,9 @@ class ReceivedMessageScreen extends StatelessWidget {
                   alignment: Alignment.bottomRight,
                   child: Text(
                     DateFormat("dd MMM, yyyy  hh:mm a").format(DateTime.parse(chat.sent_at)),
-                    style: TextStyle(
-                        fontSize: 10
+                    style: GoogleFonts.manrope(
+                        fontSize: 10,
+                      color: MyColors.colorInfo
                     ),
                   ),
                 ),

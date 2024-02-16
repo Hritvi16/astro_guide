@@ -105,11 +105,11 @@ class _$SupportChatModelCopyWithImpl<$Res, $Val extends SupportChatModel>
 }
 
 /// @nodoc
-abstract class _$$_SupportChatModelCopyWith<$Res>
+abstract class _$$SupportChatModelImplCopyWith<$Res>
     implements $SupportChatModelCopyWith<$Res> {
-  factory _$$_SupportChatModelCopyWith(
-          _$_SupportChatModel value, $Res Function(_$_SupportChatModel) then) =
-      __$$_SupportChatModelCopyWithImpl<$Res>;
+  factory _$$SupportChatModelImplCopyWith(_$SupportChatModelImpl value,
+          $Res Function(_$SupportChatModelImpl) then) =
+      __$$SupportChatModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -123,11 +123,11 @@ abstract class _$$_SupportChatModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_SupportChatModelCopyWithImpl<$Res>
-    extends _$SupportChatModelCopyWithImpl<$Res, _$_SupportChatModel>
-    implements _$$_SupportChatModelCopyWith<$Res> {
-  __$$_SupportChatModelCopyWithImpl(
-      _$_SupportChatModel _value, $Res Function(_$_SupportChatModel) _then)
+class __$$SupportChatModelImplCopyWithImpl<$Res>
+    extends _$SupportChatModelCopyWithImpl<$Res, _$SupportChatModelImpl>
+    implements _$$SupportChatModelImplCopyWith<$Res> {
+  __$$SupportChatModelImplCopyWithImpl(_$SupportChatModelImpl _value,
+      $Res Function(_$SupportChatModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -141,7 +141,7 @@ class __$$_SupportChatModelCopyWithImpl<$Res>
     Object? seen_at = freezed,
     Object? error = freezed,
   }) {
-    return _then(_$_SupportChatModel(
+    return _then(_$SupportChatModelImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -176,8 +176,8 @@ class __$$_SupportChatModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_SupportChatModel implements _SupportChatModel {
-  _$_SupportChatModel(
+class _$SupportChatModelImpl implements _SupportChatModel {
+  _$SupportChatModelImpl(
       {required this.id,
       required this.sup_id,
       required this.sender,
@@ -186,8 +186,8 @@ class _$_SupportChatModel implements _SupportChatModel {
       this.seen_at,
       this.error});
 
-  factory _$_SupportChatModel.fromJson(Map<String, dynamic> json) =>
-      _$$_SupportChatModelFromJson(json);
+  factory _$SupportChatModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$SupportChatModelImplFromJson(json);
 
   @override
   final int id;
@@ -210,10 +210,10 @@ class _$_SupportChatModel implements _SupportChatModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_SupportChatModel &&
+            other is _$SupportChatModelImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.sup_id, sup_id) || other.sup_id == sup_id) &&
             (identical(other.sender, sender) || other.sender == sender) &&
@@ -231,12 +231,13 @@ class _$_SupportChatModel implements _SupportChatModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_SupportChatModelCopyWith<_$_SupportChatModel> get copyWith =>
-      __$$_SupportChatModelCopyWithImpl<_$_SupportChatModel>(this, _$identity);
+  _$$SupportChatModelImplCopyWith<_$SupportChatModelImpl> get copyWith =>
+      __$$SupportChatModelImplCopyWithImpl<_$SupportChatModelImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_SupportChatModelToJson(
+    return _$$SupportChatModelImplToJson(
       this,
     );
   }
@@ -250,10 +251,10 @@ abstract class _SupportChatModel implements SupportChatModel {
       required final String message,
       required final String sent_at,
       final String? seen_at,
-      final int? error}) = _$_SupportChatModel;
+      final int? error}) = _$SupportChatModelImpl;
 
   factory _SupportChatModel.fromJson(Map<String, dynamic> json) =
-      _$_SupportChatModel.fromJson;
+      _$SupportChatModelImpl.fromJson;
 
   @override
   int get id;
@@ -271,6 +272,6 @@ abstract class _SupportChatModel implements SupportChatModel {
   int? get error;
   @override
   @JsonKey(ignore: true)
-  _$$_SupportChatModelCopyWith<_$_SupportChatModel> get copyWith =>
+  _$$SupportChatModelImplCopyWith<_$SupportChatModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

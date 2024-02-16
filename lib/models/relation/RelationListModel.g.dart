@@ -6,8 +6,9 @@ part of 'RelationListModel.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_RelationListModel _$$_RelationListModelFromJson(Map<String, dynamic> json) =>
-    _$_RelationListModel(
+_$RelationListModelImpl _$$RelationListModelImplFromJson(
+        Map<String, dynamic> json) =>
+    _$RelationListModelImpl(
       status: json['status'] as String,
       code: json['code'] as int,
       message: json['message'] as String,
@@ -16,8 +17,8 @@ _$_RelationListModel _$$_RelationListModelFromJson(Map<String, dynamic> json) =>
           .toList(),
     );
 
-Map<String, dynamic> _$$_RelationListModelToJson(
-        _$_RelationListModel instance) =>
+Map<String, dynamic> _$$RelationListModelImplToJson(
+        _$RelationListModelImpl instance) =>
     <String, dynamic>{
       'status': instance.status,
       'code': instance.code,

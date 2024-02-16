@@ -42,7 +42,7 @@ Widget CustomAppBar(String title, {Widget? options, bool? arrow, CrossAxisAlignm
                   child: Text(
                     title,
                     style: GoogleFonts.playfairDisplay(
-                      fontSize: 22.0,
+                      fontSize: 20.0,
                       color: MyColors.black,
                       letterSpacing: 0,
                       fontWeight: FontWeight.w700,

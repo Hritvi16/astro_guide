@@ -1,6 +1,7 @@
 import 'package:astro_guide/colors/MyColors.dart';
 import 'package:astro_guide/controllers/setting/SettingController.dart';
 import 'package:astro_guide/controllers/theme/ThemesController.dart';
+import 'package:astro_guide/essential/Essential.dart';
 import 'package:astro_guide/services/networking/ApiConstants.dart';
 import 'package:astro_guide/shared/CustomClipPath.dart';
 import 'package:astro_guide/shared/helpers/extensions/StringExtension.dart';
@@ -43,11 +44,12 @@ class Setting extends StatelessWidget {
                   horizontal: standardHorizontalPagePadding),
               decoration: BoxDecoration(
                   color: MyColors.colorPrimary,
-                  image: const DecorationImage(
+                  image: Essential.getPlatform() ?
+                  const DecorationImage(
                       image: AssetImage(
                           "assets/essential/upper_bg_s.png"
                       )
-                  )
+                  ) : null
               ),
               child: SafeArea(
                 child: Padding(
@@ -55,55 +57,62 @@ class Setting extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 25.0, bottom: 40),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Settings'.tr,
-                            style: GoogleFonts.playfairDisplay(
-                              fontSize: 22.0,
-                              color: MyColors.black,
-                              letterSpacing: 0,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              settingController.goto("/myProfile");
-                            },
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 25.0),
-                                  child: Text(
-                                    settingController.user.name,
-                                    style: GoogleFonts.playfairDisplay(
-                                      fontSize: 22.0,
-                                      color: MyColors.black,
-                                      letterSpacing: 0,
-                                      fontWeight: FontWeight.w700,
-                                    ),
+                      Text(
+                        'Settings'.tr,
+                        style: GoogleFonts.playfairDisplay(
+                          fontSize: 22.0,
+                          color: MyColors.black,
+                          letterSpacing: 0,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          settingController.goto("/myProfile");
+                        },
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Flexible(
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 10.0),
+                                child: Text(
+                                  settingController.user.name,
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                  style: GoogleFonts.playfairDisplay(
+                                    fontSize: 22.0,
+                                    color: MyColors.black,
+                                    letterSpacing: 0,
+                                    fontWeight: FontWeight.w700,
                                   ),
                                 ),
-                                SizedBox(
-                                  width: 15,
-                                ),
-                                CircleAvatar(
-                                  radius: 40,
-                                  backgroundImage: NetworkImage(
-                                      ApiConstants.userUrl+(settingController.user.profile??"")
-                                  ),
-                                ),
-                              ],
+                              ),
                             ),
-                          ),
-                        ],
+                            SizedBox(
+                              width: 15,
+                            ),
+                            (settingController.user.profile??"").isEmpty ?
+                            CircleAvatar(
+                              radius: 30,
+                              child: Icon(
+                                Icons.person,
+                                color: MyColors.grey30,
+                                size: 50,
+                              ),
+                              backgroundColor: MyColors.white,
+                            )
+                                : CircleAvatar(
+                              radius: 30,
+                              backgroundImage: NetworkImage(
+                                  ApiConstants.userUrl+(settingController.user.profile??"")
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
 
                       // Row(
@@ -130,7 +139,7 @@ class Setting extends StatelessWidget {
             builder: MaterialIndicatorDelegate(
               builder: (context, controller) {
                 return Image.asset(
-                  "assets/essential/loading.png",
+                  Essential.getPlatform() ? "assets/essential/loading.png" : "assets/app_icon/ios_icon.jpg",
                   height: 30,
                 );
               },
@@ -174,6 +183,9 @@ class Setting extends StatelessWidget {
 
                   const SizedBox(height: 16),
                   settingsTabWI('Privacy Policy'.tr, "", null, theme, onTab: () => settingController.goto("/information", arguments: {"data" : settingController.setting.privacy_64, "title" : "Privacy Policy"})),
+
+                  const SizedBox(height: 16),
+                  settingsTabWI('Refund & Cancellation Policy'.tr, "", null, theme, onTab: () => settingController.goto("/information", arguments: {"data" : settingController.setting.cr_64, "title" : "Refund & Cancellation Policy"})),
 
                   const SizedBox(height: 16),
                   settingsTabWI('About Us'.tr, "", null, theme, onTab: () => settingController.goto("/information", arguments: {"data" : settingController.setting.about_64, "title" : "About Us"})),

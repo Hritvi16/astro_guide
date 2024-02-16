@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:astro_guide/essential/Essential.dart';
 import 'package:astro_guide/size/Spacing.dart';
 import 'package:astro_guide/size/WidgetSize.dart';
 import 'package:flutter/gestures.dart';
@@ -29,12 +30,12 @@ class OTP extends StatelessWidget {
             width: MySize.size100(context),
             height: MySize.sizeh100(context),
             padding: const EdgeInsets.symmetric(horizontal: 20),
-            decoration: const BoxDecoration(
-                image: DecorationImage(
+            decoration:  BoxDecoration(
+                image: Essential.getPlatform() ? DecorationImage(
                     image: AssetImage(
                         "assets/essential/upper_bg_s.png"
                     )
-                )
+                ) : null
             ),
             child: SafeArea(
               child: SingleChildScrollView(
@@ -47,14 +48,14 @@ class OTP extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Image.asset(
-                            "assets/app_icon/icon_box.png",
+                            "assets/app_icon/${Essential.getPlatformLogo()}",
                             height: 72,
                             width: 72,
                           ),
                           Padding(
                             padding: const EdgeInsets.only(top: 25.0, bottom: 8),
                             child: Text(
-                              'Verify Mobile No.'.tr,
+                              'Verify your ${otpController.verification} '.tr,
                               style: GoogleFonts.playfairDisplay(
                                 fontSize: 32.0,
                                 color: MyColors.black,
@@ -63,13 +64,23 @@ class OTP extends StatelessWidget {
                               ),
                             ),
                           ),
-                          Text(
-                            '${'Verify your phone number'.tr}\n${otpController.code} ${otpController.mobile}',
-                            style: GoogleFonts.manrope(
-                              fontSize: 18.0,
-                              color: MyColors.black11,
-                              letterSpacing: 0,
-                              fontWeight: FontWeight.w600,
+                          RichText(
+                            text: TextSpan(
+                                text: 'Verify your ${otpController.verification} ',
+                                style: GoogleFonts.manrope(
+                                    color: MyColors.black11,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w400,
+                                    height: 1.5
+                                ),
+                                children: [
+                                  TextSpan(
+                                    text: otpController.verification=="email" ? otpController.email : '${otpController.code} ${otpController.mobile}',
+                                    style: GoogleFonts.manrope(
+                                        fontWeight: FontWeight.w600,
+                                    ),
+                                  )
+                                ]
                             ),
                           ),
                         ],
@@ -150,7 +161,7 @@ class OTP extends StatelessWidget {
                                   children: [
                                     TextSpan(
                                       text: otpController.start_time==0 ? "Resend".tr : "${"Resend".tr} in ${otpController.start_time} secs",
-                                      style: TextStyle(
+                                      style: GoogleFonts.manrope(
                                         decoration: TextDecoration.underline,
                                         color: otpController.start_time==0 ? MyColors.black : MyColors.colorGrey
                                       ),
@@ -163,9 +174,34 @@ class OTP extends StatelessWidget {
                               ),
                             ),
                           ),
+                          if(otpController.email.isNotEmpty)
+                            Center(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    height: 15,
+                                  ),
+                                  GestureDetector(
+                                    onTap: () {
+                                      otpController.changeVerificationType();
+                                    },
+                                    child: Text(
+                                        "Verify your account using ${otpController.getAntiVerification()}",
+                                        style: GoogleFonts.manrope(
+                                          fontSize: 12.0,
+                                          color: MyColors.colorPrimary,
+                                          letterSpacing: 0,
+                                          fontWeight: FontWeight.w700,
+                                        )
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
                           GestureDetector(
                             onTap: () {
-                              otpController.checkOTP(otpController.otp.text);
+                              otpController.verification=="email" ? otpController.checkOTPByEmail(otpController.otp.text) : otpController.checkOTP(otpController.otp.text);
                             },
                             child: standardButton(
                               context: context,

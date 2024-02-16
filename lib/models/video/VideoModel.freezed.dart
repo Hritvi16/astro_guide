@@ -80,22 +80,22 @@ class _$VideoModelCopyWithImpl<$Res, $Val extends VideoModel>
 }
 
 /// @nodoc
-abstract class _$$_VideoModelCopyWith<$Res>
+abstract class _$$VideoModelImplCopyWith<$Res>
     implements $VideoModelCopyWith<$Res> {
-  factory _$$_VideoModelCopyWith(
-          _$_VideoModel value, $Res Function(_$_VideoModel) then) =
-      __$$_VideoModelCopyWithImpl<$Res>;
+  factory _$$VideoModelImplCopyWith(
+          _$VideoModelImpl value, $Res Function(_$VideoModelImpl) then) =
+      __$$VideoModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int id, String title, String link, String image});
 }
 
 /// @nodoc
-class __$$_VideoModelCopyWithImpl<$Res>
-    extends _$VideoModelCopyWithImpl<$Res, _$_VideoModel>
-    implements _$$_VideoModelCopyWith<$Res> {
-  __$$_VideoModelCopyWithImpl(
-      _$_VideoModel _value, $Res Function(_$_VideoModel) _then)
+class __$$VideoModelImplCopyWithImpl<$Res>
+    extends _$VideoModelCopyWithImpl<$Res, _$VideoModelImpl>
+    implements _$$VideoModelImplCopyWith<$Res> {
+  __$$VideoModelImplCopyWithImpl(
+      _$VideoModelImpl _value, $Res Function(_$VideoModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -106,7 +106,7 @@ class __$$_VideoModelCopyWithImpl<$Res>
     Object? link = null,
     Object? image = null,
   }) {
-    return _then(_$_VideoModel(
+    return _then(_$VideoModelImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -129,15 +129,15 @@ class __$$_VideoModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_VideoModel implements _VideoModel {
-  _$_VideoModel(
+class _$VideoModelImpl implements _VideoModel {
+  _$VideoModelImpl(
       {required this.id,
       required this.title,
       required this.link,
       required this.image});
 
-  factory _$_VideoModel.fromJson(Map<String, dynamic> json) =>
-      _$$_VideoModelFromJson(json);
+  factory _$VideoModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$VideoModelImplFromJson(json);
 
   @override
   final int id;
@@ -154,10 +154,10 @@ class _$_VideoModel implements _VideoModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_VideoModel &&
+            other is _$VideoModelImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.link, link) || other.link == link) &&
@@ -171,12 +171,12 @@ class _$_VideoModel implements _VideoModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_VideoModelCopyWith<_$_VideoModel> get copyWith =>
-      __$$_VideoModelCopyWithImpl<_$_VideoModel>(this, _$identity);
+  _$$VideoModelImplCopyWith<_$VideoModelImpl> get copyWith =>
+      __$$VideoModelImplCopyWithImpl<_$VideoModelImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_VideoModelToJson(
+    return _$$VideoModelImplToJson(
       this,
     );
   }
@@ -187,10 +187,10 @@ abstract class _VideoModel implements VideoModel {
       {required final int id,
       required final String title,
       required final String link,
-      required final String image}) = _$_VideoModel;
+      required final String image}) = _$VideoModelImpl;
 
   factory _VideoModel.fromJson(Map<String, dynamic> json) =
-      _$_VideoModel.fromJson;
+      _$VideoModelImpl.fromJson;
 
   @override
   int get id;
@@ -202,6 +202,6 @@ abstract class _VideoModel implements VideoModel {
   String get image;
   @override
   @JsonKey(ignore: true)
-  _$$_VideoModelCopyWith<_$_VideoModel> get copyWith =>
+  _$$VideoModelImplCopyWith<_$VideoModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

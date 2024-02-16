@@ -87,11 +87,12 @@ class _$NotificationListModelCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_NotificationListModelCopyWith<$Res>
+abstract class _$$NotificationListModelImplCopyWith<$Res>
     implements $NotificationListModelCopyWith<$Res> {
-  factory _$$_NotificationListModelCopyWith(_$_NotificationListModel value,
-          $Res Function(_$_NotificationListModel) then) =
-      __$$_NotificationListModelCopyWithImpl<$Res>;
+  factory _$$NotificationListModelImplCopyWith(
+          _$NotificationListModelImpl value,
+          $Res Function(_$NotificationListModelImpl) then) =
+      __$$NotificationListModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -102,11 +103,12 @@ abstract class _$$_NotificationListModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_NotificationListModelCopyWithImpl<$Res>
-    extends _$NotificationListModelCopyWithImpl<$Res, _$_NotificationListModel>
-    implements _$$_NotificationListModelCopyWith<$Res> {
-  __$$_NotificationListModelCopyWithImpl(_$_NotificationListModel _value,
-      $Res Function(_$_NotificationListModel) _then)
+class __$$NotificationListModelImplCopyWithImpl<$Res>
+    extends _$NotificationListModelCopyWithImpl<$Res,
+        _$NotificationListModelImpl>
+    implements _$$NotificationListModelImplCopyWith<$Res> {
+  __$$NotificationListModelImplCopyWithImpl(_$NotificationListModelImpl _value,
+      $Res Function(_$NotificationListModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -117,7 +119,7 @@ class __$$_NotificationListModelCopyWithImpl<$Res>
     Object? message = null,
     Object? notifications = null,
   }) {
-    return _then(_$_NotificationListModel(
+    return _then(_$NotificationListModelImpl(
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -140,16 +142,16 @@ class __$$_NotificationListModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_NotificationListModel implements _NotificationListModel {
-  _$_NotificationListModel(
+class _$NotificationListModelImpl implements _NotificationListModel {
+  _$NotificationListModelImpl(
       {required this.status,
       required this.code,
       required this.message,
       required final List<NotificationModel> notifications})
       : _notifications = notifications;
 
-  factory _$_NotificationListModel.fromJson(Map<String, dynamic> json) =>
-      _$$_NotificationListModelFromJson(json);
+  factory _$NotificationListModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$NotificationListModelImplFromJson(json);
 
   @override
   final String status;
@@ -171,10 +173,10 @@ class _$_NotificationListModel implements _NotificationListModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_NotificationListModel &&
+            other is _$NotificationListModelImpl &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.code, code) || other.code == code) &&
             (identical(other.message, message) || other.message == message) &&
@@ -190,13 +192,13 @@ class _$_NotificationListModel implements _NotificationListModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_NotificationListModelCopyWith<_$_NotificationListModel> get copyWith =>
-      __$$_NotificationListModelCopyWithImpl<_$_NotificationListModel>(
-          this, _$identity);
+  _$$NotificationListModelImplCopyWith<_$NotificationListModelImpl>
+      get copyWith => __$$NotificationListModelImplCopyWithImpl<
+          _$NotificationListModelImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_NotificationListModelToJson(
+    return _$$NotificationListModelImplToJson(
       this,
     );
   }
@@ -208,10 +210,10 @@ abstract class _NotificationListModel implements NotificationListModel {
           required final int code,
           required final String message,
           required final List<NotificationModel> notifications}) =
-      _$_NotificationListModel;
+      _$NotificationListModelImpl;
 
   factory _NotificationListModel.fromJson(Map<String, dynamic> json) =
-      _$_NotificationListModel.fromJson;
+      _$NotificationListModelImpl.fromJson;
 
   @override
   String get status;
@@ -223,6 +225,6 @@ abstract class _NotificationListModel implements NotificationListModel {
   List<NotificationModel> get notifications;
   @override
   @JsonKey(ignore: true)
-  _$$_NotificationListModelCopyWith<_$_NotificationListModel> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$NotificationListModelImplCopyWith<_$NotificationListModelImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

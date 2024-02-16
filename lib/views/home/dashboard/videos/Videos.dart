@@ -1,5 +1,6 @@
 import 'package:astro_guide/colors/MyColors.dart';
 import 'package:astro_guide/controllers/video/VideosController.dart';
+import 'package:astro_guide/essential/Essential.dart';
 import 'package:astro_guide/models/video/VideoModel.dart';
 import 'package:astro_guide/services/networking/ApiConstants.dart';
 import 'package:astro_guide/shared/CustomClipPath.dart';
@@ -45,11 +46,12 @@ class Videos extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                   color: MyColors.colorPrimary,
-                  image: const DecorationImage(
+                  image: Essential.getPlatform() ?
+                  const DecorationImage(
                       image: AssetImage(
                           "assets/essential/upper_bg_s.png"
                       )
-                  )
+                  ) : null
               ),
               child: SafeArea(
                   child: CustomAppBar('Videos'.tr)
@@ -63,7 +65,7 @@ class Videos extends StatelessWidget {
             builder: MaterialIndicatorDelegate(
               builder: (context, controller) {
                 return Image.asset(
-                  "assets/essential/loading.png",
+                  Essential.getPlatform() ? "assets/essential/loading.png" : "assets/app_icon/ios_icon.jpg",
                   height: 30,
                 );
               },

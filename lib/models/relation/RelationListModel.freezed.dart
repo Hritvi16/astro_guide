@@ -81,11 +81,11 @@ class _$RelationListModelCopyWithImpl<$Res, $Val extends RelationListModel>
 }
 
 /// @nodoc
-abstract class _$$_RelationListModelCopyWith<$Res>
+abstract class _$$RelationListModelImplCopyWith<$Res>
     implements $RelationListModelCopyWith<$Res> {
-  factory _$$_RelationListModelCopyWith(_$_RelationListModel value,
-          $Res Function(_$_RelationListModel) then) =
-      __$$_RelationListModelCopyWithImpl<$Res>;
+  factory _$$RelationListModelImplCopyWith(_$RelationListModelImpl value,
+          $Res Function(_$RelationListModelImpl) then) =
+      __$$RelationListModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -93,11 +93,11 @@ abstract class _$$_RelationListModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_RelationListModelCopyWithImpl<$Res>
-    extends _$RelationListModelCopyWithImpl<$Res, _$_RelationListModel>
-    implements _$$_RelationListModelCopyWith<$Res> {
-  __$$_RelationListModelCopyWithImpl(
-      _$_RelationListModel _value, $Res Function(_$_RelationListModel) _then)
+class __$$RelationListModelImplCopyWithImpl<$Res>
+    extends _$RelationListModelCopyWithImpl<$Res, _$RelationListModelImpl>
+    implements _$$RelationListModelImplCopyWith<$Res> {
+  __$$RelationListModelImplCopyWithImpl(_$RelationListModelImpl _value,
+      $Res Function(_$RelationListModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -108,7 +108,7 @@ class __$$_RelationListModelCopyWithImpl<$Res>
     Object? message = null,
     Object? data = null,
   }) {
-    return _then(_$_RelationListModel(
+    return _then(_$RelationListModelImpl(
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -131,16 +131,16 @@ class __$$_RelationListModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_RelationListModel implements _RelationListModel {
-  _$_RelationListModel(
+class _$RelationListModelImpl implements _RelationListModel {
+  _$RelationListModelImpl(
       {required this.status,
       required this.code,
       required this.message,
       required final List<RelationModel> data})
       : _data = data;
 
-  factory _$_RelationListModel.fromJson(Map<String, dynamic> json) =>
-      _$$_RelationListModelFromJson(json);
+  factory _$RelationListModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$RelationListModelImplFromJson(json);
 
   @override
   final String status;
@@ -162,10 +162,10 @@ class _$_RelationListModel implements _RelationListModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_RelationListModel &&
+            other is _$RelationListModelImpl &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.code, code) || other.code == code) &&
             (identical(other.message, message) || other.message == message) &&
@@ -180,13 +180,13 @@ class _$_RelationListModel implements _RelationListModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_RelationListModelCopyWith<_$_RelationListModel> get copyWith =>
-      __$$_RelationListModelCopyWithImpl<_$_RelationListModel>(
+  _$$RelationListModelImplCopyWith<_$RelationListModelImpl> get copyWith =>
+      __$$RelationListModelImplCopyWithImpl<_$RelationListModelImpl>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_RelationListModelToJson(
+    return _$$RelationListModelImplToJson(
       this,
     );
   }
@@ -197,10 +197,10 @@ abstract class _RelationListModel implements RelationListModel {
       {required final String status,
       required final int code,
       required final String message,
-      required final List<RelationModel> data}) = _$_RelationListModel;
+      required final List<RelationModel> data}) = _$RelationListModelImpl;
 
   factory _RelationListModel.fromJson(Map<String, dynamic> json) =
-      _$_RelationListModel.fromJson;
+      _$RelationListModelImpl.fromJson;
 
   @override
   String get status;
@@ -212,6 +212,6 @@ abstract class _RelationListModel implements RelationListModel {
   List<RelationModel> get data;
   @override
   @JsonKey(ignore: true)
-  _$$_RelationListModelCopyWith<_$_RelationListModel> get copyWith =>
+  _$$RelationListModelImplCopyWith<_$RelationListModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

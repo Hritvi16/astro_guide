@@ -6,8 +6,9 @@ part of 'LanguageListModel.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_LanguageListModel _$$_LanguageListModelFromJson(Map<String, dynamic> json) =>
-    _$_LanguageListModel(
+_$LanguageListModelImpl _$$LanguageListModelImplFromJson(
+        Map<String, dynamic> json) =>
+    _$LanguageListModelImpl(
       status: json['status'] as String,
       code: json['code'] as int,
       message: json['message'] as String,
@@ -16,8 +17,8 @@ _$_LanguageListModel _$$_LanguageListModelFromJson(Map<String, dynamic> json) =>
           .toList(),
     );
 
-Map<String, dynamic> _$$_LanguageListModelToJson(
-        _$_LanguageListModel instance) =>
+Map<String, dynamic> _$$LanguageListModelImplToJson(
+        _$LanguageListModelImpl instance) =>
     <String, dynamic>{
       'status': instance.status,
       'code': instance.code,

@@ -6,9 +6,9 @@ part of 'WalletResponseModel.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_WalletResponseModel _$$_WalletResponseModelFromJson(
+_$WalletResponseModelImpl _$$WalletResponseModelImplFromJson(
         Map<String, dynamic> json) =>
-    _$_WalletResponseModel(
+    _$WalletResponseModelImpl(
       status: json['status'] as String,
       code: json['code'] as int,
       message: json['message'] as String,
@@ -18,8 +18,8 @@ _$_WalletResponseModel _$$_WalletResponseModelFromJson(
           .toList(),
     );
 
-Map<String, dynamic> _$$_WalletResponseModelToJson(
-        _$_WalletResponseModel instance) =>
+Map<String, dynamic> _$$WalletResponseModelImplToJson(
+        _$WalletResponseModelImpl instance) =>
     <String, dynamic>{
       'status': instance.status,
       'code': instance.code,

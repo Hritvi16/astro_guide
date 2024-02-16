@@ -12,6 +12,7 @@ class LoginModel with _$LoginModel {
     required String message,
     String? access_token,
     String? refresh_token,
+    String? email,
   }) = _LoginModel;
 
   factory LoginModel.fromJson(JSON json) => _$LoginModelFromJson(json);

@@ -6,8 +6,8 @@ part of 'StateListModel.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_StateListModel _$$_StateListModelFromJson(Map<String, dynamic> json) =>
-    _$_StateListModel(
+_$StateListModelImpl _$$StateListModelImplFromJson(Map<String, dynamic> json) =>
+    _$StateListModelImpl(
       status: json['status'] as String,
       code: json['code'] as int,
       message: json['message'] as String,
@@ -16,7 +16,8 @@ _$_StateListModel _$$_StateListModelFromJson(Map<String, dynamic> json) =>
           .toList(),
     );
 
-Map<String, dynamic> _$$_StateListModelToJson(_$_StateListModel instance) =>
+Map<String, dynamic> _$$StateListModelImplToJson(
+        _$StateListModelImpl instance) =>
     <String, dynamic>{
       'status': instance.status,
       'code': instance.code,

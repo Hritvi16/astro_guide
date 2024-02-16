@@ -6,8 +6,9 @@ part of 'SupportChatModel.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_SupportChatModel _$$_SupportChatModelFromJson(Map<String, dynamic> json) =>
-    _$_SupportChatModel(
+_$SupportChatModelImpl _$$SupportChatModelImplFromJson(
+        Map<String, dynamic> json) =>
+    _$SupportChatModelImpl(
       id: json['id'] as int,
       sup_id: json['sup_id'] as int,
       sender: json['sender'] as String,
@@ -17,7 +18,8 @@ _$_SupportChatModel _$$_SupportChatModelFromJson(Map<String, dynamic> json) =>
       error: json['error'] as int?,
     );
 
-Map<String, dynamic> _$$_SupportChatModelToJson(_$_SupportChatModel instance) =>
+Map<String, dynamic> _$$SupportChatModelImplToJson(
+        _$SupportChatModelImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'sup_id': instance.sup_id,

@@ -1,5 +1,6 @@
 import 'package:astro_guide/colors/MyColors.dart';
 import 'package:astro_guide/controllers/testimonial/TestimonialsController.dart';
+import 'package:astro_guide/essential/Essential.dart';
 import 'package:astro_guide/models/testimonial/TestimonialModel.dart';
 import 'package:astro_guide/services/networking/ApiConstants.dart';
 import 'package:astro_guide/shared/CustomClipPath.dart';
@@ -48,11 +49,12 @@ class Testimonials extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                   color: MyColors.colorPrimary,
-                  image: const DecorationImage(
+                  image: Essential.getPlatform() ?
+                  const DecorationImage(
                       image: AssetImage(
                           "assets/essential/upper_bg_s.png"
                       )
-                  )
+                  ) : null
               ),
               child: SafeArea(
                   child: CustomAppBar('Testimonials'.tr)
@@ -66,7 +68,7 @@ class Testimonials extends StatelessWidget {
             builder: MaterialIndicatorDelegate(
               builder: (context, controller) {
                 return Image.asset(
-                  "assets/essential/loading.png",
+                  Essential.getPlatform() ? "assets/essential/loading.png" : "assets/app_icon/ios_icon.jpg",
                   height: 30,
                 );
               },
@@ -146,13 +148,20 @@ class Testimonials extends StatelessWidget {
                   Positioned(
                     top: 24,
                     left: 24,
-                    child: CircleAvatar(
+                    child: (testimonial.profile??"").isEmpty ?
+                      CircleAvatar(
+                        radius: 35,
+                        child: Icon(
+                          Icons.person,
+                          color: (ind+1)%2==0 ? MyColors.colorBlueBorder : MyColors.colorButton,
+                          size: 50,
+                        ),
+                        backgroundColor: (ind+1)%2==0 ? MyColors.colorBlueBG : MyColors.colorLightPrimary,
+                      )
+                      : CircleAvatar(
                       radius: 35,
-                      // backgroundImage: AssetImage(
-                      //   "assets/test/user.jpg"
-                      // ),
                       backgroundImage: NetworkImage(
-                          ApiConstants.userUrl+testimonial.profile
+                          ApiConstants.userUrl+testimonial.profile!
                       ),
                     ),
                   ),

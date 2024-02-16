@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:astro_guide/colors/MyColors.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 getNameTitle(String text, theme) {
   return Text(
@@ -54,7 +55,7 @@ getSalesTitle(String text1, String text2, theme) {
       children: [
         TextSpan(
           text: text2,
-          style: TextStyle(
+          style: GoogleFonts.manrope(
             color: MyColors.colorDarkPrimary
           )
         )
@@ -144,7 +145,7 @@ getInfoTitle(String text, theme) {
 getInfoTitle2(String text, theme) {
   return Text(
       text,
-      style: TextStyle(
+      style: GoogleFonts.manrope(
         fontWeight: FontWeight.w500,
       )
   );
@@ -241,7 +242,7 @@ getBusinessData(String text, theme) {
 getLabelTitle(String text) {
   return Text(
     text,
-    style: TextStyle(
+    style: GoogleFonts.manrope(
       color: MyColors.black,
       backgroundColor: MyColors.white,
       fontSize: 18,
@@ -253,7 +254,7 @@ getLabelTitle(String text) {
 getProfileInitial(String text) {
   return Text(
       text,
-      style: TextStyle(
+      style: GoogleFonts.manrope(
           color: Get.isDarkMode ? MyColors.black : MyColors.white,
           fontSize: 35,
           fontWeight: FontWeight.w500

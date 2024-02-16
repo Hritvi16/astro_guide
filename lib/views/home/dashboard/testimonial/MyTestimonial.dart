@@ -8,6 +8,7 @@ import 'package:astro_guide/shared/helpers/extensions/StringExtension.dart';
 import 'package:astro_guide/shared/widgets/customAppBar/CustomAppBar.dart';
 import 'package:astro_guide/size/MySize.dart';
 import 'package:astro_guide/size/WidgetSize.dart';
+import 'package:astro_guide/views/loadingScreen/LoadingScreen.dart';
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +29,7 @@ class MyTestimonial extends StatelessWidget {
     return GetBuilder<MyTestimonialController>(
       builder: (controller) {
         return Scaffold(
-          body: getBody(context),
+          body: myTestimonialController.load ? getBody(context) : LoadingScreen(),
         );
       },
     );
@@ -45,11 +46,12 @@ class MyTestimonial extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                   color: MyColors.colorPrimary,
-                  image: const DecorationImage(
+                  image: Essential.getPlatform() ?
+                  const DecorationImage(
                       image: AssetImage(
                           "assets/essential/upper_bg_s.png"
                       )
-                  )
+                  ) : null
               ),
               child: SafeArea(
                   child: CustomAppBar('My Testimonials'.tr, options: GestureDetector(
@@ -71,7 +73,7 @@ class MyTestimonial extends StatelessWidget {
             builder: MaterialIndicatorDelegate(
               builder: (context, controller) {
                 return Image.asset(
-                  "assets/essential/loading.png",
+                  Essential.getPlatform() ? "assets/essential/loading.png" : "assets/app_icon/ios_icon.jpg",
                   height: 30,
                 );
               },
@@ -190,13 +192,20 @@ class MyTestimonial extends StatelessWidget {
                     Positioned(
                       top: 24,
                       left: 24,
-                      child: CircleAvatar(
+                      child: (testimonial.profile??"").isEmpty ?
+                        CircleAvatar(
+                          radius: 35,
+                          child: Icon(
+                            Icons.person,
+                            color: (ind+1)%2==0 ? MyColors.colorBlueBorder : MyColors.colorButton,
+                            size: 50,
+                          ),
+                          backgroundColor: (ind+1)%2==0 ? MyColors.colorBlueBG : MyColors.colorLightPrimary,
+                        )
+                        : CircleAvatar(
                         radius: 35,
-                        // backgroundImage: AssetImage(
-                        //   "assets/test/user.jpg"
-                        // ),
                         backgroundImage: NetworkImage(
-                            ApiConstants.userUrl+testimonial.profile
+                            ApiConstants.userUrl+testimonial.profile!
                         ),
                       ),
                     ),

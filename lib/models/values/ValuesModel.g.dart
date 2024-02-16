@@ -6,8 +6,8 @@ part of 'ValuesModel.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_ValuesModel _$$_ValuesModelFromJson(Map<String, dynamic> json) =>
-    _$_ValuesModel(
+_$ValuesModelImpl _$$ValuesModelImplFromJson(Map<String, dynamic> json) =>
+    _$ValuesModelImpl(
       status: json['status'] as String,
       code: json['code'] as int,
       message: json['message'] as String,
@@ -28,7 +28,7 @@ _$_ValuesModel _$$_ValuesModelFromJson(Map<String, dynamic> json) =>
           .toList(),
     );
 
-Map<String, dynamic> _$$_ValuesModelToJson(_$_ValuesModel instance) =>
+Map<String, dynamic> _$$ValuesModelImplToJson(_$ValuesModelImpl instance) =>
     <String, dynamic>{
       'status': instance.status,
       'code': instance.code,

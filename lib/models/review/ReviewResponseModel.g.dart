@@ -6,9 +6,9 @@ part of 'ReviewResponseModel.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_ReviewResponseModel _$$_ReviewResponseModelFromJson(
+_$ReviewResponseModelImpl _$$ReviewResponseModelImplFromJson(
         Map<String, dynamic> json) =>
-    _$_ReviewResponseModel(
+    _$ReviewResponseModelImpl(
       status: json['status'] as String,
       code: json['code'] as int,
       message: json['message'] as String,
@@ -18,8 +18,8 @@ _$_ReviewResponseModel _$$_ReviewResponseModelFromJson(
       m_id: json['m_id'] as int?,
     );
 
-Map<String, dynamic> _$$_ReviewResponseModelToJson(
-        _$_ReviewResponseModel instance) =>
+Map<String, dynamic> _$$ReviewResponseModelImplToJson(
+        _$ReviewResponseModelImpl instance) =>
     <String, dynamic>{
       'status': instance.status,
       'code': instance.code,

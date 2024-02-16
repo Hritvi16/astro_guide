@@ -133,11 +133,11 @@ class _$SessionListModelCopyWithImpl<$Res, $Val extends SessionListModel>
 }
 
 /// @nodoc
-abstract class _$$_SessionListModelCopyWith<$Res>
+abstract class _$$SessionListModelImplCopyWith<$Res>
     implements $SessionListModelCopyWith<$Res> {
-  factory _$$_SessionListModelCopyWith(
-          _$_SessionListModel value, $Res Function(_$_SessionListModel) then) =
-      __$$_SessionListModelCopyWithImpl<$Res>;
+  factory _$$SessionListModelImplCopyWith(_$SessionListModelImpl value,
+          $Res Function(_$SessionListModelImpl) then) =
+      __$$SessionListModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -156,11 +156,11 @@ abstract class _$$_SessionListModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_SessionListModelCopyWithImpl<$Res>
-    extends _$SessionListModelCopyWithImpl<$Res, _$_SessionListModel>
-    implements _$$_SessionListModelCopyWith<$Res> {
-  __$$_SessionListModelCopyWithImpl(
-      _$_SessionListModel _value, $Res Function(_$_SessionListModel) _then)
+class __$$SessionListModelImplCopyWithImpl<$Res>
+    extends _$SessionListModelCopyWithImpl<$Res, _$SessionListModelImpl>
+    implements _$$SessionListModelImplCopyWith<$Res> {
+  __$$SessionListModelImplCopyWithImpl(_$SessionListModelImpl _value,
+      $Res Function(_$SessionListModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -174,7 +174,7 @@ class __$$_SessionListModelCopyWithImpl<$Res>
     Object? session_history = freezed,
     Object? wallet = freezed,
   }) {
-    return _then(_$_SessionListModel(
+    return _then(_$SessionListModelImpl(
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -209,8 +209,8 @@ class __$$_SessionListModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_SessionListModel implements _SessionListModel {
-  _$_SessionListModel(
+class _$SessionListModelImpl implements _SessionListModel {
+  _$SessionListModelImpl(
       {required this.status,
       required this.code,
       required this.message,
@@ -220,8 +220,8 @@ class _$_SessionListModel implements _SessionListModel {
       this.wallet})
       : _data = data;
 
-  factory _$_SessionListModel.fromJson(Map<String, dynamic> json) =>
-      _$$_SessionListModelFromJson(json);
+  factory _$SessionListModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$SessionListModelImplFromJson(json);
 
   @override
   final String status;
@@ -252,10 +252,10 @@ class _$_SessionListModel implements _SessionListModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_SessionListModel &&
+            other is _$SessionListModelImpl &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.code, code) || other.code == code) &&
             (identical(other.message, message) || other.message == message) &&
@@ -282,12 +282,13 @@ class _$_SessionListModel implements _SessionListModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_SessionListModelCopyWith<_$_SessionListModel> get copyWith =>
-      __$$_SessionListModelCopyWithImpl<_$_SessionListModel>(this, _$identity);
+  _$$SessionListModelImplCopyWith<_$SessionListModelImpl> get copyWith =>
+      __$$SessionListModelImplCopyWithImpl<_$SessionListModelImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_SessionListModelToJson(
+    return _$$SessionListModelImplToJson(
       this,
     );
   }
@@ -301,10 +302,10 @@ abstract class _SessionListModel implements SessionListModel {
       final List<ChatModel>? data,
       final AstrologerModel? astrologer,
       final SessionHistoryModel? session_history,
-      final double? wallet}) = _$_SessionListModel;
+      final double? wallet}) = _$SessionListModelImpl;
 
   factory _SessionListModel.fromJson(Map<String, dynamic> json) =
-      _$_SessionListModel.fromJson;
+      _$SessionListModelImpl.fromJson;
 
   @override
   String get status;
@@ -322,6 +323,6 @@ abstract class _SessionListModel implements SessionListModel {
   double? get wallet;
   @override
   @JsonKey(ignore: true)
-  _$$_SessionListModelCopyWith<_$_SessionListModel> get copyWith =>
+  _$$SessionListModelImplCopyWith<_$SessionListModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

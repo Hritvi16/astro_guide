@@ -105,11 +105,11 @@ class _$ReviewListModelCopyWithImpl<$Res, $Val extends ReviewListModel>
 }
 
 /// @nodoc
-abstract class _$$_ReviewListModelCopyWith<$Res>
+abstract class _$$ReviewListModelImplCopyWith<$Res>
     implements $ReviewListModelCopyWith<$Res> {
-  factory _$$_ReviewListModelCopyWith(
-          _$_ReviewListModel value, $Res Function(_$_ReviewListModel) then) =
-      __$$_ReviewListModelCopyWithImpl<$Res>;
+  factory _$$ReviewListModelImplCopyWith(_$ReviewListModelImpl value,
+          $Res Function(_$ReviewListModelImpl) then) =
+      __$$ReviewListModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -124,11 +124,11 @@ abstract class _$$_ReviewListModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_ReviewListModelCopyWithImpl<$Res>
-    extends _$ReviewListModelCopyWithImpl<$Res, _$_ReviewListModel>
-    implements _$$_ReviewListModelCopyWith<$Res> {
-  __$$_ReviewListModelCopyWithImpl(
-      _$_ReviewListModel _value, $Res Function(_$_ReviewListModel) _then)
+class __$$ReviewListModelImplCopyWithImpl<$Res>
+    extends _$ReviewListModelCopyWithImpl<$Res, _$ReviewListModelImpl>
+    implements _$$ReviewListModelImplCopyWith<$Res> {
+  __$$ReviewListModelImplCopyWithImpl(
+      _$ReviewListModelImpl _value, $Res Function(_$ReviewListModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -140,7 +140,7 @@ class __$$_ReviewListModelCopyWithImpl<$Res>
     Object? data = freezed,
     Object? rating = freezed,
   }) {
-    return _then(_$_ReviewListModel(
+    return _then(_$ReviewListModelImpl(
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -167,8 +167,8 @@ class __$$_ReviewListModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_ReviewListModel implements _ReviewListModel {
-  _$_ReviewListModel(
+class _$ReviewListModelImpl implements _ReviewListModel {
+  _$ReviewListModelImpl(
       {required this.status,
       required this.code,
       required this.message,
@@ -176,8 +176,8 @@ class _$_ReviewListModel implements _ReviewListModel {
       this.rating})
       : _data = data;
 
-  factory _$_ReviewListModel.fromJson(Map<String, dynamic> json) =>
-      _$$_ReviewListModelFromJson(json);
+  factory _$ReviewListModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ReviewListModelImplFromJson(json);
 
   @override
   final String status;
@@ -204,10 +204,10 @@ class _$_ReviewListModel implements _ReviewListModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ReviewListModel &&
+            other is _$ReviewListModelImpl &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.code, code) || other.code == code) &&
             (identical(other.message, message) || other.message == message) &&
@@ -223,12 +223,13 @@ class _$_ReviewListModel implements _ReviewListModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ReviewListModelCopyWith<_$_ReviewListModel> get copyWith =>
-      __$$_ReviewListModelCopyWithImpl<_$_ReviewListModel>(this, _$identity);
+  _$$ReviewListModelImplCopyWith<_$ReviewListModelImpl> get copyWith =>
+      __$$ReviewListModelImplCopyWithImpl<_$ReviewListModelImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ReviewListModelToJson(
+    return _$$ReviewListModelImplToJson(
       this,
     );
   }
@@ -240,10 +241,10 @@ abstract class _ReviewListModel implements ReviewListModel {
       required final int code,
       required final String message,
       final List<ReviewModel>? data,
-      final RatingModel? rating}) = _$_ReviewListModel;
+      final RatingModel? rating}) = _$ReviewListModelImpl;
 
   factory _ReviewListModel.fromJson(Map<String, dynamic> json) =
-      _$_ReviewListModel.fromJson;
+      _$ReviewListModelImpl.fromJson;
 
   @override
   String get status;
@@ -257,6 +258,6 @@ abstract class _ReviewListModel implements ReviewListModel {
   RatingModel? get rating;
   @override
   @JsonKey(ignore: true)
-  _$$_ReviewListModelCopyWith<_$_ReviewListModel> get copyWith =>
+  _$$ReviewListModelImplCopyWith<_$ReviewListModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

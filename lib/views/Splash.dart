@@ -1,3 +1,5 @@
+import 'dart:io';
+import 'package:astro_guide/essential/Essential.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:astro_guide/colors/MyColors.dart';
@@ -13,9 +15,9 @@ class Splash extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: MyColors.white,
-      body: const Center(
+      body: Center(
         child: Text(
-          "AstroGuide"
+          Essential.getPlatformAppName()
         ),
       ),
     );
