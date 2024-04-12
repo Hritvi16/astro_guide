@@ -10,4 +10,6 @@ class WalletConstants {
   static String p_id = "p_id";
   static String description = "description";
   static String status = "status";
+  static String successUrl = "successUrl";
+  static String cancelUrl = "cancelUrl";
 }

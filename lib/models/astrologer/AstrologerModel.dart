@@ -10,7 +10,7 @@ class AstrologerModel with _$AstrologerModel {
   factory AstrologerModel({
     required int id,
     required String name,
-    required String mobile,
+    String? mobile,
     required String email,
     required String experience,
     required String profile,
@@ -26,6 +26,7 @@ class AstrologerModel with _$AstrologerModel {
     int? offer,
     int? free,
     int? online,
+    int? conline,
     double? rating,
     int? total_rating,
     int? reviews,

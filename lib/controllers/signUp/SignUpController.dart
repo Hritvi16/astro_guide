@@ -286,16 +286,16 @@ class SignUpController extends GetxController {
     print(nationality);
     print(data.fields);
 
-    userProvider.add(data, ApiConstants.add, storage.read("access")).then((response) {
+    userProvider.add(data, ApiConstants.add, storage.read("access")).then((response) async {
       print(response.toJson());
       // process = false;
       // update();
       Get.back();
 
       if(response.code==1) {
-        storage.write("access", response.access_token);
-        storage.write("refresh", response.refresh_token);
-        storage.write("status", "logged in");
+        await storage.write("access", response.access_token);
+        await storage.write("refresh", response.refresh_token);
+        await storage.write("status", "logged in");
         Get.offAllNamed(Essential.getPlatform() ? '/home' : '/preHome');
       }
       else {

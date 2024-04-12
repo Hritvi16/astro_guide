@@ -135,7 +135,7 @@ class FollowingController extends GetxController {
   }
 
   void goto(String page, {dynamic arguments}) {
-    Get.toNamed(page, arguments: arguments)?.then((value) {
+    Get.toNamed(page, arguments: arguments, )?.then((value) {
       print("objecttt");
       onInit();
     });

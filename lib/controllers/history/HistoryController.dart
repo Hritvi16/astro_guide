@@ -69,7 +69,7 @@ class HistoryController extends GetxController with GetTickerProviderStateMixin 
       if(response.code==1) {
         amount = response.amount??0;
         wallet = response.wallet??[];
-        storage.write("wallet", amount);
+        await storage.write("wallet", amount);
         payment = response.payment??[];
         call = response.call??[];
         chat = response.chat??[];
@@ -108,10 +108,10 @@ class HistoryController extends GetxController with GetTickerProviderStateMixin 
   }
 
 
-  void logout() {
-    storage.write("access", "essential");
-    storage.write("refresh", "");
-    storage.write("status", "logged out");
+  Future<void> logout() async {
+    await storage.write("access", "essential");
+    await storage.write("refresh", "");
+    await storage.write("status", "logged out");
     Get.offAllNamed("/login");
   }
 

@@ -20,6 +20,7 @@ import 'package:astro_guide/controllers/home/HomeBinding.dart';
 import 'package:astro_guide/controllers/login/LoginBinding.dart';
 import 'package:astro_guide/controllers/otp/OTPBinding.dart';
 import 'package:astro_guide/controllers/signUp/SignUpBinding.dart';
+import 'package:astro_guide/controllers/similar/SimilarBinding.dart';
 import 'package:astro_guide/controllers/splash/SplashBinding.dart';
 import 'package:astro_guide/controllers/support/SupportBinding.dart';
 import 'package:astro_guide/controllers/support/SupportChatBinding.dart';
@@ -64,6 +65,7 @@ import 'package:astro_guide/views/home/settings/ChangeMobile.dart';
 import 'package:astro_guide/views/home/settings/ContactUs.dart';
 import 'package:astro_guide/views/home/settings/Information.dart';
 import 'package:astro_guide/views/home/settings/MyProfile.dart';
+import 'package:astro_guide/views/home/similar/Similar.dart';
 import 'package:astro_guide/views/home/support/Support.dart';
 import 'package:astro_guide/views/home/support/SupportChat.dart';
 import 'package:astro_guide/views/home/wallet/Invoice.dart';
@@ -139,12 +141,12 @@ class Routes {
         binding: ChatBinding(),
     ),
     GetPage(
-      name: '/astrologerDetail',
+      name: '/astrologerDetail/:id',
       page: () => AstrologerDetail(),
       binding: AstrologerDetailBinding(),
       preventDuplicates: false,
       participatesInRootNavigator: true,
-      maintainState: false
+      maintainState: true,
     ),
     GetPage(
         name: '/call',
@@ -210,6 +212,11 @@ class Routes {
         name: '/customYoutubePlayer',
         page: () => CustomYoutubePlayer(),
       binding: CustomYoutubePlayerBinding()
+    ),
+    GetPage(
+        name: '/similar',
+        page: () => Similar(),
+      binding: SimilarBinding()
     ),
     GetPage(
         name: '/wishlist',

@@ -26,8 +26,8 @@ class CacheManager {
   static writeCache({
     required dynamic key,
     required dynamic value
-  }) {
-    storage.write(key, value);
+  }) async {
+    await storage.write(key, value);
   }
 
   static deleteKeys() {

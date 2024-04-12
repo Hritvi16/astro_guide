@@ -28,10 +28,11 @@ class Chat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      onPopInvoked: (value) {
+        chatController.stopPlayer();
+        chatController.updateDashboard();
         chatController.disposeObjects();
-        return true;
       },
       child: GetBuilder<ChatController>(
         builder: (controller) {

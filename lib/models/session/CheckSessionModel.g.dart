@@ -10,9 +10,9 @@ _$CheckSessionModelImpl _$$CheckSessionModelImplFromJson(
         Map<String, dynamic> json) =>
     _$CheckSessionModelImpl(
       name: json['name'] as String,
-      mobile: json['mobile'] as String,
-      gender: json['gender'] as String,
-      dob: json['dob'] as String,
+      mobile: json['mobile'] as String?,
+      gender: json['gender'] as String?,
+      dob: json['dob'] as String?,
       ci_id: json['ci_id'] as int?,
       marital_status: json['marital_status'] as String?,
       type: json['type'] as String?,

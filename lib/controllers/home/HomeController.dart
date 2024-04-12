@@ -79,7 +79,7 @@ class HomeController extends GetxController {
         }
         else if (current == 1) {
           screens[index] = Talk(title, null);
-          Talk(title, null).talkController.onInit();
+          // Talk(title, null).talkController.onInit();
         }
         else if (current == 2) {
           screens[index] = History();

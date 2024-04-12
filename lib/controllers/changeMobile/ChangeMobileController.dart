@@ -161,10 +161,10 @@ class ChangeMobileController extends GetxController {
     });
   }
 
-  void goToHome(LoginModel response) {
-    storage.write("access", response.access_token);
-    storage.write("refresh", response.refresh_token);
-    storage.write("status", "logged in");
+  Future<void> goToHome(LoginModel response) async {
+    await storage.write("access", response.access_token);
+    await storage.write("refresh", response.refresh_token);
+    await storage.write("status", "logged in");
     Get.offAllNamed("/home");
   }
 

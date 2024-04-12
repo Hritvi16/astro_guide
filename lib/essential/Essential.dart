@@ -175,8 +175,10 @@ class Essential {
     return await tokenProvider.access(data, CommonConstants.essential).then((response) async {
       print(response.toJson());
       if(response.code==1) {
-        storage.write("access", response.access_token);
-        storage.write("refresh", response.refresh_token);
+        await storage.write("access", response.access_token);
+        await storage.write("refresh", response.refresh_token);
+        print("storageaccess: refresh:storage.read(access)");
+        print(storage.read("access"));
         return true;
       }
       else {
@@ -188,9 +190,9 @@ class Essential {
 
   static Future<void> logout() async {
     await CacheManager.deleteAllKeys();
-    storage.write("access", "essential");
-    storage.write("refresh", "");
-    storage.write("status", "logged out");
+    await storage.write("access", "essential");
+    await storage.write("refresh", "");
+    await storage.write("status", "logged out");
     Get.offAllNamed('/login');
   }
 
@@ -479,6 +481,33 @@ class Essential {
   static getPlatformLogo() {
     return Platform.isAndroid ? "icon_box.png" : "ios_icon.jpg";
   }
+
+  static String getChartDateFormat(String value) {
+    try {
+      return DateFormat('dd MMM, yyyy').format(DateTime.parse(value));
+    }
+    catch (ex) {
+      return "";
+    }
+  }
+
+  static Future<int> requestMediaPermission() async {
+    int permission = 0;
+    if((await Permission.microphone.isGranted)!=true) {
+      PermissionStatus status = await Permission.microphone.request();
+      if(status!=PermissionStatus.granted) {
+        permission = 1;
+      }
+    }
+    if((await Permission.camera.isGranted)!=true) {
+      PermissionStatus status = await Permission.camera.request();
+      if(status!=PermissionStatus.granted) {
+        permission = permission==1 ? 2 : 3;
+      }
+    }
+    return permission;
+  }
+
 
   // static bool getPlatform() {
   //   return Platform.isIOS;

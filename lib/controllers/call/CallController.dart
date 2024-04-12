@@ -8,6 +8,7 @@ import 'package:astro_guide/dialogs/RatingDialog.dart';
 import 'package:astro_guide/essential/Essential.dart';
 import 'package:astro_guide/models/astrologer/AstrologerModel.dart';
 import 'package:astro_guide/models/session/SessionHistoryModel.dart';
+import 'package:astro_guide/notifier/GlobalNotifier.dart';
 import 'package:astro_guide/providers/MeetingProvider.dart';
 import 'package:astro_guide/services/networking/ApiConstants.dart';
 import 'package:camera/camera.dart';
@@ -68,11 +69,12 @@ class CallController extends GetxController {
   int cnt = 0;
 
   final player = AudioPlayer();
-
+  final GlobalNotifier globalNotifier = Get.find();
 
 
   @override
   void onInit() {
+    globalNotifier.updateCallInit(true);
     ended = false;
     rated = false;
     print("ssweb: hellloooo callllll");
@@ -302,6 +304,9 @@ class CallController extends GetxController {
           if (type == "RECONNECT") {
             stopTimer();
             type = "ACTIVE";
+            if(storage.read("free")??false) {
+              await storage.write("free", false);
+            }
             update();
           }
           registerMeetingEvents();
@@ -331,7 +336,7 @@ class CallController extends GetxController {
     // Called when joined in meeting
     meeting?.on(
       Events.roomJoined,
-          () {
+          () async {
             print("ssweb: joinedddd Room");
             print("ssweb: room joineddddd $type $action");
             print(meeting?.participants.length);
@@ -345,6 +350,9 @@ class CallController extends GetxController {
             joined = true;
             seconds = 0;
             type = "ACTIVE";
+            if(storage.read("free")??false) {
+              await storage.write("free", false);
+            }
             // started_at = Essential.getCurrentDate();
             calculateCountdown();
             update();
@@ -379,7 +387,7 @@ class CallController extends GetxController {
 
     meeting?.on(
       Events.participantJoined,
-          (Participant participant) {
+          (Participant participant) async {
             print("ssweb: joinedddd Participant");
             print("ssweb: ssweb: participant joined $type $action");
             print(meeting?.participants.length);
@@ -394,6 +402,9 @@ class CallController extends GetxController {
                 joined = true;
                 seconds = 0;
                 type = "ACTIVE";
+                if(storage.read("free")??false) {
+                  await storage.write("free", false);
+                }
                 // started_at = Essential.getCurrentDate();
                 calculateCountdown();
                 update();
@@ -644,8 +655,8 @@ class CallController extends GetxController {
     };
     print("ssweb: ssweb: ssweb: endddd"+data.toString());
 
-    if(storage.read("calling")!=null) {
-      storage.remove("calling");
+    if(globalNotifier.callController.value!=null) {
+      globalNotifier.updateCallController(null);
     }
 
     try {
@@ -661,7 +672,7 @@ class CallController extends GetxController {
       if (response.code == 1) {
         print("ssweb: ssweb: Recordingggggg : Stop end");
         stopTimer();
-        storage.remove("calling");
+        globalNotifier.updateCallController(null);
         type = "COMPLETED";
         try {
           if (meeting != null) {
@@ -704,8 +715,8 @@ class CallController extends GetxController {
     };
     print("ssweb: ssweb: ssweb: "+data.toString());
 
-    if(storage.read("calling")!=null) {
-      storage.remove("calling");
+    if(globalNotifier.callController.value!=null) {
+      globalNotifier.updateCallController(null);
     }
 
     await meetingProvider.cancel(data, storage.read("access")).then((response) async {
@@ -725,7 +736,7 @@ class CallController extends GetxController {
           }
         }
         disposeObjects();
-        storage.remove("calling");
+        globalNotifier.updateCallController(null);
         // back();
       }
       else if (response.code == -2) {}
@@ -748,8 +759,8 @@ class CallController extends GetxController {
     };
     print("ssweb: ssweb: ssweb: "+data.toString());
 
-    if(storage.read("calling")!=null) {
-      storage.remove("calling");
+    if(globalNotifier.callController.value!=null) {
+      globalNotifier.updateCallController(null);
     }
 
     await meetingProvider.reject(data, storage.read("access")).then((response) async {
@@ -833,8 +844,8 @@ class CallController extends GetxController {
         SessionConstants.sender : "U",
         SessionConstants.reason : "Chat was cancelled by user",
       };
-      if(storage.read("calling")!=null) {
-        storage.remove("calling");
+      if(globalNotifier.callController.value!=null) {
+        globalNotifier.updateCallController(null);
       }
 
       await meetingProvider.cancel(data, storage.read("access")).then((response) async {
@@ -849,7 +860,7 @@ class CallController extends GetxController {
           Essential.showSnackBar(response.message);
         }
       });
-      storage.remove("calling");
+      globalNotifier.updateCallController(null);
 
       if(meeting!=null) {
         try {
@@ -884,8 +895,17 @@ class CallController extends GetxController {
     super.dispose();
   }
 
+  void updateValues() {
+    print("sswebnotifier: before chat ${globalNotifier.showSession}");
+    if(globalNotifier.showSession.value=="notification") {
+      globalNotifier.updateValue("session");
+    }
+    globalNotifier.updateCallInit(false);
+    print("sswebnotifier: after chat ${globalNotifier.showSession}");
+  }
+
   void storeCalling(CallController callController) {
-    storage.write("calling", callController);
+    globalNotifier.updateCallController(callController);
   }
 
   void startRing(int time) {
@@ -1114,8 +1134,8 @@ class CallController extends GetxController {
     };
 
 
-    if(storage.read("calling")!=null) {
-      storage.remove("calling");
+    if(globalNotifier.callController.value!=null) {
+      globalNotifier.updateCallController(null);
     }
 
     await meetingProvider.waitlist(data, storage.read("access")).then((response) async {
@@ -1146,8 +1166,8 @@ class CallController extends GetxController {
     };
 
 
-    if(storage.read("calling")!=null) {
-      storage.remove("calling");
+    if(globalNotifier.callController.value!=null) {
+      globalNotifier.updateCallController(null);
     }
 
     await meetingProvider.missed(data, storage.read("access")).then((response) async {
@@ -1271,6 +1291,8 @@ class CallController extends GetxController {
     update();
 
     try {
+      cameraController?.stopImageStream();
+      cameraController?.stopVideoRecording();
       cameraController?.dispose();
       print(cameraController);
       cameraController = null;

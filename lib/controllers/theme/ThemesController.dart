@@ -22,9 +22,9 @@ class ThemesController extends GetxController {
     setTheme('light');
   }
 
-  void setTheme(String value) {
+  Future<void> setTheme(String value) async {
     theme = value;
-    storage.write('theme', value);
+    await storage.write('theme', value);
 
     if (value == 'system') Get.changeThemeMode(ThemeMode.system);
     if (value == 'light') Get.changeThemeMode(ThemeMode.light);

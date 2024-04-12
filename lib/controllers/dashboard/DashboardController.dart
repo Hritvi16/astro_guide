@@ -10,6 +10,7 @@ import 'package:astro_guide/models/spec/SpecModel.dart';
 import 'package:astro_guide/models/testimonial/TestimonialModel.dart';
 import 'package:astro_guide/models/user/UserModel.dart';
 import 'package:astro_guide/models/video/VideoModel.dart';
+import 'package:astro_guide/notifier/GlobalNotifier.dart';
 import 'package:astro_guide/providers/AstrologerProvider.dart';
 import 'package:astro_guide/providers/DashboardProvider.dart';
 import 'package:astro_guide/providers/SpecProvider.dart';
@@ -60,10 +61,16 @@ class DashboardController extends GetxController {
 
   late bool load;
 
+  final GlobalNotifier globalNotifier = Get.find();
+
   @override
   void onInit() {
     super.onInit();
     load = false;
+
+    globalNotifier.showSession.listen((value) {
+      updateDashboard(value);
+    });
 
     specProvider = Get.put(SpecProvider(specRepository));
     specs.add(
@@ -87,8 +94,8 @@ class DashboardController extends GetxController {
 
         print("response ${response.toJson()}");
 
-        storage.write("free", (response.user?.free ?? 1) == 0);
-        storage.write("wallet", response.user?.amount ?? 0);
+        await storage.write("free", (response.user?.free ?? 1) == 0);
+        await storage.write("wallet", response.user?.amount ?? 0);
         free = (response.user?.free ?? 1) == 0;
         wallet = response.user?.amount ?? 0;
         print(free);
@@ -103,7 +110,7 @@ class DashboardController extends GetxController {
           testimonials = response.testimonials ?? [];
           user = response.user!;
           session = response.session;
-          storage.write("user", user);
+          await storage.write("user", user);
         }
         else if (response.code != -1) {
           Essential.showSnackBar(response.message, code: response.code, time: response.code==-3 ? 3 : null);
@@ -218,10 +225,10 @@ class DashboardController extends GetxController {
     await getDashboardAstrologers();
   }
 
-  void logout() {
-    storage.write("access", "essential");
-    storage.write("refresh", "");
-    storage.write("status", "logged out");
+  Future<void> logout() async {
+    await storage.write("access", "essential");
+    await storage.write("refresh", "");
+    await storage.write("status", "logged out");
     Get.offAllNamed("/login");
   }
 
@@ -263,6 +270,14 @@ class DashboardController extends GetxController {
       if(spec.id==element.id) {
         await changeSpec(element);
       }
+    }
+  }
+
+  void updateDashboard(value) {
+    print("sswebnotifier dashboard: $value");
+    if(globalNotifier.showSession.value=="session") {
+      getDashboard();
+      globalNotifier.updateValue("");
     }
   }
 }

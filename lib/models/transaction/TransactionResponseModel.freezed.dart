@@ -12,7 +12,7 @@ part of 'TransactionResponseModel.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 TransactionResponseModel _$TransactionResponseModelFromJson(
     Map<String, dynamic> json) {
@@ -28,6 +28,7 @@ mixin _$TransactionResponseModel {
   String? get transaction_id => throw _privateConstructorUsedError;
   String? get body => throw _privateConstructorUsedError;
   String? get checksum => throw _privateConstructorUsedError;
+  PaymentModel? get payment => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -48,7 +49,10 @@ abstract class $TransactionResponseModelCopyWith<$Res> {
       int? id,
       String? transaction_id,
       String? body,
-      String? checksum});
+      String? checksum,
+      PaymentModel? payment});
+
+  $PaymentModelCopyWith<$Res>? get payment;
 }
 
 /// @nodoc
@@ -72,6 +76,7 @@ class _$TransactionResponseModelCopyWithImpl<$Res,
     Object? transaction_id = freezed,
     Object? body = freezed,
     Object? checksum = freezed,
+    Object? payment = freezed,
   }) {
     return _then(_value.copyWith(
       status: null == status
@@ -102,7 +107,23 @@ class _$TransactionResponseModelCopyWithImpl<$Res,
           ? _value.checksum
           : checksum // ignore: cast_nullable_to_non_nullable
               as String?,
+      payment: freezed == payment
+          ? _value.payment
+          : payment // ignore: cast_nullable_to_non_nullable
+              as PaymentModel?,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $PaymentModelCopyWith<$Res>? get payment {
+    if (_value.payment == null) {
+      return null;
+    }
+
+    return $PaymentModelCopyWith<$Res>(_value.payment!, (value) {
+      return _then(_value.copyWith(payment: value) as $Val);
+    });
   }
 }
 
@@ -122,7 +143,11 @@ abstract class _$$TransactionResponseModelImplCopyWith<$Res>
       int? id,
       String? transaction_id,
       String? body,
-      String? checksum});
+      String? checksum,
+      PaymentModel? payment});
+
+  @override
+  $PaymentModelCopyWith<$Res>? get payment;
 }
 
 /// @nodoc
@@ -145,6 +170,7 @@ class __$$TransactionResponseModelImplCopyWithImpl<$Res>
     Object? transaction_id = freezed,
     Object? body = freezed,
     Object? checksum = freezed,
+    Object? payment = freezed,
   }) {
     return _then(_$TransactionResponseModelImpl(
       status: null == status
@@ -175,6 +201,10 @@ class __$$TransactionResponseModelImplCopyWithImpl<$Res>
           ? _value.checksum
           : checksum // ignore: cast_nullable_to_non_nullable
               as String?,
+      payment: freezed == payment
+          ? _value.payment
+          : payment // ignore: cast_nullable_to_non_nullable
+              as PaymentModel?,
     ));
   }
 }
@@ -189,7 +219,8 @@ class _$TransactionResponseModelImpl implements _TransactionResponseModel {
       this.id,
       this.transaction_id,
       this.body,
-      this.checksum});
+      this.checksum,
+      this.payment});
 
   factory _$TransactionResponseModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$TransactionResponseModelImplFromJson(json);
@@ -208,10 +239,12 @@ class _$TransactionResponseModelImpl implements _TransactionResponseModel {
   final String? body;
   @override
   final String? checksum;
+  @override
+  final PaymentModel? payment;
 
   @override
   String toString() {
-    return 'TransactionResponseModel(status: $status, code: $code, message: $message, id: $id, transaction_id: $transaction_id, body: $body, checksum: $checksum)';
+    return 'TransactionResponseModel(status: $status, code: $code, message: $message, id: $id, transaction_id: $transaction_id, body: $body, checksum: $checksum, payment: $payment)';
   }
 
   @override
@@ -227,13 +260,14 @@ class _$TransactionResponseModelImpl implements _TransactionResponseModel {
                 other.transaction_id == transaction_id) &&
             (identical(other.body, body) || other.body == body) &&
             (identical(other.checksum, checksum) ||
-                other.checksum == checksum));
+                other.checksum == checksum) &&
+            (identical(other.payment, payment) || other.payment == payment));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, status, code, message, id, transaction_id, body, checksum);
+  int get hashCode => Object.hash(runtimeType, status, code, message, id,
+      transaction_id, body, checksum, payment);
 
   @JsonKey(ignore: true)
   @override
@@ -258,7 +292,8 @@ abstract class _TransactionResponseModel implements TransactionResponseModel {
       final int? id,
       final String? transaction_id,
       final String? body,
-      final String? checksum}) = _$TransactionResponseModelImpl;
+      final String? checksum,
+      final PaymentModel? payment}) = _$TransactionResponseModelImpl;
 
   factory _TransactionResponseModel.fromJson(Map<String, dynamic> json) =
       _$TransactionResponseModelImpl.fromJson;
@@ -277,6 +312,8 @@ abstract class _TransactionResponseModel implements TransactionResponseModel {
   String? get body;
   @override
   String? get checksum;
+  @override
+  PaymentModel? get payment;
   @override
   @JsonKey(ignore: true)
   _$$TransactionResponseModelImplCopyWith<_$TransactionResponseModelImpl>

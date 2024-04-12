@@ -16,6 +16,9 @@ _$TransactionResponseModelImpl _$$TransactionResponseModelImplFromJson(
       transaction_id: json['transaction_id'] as String?,
       body: json['body'] as String?,
       checksum: json['checksum'] as String?,
+      payment: json['payment'] == null
+          ? null
+          : PaymentModel.fromJson(json['payment'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$TransactionResponseModelImplToJson(
@@ -28,4 +31,5 @@ Map<String, dynamic> _$$TransactionResponseModelImplToJson(
       'transaction_id': instance.transaction_id,
       'body': instance.body,
       'checksum': instance.checksum,
+      'payment': instance.payment,
     };

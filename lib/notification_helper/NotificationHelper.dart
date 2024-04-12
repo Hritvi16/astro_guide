@@ -1,10 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
+import 'package:astro_guide/cache_manager/CacheManager.dart';
 import 'package:astro_guide/colors/MyColors.dart';
 import 'package:astro_guide/constants/SessionConstants.dart';
 import 'package:astro_guide/controllers/call/CallController.dart';
 import 'package:astro_guide/models/astrologer/AstrologerModel.dart';
 import 'package:astro_guide/models/session/SessionHistoryModel.dart';
+import 'package:astro_guide/notifier/GlobalNotifier.dart';
 import 'package:astro_guide/providers/MeetingProvider.dart';
 import 'package:astro_guide/repositories/MeetingRepository.dart';
 import 'package:astro_guide/services/networking/ApiService.dart';
@@ -55,6 +58,7 @@ class NotificationHelper {
 
   // Notification lib
   static AwesomeNotifications awesomeNotifications = AwesomeNotifications();
+  static final GlobalNotifier globalNotifier = Get.find();
 
   /// this function will initialize firebase and fcm instance
   static Future<void> initFcm() async {
@@ -148,7 +152,7 @@ class NotificationHelper {
   //
   //   userProvider.insertFCM(data).then((value) {
   //     if(value.code==1) {
-  //       storage.write("fcm", token);
+  //       await storage.write("fcm", token);
   //     }
   //   });
   // }
@@ -162,10 +166,18 @@ class NotificationHelper {
     print(message.notification?.title);
     print(message.data['category']);
     print(message.data['category']=="call");
+
+    if(message.data['category']=="chat" || message.data['category']=="call") {
+
+    }
+    else {
+      globalNotifier.updateValue("session");
+    }
+    var random = Random();
     _showNotification(
-        id: 1,
-        title: message.notification?.title ?? 'Title',
-        body: message.notification?.body ?? 'Body',
+        id: random.nextInt(pow(2, 31).toInt() - 1),
+        title: message.notification?.title ?? message?.data['title'] ?? '',
+        body: message.notification?.body ?? message?.data['body'] ?? '',
         payload: message.data.cast(),
         notificationLayout: NotificationLayout.BigText,
         category: message.data['category']=="call" || message.data['category']=="chat" ? NotificationCategory.Call : message.data['category']=="cancelled" ? NotificationCategory.MissedCall : null
@@ -207,53 +219,53 @@ class NotificationHelper {
     }
 
     if(go) {
+      globalNotifier.updateValue("session");
       if(message.data['category']=="waitlist") {
-        final storage = GetStorage();
 
-        print(storage.read("calling"));
-        if(storage.read("calling")!=null) {
-          CallController callController = storage.read("calling");
+        print(globalNotifier.callController.value);
+        if(globalNotifier.callController.value!=null) {
+          CallController callController = globalNotifier.callController.value!;
 
           if(callController.meeting!=null) {
             callController.meeting?.end();
             callController.meeting?.leave();
           }
           callController.back();
-          storage.remove("calling");
+          globalNotifier.updateCallController(null);
         }
       }
 
       else if(message.data['category']=="cancelled") {
-        final storage = GetStorage();
 
-        print(storage.read("calling"));
-        if(storage.read("calling")!=null) {
-          CallController callController = storage.read("calling");
+        print(globalNotifier.callController.value);
+        if(globalNotifier.callController.value!=null) {
+          CallController callController = globalNotifier.callController.value!;
 
           if(callController.meeting!=null) {
             callController.meeting?.end();
             callController.meeting?.leave();
           }
           callController.back();
-          storage.remove("calling");
+          globalNotifier.updateCallController(null);
         }
       }
 
       else if(message.data['category']=="rejected" || message.data['category']=="ended") {
-        final storage = GetStorage();
 
-        print(storage.read("calling"));
-        if(storage.read("calling")!=null) {
-          CallController callController = storage.read("calling");
+        print("globalNotifier.callController.value");
+        print(globalNotifier.callController.value);
+        if(globalNotifier.callController.value!=null) {
+          CallController callController = globalNotifier.callController.value!;
           callController.endMeeting(message.data['category']=="rejected" ? "REJECTED" : "COMPLETED");
-          storage.remove("calling");
+          globalNotifier.updateCallController(null);
         }
       }
 
+      var random = Random();
       _showNotification(
-          id: 1,
-          title: message.notification?.title ?? 'Title',
-          body: message.notification?.body ?? 'Body',
+          id: random.nextInt(pow(2, 31).toInt() - 1),
+          title: message.notification?.title ?? message?.data['title'] ?? '',
+          body: message.notification?.body ?? message?.data['body'] ?? '',
           payload: message.data.cast(),
           // pass payload to the notification card so you can use it (when user click on notification)
           notificationLayout: NotificationLayout.BigText,
@@ -295,6 +307,10 @@ class NotificationHelper {
           }
       );
     }
+
+    print("sswebnotifier: before notification ${globalNotifier.showSession}");
+    globalNotifier.updateValue("notification");
+    print("sswebnotifier: after notification ${globalNotifier.showSession}");
 
     Get.toNamed(
         data['path'] ?? "/splash",
@@ -423,6 +439,14 @@ class NotificationController {
     print("createddd");
     print(receivedNotification);
     print(receivedNotification.payload);
+
+    if(receivedNotification.category!=NotificationCategory.Call) {
+      print("last call id ${storage.read("current_id")}");
+      if(storage.read("current_id")!=null) {
+        AwesomeNotifications().cancel(storage.read("current_id"));
+        storage.remove("current_id");
+      }
+    }
     // Your code goes here
   }
 
@@ -432,6 +456,17 @@ class NotificationController {
     print("display");
     print(receivedNotification);
     print(receivedNotification.payload);
+    if(receivedNotification.category==NotificationCategory.Call) {
+      storage.write("current_id", receivedNotification.id ?? -1);
+      print("display Notification current call id ${receivedNotification.id}");
+    }
+    else {
+      Future.delayed(Duration(seconds: 5)).then((value) async {
+        print("display Notification last call id ${receivedNotification.id}");
+        await AwesomeNotifications().dismiss(receivedNotification.id ?? -1);
+        print("display Notification cancelled");
+      });
+    }
     // Your code goes here
   }
 
@@ -569,6 +604,7 @@ Future<void> rejectCall(String ch_id) async {
   final MeetingProvider meetingProvider = Get.put(MeetingProvider(meetingRepository));;
 
   final storage = GetStorage();
+  final GlobalNotifier globalNotifier = Get.find();
 
   Map <String, dynamic> data = {
     SessionConstants.ch_id : ch_id,
@@ -576,8 +612,8 @@ Future<void> rejectCall(String ch_id) async {
     SessionConstants.reason : "Chat was rejected by user",
   };
 
-  if(storage.read("calling")!=null) {
-    storage.remove("calling");
+  if(globalNotifier.callController.value!=null) {
+    globalNotifier.updateCallController(null);
   }
 
   await meetingProvider.reject(data, storage.read("access")).then((response) async {

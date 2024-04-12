@@ -12,6 +12,7 @@ class LoginModel with _$LoginModel {
     required String message,
     String? access_token,
     String? refresh_token,
+    int? whatsapp,
     String? email,
   }) = _LoginModel;
 

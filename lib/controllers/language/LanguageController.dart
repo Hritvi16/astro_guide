@@ -14,7 +14,7 @@ class LanguageController extends GetxController {
   Map<String, String>? language;
 
   @override
-  void onInit() {
+  Future<void> onInit() async {
     languages = Languages().languages.entries.map((entry){
       if(entry.key==storage.read("language")) {
         language = {entry.key : entry.value};
@@ -25,7 +25,7 @@ class LanguageController extends GetxController {
     messages = Languages().messages;
 
     if(storage.read("language")==null) {
-      storage.write("language", languages.first.entries.first.key);
+      await storage.write("language", languages.first.entries.first.key);
       language = {languages.first.entries.first.key : languages.first.entries.first.value};
     }
     super.onInit();
@@ -38,7 +38,7 @@ class LanguageController extends GetxController {
 
   Future<void> changeLanguage(Map<String, String> language) async {
     this.language = language;
-    storage.write("language", language.entries.first.key);
+    await storage.write("language", language.entries.first.key);
     update();
 
     Get.updateLocale(Locale(language.entries.first.key));

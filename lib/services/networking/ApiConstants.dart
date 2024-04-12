@@ -1,6 +1,6 @@
 class ApiConstants {
-  // static const url = "http://192.168.29.244:9000/";
-  // static const urlS = "http://192.168.29.244:9000/";
+  // static const url = "http://192.168.29.245:9000/";
+  // static const urlS = "http://192.168.29.245:3000/";
   static const url = "https://astroguide4u.com:9000/";
   static const urlS = "https://astroguide4u.com:9000/";
   // static const url = "http://15.206.164.99:9000/";
@@ -158,8 +158,8 @@ class ApiConstants {
   static const type = "type";
 
 
-  static String publishablekey =
-      "pk_test_51NSv16SBexlDw2EaLA2zwDO6nSuWdK2FuL4pbpBCo8ZhXhmebsyjtCl5uGgIwKgBGuLtPyiqPYXumf1AtqPdzCTy00U9Zdq9Lt";
+  // static String publishablekey = "pk_test_51NSv16SBexlDw2EaLA2zwDO6nSuWdK2FuL4pbpBCo8ZhXhmebsyjtCl5uGgIwKgBGuLtPyiqPYXumf1AtqPdzCTy00U9Zdq9Lt";
+  static String publishablekey = "pk_live_51NSv16SBexlDw2EapvHbsm7m6ErgtWfizj4YC0SUqFW2c3Zo5rDac0pZ4XA0wAJyvS1PDQFLaeXH1cbEz9qqgJis00eRRSRaux";
 
   // static SalesConstants sales = SalesConstants();
   // static BankConstants bank = BankConstants();

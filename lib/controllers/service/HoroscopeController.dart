@@ -79,7 +79,7 @@ class HoroscopeController extends GetxController {
         print(horoscopes);
         List<HoroscopeModel> temp = [];
         temp.addAll(horoscopes);
-        storage.write("zodiac_${sign}_$date", temp);
+        await storage.write("zodiac_${sign}_$date", temp);
       }
       update();
     });

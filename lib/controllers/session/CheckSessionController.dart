@@ -98,7 +98,7 @@ class CheckSessionController extends GetxController {
         kundlis = response.kundlis??[];
         relations.addAll(response.relations??[]);
         wallet = response.wallet??0;
-        storage.write("wallet", response.wallet??wallet);
+        await storage.write("wallet", response.wallet??wallet);
         sess_id = response.sess_id;
         update();
         setDetails();
@@ -110,7 +110,7 @@ class CheckSessionController extends GetxController {
         kundlis = response.kundlis??[];
         relations.addAll(response.relations??[]);
         wallet = response.wallet??0;
-        storage.write("wallet", response.wallet??wallet);
+        await storage.write("wallet", response.wallet??wallet);
         sess_id = response.sess_id;
         update();
         setDetails();
@@ -245,19 +245,22 @@ class CheckSessionController extends GetxController {
 
   void setUserDetails() {
     name.text = checkSessionModel.name;
-    gender = checkSessionModel.gender;
-    DateTime temp = DateTime.parse(checkSessionModel.dob);
-    relation = relations.first;
-    setDOB(temp);
-    if(checkSessionModel.info=="K") {
-      setTOB(temp);
-      for (var element in cities) {
-        if(element.id==checkSessionModel.ci_id) {
-          city = element;
+    gender = checkSessionModel.gender??UserConstants.F;
+    if(checkSessionModel.dob!=null) {
+      DateTime temp = DateTime.parse(checkSessionModel.dob??"");
+      setDOB(temp);
+      if(checkSessionModel.info=="K") {
+        setTOB(temp);
+        for (var element in cities) {
+          if(element.id==checkSessionModel.ci_id) {
+            city = element;
+          }
         }
+        marital_status = checkSessionModel.marital_status??"";
       }
-      marital_status = checkSessionModel.marital_status??"";
     }
+    relation = relations.first;
+
     if(!load) {
       load = true;
     }
@@ -338,13 +341,22 @@ class CheckSessionController extends GetxController {
     update();
   }
 
-  validate() {
+  validate() async {
     if(formKey.currentState!.validate()) {
       if(marital_status.isEmpty) {
         Essential.showSnackBar("Please select your marital status", time: 1);
       }
       else {
-        initiateSession();
+        int cnt = await Essential.requestMediaPermission();
+
+        if(cnt==0) {
+          initiateSession();
+        }
+        else {
+          Essential.showInfoDialog(
+              cnt==1 ? "Permission required for accessing microphone" :
+              cnt==2 ? "Permission required for accessing camera" : "Permission required for accessing microphone and camera");
+        }
       }
     }
   }

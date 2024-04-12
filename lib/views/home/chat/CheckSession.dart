@@ -361,6 +361,10 @@ class CheckSession extends StatelessWidget {
                               print(value);
                               checkSessionController.setTOB(value);
                             },
+                            onSubmit: (value) {
+                              print(value);
+                              checkSessionController.setTOB(value);
+                            },
                             backgroundColor: MyColors.cardColor(),
                             closeIconColor: MyColors.iconColor(),
                             bottomPickerTheme:  BottomPickerTheme.plumPlate,

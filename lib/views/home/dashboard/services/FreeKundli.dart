@@ -200,6 +200,7 @@ class FreeKundli extends StatelessWidget {
         getTabs(),
         Flexible(
           flex: 1,
+          // child: freeKundliController.detailLoad[freeKundliController.selected] ? SingleChildScrollView(
           child: freeKundliController.load ? SingleChildScrollView(
             physics: const AlwaysScrollableScrollPhysics(),
             child: getTabBody(context),
@@ -494,8 +495,15 @@ class FreeKundli extends StatelessWidget {
   }
 
   Widget getChart(String svg) {
+    print("freeKundliController.charts");
+    print(freeKundliController.charts);
+    print("svg");
+    print(svg);
+    // print(svg.replaceAll("\\", "").replaceAll("\n", ""));
+    // print(svg.replaceAll("\\", ""));
     return freeKundliController.charts.isNotEmpty ?
     SvgPicture.string(svg)
+    // SvgPicture.string(svg.replaceAll("\\", "").replaceAll("\n", ""))
         : Container();
   }
 
@@ -947,15 +955,21 @@ class FreeKundli extends StatelessWidget {
 
     Map<String, dynamic> mahadashaList = freeKundliController.getVimDasha();
 
+    print(mahadashaList);
     for (var element in mahadashaList.keys) {
       VimMahaDashaDateModel mahadashaDateModel = mahadashaList[element];
+      print("mahadashaDateModel.start_date");
+      print(mahadashaDateModel.start_date);
       dasha.add(
           TableRow(
               children: [
                 getTableInfo(element, vertical: 10),
-                getTableInfo(DateFormat('dd MMM, yyyy').format(DateTime.parse(mahadashaDateModel.start_date??mahadashaDateModel.start_time??"")), vertical: 10),
-                getTableInfo(DateFormat('dd MMM, yyyy').format(DateTime.parse(mahadashaDateModel.end_date??mahadashaDateModel.end_time??"")),
+                getTableInfo(Essential.getChartDateFormat(mahadashaDateModel.start_date??mahadashaDateModel.start_time??""), vertical: 10),
+                getTableInfo(Essential.getChartDateFormat(mahadashaDateModel.end_date??mahadashaDateModel.end_time??""),
                     next: (freeKundliController.dasha_level<2 ? " >" : ""), dasha: mahadashaDateModel.antar_dasha??mahadashaDateModel.pratyantar_dasha, vertical: 10),
+                // getTableInfo(DateFormat('dd MMM, yyyy').format(DateTime.parse(mahadashaDateModel.start_date??mahadashaDateModel.start_time??"")), vertical: 10),
+                // getTableInfo(DateFormat('dd MMM, yyyy').format(DateTime.parse(mahadashaDateModel.end_date??mahadashaDateModel.end_time??"")),
+                //     next: (freeKundliController.dasha_level<2 ? " >" : ""), dasha: mahadashaDateModel.antar_dasha??mahadashaDateModel.pratyantar_dasha, vertical: 10),
               ]
           )
       );

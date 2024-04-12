@@ -118,9 +118,8 @@ class JoinScreen extends StatelessWidget {
                                                 style: ElevatedButton.styleFrom(
                                                   shape: const CircleBorder(),
                                                   padding: const EdgeInsets.all(12),
-                                                  primary:
-                                                  joinScreenController.isMicOn ? Colors.white : red,
-                                                  onPrimary: Colors.black,
+                                                  backgroundColor: joinScreenController.isMicOn ? Colors.white : red,
+                                                  // onPrimary: Colors.black,
                                                 ),
                                               ),
                                               ElevatedButton(
@@ -137,7 +136,7 @@ class JoinScreen extends StatelessWidget {
                                                 style: ElevatedButton.styleFrom(
                                                   shape: const CircleBorder(),
                                                   padding: const EdgeInsets.all(12),
-                                                  primary: joinScreenController.isCameraOn
+                                                  backgroundColor: joinScreenController.isCameraOn
                                                       ? Colors.white
                                                       : red,
                                                 ),

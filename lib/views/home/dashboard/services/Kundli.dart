@@ -295,9 +295,9 @@ class Kundli extends StatelessWidget {
                               print(value);
                               kundliController.setTOB(value);
                             },
-                            onClose: () {
+                            onSubmit: (value) {
                               print("closee");
-                              // kundliController.setTOB(value);
+                              kundliController.setTOB(value);
                             },
                             backgroundColor: MyColors.cardColor(),
                             closeIconColor: MyColors.iconColor(),

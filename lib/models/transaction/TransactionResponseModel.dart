@@ -1,4 +1,5 @@
 import 'package:astro_guide/models/package/PackageModel.dart';
+import 'package:astro_guide/models/payment/PaymentModel.dart';
 import 'package:astro_guide/shared/typedef.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -16,6 +17,7 @@ class TransactionResponseModel with _$TransactionResponseModel {
     String? transaction_id,
     String? body,
     String? checksum,
+    PaymentModel? payment,
     // double? amount,
     // List<PackageModel>? data,
   }) = _TransactionResponseModel;

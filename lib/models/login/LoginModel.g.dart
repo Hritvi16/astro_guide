@@ -13,6 +13,7 @@ _$LoginModelImpl _$$LoginModelImplFromJson(Map<String, dynamic> json) =>
       message: json['message'] as String,
       access_token: json['access_token'] as String?,
       refresh_token: json['refresh_token'] as String?,
+      whatsapp: json['whatsapp'] as int?,
       email: json['email'] as String?,
     );
 
@@ -23,5 +24,6 @@ Map<String, dynamic> _$$LoginModelImplToJson(_$LoginModelImpl instance) =>
       'message': instance.message,
       'access_token': instance.access_token,
       'refresh_token': instance.refresh_token,
+      'whatsapp': instance.whatsapp,
       'email': instance.email,
     };

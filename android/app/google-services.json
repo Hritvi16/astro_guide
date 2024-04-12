@@ -22,11 +22,19 @@
           }
         },
         {
-          "client_id": "170894307366-1121stmp5mna8q9illqf4r7p7e7okuea.apps.googleusercontent.com",
+          "client_id": "170894307366-n6hd8rts1a5gtpomabdghq6c7dggfs7k.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.ss.astro_guide",
-            "certificate_hash": "c77a599012dd3ea8db5bc5f32f2953006f0b3866"
+            "certificate_hash": "a463710f0c4b19799300e4d1789a85bc8bf91247"
+          }
+        },
+        {
+          "client_id": "170894307366-vclcp6gv36um4p9lkmdgqbeueqauj174.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ss.astro_guide",
+            "certificate_hash": "a9b74d2435b971fbd21281839892425dd6058269"
           }
         },
         {

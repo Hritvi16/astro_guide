@@ -1,15 +1,21 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 import 'package:astro_guide/constants/CommonConstants.dart';
 import 'package:astro_guide/constants/WalletConstants.dart';
 import 'package:astro_guide/essential/Essential.dart';
 import 'package:astro_guide/models/package/PackageModel.dart';
+import 'package:astro_guide/models/payment/PaymentModel.dart';
+import 'package:astro_guide/models/razorpay/ErrorModel.dart';
+import 'package:astro_guide/models/razorpay/PaymentResponseModel.dart';
+import 'package:astro_guide/models/razorpay/SuccessModel.dart';
 import 'package:astro_guide/providers/WalletProvider.dart';
 import 'package:astro_guide/services/networking/ApiConstants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:phonepe_payment_sdk/phonepe_payment_sdk.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:stripe_checkout/stripe_checkout.dart';
 
 class WalletController extends GetxController {
@@ -25,7 +31,11 @@ class WalletController extends GetxController {
   late double wallet;
   late BuildContext context;
 
+  late Razorpay razorpay;
   Object? result;
+
+  late PaymentModel payment;
+  late int id;
 
 
   @override
@@ -43,7 +53,7 @@ class WalletController extends GetxController {
     await walletProvider.fetch(storage.read("access"), ApiConstants.user).then((response) async {
       if(response.code==1) {
         wallet = response.amount??0;
-        storage.write("wallet", wallet);
+        await storage.write("wallet", wallet);
         packages = [];
         packages.addAll(response.data??[]);
 
@@ -156,13 +166,24 @@ class WalletController extends GetxController {
       WalletConstants.wallet_amount : wallet_amount,
       WalletConstants.type : type,
       WalletConstants.description : description,
+      WalletConstants.successUrl : '',
+      WalletConstants.cancelUrl : '',
       if(type=="P")
         WalletConstants.p_id : package?.id??"",
     };
 
-    walletProvider.transaction(data, ApiConstants.transactionAPI+ApiConstants.add, storage.read("access")??CommonConstants.essential).then((response) {
+    print(data);
+
+    walletProvider.transaction(data, ApiConstants.transactionAPI+ApiConstants.add, storage.read("access")??CommonConstants.essential).then((response) async {
       print(response.toJson());
       if(response.code==1) {
+        if(payment_type=="RAZORPAY") {
+          await initRazorpay();
+          id = response.id??-1;
+          payment = response.payment!;
+          update();
+          getRazorpayCheckout();
+        }
         if(payment_type=="STRIPE") {
           getStripeCheckout(response.id ?? -1, response.transaction_id ?? "");
         }
@@ -176,6 +197,111 @@ class WalletController extends GetxController {
       update();
     });
   }
+
+  Future<void> initRazorpay() async {
+    try {
+      razorpay = Razorpay();
+      update();
+
+      razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, handlePaymentSuccess);
+      razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, handlePaymentError);
+      razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, handleExternalWallet);
+    }
+    catch(e) {
+      print(e);
+      print(e.toString());
+    }
+  }
+
+  void getRazorpayCheckout() {
+    print("---------------------------------------------------");
+    print(payment.toJson());
+    print(payment.amount_due);
+    var options = {
+      // 'key': "rzp_test_cXprx1a09EIpa4",
+      'key': "rzp_live_9K8UTtB73p7JTM",
+      'amount': payment.amount_due * 100, //in the smallest currency sub-unit.
+      'order_id': payment.id, // Generate order_id using Orders API
+      'timeout': 600, // in seconds
+    };
+    print(options);
+    // var options = {
+    //   'key': payment.id,
+    //   'amount': payment.amount_due * 100, //in the smallest currency sub-unit.
+    //   // 'name': 'Acme Corp.',
+    //   'order_id': payment.receipt, // Generate order_id using Orders API
+    //   // 'description': 'Fine T-Shirt',
+    //   'timeout': 60, // in seconds
+    //   'prefill': {
+    //     'contact': '9586033791',
+    //     'email': 'hritvi16gajiwala@gmail.com'
+    //   }
+    // };
+
+    razorpay.open(options);
+    print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+  }
+
+  void handlePaymentSuccess(PaymentSuccessResponse response) {
+    print("------------------------Success--------------------------");
+    print(response.toString());
+    print(response.data);
+    print(response.orderId);
+    print(response.paymentId);
+    print(response.signature);
+    PaymentResponseModel paymentResponse = PaymentResponseModel(
+        status: "Success",
+        code: 1,
+        success: SuccessModel(orderId: response.orderId, paymentId: response.paymentId, signature: response.signature)
+    );
+    processPayment(paymentResponse);
+  }
+
+  void handlePaymentError(PaymentFailureResponse response) {
+    print("------------------------Error--------------------------");
+    print(response.message??"");
+    Map<String, dynamic> res;
+    bool first;
+    if((response.message??"").startsWith("{") && (response.message??"").endsWith("}")) {
+      first = true;
+      res = json.decode(response.message ?? "");
+    }
+    else {
+      first = false;
+      res = {
+        "code" : response.code.toString(),
+        "reason" : response.message
+      };
+    }
+    print(res);
+    print(res!=null);
+    print(response.code);
+    PaymentResponseModel paymentResponse = PaymentResponseModel(
+        status: "Failure",
+        code: response.code,
+        error: ErrorModel.fromJson(first ? res['error'] : res)
+    );
+    cancelPayment(paymentResponse);
+  }
+
+  void handleExternalWallet(ExternalWalletResponse response) {
+    print("------------------------Wallet--------------------------");
+    print(response.toString());
+    print(response.walletName);
+    print(response);
+    PaymentResponseModel paymentResponse = PaymentResponseModel(
+        status: "Success",
+        code: 1,
+        success: SuccessModel(orderId: payment?.id??"", wallet: response.walletName)
+    );
+    processPayment(paymentResponse);
+
+  }
+
+  clearRazorpay() {
+    razorpay.clear(); // Removes all listeners
+  }
+
 
   Future<void> getStripeCheckout(int id, String sessionId) async {
     // final String sessionId = await _createCheckoutSession();
@@ -212,13 +338,65 @@ class WalletController extends GetxController {
     Map<String, dynamic> data = {
       WalletConstants.status : status,
       WalletConstants.id : id,
+      "method" : "STRIPE",
     };
 
     walletProvider.transaction(data, ApiConstants.transactionAPI+ApiConstants.statuss, storage.read("access")??CommonConstants.essential).then((response) {
+      print("response.toJson()");
       print(response.toJson());
       if(response.code==1) {
         package = null;
-        this.amount.text = "";
+        amount.text = "";
+        getPackages();
+      }
+      update();
+    });
+  }
+
+  Future<void> processPayment(PaymentResponseModel paymentResponse) async {
+    final Map<String, dynamic> data = {
+      "method" : "RAZORPAY",
+      "id" : id.toString(),
+      "status" : paymentResponse.code,
+      "status_type" : paymentResponse.status,
+      "payment_id" : paymentResponse.success?.paymentId??"",
+      "receipt" : payment?.receipt??"",
+      "wallet" : paymentResponse.success?.wallet??"",
+    };
+
+    print(data);
+
+    await walletProvider.transaction(data, ApiConstants.transactionAPI+ApiConstants.statuss, storage.read("access")).then((response) async {
+      print(response.toJson());
+      if(response.code==1) {
+        package = null;
+        amount.text = "";
+        getPackages();
+      }
+      update();
+    });
+  }
+
+  Future<void> cancelPayment(PaymentResponseModel paymentResponse) async {
+    final Map<String, dynamic> data = {
+      "method" : "RAZORPAY",
+      "id" : id.toString(),
+      "status" : paymentResponse.code,
+      "status_type" : paymentResponse.status,
+      "payment_id" : paymentResponse.success?.paymentId??"",
+      "receipt" : payment?.receipt??"",
+      "error_code" : paymentResponse.error?.code??"",
+      "rdescription" : paymentResponse.error?.description??"",
+      "source" : paymentResponse.error?.source??"",
+      "step" : paymentResponse.error?.step??"",
+      "reason" : paymentResponse.error?.reason??"",
+    };
+
+    await walletProvider.transaction(data, ApiConstants.transactionAPI+ApiConstants.statuss, storage.read("access")).then((response) async {
+      print(response.toJson());
+      if(response.code==1) {
+        package = null;
+        amount.text = "";
         getPackages();
       }
       update();

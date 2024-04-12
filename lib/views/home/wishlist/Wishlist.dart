@@ -13,6 +13,7 @@ import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:math' as math;
@@ -108,7 +109,7 @@ class Wishlist extends StatelessWidget {
     int rate = 0;
     return GestureDetector(
       onTap: () {
-        wishlistController.goto("/astrologerDetail", arguments: astrologer.id.toString());
+        wishlistController.goto("/astrologerDetail/${astrologer.id}", arguments: astrologer.id.toString());
       },
       child: Container(
         padding: const EdgeInsets.all(8),
@@ -132,16 +133,28 @@ class Wishlist extends StatelessWidget {
     );
   }
 
-  Widget getRatingDesign(int rate, int index) {
-    return Image.asset(
-      "assets/common/star.png",
-      color: (index+1)<=rate ? MyColors.colorButton : MyColors.colorGrey,
+  Widget getRatingDesign(double rating) {
+    return Center(
+      child: RatingBar.builder(
+        initialRating: rating,
+        direction: Axis.horizontal,
+        unratedColor: MyColors.colorUnrated,
+        allowHalfRating: true,
+        itemCount: 5,
+        itemPadding: EdgeInsets.symmetric(horizontal: 1.0),
+        ignoreGestures: true,
+        itemSize: 12,
+        itemBuilder: (context, _) => Image.asset(
+          "assets/common/star.png",
+          color: MyColors.colorButton,
+        ),
+        onRatingUpdate: (rating) {
+        },
+      ),
     );
   }
 
   getLeftSection(AstrologerModel astrologer) {
-    int rate = math.Random().nextInt(5);
-    int review = math.Random().nextInt(10000);
     return Container(
       decoration: BoxDecoration(
         border: Border.all(
@@ -199,22 +212,13 @@ class Wishlist extends StatelessWidget {
                     width: standardAstroListImageW,
                     height: 13,
                     padding: EdgeInsets.symmetric(horizontal: 10,),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        getRatingDesign(rate, 0),
-                        getRatingDesign(rate, 1),
-                        getRatingDesign(rate, 2),
-                        getRatingDesign(rate, 3),
-                        getRatingDesign(rate, 4),
-                      ],
-                    ),
+                    child: getRatingDesign(astrologer.rating??0),
                   ),
                   SizedBox(
                     height: 3,
                   ),
                   Text(
-                    '${'Reviews'.tr}: $review',
+                    '${'Reviews'.tr}: ${astrologer.reviews??0}',
                     style: GoogleFonts.manrope(
                       fontSize: 12.0,
                       color: MyColors.white,
@@ -255,14 +259,19 @@ class Wishlist extends StatelessWidget {
                             ),
                           ),
                         ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Image.asset(
-                          "assets/common/online.png",
-                          height: 11,
-                          width: 11,
-                        )
+                        if(astrologer.online==1)
+                          Row(
+                            children: [
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Image.asset(
+                                "assets/common/online.png",
+                                height: 11,
+                                width: 11,
+                              )
+                            ],
+                          )
                       ],
                     ),
                     SizedBox(
@@ -271,6 +280,8 @@ class Wishlist extends StatelessWidget {
                     if(Essential.getPlatform())
                       Text(
                         astrologer.types??"-",
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                         style: GoogleFonts.manrope(
                           fontSize: 12.0,
                           color: MyColors.colorGrey,
@@ -305,12 +316,16 @@ class Wishlist extends StatelessWidget {
               SizedBox(
                 width: 6,
               ),
-              Text(
-                "Hindi, English, Telegu",
-                style: GoogleFonts.manrope(
-                  fontSize: 12.0,
-                  color: MyColors.colorGrey,
-                  fontWeight: FontWeight.w500,
+              Flexible(
+                child: Text(
+                  astrologer.languages??"-",
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: GoogleFonts.manrope(
+                    fontSize: 12.0,
+                    color: MyColors.colorGrey,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
 
@@ -326,6 +341,9 @@ class Wishlist extends StatelessWidget {
   }
 
   getNewBottom(AstrologerModel astrologer) {
+    Color call = astrologer.conline==1 ? MyColors.colorSuccess : MyColors.colorGrey;
+    Color chat = astrologer.online==1 ? MyColors.colorChat : MyColors.colorGrey;
+
     print(wishlistController.free && astrologer.free==1);
     print('astrologer.free');
     print(astrologer.free);
@@ -339,22 +357,32 @@ class Wishlist extends StatelessWidget {
           fit: FlexFit.tight,
           child: GestureDetector(
             onTap: () {
-              print(wishlistController.wallet);
-              double min = Essential.getCalculatedAmount(astrologer.p_call??0, minutes: 5);
-              if((wishlistController.free && astrologer.free==1) || (wishlistController.wallet>=min)) {
-                wishlistController.goto("/checkSession", arguments: {
-                  "astrologer": astrologer,
-                  "free": wishlistController.free && astrologer.free == 1,
-                  "controller" : wishlistController,
-                  "category" : "CALL"
-                });
+              if(astrologer.conline==1) {
+                print(wishlistController.wallet);
+                double min = Essential.getCalculatedAmount(
+                    astrologer.p_call ?? 0, minutes: 5);
+                if ((wishlistController.free && astrologer.free == 1) ||
+                    (wishlistController.wallet >= min)) {
+                  wishlistController.goto("/checkSession", arguments: {
+                    "astrologer": astrologer,
+                    "free": wishlistController.free && astrologer.free == 1,
+                    "controller": wishlistController,
+                    "category": "CALL"
+                  });
+                }
+                else {
+                  Essential.showBasicDialog(
+                      "You must have minimum of ${CommonConstants.rupee}${min
+                          .ceil()} balance in your wallet. Do you want to recharge?",
+                      "Recharge Now", "No, Thanks").then((value) {
+                    if (value == "Recharge Now") {
+                      wishlistController.goto("/wallet");
+                    }
+                  });
+                }
               }
               else {
-                Essential.showBasicDialog("You must have minimum of ${CommonConstants.rupee}${min.ceil()} balance in your wallet. Do you want to recharge?", "Recharge Now", "No, Thanks").then((value) {
-                  if(value=="Recharge Now") {
-                    wishlistController.goto("/wallet");
-                  }
-                });
+                Essential.showInfoDialog("${astrologer.name} is currently unavailable for call." , btn: "OK");
               }
               // wishlistController.goto("/call", arguments: {"astrologer" : astrologer, "type" : "REQUESTED", "action" : });
             },
@@ -363,9 +391,9 @@ class Wishlist extends StatelessWidget {
                 height: standardShortButtonHeight,
                 padding: EdgeInsets.symmetric(horizontal: 5),
                 decoration: BoxDecoration(
-                    color: MyColors.colorSuccess.withOpacity(0.3),
+                    color: call.withOpacity(0.3),
                     border: Border.all(
-                        color: MyColors.colorSuccess
+                        color: call
                     ),
                     borderRadius: BorderRadius.circular(16)
                 ),
@@ -376,7 +404,7 @@ class Wishlist extends StatelessWidget {
                     Image.asset(
                       "assets/dashboard/call_filled.png",
                       height: 16,
-                      color: MyColors.colorSuccess,
+                      color: call,
                     ),
                     Flexible(
                       child: Text(
@@ -402,22 +430,32 @@ class Wishlist extends StatelessWidget {
           fit: FlexFit.tight,
           child: GestureDetector(
             onTap: () {
-              print(wishlistController.wallet);
-              double min = Essential.getCalculatedAmount(astrologer.p_chat??0, minutes: 5);
-              if((wishlistController.free && astrologer.free==1) || (wishlistController.wallet>=min)) {
-                wishlistController.goto("/checkSession", arguments: {
-                  "astrologer": astrologer,
-                  "free": wishlistController.free && astrologer.free == 1,
-                  "controller" : wishlistController,
-                  "category" : "CHAT"
-                });
+              if(astrologer.online==1) {
+                print(wishlistController.wallet);
+                double min = Essential.getCalculatedAmount(
+                    astrologer.p_chat ?? 0, minutes: 5);
+                if ((wishlistController.free && astrologer.free == 1) ||
+                    (wishlistController.wallet >= min)) {
+                  wishlistController.goto("/checkSession", arguments: {
+                    "astrologer": astrologer,
+                    "free": wishlistController.free && astrologer.free == 1,
+                    "controller": wishlistController,
+                    "category": "CHAT"
+                  });
+                }
+                else {
+                  Essential.showBasicDialog(
+                      "You must have minimum of ${CommonConstants.rupee}${min
+                          .ceil()} balance in your wallet. Do you want to recharge?",
+                      "Recharge Now", "No, Thanks").then((value) {
+                    if (value == "Recharge Now") {
+                      wishlistController.goto("/wallet");
+                    }
+                  });
+                }
               }
               else {
-                Essential.showBasicDialog("You must have minimum of ${CommonConstants.rupee}${min.ceil()} balance in your wallet. Do you want to recharge?", "Recharge Now", "No, Thanks").then((value) {
-                  if(value=="Recharge Now") {
-                    wishlistController.goto("/wallet");
-                  }
-                });
+                Essential.showInfoDialog("${astrologer.name} is currently unavailable for chat." , btn: "OK");
               }
             },
             child: Container(
@@ -425,9 +463,9 @@ class Wishlist extends StatelessWidget {
                 height: standardShortButtonHeight,
                 padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                 decoration: BoxDecoration(
-                    color: MyColors.colorChat.withOpacity(0.3),
+                    color: chat.withOpacity(0.3),
                     border: Border.all(
-                        color: MyColors.colorChat
+                        color: chat
                     ),
                     borderRadius: BorderRadius.circular(16)
                 ),
@@ -438,7 +476,7 @@ class Wishlist extends StatelessWidget {
                     Image.asset(
                       "assets/dashboard/chat_filled.png",
                       height: 16,
-                      color: MyColors.colorChat,
+                      color: chat,
                     ),
                     Flexible(
                       child: Text(

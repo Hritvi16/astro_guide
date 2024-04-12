@@ -55,7 +55,8 @@ class OTP extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.only(top: 25.0, bottom: 8),
                             child: Text(
-                              'Verify your ${otpController.verification} '.tr,
+                              'Verify your Mobile No. '.tr,
+                              // 'Verify your ${otpController.verification} '.tr,
                               style: GoogleFonts.playfairDisplay(
                                 fontSize: 32.0,
                                 color: MyColors.black,
@@ -89,7 +90,7 @@ class OTP extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.all(20),
                       decoration: BoxDecoration(
-                          color: MyColors.white,
+                          color: MyColors.cardColor(),
                           borderRadius: BorderRadius.circular(24)
                       ),
                       child: Column(
@@ -101,7 +102,6 @@ class OTP extends StatelessWidget {
                               'One Time Password',
                               style: GoogleFonts.manrope(
                                 fontSize: 16.0,
-                                color: MyColors.black,
                                 letterSpacing: 0,
                                 fontWeight: FontWeight.w600,
                               ),
@@ -154,16 +154,16 @@ class OTP extends StatelessWidget {
                                   text: "${"Didn't receive code?".tr}\n",
                                   style: GoogleFonts.manrope(
                                     fontSize: 12.0,
-                                    color: MyColors.black,
                                     letterSpacing: 0,
                                     fontWeight: FontWeight.w500,
+                                    color: MyColors.labelColor()
                                   ),
                                   children: [
                                     TextSpan(
                                       text: otpController.start_time==0 ? "Resend".tr : "${"Resend".tr} in ${otpController.start_time} secs",
                                       style: GoogleFonts.manrope(
                                         decoration: TextDecoration.underline,
-                                        color: otpController.start_time==0 ? MyColors.black : MyColors.colorGrey
+                                        color: otpController.start_time==0 ? MyColors.labelColor() : MyColors.colorGrey
                                       ),
                                       recognizer: TapGestureRecognizer()..onTap = () {
                                         otpController.resendOTP();
@@ -174,34 +174,92 @@ class OTP extends StatelessWidget {
                               ),
                             ),
                           ),
-                          if(otpController.email.isNotEmpty)
-                            Center(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  SizedBox(
-                                    height: 15,
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      otpController.changeVerificationType();
-                                    },
-                                    child: Text(
-                                        "Verify your account using ${otpController.getAntiVerification()}",
-                                        style: GoogleFonts.manrope(
-                                          fontSize: 12.0,
-                                          color: MyColors.colorPrimary,
-                                          letterSpacing: 0,
-                                          fontWeight: FontWeight.w700,
-                                        )
-                                    ),
-                                  ),
-                                ],
+                          if(otpController.verification!="sms")
+                            Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                height: 15,
                               ),
-                            ),
+                              GestureDetector(
+                                onTap: () {
+                                  otpController.changeType("sms");
+                                },
+                                child: Center(
+                                  child: Text(
+                                      "Verify your account using SMS",
+                                      style: GoogleFonts.manrope(
+                                        fontSize: 12.0,
+                                        color: MyColors.colorPrimary,
+                                        letterSpacing: 0,
+                                        fontWeight: FontWeight.w700,
+                                      )
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          if(otpController.verification!="whatsapp" && otpController.whatsapp==1)
+                            Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                height: 15,
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  otpController.changeType("whatsapp");
+                                },
+                                child: Center(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Image.asset("assets/common/whatsapp.png", height: 30,),
+                                      SizedBox(width: 5,),
+                                      Text(
+                                          "VERIFY USING WHATSAPP",
+                                          style: GoogleFonts.manrope(
+                                              fontSize: 14.0,
+                                              color: MyColors.black,
+                                              letterSpacing: 0,
+                                              fontWeight: FontWeight.w500,
+                                              decoration: TextDecoration.underline
+                                          )
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          // if(otpController.email.isNotEmpty && otpController.verification!="whatsapp")
+                          //   Center(
+                          //     child: Column(
+                          //       crossAxisAlignment: CrossAxisAlignment.center,
+                          //       children: [
+                          //         SizedBox(
+                          //           height: 15,
+                          //         ),
+                          //         GestureDetector(
+                          //           onTap: () {
+                          //             otpController.changeType("email");
+                          //           },
+                          //           child: Text(
+                          //               "Verify your account using Email",
+                          //               style: GoogleFonts.manrope(
+                          //                 fontSize: 12.0,
+                          //                 color: MyColors.colorPrimary,
+                          //                 letterSpacing: 0,
+                          //                 fontWeight: FontWeight.w700,
+                          //               )
+                          //           ),
+                          //         ),
+                          //       ],
+                          //     ),
+                          //   ),
                           GestureDetector(
                             onTap: () {
-                              otpController.verification=="email" ? otpController.checkOTPByEmail(otpController.otp.text) : otpController.checkOTP(otpController.otp.text);
+                              otpController.checkOTP(otpController.otp.text);
                             },
                             child: standardButton(
                               context: context,

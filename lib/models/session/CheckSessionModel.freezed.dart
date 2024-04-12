@@ -12,7 +12,7 @@ part of 'CheckSessionModel.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 CheckSessionModel _$CheckSessionModelFromJson(Map<String, dynamic> json) {
   return _CheckSessionModel.fromJson(json);
@@ -21,9 +21,9 @@ CheckSessionModel _$CheckSessionModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$CheckSessionModel {
   String get name => throw _privateConstructorUsedError;
-  String get mobile => throw _privateConstructorUsedError;
-  String get gender => throw _privateConstructorUsedError;
-  String get dob => throw _privateConstructorUsedError;
+  String? get mobile => throw _privateConstructorUsedError;
+  String? get gender => throw _privateConstructorUsedError;
+  String? get dob => throw _privateConstructorUsedError;
   int? get ci_id => throw _privateConstructorUsedError;
   String? get marital_status => throw _privateConstructorUsedError;
   String? get type => throw _privateConstructorUsedError;
@@ -43,9 +43,9 @@ abstract class $CheckSessionModelCopyWith<$Res> {
   @useResult
   $Res call(
       {String name,
-      String mobile,
-      String gender,
-      String dob,
+      String? mobile,
+      String? gender,
+      String? dob,
       int? ci_id,
       String? marital_status,
       String? type,
@@ -66,9 +66,9 @@ class _$CheckSessionModelCopyWithImpl<$Res, $Val extends CheckSessionModel>
   @override
   $Res call({
     Object? name = null,
-    Object? mobile = null,
-    Object? gender = null,
-    Object? dob = null,
+    Object? mobile = freezed,
+    Object? gender = freezed,
+    Object? dob = freezed,
     Object? ci_id = freezed,
     Object? marital_status = freezed,
     Object? type = freezed,
@@ -79,18 +79,18 @@ class _$CheckSessionModelCopyWithImpl<$Res, $Val extends CheckSessionModel>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      mobile: null == mobile
+      mobile: freezed == mobile
           ? _value.mobile
           : mobile // ignore: cast_nullable_to_non_nullable
-              as String,
-      gender: null == gender
+              as String?,
+      gender: freezed == gender
           ? _value.gender
           : gender // ignore: cast_nullable_to_non_nullable
-              as String,
-      dob: null == dob
+              as String?,
+      dob: freezed == dob
           ? _value.dob
           : dob // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       ci_id: freezed == ci_id
           ? _value.ci_id
           : ci_id // ignore: cast_nullable_to_non_nullable
@@ -121,9 +121,9 @@ abstract class _$$CheckSessionModelImplCopyWith<$Res>
   @useResult
   $Res call(
       {String name,
-      String mobile,
-      String gender,
-      String dob,
+      String? mobile,
+      String? gender,
+      String? dob,
       int? ci_id,
       String? marital_status,
       String? type,
@@ -142,9 +142,9 @@ class __$$CheckSessionModelImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? name = null,
-    Object? mobile = null,
-    Object? gender = null,
-    Object? dob = null,
+    Object? mobile = freezed,
+    Object? gender = freezed,
+    Object? dob = freezed,
     Object? ci_id = freezed,
     Object? marital_status = freezed,
     Object? type = freezed,
@@ -155,18 +155,18 @@ class __$$CheckSessionModelImplCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      mobile: null == mobile
+      mobile: freezed == mobile
           ? _value.mobile
           : mobile // ignore: cast_nullable_to_non_nullable
-              as String,
-      gender: null == gender
+              as String?,
+      gender: freezed == gender
           ? _value.gender
           : gender // ignore: cast_nullable_to_non_nullable
-              as String,
-      dob: null == dob
+              as String?,
+      dob: freezed == dob
           ? _value.dob
           : dob // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       ci_id: freezed == ci_id
           ? _value.ci_id
           : ci_id // ignore: cast_nullable_to_non_nullable
@@ -192,9 +192,9 @@ class __$$CheckSessionModelImplCopyWithImpl<$Res>
 class _$CheckSessionModelImpl implements _CheckSessionModel {
   _$CheckSessionModelImpl(
       {required this.name,
-      required this.mobile,
-      required this.gender,
-      required this.dob,
+      this.mobile,
+      this.gender,
+      this.dob,
       this.ci_id,
       this.marital_status,
       this.type,
@@ -206,11 +206,11 @@ class _$CheckSessionModelImpl implements _CheckSessionModel {
   @override
   final String name;
   @override
-  final String mobile;
+  final String? mobile;
   @override
-  final String gender;
+  final String? gender;
   @override
-  final String dob;
+  final String? dob;
   @override
   final int? ci_id;
   @override
@@ -264,9 +264,9 @@ class _$CheckSessionModelImpl implements _CheckSessionModel {
 abstract class _CheckSessionModel implements CheckSessionModel {
   factory _CheckSessionModel(
       {required final String name,
-      required final String mobile,
-      required final String gender,
-      required final String dob,
+      final String? mobile,
+      final String? gender,
+      final String? dob,
       final int? ci_id,
       final String? marital_status,
       final String? type,
@@ -278,11 +278,11 @@ abstract class _CheckSessionModel implements CheckSessionModel {
   @override
   String get name;
   @override
-  String get mobile;
+  String? get mobile;
   @override
-  String get gender;
+  String? get gender;
   @override
-  String get dob;
+  String? get dob;
   @override
   int? get ci_id;
   @override

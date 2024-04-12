@@ -317,6 +317,7 @@ class TalkController extends GetxController {
   }
 
   void goto(String page, {dynamic arguments}) {
+    print(page);
     Get.toNamed(page, arguments: arguments)?.then((value) {
       print("objecttt");
       onInit();

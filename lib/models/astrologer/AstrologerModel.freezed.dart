@@ -12,7 +12,7 @@ part of 'AstrologerModel.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 AstrologerModel _$AstrologerModelFromJson(Map<String, dynamic> json) {
   return _AstrologerModel.fromJson(json);
@@ -22,7 +22,7 @@ AstrologerModel _$AstrologerModelFromJson(Map<String, dynamic> json) {
 mixin _$AstrologerModel {
   int get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  String get mobile => throw _privateConstructorUsedError;
+  String? get mobile => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
   String get experience => throw _privateConstructorUsedError;
   String get profile => throw _privateConstructorUsedError;
@@ -38,6 +38,7 @@ mixin _$AstrologerModel {
   int? get offer => throw _privateConstructorUsedError;
   int? get free => throw _privateConstructorUsedError;
   int? get online => throw _privateConstructorUsedError;
+  int? get conline => throw _privateConstructorUsedError;
   double? get rating => throw _privateConstructorUsedError;
   int? get total_rating => throw _privateConstructorUsedError;
   int? get reviews => throw _privateConstructorUsedError;
@@ -66,7 +67,7 @@ abstract class $AstrologerModelCopyWith<$Res> {
   $Res call(
       {int id,
       String name,
-      String mobile,
+      String? mobile,
       String email,
       String experience,
       String profile,
@@ -82,6 +83,7 @@ abstract class $AstrologerModelCopyWith<$Res> {
       int? offer,
       int? free,
       int? online,
+      int? conline,
       double? rating,
       int? total_rating,
       int? reviews,
@@ -111,7 +113,7 @@ class _$AstrologerModelCopyWithImpl<$Res, $Val extends AstrologerModel>
   $Res call({
     Object? id = null,
     Object? name = null,
-    Object? mobile = null,
+    Object? mobile = freezed,
     Object? email = null,
     Object? experience = null,
     Object? profile = null,
@@ -127,6 +129,7 @@ class _$AstrologerModelCopyWithImpl<$Res, $Val extends AstrologerModel>
     Object? offer = freezed,
     Object? free = freezed,
     Object? online = freezed,
+    Object? conline = freezed,
     Object? rating = freezed,
     Object? total_rating = freezed,
     Object? reviews = freezed,
@@ -149,10 +152,10 @@ class _$AstrologerModelCopyWithImpl<$Res, $Val extends AstrologerModel>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      mobile: null == mobile
+      mobile: freezed == mobile
           ? _value.mobile
           : mobile // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
@@ -212,6 +215,10 @@ class _$AstrologerModelCopyWithImpl<$Res, $Val extends AstrologerModel>
       online: freezed == online
           ? _value.online
           : online // ignore: cast_nullable_to_non_nullable
+              as int?,
+      conline: freezed == conline
+          ? _value.conline
+          : conline // ignore: cast_nullable_to_non_nullable
               as int?,
       rating: freezed == rating
           ? _value.rating
@@ -276,7 +283,7 @@ abstract class _$$AstrologerModelImplCopyWith<$Res>
   $Res call(
       {int id,
       String name,
-      String mobile,
+      String? mobile,
       String email,
       String experience,
       String profile,
@@ -292,6 +299,7 @@ abstract class _$$AstrologerModelImplCopyWith<$Res>
       int? offer,
       int? free,
       int? online,
+      int? conline,
       double? rating,
       int? total_rating,
       int? reviews,
@@ -319,7 +327,7 @@ class __$$AstrologerModelImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? name = null,
-    Object? mobile = null,
+    Object? mobile = freezed,
     Object? email = null,
     Object? experience = null,
     Object? profile = null,
@@ -335,6 +343,7 @@ class __$$AstrologerModelImplCopyWithImpl<$Res>
     Object? offer = freezed,
     Object? free = freezed,
     Object? online = freezed,
+    Object? conline = freezed,
     Object? rating = freezed,
     Object? total_rating = freezed,
     Object? reviews = freezed,
@@ -357,10 +366,10 @@ class __$$AstrologerModelImplCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      mobile: null == mobile
+      mobile: freezed == mobile
           ? _value.mobile
           : mobile // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
@@ -421,6 +430,10 @@ class __$$AstrologerModelImplCopyWithImpl<$Res>
           ? _value.online
           : online // ignore: cast_nullable_to_non_nullable
               as int?,
+      conline: freezed == conline
+          ? _value.conline
+          : conline // ignore: cast_nullable_to_non_nullable
+              as int?,
       rating: freezed == rating
           ? _value.rating
           : rating // ignore: cast_nullable_to_non_nullable
@@ -479,7 +492,7 @@ class _$AstrologerModelImpl implements _AstrologerModel {
   _$AstrologerModelImpl(
       {required this.id,
       required this.name,
-      required this.mobile,
+      this.mobile,
       required this.email,
       required this.experience,
       required this.profile,
@@ -495,6 +508,7 @@ class _$AstrologerModelImpl implements _AstrologerModel {
       this.offer,
       this.free,
       this.online,
+      this.conline,
       this.rating,
       this.total_rating,
       this.reviews,
@@ -516,7 +530,7 @@ class _$AstrologerModelImpl implements _AstrologerModel {
   @override
   final String name;
   @override
-  final String mobile;
+  final String? mobile;
   @override
   final String email;
   @override
@@ -548,6 +562,8 @@ class _$AstrologerModelImpl implements _AstrologerModel {
   @override
   final int? online;
   @override
+  final int? conline;
+  @override
   final double? rating;
   @override
   final int? total_rating;
@@ -574,7 +590,7 @@ class _$AstrologerModelImpl implements _AstrologerModel {
 
   @override
   String toString() {
-    return 'AstrologerModel(id: $id, name: $name, mobile: $mobile, email: $email, experience: $experience, profile: $profile, about: $about, fav: $fav, follow: $follow, followers: $followers, favourite: $favourite, p_call: $p_call, p_chat: $p_chat, f_call: $f_call, f_chat: $f_chat, offer: $offer, free: $free, online: $online, rating: $rating, total_rating: $total_rating, reviews: $reviews, country: $country, state: $state, city: $city, total_chat_sec: $total_chat_sec, total_call_sec: $total_call_sec, total_chat_rating: $total_chat_rating, total_call_rating: $total_call_rating, types: $types, languages: $languages)';
+    return 'AstrologerModel(id: $id, name: $name, mobile: $mobile, email: $email, experience: $experience, profile: $profile, about: $about, fav: $fav, follow: $follow, followers: $followers, favourite: $favourite, p_call: $p_call, p_chat: $p_chat, f_call: $f_call, f_chat: $f_chat, offer: $offer, free: $free, online: $online, conline: $conline, rating: $rating, total_rating: $total_rating, reviews: $reviews, country: $country, state: $state, city: $city, total_chat_sec: $total_chat_sec, total_call_sec: $total_call_sec, total_chat_rating: $total_chat_rating, total_call_rating: $total_call_rating, types: $types, languages: $languages)';
   }
 
   @override
@@ -603,6 +619,7 @@ class _$AstrologerModelImpl implements _AstrologerModel {
             (identical(other.offer, offer) || other.offer == offer) &&
             (identical(other.free, free) || other.free == free) &&
             (identical(other.online, online) || other.online == online) &&
+            (identical(other.conline, conline) || other.conline == conline) &&
             (identical(other.rating, rating) || other.rating == rating) &&
             (identical(other.total_rating, total_rating) ||
                 other.total_rating == total_rating) &&
@@ -645,6 +662,7 @@ class _$AstrologerModelImpl implements _AstrologerModel {
         offer,
         free,
         online,
+        conline,
         rating,
         total_rating,
         reviews,
@@ -678,7 +696,7 @@ abstract class _AstrologerModel implements AstrologerModel {
   factory _AstrologerModel(
       {required final int id,
       required final String name,
-      required final String mobile,
+      final String? mobile,
       required final String email,
       required final String experience,
       required final String profile,
@@ -694,6 +712,7 @@ abstract class _AstrologerModel implements AstrologerModel {
       final int? offer,
       final int? free,
       final int? online,
+      final int? conline,
       final double? rating,
       final int? total_rating,
       final int? reviews,
@@ -715,7 +734,7 @@ abstract class _AstrologerModel implements AstrologerModel {
   @override
   String get name;
   @override
-  String get mobile;
+  String? get mobile;
   @override
   String get email;
   @override
@@ -746,6 +765,8 @@ abstract class _AstrologerModel implements AstrologerModel {
   int? get free;
   @override
   int? get online;
+  @override
+  int? get conline;
   @override
   double? get rating;
   @override

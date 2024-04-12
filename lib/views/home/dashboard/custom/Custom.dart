@@ -281,7 +281,7 @@ class Custom extends StatelessWidget {
     int rate = 0;
     return GestureDetector(
       onTap: () {
-        // customController.goto("/astrologerDetail", arguments: astrologer.id.toString());
+        // customController.goto("/astrologerDetail/${astrologer.id}", arguments: astrologer.id.toString());
       },
       child: Container(
         padding: const EdgeInsets.all(8),

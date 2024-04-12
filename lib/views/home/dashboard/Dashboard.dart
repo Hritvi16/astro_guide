@@ -18,6 +18,7 @@ import 'package:astro_guide/size/MySize.dart';
 import 'package:astro_guide/size/WidgetSize.dart';
 import 'package:astro_guide/views/loadingScreen/LoadingScreen.dart';
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
+// import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -309,8 +310,89 @@ class Dashboard extends StatelessWidget {
                 )
               ],
             ),
+            if(dashboardController.session?.status=="REQUESTED")
+              Padding(
+                padding: const EdgeInsets.only(top: 5.0),
+                child: Row(
+                  children: [
+                    getSessionButton("ACCEPT", Icons.call),
+                    SizedBox(width: 10,),
+                    getSessionButton("REJECT", Icons.call_end),
+                  ],
+                ),
+              )
           ],
         )
+      ),
+    );
+  }
+
+  Widget getSessionButton(String action, IconData icon) {
+    return Flexible(
+      flex: 1,
+      fit: FlexFit.tight,
+      child: GestureDetector(
+        onTap: () {
+          if(dashboardController.session?.category=="CHAT") {
+            dashboardController.goto(
+                "/chat",
+                arguments: {
+                  "type" : dashboardController.session?.status,
+                  "action" : action,
+                  "user_id" : dashboardController.session?.user_id,
+                  "ch_id" : dashboardController.session?.id,
+                  "session_history" : dashboardController.session,
+                  "astrologer": AstrologerModel(
+                    id: dashboardController.session?.astro_id??-1,
+                    name: dashboardController.session?.astrologer??"",
+                    profile: dashboardController.session?.astro_profile??"",
+                    mobile: '', email: '', experience: '', about: '',
+                  ),
+                }
+            );
+          }
+          else {
+            dashboardController.goto("/call",
+                arguments: {
+                  "type":  dashboardController.session?.status,
+                  "action" : action,
+                  "astro_id": dashboardController.session?.astro_id,
+                  "session_history": dashboardController.session,
+                  "astrologer": AstrologerModel(
+                    id: dashboardController.session?.astro_id??-1,
+                    name: dashboardController.session?.astrologer??"",
+                    profile: dashboardController.session?.astro_profile??"",
+                    mobile: '', email: '', experience: '', about: '',
+                  ),
+                  "meetingID": dashboardController.session?.meeting_id,
+                  "ch_id": dashboardController.session?.id
+                }
+            );
+          }
+        },
+        child: Container(
+          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+          decoration: BoxDecoration(
+              color: action=="ACCEPT" ? MyColors.colorSuccess : MyColors.colorError,
+              borderRadius: BorderRadius.circular(8)
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Icon(
+                icon,
+                color: MyColors.white,
+              ),
+              Text(
+                action,
+                style: GoogleFonts.manrope(
+                    color: MyColors.white,
+                    fontWeight: FontWeight.w700
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -508,7 +590,7 @@ class Dashboard extends StatelessWidget {
   Widget getLiveAstrologerDesign(int ind, AstrologerModel astrologer) {
     return GestureDetector(
       onTap: () {
-        dashboardController.goto("/astrologerDetail", arguments: astrologer.id.toString());
+        dashboardController.goto("/astrologerDetail/${astrologer.id}", arguments: astrologer.id.toString());
       },
       child: Container(
         height: standardLiveAstroHeight,
@@ -662,11 +744,9 @@ class Dashboard extends StatelessWidget {
   }
 
   Widget getNewAstrologerDesign(int ind, AstrologerModel astrologer) {
-    int rate = math.Random().nextInt(5);
-    int review = math.Random().nextInt(10000);
     return GestureDetector(
       onTap: () {
-        dashboardController.goto("/astrologerDetail", arguments: astrologer.id.toString());
+        dashboardController.goto("/astrologerDetail/${astrologer.id}", arguments: astrologer.id.toString());
       },
       child: Container(
         height: standardNewAstroHeight,
@@ -747,23 +827,23 @@ class Dashboard extends StatelessWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                getRatingDesign(rate, 0),
+                                getRatingDesign(astrologer.rating??0, 0),
                                 const SizedBox(
                                   width: 3,
                                 ),
-                                getRatingDesign(rate, 1),
+                                getRatingDesign(astrologer.rating??0, 1),
                                 const SizedBox(
                                   width: 3,
                                 ),
-                                getRatingDesign(rate, 2),
+                                getRatingDesign(astrologer.rating??0, 2),
                                 const SizedBox(
                                   width: 3,
                                 ),
-                                getRatingDesign(rate, 3),
+                                getRatingDesign(astrologer.rating??0, 3),
                                 const SizedBox(
                                   width: 3,
                                 ),
-                                getRatingDesign(rate, 4),
+                                getRatingDesign(astrologer.rating??0, 4),
                               ],
                             ),
                           ),
@@ -771,7 +851,7 @@ class Dashboard extends StatelessWidget {
                             height: 3,
                           ),
                           Text(
-                            '${'Reviews'.tr}: $review',
+                            '${'Reviews'.tr}: ${astrologer.reviews??"0"}',
                             style: GoogleFonts.manrope(
                               fontSize: 12.0,
                               color: MyColors.white,
@@ -1325,7 +1405,7 @@ class Dashboard extends StatelessWidget {
     );
   }
 
-  Widget getRatingDesign(int rate, int index) {
+  Widget getRatingDesign(double rate, int index) {
     return Image.asset(
       "assets/common/star.png",
       color: (index+1)<=rate ? MyColors.colorButton : MyColors.colorGrey,
@@ -1333,6 +1413,9 @@ class Dashboard extends StatelessWidget {
   }
 
   getNewBottom(AstrologerModel astrologer) {
+    Color call = astrologer.conline==1 ? MyColors.colorSuccess : MyColors.colorGrey;
+    Color chat = astrologer.online==1 ? MyColors.colorChat : MyColors.colorGrey;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -1341,22 +1424,32 @@ class Dashboard extends StatelessWidget {
           fit: FlexFit.tight,
           child: GestureDetector(
             onTap: () {
-              print(dashboardController.wallet);
-              double min = Essential.getCalculatedAmount(astrologer.p_call??0, minutes: 5);
-              if((dashboardController.free && astrologer.free==1) || (dashboardController.wallet>=min)) {
-                dashboardController.goto("/checkSession", arguments: {
-                  "astrologer": astrologer,
-                  "free": dashboardController.free && astrologer.free == 1,
-                  "controller" : dashboardController,
-                  "category" : "CALL"
-                });
+              if(astrologer.conline==1) {
+                print(dashboardController.wallet);
+                double min = Essential.getCalculatedAmount(
+                    astrologer.p_call ?? 0, minutes: 5);
+                if ((dashboardController.free && astrologer.free == 1) ||
+                    (dashboardController.wallet >= min)) {
+                  dashboardController.goto("/checkSession", arguments: {
+                    "astrologer": astrologer,
+                    "free": dashboardController.free && astrologer.free == 1,
+                    "controller": dashboardController,
+                    "category": "CALL"
+                  });
+                }
+                else {
+                  Essential.showBasicDialog(
+                      "You must have minimum of ${CommonConstants.rupee}${min
+                          .ceil()} balance in your wallet. Do you want to recharge?",
+                      "Recharge Now", "No, Thanks").then((value) {
+                    if (value == "Recharge Now") {
+                      dashboardController.goto("/wallet");
+                    }
+                  });
+                }
               }
               else {
-                Essential.showBasicDialog("You must have minimum of ${CommonConstants.rupee}${min.ceil()} balance in your wallet. Do you want to recharge?", "Recharge Now", "No, Thanks").then((value) {
-                  if(value=="Recharge Now") {
-                    dashboardController.goto("/wallet");
-                  }
-                });
+                Essential.showInfoDialog("${astrologer.name} is currently offline." , btn: "OK");
               }
               // dashboardController.goto("/call", arguments: {"astrologer" : astrologer, "type" : "REQUESTED", "action" : });
             },
@@ -1365,9 +1458,9 @@ class Dashboard extends StatelessWidget {
                 height: standardShortButtonHeight,
                 padding: const EdgeInsets.symmetric(horizontal: 5),
                 decoration: BoxDecoration(
-                    color: MyColors.colorSuccess.withOpacity(0.3),
+                    color: call.withOpacity(0.3),
                     border: Border.all(
-                        color: MyColors.colorSuccess
+                        color: call
                     ),
                     borderRadius: BorderRadius.circular(16)
                 ),
@@ -1378,7 +1471,7 @@ class Dashboard extends StatelessWidget {
                     Image.asset(
                       "assets/dashboard/call_filled.png",
                       height: 13,
-                      color: MyColors.colorSuccess,
+                      color: call,
                     ),
                     Flexible(
                       child: Text(
@@ -1404,22 +1497,32 @@ class Dashboard extends StatelessWidget {
           fit: FlexFit.tight,
           child: GestureDetector(
             onTap: () {
-              print(dashboardController.wallet);
-              double min = Essential.getCalculatedAmount(astrologer.p_chat??0, minutes: 5);
-              if((dashboardController.free && astrologer.free==1) || (dashboardController.wallet>=min)) {
-                dashboardController.goto("/checkSession", arguments: {
-                  "astrologer": astrologer,
-                  "free": dashboardController.free && astrologer.free == 1,
-                  "controller" : dashboardController,
-                  "category" : "CHAT"
-                });
+              if(astrologer.online==1) {
+                print(dashboardController.wallet);
+                double min = Essential.getCalculatedAmount(
+                    astrologer.p_chat ?? 0, minutes: 5);
+                if ((dashboardController.free && astrologer.free == 1) ||
+                    (dashboardController.wallet >= min)) {
+                  dashboardController.goto("/checkSession", arguments: {
+                    "astrologer": astrologer,
+                    "free": dashboardController.free && astrologer.free == 1,
+                    "controller": dashboardController,
+                    "category": "CHAT"
+                  });
+                }
+                else {
+                  Essential.showBasicDialog(
+                      "You must have minimum of ${CommonConstants.rupee}${min
+                          .ceil()} balance in your wallet. Do you want to recharge?",
+                      "Recharge Now", "No, Thanks").then((value) {
+                    if (value == "Recharge Now") {
+                      dashboardController.goto("/wallet");
+                    }
+                  });
+                }
               }
               else {
-                Essential.showBasicDialog("You must have minimum of ${CommonConstants.rupee}${min.ceil()} balance in your wallet. Do you want to recharge?", "Recharge Now", "No, Thanks").then((value) {
-                  if(value=="Recharge Now") {
-                    dashboardController.goto("/wallet");
-                  }
-                });
+                Essential.showInfoDialog("${astrologer.name} is currently unavailable for chat." , btn: "OK");
               }
             },
             child: Container(
@@ -1427,9 +1530,9 @@ class Dashboard extends StatelessWidget {
                 height: standardShortButtonHeight,
                 padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                 decoration: BoxDecoration(
-                    color: MyColors.colorChat.withOpacity(0.3),
+                    color: chat.withOpacity(0.3),
                     border: Border.all(
-                        color: MyColors.colorChat
+                        color: chat
                     ),
                     borderRadius: BorderRadius.circular(16)
                 ),
@@ -1440,7 +1543,7 @@ class Dashboard extends StatelessWidget {
                     Image.asset(
                       "assets/dashboard/chat_filled.png",
                       height: 13,
-                      color: MyColors.colorChat,
+                      color: chat,
                     ),
                     Flexible(
                       child: Text(

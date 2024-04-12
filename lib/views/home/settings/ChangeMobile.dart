@@ -78,7 +78,7 @@ class ChangeMobile extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.all(20),
                       decoration: BoxDecoration(
-                          color: MyColors.white,
+                          color: MyColors.cardColor(),
                           borderRadius: BorderRadius.circular(24)
                       ),
                       child: Column(
@@ -90,7 +90,6 @@ class ChangeMobile extends StatelessWidget {
                               '${changeMobileController.verified ? 'New'.tr : 'Old'.tr} ${'Mobile No.'.tr}',
                               style: GoogleFonts.manrope(
                                 fontSize: 16.0,
-                                color: MyColors.black,
                                 letterSpacing: 0,
                                 fontWeight: FontWeight.w600,
                               ),
@@ -108,7 +107,6 @@ class ChangeMobile extends StatelessWidget {
                                 ],
                                 style: GoogleFonts.manrope(
                                   fontSize: 16.0,
-                                  color: MyColors.black,
                                   letterSpacing: 0,
                                   fontWeight: FontWeight.w400,
                                 ),
@@ -164,7 +162,6 @@ class ChangeMobile extends StatelessWidget {
                                               changeMobileController.country.code,
                                               style: GoogleFonts.manrope(
                                                 fontSize: 16.0,
-                                                color: MyColors.black,
                                                 letterSpacing: 0,
                                                 fontWeight: FontWeight.w400,
                                               ),

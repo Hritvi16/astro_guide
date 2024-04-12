@@ -41,7 +41,7 @@ class AstrologerDetailController extends GetxController {
 
   @override
   void onInit() {
-    super.onInit();
+    print("Get.argumentssss");
     print(Get.arguments);
     print(Get.parameters);
     if(Get.arguments!=null) {
@@ -60,14 +60,16 @@ class AstrologerDetailController extends GetxController {
     wallet = double.parse((storage.read("wallet")??0.0).toString());
 
     start();
+    super.onInit();
   }
 
   start() {
-    getAstrologer();
+    getAstrologer("start");
   }
 
 
-  Future<void> getAstrologer({String? id}) async {
+  Future<void> getAstrologer(String type, {String? id}) async {
+    print("get Astrologer $type");
     Map <String, String> data = {
       AstrologerConstants.id : id??this.id
     };
@@ -100,7 +102,7 @@ class AstrologerDetailController extends GetxController {
 
   Future<void> onRefresh() async{
     await Future.delayed(Duration(seconds: 1));
-    await getAstrologer();
+    await getAstrologer("refresh");
   }
 
   @override
@@ -166,10 +168,14 @@ class AstrologerDetailController extends GetxController {
 
   void goto(String page, {dynamic arguments, String? id}) {
     Get.toNamed(page, arguments: arguments, preventDuplicates: false)?.then((value) {
+      print("goto iddddd $id");
+      if(id!=null) {
+        this.id = id;
+      }
 
       wallet = double.parse((storage.read("wallet")??0.0).toString());
       print("objecttt");
-      getAstrologer(id: id);
+      getAstrologer("goto", id: id);
     });
   }
 

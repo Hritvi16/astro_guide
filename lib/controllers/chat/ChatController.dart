@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 import 'package:astro_guide/constants/SessionConstants.dart';
 import 'package:astro_guide/constants/CommonConstants.dart';
 import 'package:astro_guide/dialogs/BasicDialog.dart';
@@ -13,6 +14,7 @@ import 'package:astro_guide/models/chat/ChatResponseModel.dart';
 import 'package:astro_guide/models/session/CheckSessionResponseModel.dart';
 import 'package:astro_guide/models/session/EndSessionResponseModel.dart';
 import 'package:astro_guide/models/response/ResponseModel.dart';
+import 'package:astro_guide/notifier/GlobalNotifier.dart';
 import 'package:astro_guide/providers/ChatProvider.dart';
 import 'package:astro_guide/services/networking/ApiConstants.dart';
 import 'package:audioplayers/audioplayers.dart';
@@ -92,13 +94,13 @@ class ChatController extends GetxController {
 
   late bool recording;
   late String playerUrl;
+  final GlobalNotifier globalNotifier = Get.find();
 
   @override
   void onInit() {
     super.onInit();
     initAudio();
-
-
+    seconds = 0;
     cancel = false;
     reject = false;
     recording = false;
@@ -279,19 +281,29 @@ class ChatController extends GetxController {
         chat_type = sessionHistory.type;
         load = false;
 
+
         if (type == "ACTIVE") {
-          if (chat_type == "FREE") {
-            show = false;
+          if(sessionHistory.status=="COMPLETED") {
+            type = "COMPLETED";
+            action = "COMPLETED";
             update();
-            max = 600;
+            manageRating();
           }
           else {
-            show = true;
-            update();
-            calculateCountdown();
+            if (chat_type == "FREE") {
+              show = false;
+              update();
+              max = 600;
+            }
+            else {
+              show = true;
+              update();
+              calculateCountdown();
+            }
+
+            startTimer();
           }
 
-          startTimer();
         }
       }
       load = true;
@@ -323,7 +335,7 @@ class ChatController extends GetxController {
           stopTimer(false);
           type = "ACTIVE";
           if(storage.read("free")??false) {
-            storage.write("free", false);
+            await storage.write("free", false);
           }
 
           cnt = 0;
@@ -534,7 +546,7 @@ class ChatController extends GetxController {
           type = "COMPLETED";
           action = "COMPLETED";
           amount = endSessionResponse.amount??0;
-          storage.write("wallet", endSessionResponse.wallet??storage.read(("wallet")));
+          await storage.write("wallet", endSessionResponse.wallet??storage.read(("wallet")));
 
           stopTimer(true);
           manageRating();
@@ -582,6 +594,7 @@ class ChatController extends GetxController {
       'self',
           (data) {
             print("dataggaa");
+            print(data);
         ChatResponseModel chatResponseModel = ChatResponseModel.fromJson(json.decode(data));
 
         for (int i=0; i<chats.length; i++) {
@@ -688,13 +701,24 @@ class ChatController extends GetxController {
 
     if (result != null) {
       File file = File(result.files.first.path??"");
-      // List<int> fileBytes = await file.readAsBytes();
+      int bytes = file.lengthSync();
+      if(bytes>0) {
+        // var i = (log(bytes) / log(1024)).floor();
+        // print(i);
+        double size = ((bytes / pow(1024, 1)));
+        print(size.toStringAsFixed(2) +" KB");
 
-      data.addAll({SessionConstants.message : MultipartFile(File(file!.path), filename: basename(file!.path)), SessionConstants.ext : basename(file!.path).substring(basename(file!.path).lastIndexOf(".")+1)});
-
-      // data.addAll({SessionConstants.message : fileBytes});
-
-      sendMessage(data, file.path);
+        if(size<=2048) {
+          data.addAll({SessionConstants.message : MultipartFile(File(file!.path), filename: basename(file!.path)), SessionConstants.ext : basename(file!.path).substring(basename(file!.path).lastIndexOf(".")+1)});
+          sendMessage(data, file.path);
+        }
+        else {
+          Essential.showInfoDialog("File must not be greater than 2MB");
+        }
+      }
+      else {
+        Essential.showInfoDialog("File is empty");
+      }
     }
   }
 
@@ -731,7 +755,9 @@ class ChatController extends GetxController {
       show = true;
       wallet = double.parse((storage.read("wallet")??0.0).toString());
       update();
-      calculateCountdown();
+      if (chat_type != "FREE") {
+        calculateCountdown();
+      }
     });
   }
 
@@ -1337,5 +1363,19 @@ class ChatController extends GetxController {
     player.pause();
     // playerUrl = "";
     update();
+  }
+
+  void stopPlayer() {
+    if(player.playing) {
+      player.stop();
+    }
+  }
+
+  void updateDashboard() {
+    print("sswebnotifier: before chat ${globalNotifier.showSession}");
+    if(globalNotifier.showSession.value=="notification") {
+      globalNotifier.updateValue("session");
+    }
+    print("sswebnotifier: after chat ${globalNotifier.showSession}");
   }
 }

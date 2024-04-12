@@ -81,9 +81,10 @@ class SettingController extends GetxController {
       print(response.toJson());
       Get.back();
       if(response.code==1) {
-        storage.write("access", "essential");
-        storage.write("refresh", "");
-        storage.write("status", "logged out");
+        themesController.setTheme('light');
+        await storage.write("access", "essential");
+        await storage.write("refresh", "");
+        await storage.write("status", "logged out");
         Get.offAllNamed("/login");
       }
       else if(response.code!=-1){

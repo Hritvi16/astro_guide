@@ -40,12 +40,12 @@ class SplashController extends GetxController {
         Get.offAllNamed(Essential.getPlatform() ? '/home' : '/preHome');
       }
       else {
-        storage.write("access", CommonConstants.essential);
-        storage.write("refresh", "");
+        await storage.write("access", CommonConstants.essential);
+        await storage.write("refresh", "");
         Get.offAllNamed('/login');
       }
 
-      // storage.write("popbanner", 0);
+      // await storage.write("popbanner", 0);
 
     });
 

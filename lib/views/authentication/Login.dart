@@ -304,39 +304,39 @@ class Login extends StatelessWidget {
                               ),
                             ),
                           ),
-                        GestureDetector(
-                          onTap: () {
-                            // loginController.loginWithFacebook();
-                          },
-                          child: standardButton(
-                            context: context,
-                            backgroundColor: MyColors.colorFacebook,
-                            borderColor: MyColors.white,
-                            margin: EdgeInsets.only(top: standardVBS),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset(
-                                  "assets/social/facebook.png",
-                                  height: 24,
-                                  width: 24,
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(left: standardHTIS),
-                                  child: Text(
-                                    'Login with Facebook',
-                                    style: GoogleFonts.manrope(
-                                      fontSize: 16.0,
-                                      color: MyColors.white,
-                                      letterSpacing: 0,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
+                        // GestureDetector(
+                        //   onTap: () {
+                        //     // loginController.loginWithFacebook();
+                        //   },
+                        //   child: standardButton(
+                        //     context: context,
+                        //     backgroundColor: MyColors.colorFacebook,
+                        //     borderColor: MyColors.white,
+                        //     margin: EdgeInsets.only(top: standardVBS),
+                        //     child: Row(
+                        //       mainAxisAlignment: MainAxisAlignment.center,
+                        //       children: [
+                        //         Image.asset(
+                        //           "assets/social/facebook.png",
+                        //           height: 24,
+                        //           width: 24,
+                        //         ),
+                        //         Padding(
+                        //           padding: EdgeInsets.only(left: standardHTIS),
+                        //           child: Text(
+                        //             'Login with Facebook',
+                        //             style: GoogleFonts.manrope(
+                        //               fontSize: 16.0,
+                        //               color: MyColors.white,
+                        //               letterSpacing: 0,
+                        //               fontWeight: FontWeight.w600,
+                        //             ),
+                        //           ),
+                        //         )
+                        //       ],
+                        //     ),
+                        //   ),
+                        // ),
                       ],
                     )
                     // Container(

@@ -267,7 +267,7 @@ class History extends StatelessWidget  {
                   decoration: BoxDecoration(
                       border: Border(
                           bottom: BorderSide(
-                              color: MyColors.colorBorder,
+                              color: MyColors.borderColor(),
                               width: 1.5
                           )
                       )
@@ -318,7 +318,7 @@ class History extends StatelessWidget  {
                   decoration: BoxDecoration(
                       border: Border(
                           bottom: BorderSide(
-                              color: MyColors.colorBorder,
+                              color: MyColors.borderColor(),
                               width: 1.5
                           )
                       )
@@ -398,6 +398,7 @@ class History extends StatelessWidget  {
                   ),
                 ],
               ),
+              SizedBox(width: 5,),
             ],
           ),
           Flexible(
@@ -482,10 +483,10 @@ class History extends StatelessWidget  {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-          color: MyColors.white,
+          color: MyColors.cardColor(),
           borderRadius: BorderRadius.circular(14),
           border: Border.all(
-              color: MyColors.colorBorder
+              color: MyColors.borderColor()
           )
       ),
       child: Column(
@@ -500,7 +501,6 @@ class History extends StatelessWidget  {
                   Essential.getPlatformReplace(walletHistory.description),
                   style: GoogleFonts.manrope(
                     fontSize: 14.0,
-                    color: MyColors.black,
                     letterSpacing: 0,
                     fontWeight: FontWeight.w600,
                   ),
@@ -693,13 +693,14 @@ class History extends StatelessWidget  {
 
   Widget getPLDesign(int index, BuildContext context) {
     WalletHistoryModel transaction = historyController.spayment[index];
+    bool success = transaction.status==1;
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
           color: MyColors.cardColor(),
           borderRadius: BorderRadius.circular(14),
           border: Border.all(
-              color: MyColors.colorBorder
+              color: MyColors.borderColor()
           )
       ),
       child: Column(
@@ -726,7 +727,7 @@ class History extends StatelessWidget  {
                 "INR ${transaction.amount.toDouble()}",
                 style: GoogleFonts.manrope(
                   fontSize: 14.0,
-                  color: index%3==0 ? MyColors.colorSuccess : MyColors.colorError,
+                  color: success ? MyColors.colorSuccess : MyColors.colorError,
                   letterSpacing: 0,
                   fontWeight: FontWeight.w600,
                 ),
@@ -782,13 +783,13 @@ class History extends StatelessWidget  {
             child: standardButton(
               context: context,
               height: 40,
-              backgroundColor: index%3==0 ? MyColors.colorSuccess : MyColors.colorError,
+              backgroundColor: success ? MyColors.colorSuccess : MyColors.colorError,
               margin: const EdgeInsets.only(top: 12),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Image.asset(
-                    "assets/common/${index%3==0 ? 'success' : 'error'}.png",
+                    "assets/common/${success ? 'success' : 'error'}.png",
                     height: 18,
                     width: 18,
                   ),
@@ -796,7 +797,7 @@ class History extends StatelessWidget  {
                     width: 11,
                   ),
                   Text(
-                    index%3==0 ? "Success" : "Failed",
+                    success ? "Success" : "Failed",
                     style: GoogleFonts.manrope(
                       fontSize: 16.0,
                       color: MyColors.white,
@@ -929,7 +930,7 @@ class History extends StatelessWidget  {
           color: MyColors.cardColor(),
           borderRadius: BorderRadius.circular(14),
           border: Border.all(
-              color: MyColors.colorBorder
+              color: MyColors.borderColor()
           )
       ),
       child: Column(
@@ -1088,7 +1089,7 @@ class History extends StatelessWidget  {
           color: MyColors.cardColor(),
           borderRadius: BorderRadius.circular(14),
           border: Border.all(
-              color: MyColors.colorBorder
+              color: MyColors.borderColor()
           )
       ),
       child: Column(
@@ -1261,7 +1262,7 @@ class History extends StatelessWidget  {
   Widget getStatusDesign(int index) {
     Color bg = MyColors.white;
     Color border = MyColors.borderColor();
-    Color text = MyColors.black;
+    Color? text = null;
 
     if(historyController.selected==index) {
       if(index==0) {
@@ -1274,6 +1275,8 @@ class History extends StatelessWidget  {
         text = border;
         bg = border.withOpacity(0.3);
       }
+      
+      
     }
 
     return GestureDetector(
@@ -1284,8 +1287,8 @@ class History extends StatelessWidget  {
         decoration: BoxDecoration(
             border: Border(
                 bottom: BorderSide(
-                    color: MyColors.borderColor(),
-                    width: 1.5
+                  color: MyColors.borderColor(),
+                  width: 1.5
                 )
             )
         ),

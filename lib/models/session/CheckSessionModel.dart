@@ -10,9 +10,9 @@ part 'CheckSessionModel.g.dart';
 class CheckSessionModel with _$CheckSessionModel {
   factory CheckSessionModel({
     required String name,
-    required String mobile,
-    required String gender,
-    required String dob,
+    String? mobile,
+    String? gender,
+    String? dob,
     int? ci_id,
     String? marital_status,
     String? type,

@@ -66,7 +66,6 @@ class LoginController extends GetxController {
 
   Future<void> getCountries() async {
     countryProvider.fetchList(storage.read("access")).then((response) {
-      print(response.toJson());
       if(response.code==1) {
         countries = response.data??[];
         for (var value in countries) {
@@ -90,7 +89,6 @@ class LoginController extends GetxController {
 
   goto(String path, dynamic data, {LoginModel? loginModel}) {
     Get.toNamed(path, arguments: data)?.then((value) {
-      print(userProvider);
       if(userProvider==null) {
         userProvider = Get.find();
         update();
@@ -167,10 +165,6 @@ class LoginController extends GetxController {
       ]
     );
 
-    print(loginResult);
-    print(loginResult.message);
-    print(loginResult.status.toString());
-    print(loginResult.accessToken);
 
     // Create a credential from the access token
     // final OAuthCredential facebookAuthCredential = FacebookAuthProvider.credential(loginResult.accessToken!.token);
@@ -215,11 +209,9 @@ class LoginController extends GetxController {
       UserConstants.fcm : await NotificationHelper.generateFcmToken()
     });
 
-    print(data.fields);
-    print(data.files);
 
     userProvider.add(data, ApiConstants.add, storage.read("access")??CommonConstants.essential).then((response) {
-      print(response.toJson());
+
       if(response.code==1) {
         goToHome(response);
       }
@@ -280,7 +272,7 @@ class LoginController extends GetxController {
         Essential.showSnackBar(response.message, code: response.code, time: 3);
       }
       else {
-        goto("/otp", {"mobile" : mobile.text, "code" : country.code, "email" : response.email??"", "nationality" : country}, loginModel: response);
+        goto("/otp", {"mobile" : mobile.text, "code" : country.code, "email" : response.email??"", "nationality" : country, "instance_id" : response.refresh_token, "access_token" : response.access_token, "whatsapp" : response.whatsapp}, loginModel: response);
       }
     });
   }
@@ -307,10 +299,12 @@ class LoginController extends GetxController {
     });
   }
 
-  void goToHome(LoginModel response) {
-    storage.write("access", response.access_token);
-    storage.write("refresh", response.refresh_token);
-    storage.write("status", "logged in");
+  Future<void> goToHome(LoginModel response) async {
+    await storage.write("access", response.access_token);
+    await storage.write("refresh", response.refresh_token);
+    await storage.write("status", "logged in");
+    print("storageaccess: login:storage.read(access)");
+    print(storage.read("access"));
     Get.offAllNamed(Essential.getPlatform() ? '/home' : '/preHome');
   }
 
@@ -319,7 +313,6 @@ class LoginController extends GetxController {
         isScrollControlled: true,
         Country(countries, country)
     ).then((value) {
-      print(value);
 
       if(value!=null) {
         countries = value['countries'];

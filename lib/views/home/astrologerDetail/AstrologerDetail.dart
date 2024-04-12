@@ -14,6 +14,7 @@ import 'package:astro_guide/size/MySize.dart';
 import 'package:astro_guide/size/WidgetSize.dart';
 import 'package:astro_guide/views/loadingScreen/LoadingScreen.dart';
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
@@ -24,7 +25,13 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 
 class AstrologerDetail extends StatelessWidget {
   AstrologerDetail({ Key? key }){
-    astrologerDetailController.onInit();
+
+    print("Get.parameters");
+    print(astrologerDetailController.id);
+    print(Get.parameters);
+    if(astrologerDetailController.id!=Get.parameters['id']) {
+      astrologerDetailController.onInit();
+    }
   }
 
   final AstrologerDetailController astrologerDetailController = Get.find();
@@ -40,7 +47,7 @@ class AstrologerDetail extends StatelessWidget {
           builder: (controller) {
             print(astrologerDetailController.load);
             if(!astrologerDetailController.load) {
-              astrologerDetailController.getAstrologer();
+              astrologerDetailController.getAstrologer("load");
             }
             return astrologerDetailController.load ? Scaffold(
               // bottomNavigationBar: getBottomDesign(),
@@ -483,7 +490,7 @@ class AstrologerDetail extends StatelessWidget {
                     ),
                   ),
                 ),
-                if((astrologerDetailController.astrologer.online??0)==1)
+                if((astrologerDetailController.astrologer.online??0)==1 || (astrologerDetailController.astrologer.conline??0)==1)
                   Padding(
                     padding: const EdgeInsets.only(top: 10.0),
                     child: Row(
@@ -1014,14 +1021,22 @@ class AstrologerDetail extends StatelessWidget {
                 fontWeight: FontWeight.w600,
               ),
             ),
-            Text(
-              "View all".tr,
-              style: GoogleFonts.manrope(
-                fontSize: 14.0,
-                color: MyColors.colorInfoBlue,
-                fontWeight: FontWeight.w600,
+            if(astrologerDetailController.similar.length>5)
+              GestureDetector(
+                onTap: () {
+                  astrologerDetailController.goto(
+                    "/similar", arguments: {"id" : astrologerDetailController.astrologer.id.toString(), "astrologers" : astrologerDetailController.similar}
+                  );
+                },
+                child: Text(
+                  "View all".tr,
+                  style: GoogleFonts.manrope(
+                    fontSize: 14.0,
+                    color: MyColors.colorInfoBlue,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
               ),
-            ),
           ],
         ),
         Padding(
@@ -1031,7 +1046,7 @@ class AstrologerDetail extends StatelessWidget {
             margin: EdgeInsets.symmetric(vertical: 20),
             child: ListView.separated(
                 scrollDirection: Axis.horizontal,
-                itemCount: astrologerDetailController.similar.length,
+                itemCount: astrologerDetailController.similar.length>5 ? 5 : astrologerDetailController.similar.length,
                 separatorBuilder: (BuildContext buildContext, index) {
                   return SizedBox(
                     width: standardHorizontalGap,
@@ -1052,7 +1067,7 @@ class AstrologerDetail extends StatelessWidget {
     int rate = 0;
     return GestureDetector(
       onTap: () {
-        astrologerDetailController.goto("/astrologerDetail", arguments: astrologer.id.toString(), id: astrologerDetailController.astrologer.id.toString());
+        astrologerDetailController.goto("/astrologerDetail/${astrologer.id}", arguments: astrologer.id.toString(), id: astrologerDetailController.astrologer.id.toString());
       },
       child: Container(
         padding: const EdgeInsets.all(8),
@@ -1203,7 +1218,7 @@ class AstrologerDetail extends StatelessWidget {
                             ),
                           ),
                         ),
-                        if(astrologer.online==1)
+                        if(astrologer.online==1 || astrologer.conline==1)
                           Row(
                             children: [
                               SizedBox(
@@ -1282,6 +1297,8 @@ class AstrologerDetail extends StatelessWidget {
   }
 
   getNewBottom(AstrologerModel astrologer) {
+    Color call = astrologer.conline==1 ? MyColors.colorSuccess : MyColors.colorGrey;
+    Color chat = astrologer.online==1 ? MyColors.colorChat : MyColors.colorGrey;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -1290,7 +1307,7 @@ class AstrologerDetail extends StatelessWidget {
           fit: FlexFit.tight,
           child: GestureDetector(
             onTap: () {
-              if(astrologer.online==1) {
+              if(astrologer.conline==1) {
                 double min = Essential.getCalculatedAmount(
                     astrologer.p_call ?? 0, minutes: 5);
                 if ((astrologerDetailController.free && astrologer.free == 1) ||
@@ -1315,7 +1332,7 @@ class AstrologerDetail extends StatelessWidget {
                 }
               }
               else {
-                Essential.showInfoDialog("${astrologer.name} is currently offline." , btn: "OK");
+                Essential.showInfoDialog("${astrologer.name} is currently unavailable for call." , btn: "OK");
               }
               // astrologerDetailController.goto("/call", arguments: {"astrologer" : astrologer, "type" : "REQUESTED", "action" : });
             },
@@ -1324,9 +1341,9 @@ class AstrologerDetail extends StatelessWidget {
                 height: standardShortButtonHeight,
                 padding: EdgeInsets.symmetric(horizontal: 5),
                 decoration: BoxDecoration(
-                    color: MyColors.colorSuccess.withOpacity(0.3),
+                    color: call.withOpacity(0.3),
                     border: Border.all(
-                        color: MyColors.colorSuccess
+                        color: call
                     ),
                     borderRadius: BorderRadius.circular(16)
                 ),
@@ -1337,7 +1354,7 @@ class AstrologerDetail extends StatelessWidget {
                     Image.asset(
                       "assets/dashboard/call_filled.png",
                       height: 16,
-                      color: MyColors.colorSuccess,
+                      color: call,
                     ),
                     Flexible(
                       child: Text(
@@ -1388,7 +1405,7 @@ class AstrologerDetail extends StatelessWidget {
                 }
               }
               else {
-                Essential.showInfoDialog("${astrologer.name} is currently offline." , btn: "OK");
+                Essential.showInfoDialog("${astrologer.name} is currently unavailable for chat." , btn: "OK");
               }
             },
             child: Container(
@@ -1396,9 +1413,9 @@ class AstrologerDetail extends StatelessWidget {
                 height: standardShortButtonHeight,
                 padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                 decoration: BoxDecoration(
-                    color: MyColors.colorChat.withOpacity(0.3),
+                    color: chat.withOpacity(0.3),
                     border: Border.all(
-                        color: MyColors.colorChat
+                        color: chat
                     ),
                     borderRadius: BorderRadius.circular(16)
                 ),
@@ -1409,7 +1426,7 @@ class AstrologerDetail extends StatelessWidget {
                     Image.asset(
                       "assets/dashboard/chat_filled.png",
                       height: 16,
-                      color: MyColors.colorChat,
+                      color: chat,
                     ),
                     Flexible(
                       child: Text(
@@ -1504,6 +1521,9 @@ class AstrologerDetail extends StatelessWidget {
   }
 
   Widget getButtons(BuildContext context) {
+    Color call = astrologerDetailController.astrologer.conline==1 ? MyColors.colorSuccess : MyColors.colorGrey;
+    Color chat = astrologerDetailController.astrologer.online==1 ? MyColors.colorChat : MyColors.colorGrey;
+
     return Container(
       width: MySize.size100(context),
       padding: EdgeInsets.symmetric(horizontal: 16),
@@ -1515,7 +1535,7 @@ class AstrologerDetail extends StatelessWidget {
             fit: FlexFit.tight,
             child: GestureDetector(
               onTap: () {
-                if(astrologerDetailController.astrologer.online==1) {
+                if(astrologerDetailController.astrologer.conline==1) {
                   double min = Essential.getCalculatedAmount(
                       astrologerDetailController.astrologer.p_call ?? 0,
                       minutes: 5);
@@ -1543,7 +1563,7 @@ class AstrologerDetail extends StatelessWidget {
                   }
                 }
                 else {
-                  Essential.showInfoDialog("${astrologerDetailController.astrologer.name} is currently offline." , btn: "OK");
+                  Essential.showInfoDialog("${astrologerDetailController.astrologer.name} is currently unavailable for call." , btn: "OK");
                 }
                 // astrologerDetailController.goto("/call", arguments: {"astrologer" : astrologer, "type" : "REQUESTED", "action" : });
               },
@@ -1552,7 +1572,7 @@ class AstrologerDetail extends StatelessWidget {
                   height: standardLongButtonHeight,
                   padding: EdgeInsets.symmetric(horizontal: 5),
                   decoration: BoxDecoration(
-                      color: MyColors.colorSuccess,
+                      color: call,
                       borderRadius: BorderRadius.circular(16)
                   ),
                   child: Row(
@@ -1632,7 +1652,7 @@ class AstrologerDetail extends StatelessWidget {
                   }
                 }
                 else {
-                  Essential.showInfoDialog("${astrologerDetailController.astrologer.name} is currently offline." , btn: "OK");
+                  Essential.showInfoDialog("${astrologerDetailController.astrologer.name} is currently unavailable for chat." , btn: "OK");
                 }
               },
               child: Container(
@@ -1640,7 +1660,7 @@ class AstrologerDetail extends StatelessWidget {
                   height: standardLongButtonHeight,
                   padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                   decoration: BoxDecoration(
-                      color: MyColors.colorChat,
+                      color: chat,
                       borderRadius: BorderRadius.circular(16)
                   ),
                   child: Row(

@@ -8,13 +8,19 @@ FutureOr<dynamic> responseInterceptor(Request request, Response response) async 
 }
 
 dynamic handleResponse(response) {
+  print("mainnnn response.statusCode");
+  print(response);
+  print(response.statusCode);
 
   switch (response.statusCode) {
     case 200:
     case 401:
     case 403:
+    case 404:
       return response;
     default:
+      print("hellooo");
+      print(response.statusCode);
       // CommonWidgets.snackBar('error',
       //     'Error accrued while fetching data. : ${response.statusCode}');
       throw UnknownException(

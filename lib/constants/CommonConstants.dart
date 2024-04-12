@@ -56,7 +56,7 @@ class CommonConstants {
 
   static Map<String, Map<String, String>> chartDetails = {
     charts[0] : {'chart' : 'D1', 'name' : 'Birth'},
-    charts[1] : {'chart' : 'D9', 'name' : 'Navamsad'},
+    charts[1] : {'chart' : 'D9', 'name' : 'Navamsa'},
     divCharts[0] : {'chart' : 'chalit', 'name' : 'Chalit'},
     divCharts[1] : {'chart' : 'SUN', 'name' : 'Sun'},
     divCharts[2] : {'chart' : 'MOON', 'name' : 'Moon'},
@@ -87,8 +87,9 @@ class CommonConstants {
   };
 
   static List<Map<String, String>> paymentMethods = [
+    {"name" : "RAZORPAY", "label" : "Razorpay", "icon" : "razorpay.png"},
     {"name" : "STRIPE", "label" : "Stripe", "icon" : "stripe.png"},
-    {"name" : "PHONEPE", "label" : "Phone Pe", "icon" : "phonepe.png"},
+    // {"name" : "PHONEPE", "label" : "Phone Pe", "icon" : "phonepe.png"},
   ];
 
   static String environment = "PRODUCTION";

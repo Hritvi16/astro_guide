@@ -14,6 +14,7 @@ import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -290,7 +291,7 @@ class Talk extends StatelessWidget {
   Widget getAstrologerDesign(int index, AstrologerModel astrologer) {
     return GestureDetector(
       onTap: () {
-        talkController.goto("/astrologerDetail", arguments: astrologer.id.toString());
+        talkController.goto("/astrologerDetail/${astrologer.id}", arguments: astrologer.id.toString());
       },
       child: Container(
         padding: const EdgeInsets.all(8),
@@ -441,7 +442,7 @@ class Talk extends StatelessWidget {
                             ),
                           ),
                         ),
-                        if(astrologer.online==1)
+                        if(astrologer.online==1 || astrologer.conline==1)
                           Row(
                             children: [
                               SizedBox(
@@ -462,7 +463,6 @@ class Talk extends StatelessWidget {
                     if(Essential.getPlatform())
                       Text(
                         astrologer.types??"-",
-                        // "Vedic Astrologer",
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: GoogleFonts.manrope(
@@ -499,12 +499,16 @@ class Talk extends StatelessWidget {
               SizedBox(
                 width: 6,
               ),
-              Text(
-                astrologer.languages??"-",
-                style: GoogleFonts.manrope(
-                  fontSize: 12.0,
-                  color: MyColors.colorGrey,
-                  fontWeight: FontWeight.w500,
+              Flexible(
+                child: Text(
+                  astrologer.languages??"-",
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: GoogleFonts.manrope(
+                    fontSize: 12.0,
+                    color: MyColors.colorGrey,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
             ],
@@ -519,6 +523,9 @@ class Talk extends StatelessWidget {
   }
 
   getNewBottom(AstrologerModel astrologer) {
+    Color call = astrologer.conline==1 ? MyColors.colorSuccess : MyColors.colorGrey;
+    Color chat = astrologer.online==1 ? MyColors.colorChat : MyColors.colorGrey;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -527,7 +534,7 @@ class Talk extends StatelessWidget {
           fit: FlexFit.tight,
           child: GestureDetector(
             onTap: () {
-              if(astrologer.online==1) {
+              if(astrologer.conline==1) {
                 double min = Essential.getCalculatedAmount(
                     astrologer.p_call ?? 0, minutes: 5);
                 if ((talkController.free && astrologer.free == 1) ||
@@ -551,7 +558,7 @@ class Talk extends StatelessWidget {
                 }
               }
               else {
-                Essential.showInfoDialog("${astrologer.name} is currently offline." , btn: "OK");
+                Essential.showInfoDialog("${astrologer.name} is currently unavailable for call." , btn: "OK");
               }
               // talkController.goto("/call", arguments: {"astrologer" : astrologer, "type" : "REQUESTED", "action" : });
             },
@@ -560,9 +567,9 @@ class Talk extends StatelessWidget {
                 height: standardShortButtonHeight,
                 padding: EdgeInsets.symmetric(horizontal: 5),
                 decoration: BoxDecoration(
-                    color: MyColors.colorSuccess.withOpacity(0.3),
+                    color: call.withOpacity(0.3),
                     border: Border.all(
-                        color: MyColors.colorSuccess
+                        color: call
                     ),
                     borderRadius: BorderRadius.circular(16)
                 ),
@@ -573,7 +580,7 @@ class Talk extends StatelessWidget {
                     Image.asset(
                       "assets/dashboard/call_filled.png",
                       height: 16,
-                      color: MyColors.colorSuccess,
+                      color: call,
                     ),
                     Flexible(
                       child: Text(
@@ -624,7 +631,7 @@ class Talk extends StatelessWidget {
                 }
               }
               else {
-                Essential.showInfoDialog("${astrologer.name} is currently offline." , btn: "OK");
+                Essential.showInfoDialog("${astrologer.name} is currently unavailable for chat." , btn: "OK");
               }
             },
             child: Container(
@@ -632,9 +639,9 @@ class Talk extends StatelessWidget {
                 height: standardShortButtonHeight,
                 padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                 decoration: BoxDecoration(
-                    color: MyColors.colorChat.withOpacity(0.3),
+                    color: chat.withOpacity(0.3),
                     border: Border.all(
-                        color: MyColors.colorChat
+                        color: chat
                     ),
                     borderRadius: BorderRadius.circular(16)
                 ),
@@ -645,7 +652,7 @@ class Talk extends StatelessWidget {
                     Image.asset(
                       "assets/dashboard/chat_filled.png",
                       height: 16,
-                      color: MyColors.colorChat,
+                      color: chat,
                     ),
                     Flexible(
                       child: Text(

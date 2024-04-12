@@ -70,7 +70,7 @@ class Country extends StatelessWidget {
               keyboardType: TextInputType.name,
               style: GoogleFonts.manrope(
                 fontSize: 16.0,
-                color: MyColors.black,
+                color: MyColors.labelColor(),
                 letterSpacing: 0,
                 fontWeight: FontWeight.w400,
               ),
@@ -137,7 +137,7 @@ class Country extends StatelessWidget {
                     fontSize: 16,
                     letterSpacing: 0,
                     fontWeight: FontWeight.w600,
-                    color: MyColors.black
+                    color: MyColors.labelColor()
                   ),
                   children: [
                     TextSpan(
