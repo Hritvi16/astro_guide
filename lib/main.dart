@@ -15,6 +15,7 @@ import 'package:astro_guide/controllers/theme/ThemesController.dart';
 import 'package:astro_guide/routes/routes.dart';
 import 'package:astro_guide/themes/Themes.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:timezone/data/latest.dart' as tz;
 
@@ -27,6 +28,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   //await Firebase.initializeApp();
   await NotificationHelper.initFcm();
+  await deleteAllFilesInDocumentsDirectory();
 
   tz.initializeTimeZones();
   await GetStorage.init();
@@ -41,6 +43,30 @@ void main() async {
   SecurityContext.defaultContext.setTrustedCertificatesBytes(data.buffer.asUint8List());
 
   runApp(LifecycleAwareWidget(child: MyApp(),));
+}
+
+Future<void> deleteAllFilesInDirectory(String directoryPath) async {
+  final dir = Directory(directoryPath);
+  if (await dir.exists()) {
+    final files = await dir.list().toList();
+    for (final file in files) {
+      print("deleted filesss ${file.path}");
+      if (file is File) {
+        if (file.path.endsWith('.mp4') || file.path.endsWith('.m4a')) {
+          await file.delete();
+        }
+      }
+      // else if (file is Directory) {
+      //   await deleteAllFilesInDirectory(file.path);
+      // }
+    }
+  }
+}
+
+Future<void> deleteAllFilesInDocumentsDirectory() async {
+  final directory = await getApplicationDocumentsDirectory();
+  await deleteAllFilesInDirectory(directory.path);
+  print("deleted filesss completed");
 }
 
 Future<void> checkPermission() async {

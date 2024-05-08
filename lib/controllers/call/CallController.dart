@@ -12,7 +12,9 @@ import 'package:astro_guide/notifier/GlobalNotifier.dart';
 import 'package:astro_guide/providers/MeetingProvider.dart';
 import 'package:astro_guide/services/networking/ApiConstants.dart';
 import 'package:camera/camera.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_internet_signal/flutter_internet_signal.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:just_audio/just_audio.dart';
@@ -27,6 +29,9 @@ class CallController extends GetxController {
 
   final MeetingProvider meetingProvider = Get.find();
 
+  final Connectivity connectivity = Connectivity();
+  final FlutterInternetSignal internetSignal = FlutterInternetSignal();
+
   late String sessionID;
 
 
@@ -36,7 +41,9 @@ class CallController extends GetxController {
   late String meetingID, token;
   late bool micEnabled, camEnabled, speakerEnabled;
   late bool auto;
-  
+
+  late int poor;
+
   // Meeting
   Room? meeting;
   // late Room meeting;
@@ -80,6 +87,8 @@ class CallController extends GetxController {
     print("ssweb: hellloooo callllll");
     wallet = 0;
     seconds = 0;
+    poor = 1;
+
     astrologer = Get.arguments['astrologer'];
     print("ssweb: hellloooo callllll1");
     type = Get.arguments['type'];
@@ -370,7 +379,7 @@ class CallController extends GetxController {
             };
 
             print("ssweb: ssweb: Recordingggggg : Start Joined");
-            // meeting?.startRecording(config: config);
+            meeting?.startRecording(config: config);
           } else {
             // print("ssweb: ssweb: stop");
             // stopTimer();
@@ -422,7 +431,7 @@ class CallController extends GetxController {
                 };
 
                 print("ssweb: ssweb: Recordingggggg : Start Joined");
-                // meeting?.startRecording(config: config);
+                meeting?.startRecording(config: config);
               }
               else {
                 joined = true;
@@ -693,6 +702,7 @@ class CallController extends GetxController {
       }
       else if (response.code == -2) {}
       else {
+        back();
         Essential.showSnackBar(response.message);
       }
     });
@@ -966,6 +976,10 @@ class CallController extends GetxController {
   void setCountDown(String type) {
     seconds+=1;
     update();
+
+    if(seconds%3==0) {
+      checkInternet();
+    }
     // print("ssweb: ssweb: max");
     // print(max);
     // print("ssweb: ssweb: total");
@@ -1316,4 +1330,65 @@ class CallController extends GetxController {
 
   }
 
+
+  Future<void> checkInternet() async {
+
+    final List<ConnectivityResult> connectivityResult = await (Connectivity().checkConnectivity());
+
+    if (connectivityResult.contains(ConnectivityResult.none)) {
+      print("Resulttt connectivity none");
+      poor = 0;
+      // Mobile network available.
+    }
+    else if (connectivityResult.contains(ConnectivityResult.mobile)) {
+      print("Resulttt connectivity mobile");
+      final int? strength = await internetSignal.getMobileSignalStrength();
+      print('Resulttt mobile dBm -> $strength');
+      if (strength == null) {
+        print('No mobile connection');
+        poor = 0;
+      }
+
+      if ((strength??0) >= -50) {
+        print('Excellent mobile signal');
+        poor = 1;
+      } else if ((strength??0) >= -70) {
+        print('Good mobile signal');
+        poor = 1;
+      } else if ((strength??0) >= -90) {
+        print('Fair mobile signal');
+        poor = 1;
+      } else {
+        print('Poor mobile signal');
+        poor = 2;
+      }
+      // Mobile network available.
+    } else if (connectivityResult.contains(ConnectivityResult.wifi)) {
+      print("Resulttt connectivity wifi");
+      final int? rssi = await internetSignal.getWifiSignalStrength();
+      print('Resulttt wifi dBm -> $rssi');
+      if (rssi == null) {
+        print('No Wi-Fi connection');
+        poor = 0;
+      }
+
+      if ((rssi??0) >= -30) {
+        print('Excellent Wi-Fi signal');
+        poor = 1;
+      } else if ((rssi??0) >= -67) {
+        print('Good Wi-Fi signal');
+        poor = 1;
+      } else if ((rssi??0) >= -70) {
+        print('Fair Wi-Fi signal');
+        poor = 1;
+      } else {
+        print('Poor Wi-Fi signal');
+        poor = 2;
+      }
+      update();
+      // Wi-fi is available.
+      // Note for Android:
+      // When both mobile and Wi-Fi are turned on system will return Wi-Fi only as active network type
+    }
+  }
 }

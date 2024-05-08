@@ -10,6 +10,7 @@ class LoginModel with _$LoginModel {
     required int code,
     required String status,
     required String message,
+    String? whatsapp_url,
     String? access_token,
     String? refresh_token,
     int? whatsapp,

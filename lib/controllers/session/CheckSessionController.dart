@@ -84,8 +84,9 @@ class CheckSessionController extends GetxController {
   }
 
   Future<void> checkSession() async {
-    Map <String, String> data = {
+    Map <String, dynamic> data = {
       SessionConstants.astro_id : astrologer.id.toString(),
+      "free" : free ? 1 : 0
     };
 
     print(data);
@@ -171,6 +172,7 @@ class CheckSessionController extends GetxController {
           Essential.showSnackBar(response.message);
         }
         else if (response.code != -1) {
+          Get.back();
           Essential.showSnackBar(response.message);
         }
       });

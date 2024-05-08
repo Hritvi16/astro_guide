@@ -28,6 +28,8 @@ mixin _$ValuesModel {
   List<TypeModel>? get types => throw _privateConstructorUsedError;
   List<SpecModel>? get specifications => throw _privateConstructorUsedError;
   List<LanguageModel>? get languages => throw _privateConstructorUsedError;
+  double? get wallet => throw _privateConstructorUsedError;
+  int? get free => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -49,7 +51,9 @@ abstract class $ValuesModelCopyWith<$Res> {
       List<CityModel>? cities,
       List<TypeModel>? types,
       List<SpecModel>? specifications,
-      List<LanguageModel>? languages});
+      List<LanguageModel>? languages,
+      double? wallet,
+      int? free});
 }
 
 /// @nodoc
@@ -73,6 +77,8 @@ class _$ValuesModelCopyWithImpl<$Res, $Val extends ValuesModel>
     Object? types = freezed,
     Object? specifications = freezed,
     Object? languages = freezed,
+    Object? wallet = freezed,
+    Object? free = freezed,
   }) {
     return _then(_value.copyWith(
       status: null == status
@@ -107,6 +113,14 @@ class _$ValuesModelCopyWithImpl<$Res, $Val extends ValuesModel>
           ? _value.languages
           : languages // ignore: cast_nullable_to_non_nullable
               as List<LanguageModel>?,
+      wallet: freezed == wallet
+          ? _value.wallet
+          : wallet // ignore: cast_nullable_to_non_nullable
+              as double?,
+      free: freezed == free
+          ? _value.free
+          : free // ignore: cast_nullable_to_non_nullable
+              as int?,
     ) as $Val);
   }
 }
@@ -127,7 +141,9 @@ abstract class _$$ValuesModelImplCopyWith<$Res>
       List<CityModel>? cities,
       List<TypeModel>? types,
       List<SpecModel>? specifications,
-      List<LanguageModel>? languages});
+      List<LanguageModel>? languages,
+      double? wallet,
+      int? free});
 }
 
 /// @nodoc
@@ -149,6 +165,8 @@ class __$$ValuesModelImplCopyWithImpl<$Res>
     Object? types = freezed,
     Object? specifications = freezed,
     Object? languages = freezed,
+    Object? wallet = freezed,
+    Object? free = freezed,
   }) {
     return _then(_$ValuesModelImpl(
       status: null == status
@@ -183,6 +201,14 @@ class __$$ValuesModelImplCopyWithImpl<$Res>
           ? _value._languages
           : languages // ignore: cast_nullable_to_non_nullable
               as List<LanguageModel>?,
+      wallet: freezed == wallet
+          ? _value.wallet
+          : wallet // ignore: cast_nullable_to_non_nullable
+              as double?,
+      free: freezed == free
+          ? _value.free
+          : free // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -198,7 +224,9 @@ class _$ValuesModelImpl implements _ValuesModel {
       final List<CityModel>? cities,
       final List<TypeModel>? types,
       final List<SpecModel>? specifications,
-      final List<LanguageModel>? languages})
+      final List<LanguageModel>? languages,
+      this.wallet,
+      this.free})
       : _countries = countries,
         _cities = cities,
         _types = types,
@@ -265,8 +293,13 @@ class _$ValuesModelImpl implements _ValuesModel {
   }
 
   @override
+  final double? wallet;
+  @override
+  final int? free;
+
+  @override
   String toString() {
-    return 'ValuesModel(status: $status, code: $code, message: $message, countries: $countries, cities: $cities, types: $types, specifications: $specifications, languages: $languages)';
+    return 'ValuesModel(status: $status, code: $code, message: $message, countries: $countries, cities: $cities, types: $types, specifications: $specifications, languages: $languages, wallet: $wallet, free: $free)';
   }
 
   @override
@@ -284,7 +317,9 @@ class _$ValuesModelImpl implements _ValuesModel {
             const DeepCollectionEquality()
                 .equals(other._specifications, _specifications) &&
             const DeepCollectionEquality()
-                .equals(other._languages, _languages));
+                .equals(other._languages, _languages) &&
+            (identical(other.wallet, wallet) || other.wallet == wallet) &&
+            (identical(other.free, free) || other.free == free));
   }
 
   @JsonKey(ignore: true)
@@ -298,7 +333,9 @@ class _$ValuesModelImpl implements _ValuesModel {
       const DeepCollectionEquality().hash(_cities),
       const DeepCollectionEquality().hash(_types),
       const DeepCollectionEquality().hash(_specifications),
-      const DeepCollectionEquality().hash(_languages));
+      const DeepCollectionEquality().hash(_languages),
+      wallet,
+      free);
 
   @JsonKey(ignore: true)
   @override
@@ -323,7 +360,9 @@ abstract class _ValuesModel implements ValuesModel {
       final List<CityModel>? cities,
       final List<TypeModel>? types,
       final List<SpecModel>? specifications,
-      final List<LanguageModel>? languages}) = _$ValuesModelImpl;
+      final List<LanguageModel>? languages,
+      final double? wallet,
+      final int? free}) = _$ValuesModelImpl;
 
   factory _ValuesModel.fromJson(Map<String, dynamic> json) =
       _$ValuesModelImpl.fromJson;
@@ -344,6 +383,10 @@ abstract class _ValuesModel implements ValuesModel {
   List<SpecModel>? get specifications;
   @override
   List<LanguageModel>? get languages;
+  @override
+  double? get wallet;
+  @override
+  int? get free;
   @override
   @JsonKey(ignore: true)
   _$$ValuesModelImplCopyWith<_$ValuesModelImpl> get copyWith =>

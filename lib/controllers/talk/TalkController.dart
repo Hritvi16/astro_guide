@@ -129,8 +129,16 @@ class TalkController extends GetxController {
       print("valuessss");
       print(response.toJson());
       print(response.types);
+      print("response.wallet");
+      print(response.wallet);
+      print(response.free);
       if(response.code==1) {
         // countries = response.countries??[];
+        wallet = response.wallet ?? wallet;
+        free = (response.free ?? 1) == 0;
+        await storage.write("free", free);
+        await storage.write("wallet", wallet);
+
         countries = response.countries??[];
         types = response.types??[];
         langs = response.languages??[];

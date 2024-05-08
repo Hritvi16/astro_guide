@@ -162,118 +162,135 @@ class NotificationHelper {
   /// https://stackoverflow.com/a/67083337
   @pragma('vm:entry-point')
   static Future<void> _fcmBackgroundHandler(RemoteMessage message) async {
+    final storage = GetStorage();
     print("categoryyyyy backkk");
     print(message.notification?.title);
     print(message.data['category']);
     print(message.data['category']=="call");
 
-    if(message.data['category']=="chat" || message.data['category']=="call") {
+    if(storage.read("status") == "logged in") {
+      if (message.data['category'] == "chat" ||
+          message.data['category'] == "call") {
 
-    }
-    else {
-      globalNotifier.updateValue("session");
-    }
-    var random = Random();
-    _showNotification(
-        id: random.nextInt(pow(2, 31).toInt() - 1),
-        title: message.notification?.title ?? message?.data['title'] ?? '',
-        body: message.notification?.body ?? message?.data['body'] ?? '',
-        payload: message.data.cast(),
-        notificationLayout: NotificationLayout.BigText,
-        category: message.data['category']=="call" || message.data['category']=="chat" ? NotificationCategory.Call : message.data['category']=="cancelled" ? NotificationCategory.MissedCall : null
-    );
-  }
-
-  //handle fcm notification when app is open
-  static Future<void> _fcmForegroundHandler(RemoteMessage message) async {
-    print("categoryyyyy");
-    print(message.data);
-    print(message.data['category']);
-    print(message.data['path']);
-    bool go = true;
-    // if(message.data['category']=="chat" || message.data['category']=="call") {
-    //   go = false;
-    //   Get.toNamed(
-    //       message.data['path'] ?? "/splash",
-    //       arguments: {
-    //         "astrologer": AstrologerModel(
-    //           id: int.parse(message.data['astro_id'] ?? "-1"),
-    //           name: message.data['name'] ?? "",
-    //           profile: message.data['profile'] ?? "",
-    //           mobile: '', email: '', experience: '', about: '',
-    //         ),
-    //         "ch_id": int.parse(message.data['ch_id'] ?? "-1"),
-    //         "type": "RECONNECT",
-    //         "action" : "NOT DECIDED",
-    //         "chat_type" : message.data['chat_type'],
-    //         "meeting_id" : message.data['meeting_id'],
-    //         "session_id" : message.data['session_id'],
-    //         "rate" : message.data['rate'],
-    //       }
-    //   );
-    // }
-    if(message.data['category']=="chat" || message.data['category']=="call") {
-      print("hellooooo");
-      go = false;
-      session(message.data);
-    }
-
-    if(go) {
-      globalNotifier.updateValue("session");
-      if(message.data['category']=="waitlist") {
-
-        print(globalNotifier.callController.value);
-        if(globalNotifier.callController.value!=null) {
-          CallController callController = globalNotifier.callController.value!;
-
-          if(callController.meeting!=null) {
-            callController.meeting?.end();
-            callController.meeting?.leave();
-          }
-          callController.back();
-          globalNotifier.updateCallController(null);
-        }
       }
-
-      else if(message.data['category']=="cancelled") {
-
-        print(globalNotifier.callController.value);
-        if(globalNotifier.callController.value!=null) {
-          CallController callController = globalNotifier.callController.value!;
-
-          if(callController.meeting!=null) {
-            callController.meeting?.end();
-            callController.meeting?.leave();
-          }
-          callController.back();
-          globalNotifier.updateCallController(null);
-        }
+      else {
+        globalNotifier.updateValue("session");
       }
-
-      else if(message.data['category']=="rejected" || message.data['category']=="ended") {
-
-        print("globalNotifier.callController.value");
-        print(globalNotifier.callController.value);
-        if(globalNotifier.callController.value!=null) {
-          CallController callController = globalNotifier.callController.value!;
-          callController.endMeeting(message.data['category']=="rejected" ? "REJECTED" : "COMPLETED");
-          globalNotifier.updateCallController(null);
-        }
-      }
-
       var random = Random();
       _showNotification(
           id: random.nextInt(pow(2, 31).toInt() - 1),
           title: message.notification?.title ?? message?.data['title'] ?? '',
           body: message.notification?.body ?? message?.data['body'] ?? '',
           payload: message.data.cast(),
-          // pass payload to the notification card so you can use it (when user click on notification)
           notificationLayout: NotificationLayout.BigText,
-          category: message.data['category'] == "call" ? NotificationCategory
-              .Call : message.data['category'] == "cancelled" || message.data['category'] == "rejected"
-              ? NotificationCategory.MissedCall
-              : null
+          category: message.data['category'] == "call" ||
+              message.data['category'] == "chat"
+              ? NotificationCategory.Call
+              : message.data['category'] == "cancelled" ? NotificationCategory
+              .MissedCall : null
       );
+    }
+  }
+
+  //handle fcm notification when app is open
+  static Future<void> _fcmForegroundHandler(RemoteMessage message) async {
+    final storage = GetStorage();
+    print("categoryyyyy");
+    print(message.data);
+    print(message.data['category']);
+    print(message.data['path']);
+    bool go = true;
+
+    if(storage.read("status") == "logged in") {
+      // if(message.data['category']=="chat" || message.data['category']=="call") {
+      //   go = false;
+      //   Get.toNamed(
+      //       message.data['path'] ?? "/splash",
+      //       arguments: {
+      //         "astrologer": AstrologerModel(
+      //           id: int.parse(message.data['astro_id'] ?? "-1"),
+      //           name: message.data['name'] ?? "",
+      //           profile: message.data['profile'] ?? "",
+      //           mobile: '', email: '', experience: '', about: '',
+      //         ),
+      //         "ch_id": int.parse(message.data['ch_id'] ?? "-1"),
+      //         "type": "RECONNECT",
+      //         "action" : "NOT DECIDED",
+      //         "chat_type" : message.data['chat_type'],
+      //         "meeting_id" : message.data['meeting_id'],
+      //         "session_id" : message.data['session_id'],
+      //         "rate" : message.data['rate'],
+      //       }
+      //   );
+      // }
+      if (message.data['category'] == "chat" ||
+          message.data['category'] == "call") {
+        print("hellooooo");
+        go = false;
+        session(message.data);
+      }
+
+      if (go) {
+        globalNotifier.updateValue("session");
+        if (message.data['category'] == "waitlist") {
+          print(globalNotifier.callController.value);
+          if (globalNotifier.callController.value != null) {
+            CallController callController = globalNotifier.callController
+                .value!;
+
+            if (callController.meeting != null) {
+              callController.meeting?.end();
+              callController.meeting?.leave();
+            }
+            callController.back();
+            globalNotifier.updateCallController(null);
+          }
+        }
+
+        else if (message.data['category'] == "cancelled") {
+          print(globalNotifier.callController.value);
+          if (globalNotifier.callController.value != null) {
+            CallController callController = globalNotifier.callController
+                .value!;
+
+            if (callController.meeting != null) {
+              callController.meeting?.end();
+              callController.meeting?.leave();
+            }
+            callController.back();
+            globalNotifier.updateCallController(null);
+          }
+        }
+
+        else if (message.data['category'] == "rejected" ||
+            message.data['category'] == "ended") {
+          print("globalNotifier.callController.value");
+          print(globalNotifier.callController.value);
+          if (globalNotifier.callController.value != null) {
+            CallController callController = globalNotifier.callController
+                .value!;
+            callController.endMeeting(message.data['category'] == "rejected"
+                ? "REJECTED"
+                : "COMPLETED");
+            globalNotifier.updateCallController(null);
+          }
+        }
+
+        var random = Random();
+        _showNotification(
+            id: random.nextInt(pow(2, 31).toInt() - 1),
+            title: message.notification?.title ?? message?.data['title'] ?? '',
+            body: message.notification?.body ?? message?.data['body'] ?? '',
+            payload: message.data.cast(),
+            // pass payload to the notification card so you can use it (when user click on notification)
+            notificationLayout: NotificationLayout.BigText,
+            category: message.data['category'] == "call" ? NotificationCategory
+                .Call : message.data['category'] == "cancelled" ||
+                message.data['category'] == "rejected"
+                ? NotificationCategory.MissedCall
+                : null
+        );
+      }
     }
   }
 
@@ -403,7 +420,6 @@ class NotificationHelper {
             soundSource: 'resource://raw/notinoti',
           ),
         ],
-
         channelGroups: [
           NotificationChannelGroup(
             channelGroupKey: NotificationChannels.generalChannelGroupKey,

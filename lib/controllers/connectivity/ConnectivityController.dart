@@ -17,7 +17,7 @@ class ConnectivityController extends GetxController {
     updateConnectionStatus(connectivityResult);
   }
 
-  void updateConnectionStatus(ConnectivityResult result) {
+  void updateConnectionStatus(List<ConnectivityResult> result) {
     switch (result) {
       case ConnectivityResult.wifi:
       case ConnectivityResult.mobile:

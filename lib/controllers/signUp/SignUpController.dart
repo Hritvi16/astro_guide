@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:astro_guide/colors/MyColors.dart';
 import 'package:astro_guide/constants/CityConstants.dart';
 import 'package:astro_guide/constants/CommonConstants.dart';
 import 'package:astro_guide/constants/StateConstants.dart';
@@ -17,10 +18,15 @@ import 'package:astro_guide/providers/UserProvider.dart';
 import 'package:astro_guide/services/networking/ApiConstants.dart';
 import 'package:astro_guide/views/country/Country.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:image_cropping/image_cropping.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart' as path;
 
 class SignUpController extends GetxController {
   SignUpController();
@@ -305,7 +311,7 @@ class SignUpController extends GetxController {
   }
 
 
-  void chooseSource() {
+  void chooseSource(BuildContext context) {
     Get.dialog(
       BasicDialog(
         text: "Choose one",
@@ -315,38 +321,79 @@ class SignUpController extends GetxController {
       barrierDismissible: false,
     ).then((value) {
       if (value == "Camera") {
-        openCamera();
+        pickImage(ImageSource.camera, context);
       }
       else if (value == "Gallery") {
-        openFiles();
+        pickImage(ImageSource.gallery, context);
+        // openFiles();
       }
     });
   }
 
 
-  Future<void> openCamera() async {
+
+  Future<void> pickImage(ImageSource imageSource, BuildContext context) async {
     final ImagePicker picker = ImagePicker();
 
     XFile? file = await picker.pickImage(
-      source: ImageSource.camera, imageQuality: 40,);
+      source: imageSource, imageQuality: 40,);
 
     if (file != null) {
       image = file;
       update();
+
+      Uint8List? imageBytes = await image?.readAsBytes();
+
+      if(imageBytes!=null) {
+        ImageCropping.cropImage(
+            context: context,
+            imageBytes: imageBytes!,
+            onImageDoneListener: (data) async {
+              imageBytes = data;
+
+              final tempDir = await getTemporaryDirectory();
+              final tempPath = path.join(tempDir.path, '${DateTime.now().millisecondsSinceEpoch}.png');
+
+              final file = File(tempPath);
+              await file.writeAsBytes(imageBytes!);
+
+              image = XFile(file.path);
+              update();
+
+            },
+            customAspectRatios: [
+              const CropAspectRatio(
+                ratioX: 4,
+                ratioY: 5,
+              ),
+            ],
+            onImageStartLoading: showLoader,
+            onImageEndLoading: hideLoader,
+            visibleOtherAspectRatios: true,
+            squareBorderWidth: 2,
+            isConstrain: false,
+            squareCircleColor: MyColors.red,
+            defaultTextColor: MyColors.black,
+            selectedTextColor: MyColors.orange,
+            colorForWhiteSpace: MyColors.white,
+            makeDarkerOutside: true,
+            outputImageFormat: OutputImageFormat.jpg,
+            encodingQuality: 10);
+      }
+
+      // updateProfile();
     }
   }
-
-  Future<void> openFiles() async {
-    final ImagePicker picker = ImagePicker();
-
-    final XFile? pickedFileList = await picker.pickImage(
-      imageQuality: 40, source: ImageSource.gallery,
-    );
-
-    if (pickedFileList!=null) {
-      image = pickedFileList;
-      update();
+  void showLoader() {
+    if (EasyLoading.isShow) {
+      return;
     }
+    EasyLoading.show(status: "Loading");
+  }
+
+  /// To hide loader
+  void hideLoader() {
+    EasyLoading.dismiss();
   }
 
 

@@ -15,6 +15,7 @@ import 'package:astro_guide/views/home/chat/Waiting.dart';
 import 'package:astro_guide/views/loadingScreen/LoadingScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -48,44 +49,54 @@ class Chat extends StatelessWidget {
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(
-                    children: [
-                      CircleAvatar(
-                        // radius: standardServiceOCRadius,
-                        radius: 25,
-                        // backgroundImage: AssetImage(
-                        //   "assets/test/user.jpg"
-                        // ),
-                        backgroundImage: NetworkImage(
-                          ApiConstants.astrologerUrl+chatController.astrologer.profile
-                        ),
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                  Flexible(
+                    child: GestureDetector(
+                      onTap: () {
+                        chatController.goto("/astrologerDetail/${chatController.astrologer.id}", arguments: chatController.astrologer.id.toString());
+                      },
+                      child: Row(
                         children: [
-                          Text(
-                            chatController.astrologer.name,
-                            style: GoogleFonts.manrope(
-                              fontSize: 16,
-                              color: MyColors.black
+                          CircleAvatar(
+                            // radius: standardServiceOCRadius,
+                            radius: 25,
+                            // backgroundImage: AssetImage(
+                            //   "assets/test/user.jpg"
+                            // ),
+                            backgroundImage: NetworkImage(
+                              ApiConstants.astrologerUrl+chatController.astrologer.profile
                             ),
                           ),
-                          if(chatController.type=="ACTIVE")
-                            Text(
-                              chatController.getChatTime(),
-                              style: GoogleFonts.manrope(
-                                fontSize: 12,
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Flexible(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  chatController.astrologer.name,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: GoogleFonts.manrope(
+                                    fontSize: 16,
+                                    color: MyColors.black
+                                  ),
+                                ),
+                                if(chatController.type=="ACTIVE")
+                                  Text(
+                                    chatController.getChatTime(),
+                                    style: GoogleFonts.manrope(
+                                      fontSize: 12,
 
-                                  color: MyColors.black
-                              ),
+                                        color: MyColors.black
+                                    ),
+                                  ),
+                              ],
                             ),
+                          )
                         ],
-                      )
-                    ],
+                      ),
+                    ),
                   ),
                   if(chatController.type=="ACTIVE")
                     Row(
@@ -120,10 +131,10 @@ class Chat extends StatelessWidget {
                         ),
                       ],
                     ),
-                  if(chatController.type=="COMPLETED")
-                    Icon(
-                      Icons.share
-                    )
+                  // if(chatController.type=="COMPLETED")
+                  //   Icon(
+                  //     Icons.share
+                  //   )
                 ],
               ),
             ),

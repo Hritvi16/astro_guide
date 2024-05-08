@@ -17,7 +17,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.6.2+346
+version: 1.8.0+353
 
 environment:
   sdk: '>=3.0.2 <4.0.0'
@@ -71,7 +71,7 @@ dependencies:
   dropdown_search: ^5.0.6
   bottom_picker: ^2.3.2
   drop_shadow_image: ^0.9.1
-  connectivity_plus: ^4.0.2
+  connectivity_plus: ^6.0.3
   custom_refresh_indicator: ^2.0.1
   pinput: ^3.0.1
   videosdk: ^1.1.2
@@ -91,7 +91,7 @@ dependencies:
   file_picker: ^5.3.3
   flutter_stripe: ^10.0.0
   stripe_checkout: ^1.0.2
-  just_audio: ^0.9.34
+  just_audio: ^0.9.37
   pdf: ^3.10.4
   flutter_pdfview: ^1.3.1
   flutter_swipe_action_cell: ^3.1.2
@@ -99,6 +99,8 @@ dependencies:
   in_app_update: ^4.2.1
   syncfusion_flutter_gauges: ^23.2.4
   phonepe_payment_sdk: ^2.0.1
+  image_cropping: ^0.0.14
+  flutter_internet_signal: ^0.0.30
 
 #  libphonenumber: ^2.0.2
 #  intl_phone_number_input: ^0.7.2
@@ -109,6 +111,9 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   razorpay_flutter: ^1.3.6
+  flutter_easyloading: ^3.0.5
+  image: ^4.1.7
+  path: ^1.9.0
 
 dev_dependencies:
   flutter_test:
@@ -125,7 +130,7 @@ dev_dependencies:
   build_runner: ^2.3.3
   freezed: ^2.3.2
   json_serializable: ^6.5.4
-  connectivity_plus: ^4.0.2
+  connectivity_plus: ^6.0.3
 
 flutter_icons:
   android: true

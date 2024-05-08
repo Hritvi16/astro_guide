@@ -24,6 +24,8 @@ mixin _$AstrologerListModel {
   int get code => throw _privateConstructorUsedError;
   String get message => throw _privateConstructorUsedError;
   List<AstrologerModel>? get data => throw _privateConstructorUsedError;
+  double? get wallet => throw _privateConstructorUsedError;
+  int? get free => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -38,7 +40,12 @@ abstract class $AstrologerListModelCopyWith<$Res> {
       _$AstrologerListModelCopyWithImpl<$Res, AstrologerListModel>;
   @useResult
   $Res call(
-      {String status, int code, String message, List<AstrologerModel>? data});
+      {String status,
+      int code,
+      String message,
+      List<AstrologerModel>? data,
+      double? wallet,
+      int? free});
 }
 
 /// @nodoc
@@ -58,6 +65,8 @@ class _$AstrologerListModelCopyWithImpl<$Res, $Val extends AstrologerListModel>
     Object? code = null,
     Object? message = null,
     Object? data = freezed,
+    Object? wallet = freezed,
+    Object? free = freezed,
   }) {
     return _then(_value.copyWith(
       status: null == status
@@ -76,6 +85,14 @@ class _$AstrologerListModelCopyWithImpl<$Res, $Val extends AstrologerListModel>
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
               as List<AstrologerModel>?,
+      wallet: freezed == wallet
+          ? _value.wallet
+          : wallet // ignore: cast_nullable_to_non_nullable
+              as double?,
+      free: freezed == free
+          ? _value.free
+          : free // ignore: cast_nullable_to_non_nullable
+              as int?,
     ) as $Val);
   }
 }
@@ -89,7 +106,12 @@ abstract class _$$AstrologerListModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String status, int code, String message, List<AstrologerModel>? data});
+      {String status,
+      int code,
+      String message,
+      List<AstrologerModel>? data,
+      double? wallet,
+      int? free});
 }
 
 /// @nodoc
@@ -107,6 +129,8 @@ class __$$AstrologerListModelImplCopyWithImpl<$Res>
     Object? code = null,
     Object? message = null,
     Object? data = freezed,
+    Object? wallet = freezed,
+    Object? free = freezed,
   }) {
     return _then(_$AstrologerListModelImpl(
       status: null == status
@@ -125,6 +149,14 @@ class __$$AstrologerListModelImplCopyWithImpl<$Res>
           ? _value._data
           : data // ignore: cast_nullable_to_non_nullable
               as List<AstrologerModel>?,
+      wallet: freezed == wallet
+          ? _value.wallet
+          : wallet // ignore: cast_nullable_to_non_nullable
+              as double?,
+      free: freezed == free
+          ? _value.free
+          : free // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -136,7 +168,9 @@ class _$AstrologerListModelImpl implements _AstrologerListModel {
       {required this.status,
       required this.code,
       required this.message,
-      final List<AstrologerModel>? data})
+      final List<AstrologerModel>? data,
+      this.wallet,
+      this.free})
       : _data = data;
 
   factory _$AstrologerListModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -159,8 +193,13 @@ class _$AstrologerListModelImpl implements _AstrologerListModel {
   }
 
   @override
+  final double? wallet;
+  @override
+  final int? free;
+
+  @override
   String toString() {
-    return 'AstrologerListModel(status: $status, code: $code, message: $message, data: $data)';
+    return 'AstrologerListModel(status: $status, code: $code, message: $message, data: $data, wallet: $wallet, free: $free)';
   }
 
   @override
@@ -171,13 +210,15 @@ class _$AstrologerListModelImpl implements _AstrologerListModel {
             (identical(other.status, status) || other.status == status) &&
             (identical(other.code, code) || other.code == code) &&
             (identical(other.message, message) || other.message == message) &&
-            const DeepCollectionEquality().equals(other._data, _data));
+            const DeepCollectionEquality().equals(other._data, _data) &&
+            (identical(other.wallet, wallet) || other.wallet == wallet) &&
+            (identical(other.free, free) || other.free == free));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, status, code, message,
-      const DeepCollectionEquality().hash(_data));
+      const DeepCollectionEquality().hash(_data), wallet, free);
 
   @JsonKey(ignore: true)
   @override
@@ -199,7 +240,9 @@ abstract class _AstrologerListModel implements AstrologerListModel {
       {required final String status,
       required final int code,
       required final String message,
-      final List<AstrologerModel>? data}) = _$AstrologerListModelImpl;
+      final List<AstrologerModel>? data,
+      final double? wallet,
+      final int? free}) = _$AstrologerListModelImpl;
 
   factory _AstrologerListModel.fromJson(Map<String, dynamic> json) =
       _$AstrologerListModelImpl.fromJson;
@@ -212,6 +255,10 @@ abstract class _AstrologerListModel implements AstrologerListModel {
   String get message;
   @override
   List<AstrologerModel>? get data;
+  @override
+  double? get wallet;
+  @override
+  int? get free;
   @override
   @JsonKey(ignore: true)
   _$$AstrologerListModelImplCopyWith<_$AstrologerListModelImpl> get copyWith =>

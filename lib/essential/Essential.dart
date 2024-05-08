@@ -281,8 +281,16 @@ class Essential {
     return DateFormat("dd MMM, yyyy").format(Essential.getConvertedDate(datetime));
   }
 
+  static String getRawDate(String datetime) {
+    return DateFormat("dd MMM, yyyy").format(DateTime.parse(datetime));
+  }
+
   static String getTime(String datetime) {
     return DateFormat("hh:mm aa").format(Essential.getConvertedDate(datetime));
+  }
+
+  static String getRawTime(String datetime) {
+    return DateFormat("hh:mm aa").format(DateTime.parse(datetime));
   }
 
   static String getDateTime(String datetime) {
@@ -291,30 +299,38 @@ class Essential {
 
 
   static String getChatDuration(int? seconds, String started_at, String ended_at) {
-    if(seconds==null) {
-      tz.TZDateTime start = getGMTDate(started_at);
-      tz.TZDateTime end = getGMTDate(ended_at);
+    if(ended_at.isNotEmpty) {
+      if (seconds == null) {
+        tz.TZDateTime start = getGMTDate(started_at);
+        tz.TZDateTime end = getGMTDate(ended_at);
 
-      Duration dur = end.difference(start);
-      seconds = dur.inSeconds;
-    }
+        Duration dur = end.difference(start);
+        seconds = dur.inSeconds;
+      }
 
 
-    int hours = seconds ~/ 3600;
-    int minutes = (seconds % 3600) ~/ 60;
-    int remainingSeconds = seconds % 60;
+      int hours = seconds ~/ 3600;
+      int minutes = (seconds % 3600) ~/ 60;
+      int remainingSeconds = seconds % 60;
 
-    String duration = "";
-    if(hours>0) {
-      duration+="$hours Hour${hours>1 ? "s" : ""}";
+      String duration = "";
+      if (hours > 0) {
+        duration += "$hours Hour${hours > 1 ? "s" : ""}";
+      }
+      if (minutes > 0) {
+        duration +=
+        "${duration.isNotEmpty ? " " : ""}$minutes Minute${minutes > 1
+            ? "s"
+            : ""}";
+      }
+      if (remainingSeconds > 0) {
+        duration += "${duration.isNotEmpty
+            ? " "
+            : ""}$remainingSeconds Second${remainingSeconds > 1 ? "s" : ""}";
+      }
+      return duration;
     }
-    if(minutes>0) {
-      duration+="${duration.isNotEmpty ? " " : ""}$minutes Minute${minutes>1 ? "s" : ""}";
-    }
-    if(remainingSeconds>0) {
-      duration+="${duration.isNotEmpty ? " " : ""}$remainingSeconds Second${remainingSeconds>1 ? "s" : ""}";
-    }
-    return duration;
+    return "Duration not available";
   }
 
   static void back() {

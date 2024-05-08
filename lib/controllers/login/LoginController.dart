@@ -255,13 +255,14 @@ class LoginController extends GetxController {
   void validate() {
     if(formKey.currentState!.validate()) {
       verify();
+      // login();
     }
   }
 
   Future<void> verify() async {
     Essential.showLoadingDialog();
     final Map<String, String> data = {
-      UserConstants.mobile : country.code+"-"+mobile.text,
+      UserConstants.mobile : "${country.code}-${mobile.text}",
     };
 
     print(data);
@@ -272,7 +273,7 @@ class LoginController extends GetxController {
         Essential.showSnackBar(response.message, code: response.code, time: 3);
       }
       else {
-        goto("/otp", {"mobile" : mobile.text, "code" : country.code, "email" : response.email??"", "nationality" : country, "instance_id" : response.refresh_token, "access_token" : response.access_token, "whatsapp" : response.whatsapp}, loginModel: response);
+        goto("/otp", {"mobile" : mobile.text, "code" : country.code, "email" : response.email??"", "nationality" : country, "whatsapp_url" : response.whatsapp_url,  "instance_id" : response.refresh_token, "access_token" : response.access_token, "whatsapp" : response.whatsapp}, loginModel: response);
       }
     });
   }
@@ -280,7 +281,7 @@ class LoginController extends GetxController {
   Future<void> login() async {
     Essential.showLoadingDialog();
     final Map<String, String> data = {
-      UserConstants.mobile : country.code+"-"+mobile.text,
+      UserConstants.mobile : "${country.code}-${mobile.text}",
       UserConstants.fcm : await NotificationHelper.generateFcmToken()
     };
 

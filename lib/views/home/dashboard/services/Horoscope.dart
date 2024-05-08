@@ -301,10 +301,11 @@ class Horoscope extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       width: double.infinity,
       decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage("assets/astrology/galaxy.jpg"),
-          fit: BoxFit.fill
-        ),
+        color: MyColors.black,
+        // image: DecorationImage(
+        //   image: AssetImage("assets/astrology/galaxy.jpg"),
+        //   fit: BoxFit.fill
+        // ),
         borderRadius: BorderRadius.circular(14),
       ),
       child: Column(

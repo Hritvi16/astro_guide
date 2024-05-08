@@ -4,6 +4,7 @@ import 'package:astro_guide/models/horoscope/basic/BasicKundliResponseModel.dart
 import 'package:astro_guide/models/horoscope/chart/ChartResponseModel.dart';
 import 'package:astro_guide/models/horoscope/horoscope/HoroscopeResponseModel.dart';
 import 'package:astro_guide/models/horoscope/kp/KPPlanetResponseModel.dart';
+import 'package:astro_guide/models/horoscope/numeroscope/NumeroscopeResponseModel.dart';
 import 'package:astro_guide/models/horoscope/planet/PlanetResponseModel.dart';
 import 'package:astro_guide/models/horoscope/vimshottari/VimshottariDashaResponseModel.dart';
 import 'package:astro_guide/models/horoscope/yogini/YoginiDashaResponseModel.dart';
@@ -18,6 +19,12 @@ class HoroscopeProvider {
     var horoscopeResponseModel = await horoscopeRepository.fetchByData(token, endpoint, data);
 
     return HoroscopeResponseModel.fromJson(horoscopeResponseModel);
+  }
+
+  Future<NumeroscopeResponseModel> fetchNumeroscope(String token, String endpoint, Map<String, dynamic> data) async {
+    var numeroscopeResponseModel = await horoscopeRepository.fetchByData(token, endpoint, data);
+
+    return NumeroscopeResponseModel.fromJson(numeroscopeResponseModel);
   }
 
   Future<KundliResponseModel> fetchKundli(String token, String endpoint, Map<String, dynamic> data) async {

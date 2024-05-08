@@ -260,7 +260,7 @@ class SignUp extends StatelessWidget {
                   bottom: 0,
                   child: GestureDetector(
                     onTap: () {
-                      signUpController.chooseSource();
+                      signUpController.chooseSource(context);
                     },
                     child: Container(
                       padding: EdgeInsets.all(13),

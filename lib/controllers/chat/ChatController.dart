@@ -33,6 +33,7 @@ import 'package:path/path.dart';
 // import 'package:audioplayers/audioplayers.dart' as ap;
 import 'package:record/record.dart' as r;
 import 'package:just_audio/just_audio.dart' as p;
+import 'package:http/http.dart' as http;
 
 class ChatController extends GetxController {
   ChatController();
@@ -1323,7 +1324,65 @@ class ChatController extends GetxController {
     }
   }
 
-  void playAudio(String url) {
+  Future<File> downloadFile(String url, String fileName) async {
+    final directory = await getApplicationDocumentsDirectory();
+    final filePath = '${directory.path}/$fileName';
+    final file = File(filePath);
+
+    if (await file.exists()) {
+      return file;
+    } else {
+      final response = await http.get(Uri.parse(url));
+      await file.writeAsBytes(response.bodyBytes);
+      return file;
+    }
+  }
+
+  Future<void> playAudio(String url) async {
+    try {
+      if(url!=playerUrl) {
+        final fileName = url.split('/').last;
+        File file = await downloadFile(url, fileName);
+        final source = AudioSource.uri(Uri.file(file.path));
+        print("file.path");
+        print(file.path);
+        player.setAudioSource(source);
+        player.play();
+
+        player.processingStateStream.listen((processingState) {
+          print("processingState");
+          print(processingState);
+          if(processingState == ProcessingState.ready) {
+
+          }
+          if (processingState == ProcessingState.completed) {
+            // player.seek(Duration.zero);
+            player.stop();
+            update();
+            print("completed");
+          }
+        });
+        playerUrl = url;
+      }
+      else {
+        if(player.processingState==ProcessingState.ready) {
+          player.play();
+        }
+        else {
+          player.seek(Duration.zero);
+          player.play();
+        }
+      }
+      // audioPlayer.play(UrlSource(url));
+    }
+    catch(ex) {
+      print("errorrr");
+      print(ex);
+    }
+    update();
+  }
+
+  void playAudio1(String url) {
     print(url);
     try {
       if(url!=playerUrl) {

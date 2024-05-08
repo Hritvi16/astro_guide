@@ -174,7 +174,7 @@ class FreeKundli extends StatelessWidget {
               ),
             ),
             Text(
-              "${Essential.getDate(kundli.dob)}, ${Essential.getTime(kundli.dob)}",
+              "${Essential.getRawDate(kundli.dob)}, ${Essential.getRawTime(kundli.dob)}",
               style: GoogleFonts.manrope(
                 fontSize: 14,
                 fontWeight: FontWeight.w500,

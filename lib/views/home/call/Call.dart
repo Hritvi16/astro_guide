@@ -154,7 +154,7 @@ class Call extends StatelessWidget {
                 },
                 // child: callController.joined ?
                 child: callController.meeting!=null ?
-                OneToOneMeetingContainer(callController: callController, meeting: callController.meeting!, token: callController.sessionHistory.token??"", timer: Duration(seconds: callController.seconds),)
+                OneToOneMeetingContainer(callController: callController, meeting: callController.meeting!, poor: callController.poor,  token: callController.sessionHistory.token??"", timer: Duration(seconds: callController.seconds),)
                     : LoadingScreen()
               // : WaitingToJoin(callController.astrologer.name, callController.astrologer.profile, callController.endMeeting, callController.type, callController.back, callController.accept,  callController.end)
             ),

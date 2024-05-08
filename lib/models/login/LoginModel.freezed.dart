@@ -23,6 +23,7 @@ mixin _$LoginModel {
   int get code => throw _privateConstructorUsedError;
   String get status => throw _privateConstructorUsedError;
   String get message => throw _privateConstructorUsedError;
+  String? get whatsapp_url => throw _privateConstructorUsedError;
   String? get access_token => throw _privateConstructorUsedError;
   String? get refresh_token => throw _privateConstructorUsedError;
   int? get whatsapp => throw _privateConstructorUsedError;
@@ -44,6 +45,7 @@ abstract class $LoginModelCopyWith<$Res> {
       {int code,
       String status,
       String message,
+      String? whatsapp_url,
       String? access_token,
       String? refresh_token,
       int? whatsapp,
@@ -66,6 +68,7 @@ class _$LoginModelCopyWithImpl<$Res, $Val extends LoginModel>
     Object? code = null,
     Object? status = null,
     Object? message = null,
+    Object? whatsapp_url = freezed,
     Object? access_token = freezed,
     Object? refresh_token = freezed,
     Object? whatsapp = freezed,
@@ -84,6 +87,10 @@ class _$LoginModelCopyWithImpl<$Res, $Val extends LoginModel>
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
+      whatsapp_url: freezed == whatsapp_url
+          ? _value.whatsapp_url
+          : whatsapp_url // ignore: cast_nullable_to_non_nullable
+              as String?,
       access_token: freezed == access_token
           ? _value.access_token
           : access_token // ignore: cast_nullable_to_non_nullable
@@ -116,6 +123,7 @@ abstract class _$$LoginModelImplCopyWith<$Res>
       {int code,
       String status,
       String message,
+      String? whatsapp_url,
       String? access_token,
       String? refresh_token,
       int? whatsapp,
@@ -136,6 +144,7 @@ class __$$LoginModelImplCopyWithImpl<$Res>
     Object? code = null,
     Object? status = null,
     Object? message = null,
+    Object? whatsapp_url = freezed,
     Object? access_token = freezed,
     Object? refresh_token = freezed,
     Object? whatsapp = freezed,
@@ -154,6 +163,10 @@ class __$$LoginModelImplCopyWithImpl<$Res>
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
+      whatsapp_url: freezed == whatsapp_url
+          ? _value.whatsapp_url
+          : whatsapp_url // ignore: cast_nullable_to_non_nullable
+              as String?,
       access_token: freezed == access_token
           ? _value.access_token
           : access_token // ignore: cast_nullable_to_non_nullable
@@ -181,6 +194,7 @@ class _$LoginModelImpl implements _LoginModel {
       {required this.code,
       required this.status,
       required this.message,
+      this.whatsapp_url,
       this.access_token,
       this.refresh_token,
       this.whatsapp,
@@ -196,6 +210,8 @@ class _$LoginModelImpl implements _LoginModel {
   @override
   final String message;
   @override
+  final String? whatsapp_url;
+  @override
   final String? access_token;
   @override
   final String? refresh_token;
@@ -206,7 +222,7 @@ class _$LoginModelImpl implements _LoginModel {
 
   @override
   String toString() {
-    return 'LoginModel(code: $code, status: $status, message: $message, access_token: $access_token, refresh_token: $refresh_token, whatsapp: $whatsapp, email: $email)';
+    return 'LoginModel(code: $code, status: $status, message: $message, whatsapp_url: $whatsapp_url, access_token: $access_token, refresh_token: $refresh_token, whatsapp: $whatsapp, email: $email)';
   }
 
   @override
@@ -217,6 +233,8 @@ class _$LoginModelImpl implements _LoginModel {
             (identical(other.code, code) || other.code == code) &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.message, message) || other.message == message) &&
+            (identical(other.whatsapp_url, whatsapp_url) ||
+                other.whatsapp_url == whatsapp_url) &&
             (identical(other.access_token, access_token) ||
                 other.access_token == access_token) &&
             (identical(other.refresh_token, refresh_token) ||
@@ -229,7 +247,7 @@ class _$LoginModelImpl implements _LoginModel {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, code, status, message,
-      access_token, refresh_token, whatsapp, email);
+      whatsapp_url, access_token, refresh_token, whatsapp, email);
 
   @JsonKey(ignore: true)
   @override
@@ -250,6 +268,7 @@ abstract class _LoginModel implements LoginModel {
       {required final int code,
       required final String status,
       required final String message,
+      final String? whatsapp_url,
       final String? access_token,
       final String? refresh_token,
       final int? whatsapp,
@@ -264,6 +283,8 @@ abstract class _LoginModel implements LoginModel {
   String get status;
   @override
   String get message;
+  @override
+  String? get whatsapp_url;
   @override
   String? get access_token;
   @override

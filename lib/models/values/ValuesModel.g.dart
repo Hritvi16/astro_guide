@@ -26,6 +26,8 @@ _$ValuesModelImpl _$$ValuesModelImplFromJson(Map<String, dynamic> json) =>
       languages: (json['languages'] as List<dynamic>?)
           ?.map((e) => LanguageModel.fromJson(e as Map<String, dynamic>))
           .toList(),
+      wallet: (json['wallet'] as num?)?.toDouble(),
+      free: json['free'] as int?,
     );
 
 Map<String, dynamic> _$$ValuesModelImplToJson(_$ValuesModelImpl instance) =>
@@ -38,4 +40,6 @@ Map<String, dynamic> _$$ValuesModelImplToJson(_$ValuesModelImpl instance) =>
       'types': instance.types,
       'specifications': instance.specifications,
       'languages': instance.languages,
+      'wallet': instance.wallet,
+      'free': instance.free,
     };

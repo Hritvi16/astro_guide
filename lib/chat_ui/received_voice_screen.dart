@@ -14,9 +14,9 @@ import 'package:just_audio/just_audio.dart';
 class ReceivedVoiceScreen extends StatelessWidget {
   final ChatModel chat;
   final dynamic play, pause;
-  final dynamic player;
+  final AudioPlayer player;
   final String playerUrl;
-  const ReceivedVoiceScreen({super.key, required this.chat, this.play, this.pause, this.player, required this.playerUrl});
+  const ReceivedVoiceScreen({super.key, required this.chat, this.play, this.pause, required this.player, required this.playerUrl});
 
 
   @override
@@ -54,7 +54,14 @@ class ReceivedVoiceScreen extends StatelessWidget {
                       Icons.pause
                   ),
                 )
-                    : GestureDetector(
+                : (player.processingState==ProcessingState.loading || player.processingState==ProcessingState.buffering) && playerUrl==ApiConstants.chatUrl+chat.message ?
+                Container(
+                  width: 20.0,
+                  height: 20.0,
+                  margin: EdgeInsets.symmetric(vertical: 3, horizontal: 2),
+                  child: CircularProgressIndicator(color: MyColors.colorPrimary,strokeWidth: 3,)
+                )
+                : GestureDetector(
                   onTap: () async {
                     play(ApiConstants.chatUrl+chat.message);
                   },

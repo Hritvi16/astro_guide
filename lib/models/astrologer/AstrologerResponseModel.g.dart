@@ -38,6 +38,7 @@ _$AstrologerResponseModelImpl _$$AstrologerResponseModelImplFromJson(
           ?.map((e) => AstrologerModel.fromJson(e as Map<String, dynamic>))
           .toList(),
       wallet: (json['wallet'] as num?)?.toDouble(),
+      free: json['free'] as int?,
     );
 
 Map<String, dynamic> _$$AstrologerResponseModelImplToJson(
@@ -55,4 +56,5 @@ Map<String, dynamic> _$$AstrologerResponseModelImplToJson(
       'galleries': instance.galleries,
       'similar': instance.similar,
       'wallet': instance.wallet,
+      'free': instance.free,
     };

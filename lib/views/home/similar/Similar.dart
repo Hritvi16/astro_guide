@@ -13,6 +13,7 @@ import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -280,6 +281,8 @@ class Similar extends StatelessWidget {
                     if(Essential.getPlatform())
                       Text(
                         astrologer.types??"-",
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                         style: GoogleFonts.manrope(
                           fontSize: 12.0,
                           color: MyColors.colorGrey,
@@ -314,12 +317,16 @@ class Similar extends StatelessWidget {
               SizedBox(
                 width: 6,
               ),
-              Text(
-                astrologer.languages??"-",
-                style: GoogleFonts.manrope(
-                  fontSize: 12.0,
-                  color: MyColors.colorGrey,
-                  fontWeight: FontWeight.w500,
+              Flexible(
+                child: Text(
+                  astrologer.languages??"-",
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: GoogleFonts.manrope(
+                    fontSize: 12.0,
+                    color: MyColors.colorGrey,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
 

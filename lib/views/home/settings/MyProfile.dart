@@ -228,7 +228,7 @@ class MyProfile extends StatelessWidget {
                   bottom: 0,
                   child: GestureDetector(
                     onTap: () {
-                      myProfileController.chooseSource();
+                      myProfileController.chooseSource(context);
                     },
                     child: Container(
                       padding: EdgeInsets.all(13),

@@ -137,6 +137,20 @@ class ApiService {
           headers: {ApiConstants.token: token}
       );
 
+      try {
+        Map<String, dynamic> data = response.body is String
+            ? json.decode(response.body)
+            : response.body;
+
+        if(data.containsKey("charts")) {
+          print("data['charts']");
+          print(data['charts']);
+        }
+      }
+      catch(ex) {
+        print(ex);
+      }
+
       if (response == null) {
           Future.delayed(Duration(seconds: 3), () {});
           if (cntf > 3) {

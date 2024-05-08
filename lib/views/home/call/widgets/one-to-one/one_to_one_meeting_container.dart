@@ -13,8 +13,9 @@ class OneToOneMeetingContainer extends StatefulWidget {
   final Room meeting;
   final CallController callController;
   final String token;
+  final int poor;
   final Duration? timer;
-  const OneToOneMeetingContainer({Key? key, required this.meeting, required this.callController, required this.token, required this.timer})
+  const OneToOneMeetingContainer({Key? key, required this.meeting, required this.callController, required this.poor,  required this.token, required this.timer})
       : super(key: key);
 
   @override
@@ -99,22 +100,43 @@ class _OneToOneMeetingContainerState extends State<OneToOneMeetingContainer> {
               firstChild: widget.callController.joined ?
               Align(
                 alignment: Alignment.topCenter,
-                child: Container(
-                  padding: EdgeInsets.symmetric(vertical: 8, horizontal: 15),
-                  margin: EdgeInsets.symmetric(vertical: 5),
-                  decoration: BoxDecoration(
-                    color: MyColors.red,
-                    borderRadius: BorderRadius.circular(3)
-                  ),
-                  child: Text(
-                    widget.timer == null
-                        ? "00:00:00"
-                        : (widget.timer!.inHours>9 ? "" : "0")+widget.timer.toString().split(".").first,
-                    style: GoogleFonts.manrope(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: MyColors.white),
-                  ),
+                child: Column(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.symmetric(vertical: 8, horizontal: 15),
+                      margin: EdgeInsets.symmetric(vertical: 5),
+                      decoration: BoxDecoration(
+                        color: MyColors.red,
+                        borderRadius: BorderRadius.circular(3)
+                      ),
+                      child: Text(
+                        widget.timer == null
+                            ? "00:00:00"
+                            : (widget.timer!.inHours>9 ? "" : "0")+widget.timer.toString().split(".").first,
+                        style: GoogleFonts.manrope(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: MyColors.white),
+                      ),
+                    ),
+                    if(widget.poor!=1)
+                      Container(
+                        padding: EdgeInsets.symmetric(vertical: 4, horizontal: 15),
+                        margin: EdgeInsets.symmetric(vertical: 5),
+                        decoration: BoxDecoration(
+                            color: MyColors.red,
+                            // color: widget.poor==0 ? MyColors.colorGrey : MyColors.red,
+                            borderRadius: BorderRadius.circular(3)
+                        ),
+                        child: Text(
+                          "${widget.poor==0 ? "No Internet" : "Poor"} Connection",
+                          style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: MyColors.white),
+                        ),
+                      ),
+                  ],
                 ),
               ) : Container(),
             ),

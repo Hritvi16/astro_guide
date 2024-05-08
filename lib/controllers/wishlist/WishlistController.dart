@@ -63,6 +63,14 @@ class WishlistController extends GetxController {
 
     await astrologerProvider.fetchByID(storage.read("access"), ApiConstants.favouriteAPI+ApiConstants.user, data).then((response) async {
       if(response.code==1) {
+        print("response.wallet");
+        print(response.wallet);
+        print(response.free);
+        wallet = response.wallet ?? wallet;
+        free = (response.free ?? 1) == 0;
+        await storage.write("free", free);
+        await storage.write("wallet", wallet);
+
         astrologers = [];
         astrologers.addAll(response.data??[]);
       }

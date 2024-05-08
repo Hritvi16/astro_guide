@@ -54,6 +54,7 @@ import 'package:astro_guide/views/home/dashboard/services/FreeKundli.dart';
 import 'package:astro_guide/views/home/dashboard/services/Horoscope.dart';
 import 'package:astro_guide/views/home/dashboard/services/Kundli.dart';
 import 'package:astro_guide/views/home/dashboard/services/MatchKundli.dart';
+import 'package:astro_guide/views/home/dashboard/services/Numeroscope.dart';
 import 'package:astro_guide/views/home/dashboard/testimonial/ManageTestimonial.dart';
 import 'package:astro_guide/views/home/dashboard/testimonial/MyTestimonial.dart';
 import 'package:astro_guide/views/home/dashboard/testimonial/Testimonial.dart';
@@ -231,6 +232,11 @@ class Routes {
     GetPage(
         name: '/horoscope',
         page: () => Horoscope(),
+      binding: HoroscopeBinding()
+    ),
+    GetPage(
+        name: '/numeroscope',
+        page: () => Numeroscope(),
       binding: HoroscopeBinding()
     ),
     GetPage(

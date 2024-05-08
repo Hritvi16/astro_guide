@@ -13,9 +13,9 @@ class SentVoiceScreen extends StatelessWidget {
   final Color color;
   final ChatModel chat;
   final dynamic play, pause;
-  final dynamic player;
+  final AudioPlayer player;
   final String playerUrl;
-  const SentVoiceScreen({super.key, required this.color, required this.chat, this.play, this.pause, this.player, required this.playerUrl});
+  const SentVoiceScreen({super.key, required this.color, required this.chat, this.play, this.pause, required this.player, required this.playerUrl});
 
   @override
   Widget build(BuildContext context) {
@@ -66,6 +66,13 @@ class SentVoiceScreen extends StatelessWidget {
                           Icons.pause
                       ),
                     )
+                        : (player.processingState==ProcessingState.loading || player.processingState==ProcessingState.buffering) && playerUrl==ApiConstants.chatUrl+chat.message ?
+                        Container(
+                            width: 20.0,
+                            height: 20.0,
+                            margin: EdgeInsets.symmetric(vertical: 3, horizontal: 2),
+                            child: CircularProgressIndicator(color: MyColors.colorPrimary,strokeWidth: 3,)
+                        )
                         : GestureDetector(
                       onTap: () async {
                         // player.play();

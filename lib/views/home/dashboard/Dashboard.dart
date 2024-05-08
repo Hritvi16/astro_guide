@@ -402,8 +402,9 @@ class Dashboard extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: standardHorizontalPagePadding),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          getServiceDesign("horoscope_circle.png", "Daily Horoscope".tr, () {
+          getServiceDesign("horoscope_circle.png", "Horoscope".tr, () {
             dashboardController.goto("/horoscope");
           }),
           getServiceDesign("kundali_circle.png", "Free Kundali".tr, () {
@@ -412,37 +413,46 @@ class Dashboard extends StatelessWidget {
           getServiceDesign("match_circle.png", "Match Kundali".tr, () {
             dashboardController.goto("/matchKundli");
           }),
+          getServiceDesign("horoscope_circle.png", "Numeroscope".tr, () {
+            dashboardController.goto("/numeroscope");
+          }),
         ],
       ),
     );
   }
 
   Widget getServiceDesign(String image, String title, void Function() onTap, ) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Column(
-        children: [
-          CircleAvatar(
-            radius: standardServiceOCRadius,
-            backgroundColor: MyColors.backgroundColor(),
-            child: Image.asset(
-              "assets/astrology/$image",
-              height: standardServiceHeight,
-              width: standardServiceWidth,
+    return Flexible(
+      flex: 1,
+      fit: FlexFit.tight,
+      child: GestureDetector(
+        onTap: onTap,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            CircleAvatar(
+              // radius: standardServiceOCRadius,
+              radius: 35,
+              backgroundColor: MyColors.backgroundColor(),
+              child: Image.asset(
+                "assets/astrology/$image",
+                height: standardServiceHeight,
+                width: standardServiceWidth,
+              ),
             ),
-          ),
-          const SizedBox(
-            height: 6,
-          ),
-          Text(
-            title,
-            textAlign: TextAlign.center,
-            style: GoogleFonts.manrope(
-              fontSize: 14.0,
-              fontWeight: FontWeight.w600,
+            const SizedBox(
+              height: 6,
             ),
-          ),
-        ],
+            Text(
+              title,
+              textAlign: TextAlign.center,
+              style: GoogleFonts.manrope(
+                fontSize: 10.0,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

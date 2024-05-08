@@ -15,6 +15,8 @@ _$AstrologerListModelImpl _$$AstrologerListModelImplFromJson(
       data: (json['data'] as List<dynamic>?)
           ?.map((e) => AstrologerModel.fromJson(e as Map<String, dynamic>))
           .toList(),
+      wallet: (json['wallet'] as num?)?.toDouble(),
+      free: json['free'] as int?,
     );
 
 Map<String, dynamic> _$$AstrologerListModelImplToJson(
@@ -24,4 +26,6 @@ Map<String, dynamic> _$$AstrologerListModelImplToJson(
       'code': instance.code,
       'message': instance.message,
       'data': instance.data,
+      'wallet': instance.wallet,
+      'free': instance.free,
     };

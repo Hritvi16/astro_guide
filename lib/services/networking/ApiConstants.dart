@@ -90,6 +90,7 @@ class ApiConstants {
   static const check = "check/";
   static const initiate = "initiate/";
   static const history = "history/";
+  static const numerology = "numerology/";
   static const daily = "daily/";
   static const basic = "basic/";
   static const kp = "kp/";

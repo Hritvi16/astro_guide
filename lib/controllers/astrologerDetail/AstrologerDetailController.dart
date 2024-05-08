@@ -93,6 +93,9 @@ class AstrologerDetailController extends GetxController {
           galleries = response.galleries ?? [];
           similar = response.similar ?? [];
           wallet = response.wallet ?? wallet;
+          free = (response.free ?? 1) == 0;
+          await storage.write("free", free);
+          await storage.write("wallet", wallet);
         }
         load = true;
         update();
