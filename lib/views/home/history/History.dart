@@ -69,9 +69,14 @@ class History extends StatelessWidget  {
               child: SafeArea(
                 child: CustomAppBar('History'.tr, options: Row(
                   children: [
-                    Image.asset(
-                      "assets/common/notification.png",
-                      height: 25,
+                    GestureDetector(
+                      onTap: () {
+                        historyController.goto("/notifications");
+                      },
+                      child: Image.asset(
+                        "assets/common/notification.png",
+                        height: 25,
+                      ),
                     ),
                     const SizedBox(
                       width: 15,
@@ -1215,9 +1220,7 @@ class History extends StatelessWidget  {
                         "ch_id": sessionHistory.id,
                         "chat_type" : sessionHistory.type,
                         "type": sessionHistory.status,
-                        "action": sessionHistory.status != "VIEW"
-                            ? sessionHistory.status
-                            : "VIEW",
+                        "action": sessionHistory.status=="ACTIVE" ? sessionHistory.status : "VIEW",
                         "astro_id": sessionHistory.astro_id,
                         "session_history": sessionHistory,
                         'astrologer': AstrologerModel(
@@ -1227,7 +1230,7 @@ class History extends StatelessWidget  {
                             mobile: '',
                             email: '',
                             experience: '',
-                            about: '')
+                            about: '', ivr: 0, video: 0)
                       });
                     // }
                   },

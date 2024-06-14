@@ -499,7 +499,7 @@ class AstrologerDetail extends StatelessWidget {
                           width: 5,
                         ),
                         Image.asset(
-                          "assets/common/online.png",
+                          "assets/common/${(astrologerDetailController.astrologer.active??0)==0 ? "online" : "engaged"}.png",
                           height: 11,
                           width: 11,
                         )
@@ -1296,7 +1296,7 @@ class AstrologerDetail extends StatelessWidget {
     );
   }
 
-  getNewBottom(AstrologerModel astrologer) {
+  getNewBottom(AstrologerModel astrologer) {print("astrologerDetailController.ivr11");
     Color call = astrologer.conline==1 ? MyColors.colorSuccess : MyColors.colorGrey;
     Color chat = astrologer.online==1 ? MyColors.colorChat : MyColors.colorGrey;
     return Row(
@@ -1307,18 +1307,28 @@ class AstrologerDetail extends StatelessWidget {
           fit: FlexFit.tight,
           child: GestureDetector(
             onTap: () {
+              print("astrologer.conline");
               if(astrologer.conline==1) {
                 double min = Essential.getCalculatedAmount(
                     astrologer.p_call ?? 0, minutes: 5);
-                if ((astrologerDetailController.free && astrologer.free == 1) ||
-                    (astrologerDetailController.wallet >= min)) {
-                  astrologerDetailController.goto("/checkSession", arguments: {
-                    "astrologer": astrologer,
-                    "free": astrologerDetailController.free &&
-                        astrologer.free == 1,
-                    "controller": astrologerDetailController,
-                    "category": "CALL"
-                  });
+                if ((astrologerDetailController.free && astrologer.free == 1) || (astrologerDetailController.wallet >= min)) {
+                  print("astrologerDetailController.ivr");
+                  print(astrologerDetailController.ivr);
+                  print(astrologer.ivr);
+                  if(astrologerDetailController.ivr==1 && astrologer.ivr==1 && astrologerDetailController.video==1 && astrologer.video==1) {
+                    astrologerDetailController.selectCallType(astrologerDetailController, astrologer);
+                  }
+                  else {
+                    astrologerDetailController.goto(
+                        "/checkSession", arguments: {
+                      "astrologer": astrologer,
+                      "free": astrologerDetailController.free &&
+                          astrologer.free == 1,
+                      "controller": astrologerDetailController,
+                      "category": "CALL",
+                      "call_type": (astrologerDetailController.ivr==1 && astrologer.ivr==1) ? "IVR" : "VIDEO",
+                    });
+                  }
                 }
                 else {
                   Essential.showBasicDialog(
@@ -1379,7 +1389,7 @@ class AstrologerDetail extends StatelessWidget {
           flex: 1,
           fit: FlexFit.tight,
           child: GestureDetector(
-            onTap: () {
+            onTap: () {print("astrologerDetailController.ivr");
               if(astrologer.online==1) {
                 double min = Essential.getCalculatedAmount(
                     astrologer.p_chat ?? 0, minutes: 5);
@@ -1542,14 +1552,21 @@ class AstrologerDetail extends StatelessWidget {
                   if ((astrologerDetailController.free &&
                       astrologerDetailController.astrologer.free == 1) ||
                       (astrologerDetailController.wallet >= min)) {
-                    astrologerDetailController.goto(
-                        "/checkSession", arguments: {
-                      "astrologer": astrologerDetailController.astrologer,
-                      "free": astrologerDetailController.free &&
-                          astrologerDetailController.astrologer.free == 1,
-                      "controller": astrologerDetailController,
-                      "category": "CALL"
-                    });
+                    if(astrologerDetailController.ivr==1 && astrologerDetailController.astrologer.ivr==1 && astrologerDetailController.video==1 && astrologerDetailController.astrologer.video==1) {
+                      astrologerDetailController.selectCallType(astrologerDetailController, astrologerDetailController.astrologer);
+                    }
+                    else {
+                      astrologerDetailController.goto(
+                          "/checkSession", arguments: {
+                        "astrologer": astrologerDetailController.astrologer,
+                        "free": astrologerDetailController.free &&
+                            astrologerDetailController.astrologer.free == 1,
+                        "controller": astrologerDetailController,
+                        "category": "CALL",
+                        "call_type": (astrologerDetailController.ivr == 1 &&
+                            astrologerDetailController.astrologer.ivr == 1) ? "IVR" : "VIDEO",
+                      });
+                    }
                   }
                   else {
                     Essential.showBasicDialog(

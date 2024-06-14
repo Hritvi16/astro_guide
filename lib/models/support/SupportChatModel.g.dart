@@ -9,13 +9,13 @@ part of 'SupportChatModel.dart';
 _$SupportChatModelImpl _$$SupportChatModelImplFromJson(
         Map<String, dynamic> json) =>
     _$SupportChatModelImpl(
-      id: json['id'] as int,
-      sup_id: json['sup_id'] as int,
+      id: (json['id'] as num).toInt(),
+      sup_id: (json['sup_id'] as num).toInt(),
       sender: json['sender'] as String,
       message: json['message'] as String,
       sent_at: json['sent_at'] as String,
       seen_at: json['seen_at'] as String?,
-      error: json['error'] as int?,
+      error: (json['error'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$$SupportChatModelImplToJson(

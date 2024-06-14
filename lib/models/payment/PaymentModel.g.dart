@@ -15,9 +15,9 @@ _$PaymentModelImpl _$$PaymentModelImplFromJson(Map<String, dynamic> json) =>
       amount_due: (json['amount_due'] as num).toDouble(),
       currency: json['currency'] as String,
       receipt: json['receipt'] as String,
-      offer_id: json['offer_id'] as int?,
+      offer_id: (json['offer_id'] as num?)?.toInt(),
       status: json['status'] as String,
-      created_at: json['created_at'] as int,
+      created_at: (json['created_at'] as num).toInt(),
     );
 
 Map<String, dynamic> _$$PaymentModelImplToJson(_$PaymentModelImpl instance) =>

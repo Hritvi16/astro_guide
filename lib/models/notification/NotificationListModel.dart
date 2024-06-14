@@ -13,6 +13,6 @@ class NotificationListModel with _$NotificationListModel {
     required String status,
     required int code,
     required String message,
-    required List<NotificationModel> notifications,
+    List<NotificationModel>? data,
   }) = _NotificationListModel;
 }

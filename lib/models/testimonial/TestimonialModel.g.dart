@@ -9,8 +9,8 @@ part of 'TestimonialModel.dart';
 _$TestimonialModelImpl _$$TestimonialModelImplFromJson(
         Map<String, dynamic> json) =>
     _$TestimonialModelImpl(
-      id: json['id'] as int,
-      user_id: json['user_id'] as int,
+      id: (json['id'] as num).toInt(),
+      user_id: (json['user_id'] as num).toInt(),
       description: json['description'] as String,
       created_at: json['created_at'] as String,
       name: json['name'] as String,

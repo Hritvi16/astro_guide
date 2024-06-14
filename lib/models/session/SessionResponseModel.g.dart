@@ -10,7 +10,7 @@ _$SessionResponseModelImpl _$$SessionResponseModelImplFromJson(
         Map<String, dynamic> json) =>
     _$SessionResponseModelImpl(
       status: json['status'] as String,
-      code: json['code'] as int,
+      code: (json['code'] as num).toInt(),
       message: json['message'] as String,
       astrologer: json['astrologer'] == null
           ? null
@@ -21,6 +21,9 @@ _$SessionResponseModelImpl _$$SessionResponseModelImplFromJson(
           : SessionHistoryModel.fromJson(
               json['session_history'] as Map<String, dynamic>),
       wallet: (json['wallet'] as num?)?.toDouble(),
+      gift: (json['gift'] as num?)?.toInt(),
+      rose: (json['rose'] as num?)?.toInt(),
+      token_status: (json['token_status'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$$SessionResponseModelImplToJson(
@@ -32,4 +35,7 @@ Map<String, dynamic> _$$SessionResponseModelImplToJson(
       'astrologer': instance.astrologer,
       'session_history': instance.session_history,
       'wallet': instance.wallet,
+      'gift': instance.gift,
+      'rose': instance.rose,
+      'token_status': instance.token_status,
     };

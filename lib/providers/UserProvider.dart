@@ -1,6 +1,7 @@
 import 'package:astro_guide/models/kundli/KundliListModel.dart';
 import 'package:astro_guide/models/kundli/KundliValuesResponseModel.dart';
 import 'package:astro_guide/models/myProfile/MyProfileResponseModel.dart';
+import 'package:astro_guide/models/notification/NotificationListModel.dart';
 import 'package:astro_guide/models/setting/SettingResponseModel.dart';
 import 'package:get/get_connect/http/src/multipart/form_data.dart';
 import 'package:astro_guide/models/login/LoginModel.dart';
@@ -58,6 +59,13 @@ class UserProvider {
     var kundliListModel = await userRepository.fetch(token, endpoint);
 
     return KundliListModel.fromJson(kundliListModel);
+  }
+
+
+  Future<NotificationListModel> fetchNotifications(String token, String endpoint) async {
+    var notificationListModel = await userRepository.fetch(token, endpoint);
+
+    return NotificationListModel.fromJson(notificationListModel);
   }
 
 }

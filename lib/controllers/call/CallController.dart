@@ -1,16 +1,20 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:developer';
 import 'package:astro_guide/constants/CommonConstants.dart';
 import 'package:astro_guide/constants/SessionConstants.dart';
 import 'package:astro_guide/constants/SessionConstants.dart';
 import 'package:astro_guide/dialogs/BasicDialog.dart';
 import 'package:astro_guide/dialogs/RatingDialog.dart';
+import 'package:astro_guide/dialogs/TokenDialog.dart';
 import 'package:astro_guide/essential/Essential.dart';
 import 'package:astro_guide/models/astrologer/AstrologerModel.dart';
 import 'package:astro_guide/models/session/SessionHistoryModel.dart';
 import 'package:astro_guide/notifier/GlobalNotifier.dart';
 import 'package:astro_guide/providers/MeetingProvider.dart';
+import 'package:astro_guide/repositories/MeetingRepository.dart';
 import 'package:astro_guide/services/networking/ApiConstants.dart';
+import 'package:astro_guide/services/networking/ApiService.dart';
 import 'package:camera/camera.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/services.dart';
@@ -27,7 +31,7 @@ class CallController extends GetxController {
 
   final storage = GetStorage();
 
-  final MeetingProvider meetingProvider = Get.find();
+  late MeetingProvider meetingProvider;
 
   final Connectivity connectivity = Connectivity();
   final FlutterInternetSignal internetSignal = FlutterInternetSignal();
@@ -78,9 +82,19 @@ class CallController extends GetxController {
   final player = AudioPlayer();
   final GlobalNotifier globalNotifier = Get.find();
 
+  late int gift, rose, token_status;
 
   @override
   void onInit() {
+    try {
+      meetingProvider = Get.find();
+    }
+    catch(ex) {
+      final MeetingRepository meetingRepository = Get.put(MeetingRepository(Get.put(ApiService(Get.find()), permanent: true)));
+      meetingProvider = Get.put(MeetingProvider(meetingRepository));
+    }
+
+    gift = rose = token_status = 0;
     globalNotifier.updateCallInit(true);
     ended = false;
     rated = false;
@@ -88,14 +102,20 @@ class CallController extends GetxController {
     wallet = 0;
     seconds = 0;
     poor = 1;
+    ring = 0;
 
-    astrologer = Get.arguments['astrologer'];
-    print("ssweb: hellloooo callllll1");
-    type = Get.arguments['type'];
-    action = Get.arguments['action'];
-    print("ssweb: hellloooo callllll2");
-    if(Get.arguments['wallet']!=null) {
-      wallet = Get.arguments['wallet'];
+    try {
+      astrologer = Get.arguments['astrologer'];
+      print("ssweb: hellloooo callllll1");
+      type = Get.arguments['type'];
+      action = Get.arguments['action'];
+      print("ssweb: hellloooo callllll2");
+      if (Get.arguments['wallet'] != null) {
+        wallet = Get.arguments['wallet'];
+      }
+    }
+    catch(ex) {
+      print(ex.toString());
     }
     tz.initializeTimeZones();
     location = tz.getLocation("GMT");
@@ -108,42 +128,52 @@ class CallController extends GetxController {
     show = true;
     cancel = false;
 
-    if (action == "VIEW" || action=="ACTIVE") {
-      load = false;
-      sessionHistory = Get.arguments['session_history'];
-      ch_id = sessionHistory.id;
-      meetingID = sessionHistory.meeting_id??"";
-      sessionID = sessionHistory.session_id??"";
-      token = sessionHistory.token??"";
-      // astrologer = AstrologerModel(id: Get.arguments['astro_id'], name: "", mobile: "", email: "", experience: 0, profile: "", about: "");
+    try {
+      if (action == "VIEW" || action == "ACTIVE") {
+        load = false;
+        sessionHistory = Get.arguments['session_history'];
+        ch_id = sessionHistory.id;
+        meetingID = sessionHistory.meeting_id ?? "";
+        sessionID = sessionHistory.session_id ?? "";
+        token = sessionHistory.token ?? "";
+        // astrologer = AstrologerModel(id: Get.arguments['astro_id'], name: "", mobile: "", email: "", experience: 0, profile: "", about: "");
 
-    }
-    else {
-      ch_id = Get.arguments['ch_id'];
-      chat_type = Get.arguments['chat_type'];
-      if(Get.arguments['session_history']==null) {
-        sessionHistory = SessionHistoryModel(id: ch_id,
-            sess_id: 0,
-            status: type,
-            category: "CALL",
-            meeting_id: Get.arguments['meeting_id'],
-            session_id: Get.arguments['session_id'],
-            rate: int.parse(Get.arguments['rate']),
-            commission: 0,
-            type: chat_type,
-            requested_at: DateTime.now().toString(),
-            updated_at: DateTime.now().toString());
       }
       else {
-        sessionHistory = Get.arguments['session_history'];
+        try {
+          ch_id = Get.arguments['ch_id'];
+          chat_type = Get.arguments['chat_type'];
+          if (Get.arguments['session_history'] == null) {
+            sessionHistory = SessionHistoryModel(id: ch_id,
+                sess_id: 0,
+                status: type,
+                category: "CALL",
+                call_type: Get.arguments['call_type'],
+                meeting_id: Get.arguments['meeting_id'],
+                session_id: Get.arguments['session_id'],
+                rate: int.parse(Get.arguments['rate']),
+                commission: 0,
+                type: chat_type,
+                requested_at: DateTime.now().toString(),
+                updated_at: DateTime.now().toString());
+          }
+          else {
+            sessionHistory = Get.arguments['session_history'];
+          }
+          meetingID = sessionHistory.meeting_id ?? "";
+          sessionID = sessionHistory.session_id ?? "";
+          token = sessionHistory.token ?? "";
+          // sessionHistory = SessionHistoryModel(id: ch_id, sess_id: 0, status: type, rate: 0, commission: 0, type: chat_type, requested_at: DateTime.now().toString(), updated_at: DateTime.now().toString());
+          astrologer = Get.arguments['astrologer'];
+        }
+        catch (ex) {
+          print(ex.toString());
+        }
       }
-      meetingID = sessionHistory.meeting_id??"";
-      sessionID = sessionHistory.session_id??"";
-      token = sessionHistory.token??"";
-      // sessionHistory = SessionHistoryModel(id: ch_id, sess_id: 0, status: type, rate: 0, commission: 0, type: chat_type, requested_at: DateTime.now().toString(), updated_at: DateTime.now().toString());
-      astrologer = Get.arguments['astrologer'];
     }
-
+    catch(ex) {
+      print(ex.toString());
+    }
 
     print("ssweb: inittttttt");
     start();
@@ -151,18 +181,27 @@ class CallController extends GetxController {
   }
 
   void start() {print("ssweb: ssweb: starttt");
-    initCameraPreview();
 
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
+    try {
+      if (action == "VIEW") {
+        getSessionHistory("start");
+      }
+      else {
+        initCameraPreview();
 
-    if(action == "VIEW") {
-      getSessionHistory("start");
+        SystemChrome.setPreferredOrientations([
+          DeviceOrientation.portraitUp,
+          DeviceOrientation.portraitDown,
+        ]);
+
+        initializeMeeting();
+      }
     }
-    else {
-      initializeMeeting();
+    catch(ex) {
+      ch_id = int.parse(storage.read("ch_id").toString());
+      astrologer = AstrologerModel.fromJson(json.decode(storage.read("astrologer")));
+      type = "VIEW";
+      getSessionHistory("start no action");
     }
   }
   
@@ -808,6 +847,9 @@ class CallController extends GetxController {
       stopTimer();
     }
     type = status;
+    if(type=="COMPLETED") {
+      action="VIEW";
+    }
     update();
     print("ssweb: ssweb: Recordingggggg : Stop endd meetingggg");
     try {
@@ -959,7 +1001,8 @@ class CallController extends GetxController {
   }
 
   void startTimer(String type) {
-    print("ssweb: type: $type");
+    print("typeeeee");
+    print(type);
     try {
       var kolkata = tz.getLocation('GMT');
       Duration duration = tz.TZDateTime.now(kolkata).difference(started_at);
@@ -980,13 +1023,15 @@ class CallController extends GetxController {
     if(seconds%3==0) {
       checkInternet();
     }
-    // print("ssweb: ssweb: max");
-    // print(max);
-    // print("ssweb: ssweb: total");
-    // print(seconds);
+    print("ssweb: ssweb: max");
+    print(max);
+    print("ssweb: ssweb: total");
+    print(seconds);
     if(max<=seconds) {
       print("ssweb: ssweb: ssweb: enddd");
-      end(true);
+      if(sessionHistory.call_type!="IVR") {
+        end(true);
+      }
     }
     if(show) {
       if ((max-seconds)<=120) {
@@ -1027,10 +1072,15 @@ class CallController extends GetxController {
 
     await meetingProvider.fetchByID(storage.read("access"), ApiConstants.id, data).then((response) async {
       print(response.toJson());
+      print("response.toJson()");
+      print(response.session_history);
       if(response.code==1) {
         astrologer = response.astrologer ?? astrologer;
         sessionHistory = response.session_history ?? sessionHistory;
         wallet = response.wallet ?? 0;
+        gift = response.gift ?? 0;
+        rose = response.rose ?? 0;
+        token_status = response.token_status ?? 0;
 
         cnt = 0;
         started_at = tz.TZDateTime.parse(location, "${sessionHistory.started_at ?? ""}+0000");
@@ -1039,6 +1089,13 @@ class CallController extends GetxController {
         token = sessionHistory.token??"";
         meetingID = sessionHistory.meeting_id??"";
         load = false;
+
+
+        if(type=="REQUESTED" && sessionHistory.status=="ACTIVE") {
+          type = sessionHistory.status;
+          stopTimer();
+          startTimer("ss history");
+        }
 
         if (type == "ACTIVE") {
           if (chat_type == "FREE") {
@@ -1051,8 +1108,11 @@ class CallController extends GetxController {
             update();
             calculateCountdown();
           }
-          joinRoom();
+          if(sessionHistory.call_type=="VIDEO") {
+            joinRoom();
+          }
 
+          stopTimer();
           startTimer("history");
           load = true;
           update();
@@ -1081,10 +1141,7 @@ class CallController extends GetxController {
 
   void calculateCountdown() {
     max = 0;
-    print(wallet);
-    print(rate);
     int minutes = (wallet/rate).floor();
-    print(minutes);
     if(minutes>0) {
       max = minutes * 60;
     }
@@ -1097,7 +1154,6 @@ class CallController extends GetxController {
         max+=secs;
       }
     }
-    print("ssweb: ssweb: ssweb: maxxxxx $max");
     update();
   }
 
@@ -1117,7 +1173,7 @@ class CallController extends GetxController {
         rate = sessionHistory.rate;
         update();
         joinRoom();
-        startRing(65);
+        startRing(sessionHistory.call_type=="IVR" ? 125 : 65);
       }
     }
     else if(type=="ACTIVE"){
@@ -1128,7 +1184,7 @@ class CallController extends GetxController {
         wallet = double.parse((storage.read("wallet")??0.0).toString());
         rate = sessionHistory.rate;
         update();
-        startRing(60);
+        startRing(sessionHistory.call_type=="IVR" ? 120 : 60);
       }
       else if(action=="ACCEPT") {
         print("ssweb: ssweb: acceptttttt meetingggg");
@@ -1251,8 +1307,36 @@ class CallController extends GetxController {
           update();
           Essential.showSnackBar("Thank you for your feedback");
         }
+
+        print("token_status");
+        print(token_status);
+        print(sessionHistory.token_type??"");
+        // if(auto) {
+          if(token_status==1 && (sessionHistory.token_type??"").isEmpty) {
+            manageToken();
+          }
+        // }
       });
     }
+  }
+
+  void manageToken() {
+    Get.dialog(
+      TokenDialog(
+          sessionHistory: sessionHistory,
+          astrologer: astrologer,
+          token_amount: {"GIFT" : gift.toString(), "ROSE" : rose.toString(), "CUSTOM" : ""}
+      ),
+      barrierDismissible: true,
+    ).then((value) {
+      print("valueeeee");
+      print(value);
+      if(value!=null) {
+        sessionHistory = value;
+        update();
+        Essential.showSnackBar("Thank you for giving appreciation token");
+      }
+    });
   }
 
   void confirmDelete() {

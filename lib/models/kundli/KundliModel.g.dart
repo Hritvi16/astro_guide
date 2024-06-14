@@ -8,15 +8,15 @@ part of 'KundliModel.dart';
 
 _$KundliModelImpl _$$KundliModelImplFromJson(Map<String, dynamic> json) =>
     _$KundliModelImpl(
-      id: json['id'] as int,
-      user_id: json['user_id'] as int,
+      id: (json['id'] as num).toInt(),
+      user_id: (json['user_id'] as num).toInt(),
       name: json['name'] as String,
       dob: json['dob'] as String,
       gender: json['gender'] as String,
-      ci_id: json['ci_id'] as int?,
+      ci_id: (json['ci_id'] as num?)?.toInt(),
       marital_status: json['marital_status'] as String,
       type: json['type'] as String,
-      r_id: json['r_id'] as int?,
+      r_id: (json['r_id'] as num?)?.toInt(),
       created_at: json['created_at'] as String,
       updated_at: json['updated_at'] as String?,
       city: json['city'] as String?,

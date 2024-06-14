@@ -8,9 +8,9 @@ part of 'StateModel.dart';
 
 _$StateModelImpl _$$StateModelImplFromJson(Map<String, dynamic> json) =>
     _$StateModelImpl(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       name: json['name'] as String,
-      co_id: json['co_id'] as int,
+      co_id: (json['co_id'] as num).toInt(),
     );
 
 Map<String, dynamic> _$$StateModelImplToJson(_$StateModelImpl instance) =>

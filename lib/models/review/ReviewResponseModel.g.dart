@@ -10,12 +10,12 @@ _$ReviewResponseModelImpl _$$ReviewResponseModelImplFromJson(
         Map<String, dynamic> json) =>
     _$ReviewResponseModelImpl(
       status: json['status'] as String,
-      code: json['code'] as int,
+      code: (json['code'] as num).toInt(),
       message: json['message'] as String,
       data: json['data'] == null
           ? null
           : ReviewModel.fromJson(json['data'] as Map<String, dynamic>),
-      m_id: json['m_id'] as int?,
+      m_id: (json['m_id'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$$ReviewResponseModelImplToJson(

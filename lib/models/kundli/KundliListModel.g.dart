@@ -10,7 +10,7 @@ _$KundliListModelImpl _$$KundliListModelImplFromJson(
         Map<String, dynamic> json) =>
     _$KundliListModelImpl(
       status: json['status'] as String,
-      code: json['code'] as int,
+      code: (json['code'] as num).toInt(),
       message: json['message'] as String,
       data: (json['data'] as List<dynamic>?)
           ?.map((e) => KundliModel.fromJson(e as Map<String, dynamic>))

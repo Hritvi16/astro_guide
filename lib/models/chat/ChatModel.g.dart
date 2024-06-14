@@ -8,8 +8,8 @@ part of 'ChatModel.dart';
 
 _$ChatModelImpl _$$ChatModelImplFromJson(Map<String, dynamic> json) =>
     _$ChatModelImpl(
-      id: json['id'] as int,
-      ch_id: json['ch_id'] as int,
+      id: (json['id'] as num).toInt(),
+      ch_id: (json['ch_id'] as num).toInt(),
       message: json['message'] as String,
       sender: json['sender'] as String,
       type: json['type'] as String,
@@ -17,7 +17,7 @@ _$ChatModelImpl _$$ChatModelImplFromJson(Map<String, dynamic> json) =>
       sent_at: json['sent_at'] as String,
       received_at: json['received_at'] as String?,
       seen_at: json['seen_at'] as String?,
-      error: json['error'] as int?,
+      error: (json['error'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$$ChatModelImplToJson(_$ChatModelImpl instance) =>

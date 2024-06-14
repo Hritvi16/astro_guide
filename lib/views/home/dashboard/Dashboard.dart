@@ -18,7 +18,6 @@ import 'package:astro_guide/size/MySize.dart';
 import 'package:astro_guide/size/WidgetSize.dart';
 import 'package:astro_guide/views/loadingScreen/LoadingScreen.dart';
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
-// import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -94,10 +93,14 @@ class Dashboard extends StatelessWidget {
                           ),
                           Row(
                             children: [
-                              Image.asset(
-                                "assets/common/notification.png",
-                                height: 25,
-                                color: MyColors.black,
+                              GestureDetector(
+                                onTap: () {
+                                  dashboardController.goto("/notifications");
+                                },
+                                child: Image.asset(
+                                  "assets/common/notification.png",
+                                  height: 25,
+                                ),
                               ),
                               const SizedBox(
                                 width: 15,
@@ -212,7 +215,8 @@ class Dashboard extends StatelessWidget {
                         getSpecs(),
                         getLiveAstrologers(),
                         getNewAstrologers(),
-                        getBlogs(context),
+                        if(dashboardController.blogs.isNotEmpty)
+                          getBlogs(context),
                         getTestimonials(),
                         getNewVideos(),
                         getAppOptions(),
@@ -258,7 +262,7 @@ class Dashboard extends StatelessWidget {
                 mobile: '',
                 email: '',
                 experience: '',
-                about: ''
+                about: '', ivr: 0, video: 0
             )
           });
         }
@@ -346,7 +350,7 @@ class Dashboard extends StatelessWidget {
                     id: dashboardController.session?.astro_id??-1,
                     name: dashboardController.session?.astrologer??"",
                     profile: dashboardController.session?.astro_profile??"",
-                    mobile: '', email: '', experience: '', about: '',
+                    mobile: '', email: '', experience: '', about: '', ivr: 0, video: 0
                   ),
                 }
             );
@@ -362,7 +366,7 @@ class Dashboard extends StatelessWidget {
                     id: dashboardController.session?.astro_id??-1,
                     name: dashboardController.session?.astrologer??"",
                     profile: dashboardController.session?.astro_profile??"",
-                    mobile: '', email: '', experience: '', about: '',
+                    mobile: '', email: '', experience: '', about: '', ivr: 0, video: 0
                   ),
                   "meetingID": dashboardController.session?.meeting_id,
                   "ch_id": dashboardController.session?.id
@@ -1435,17 +1439,21 @@ class Dashboard extends StatelessWidget {
           child: GestureDetector(
             onTap: () {
               if(astrologer.conline==1) {
-                print(dashboardController.wallet);
                 double min = Essential.getCalculatedAmount(
                     astrologer.p_call ?? 0, minutes: 5);
-                if ((dashboardController.free && astrologer.free == 1) ||
-                    (dashboardController.wallet >= min)) {
-                  dashboardController.goto("/checkSession", arguments: {
-                    "astrologer": astrologer,
-                    "free": dashboardController.free && astrologer.free == 1,
-                    "controller": dashboardController,
-                    "category": "CALL"
-                  });
+                if ((dashboardController.free && astrologer.free == 1) || (dashboardController.wallet >= min)) {
+                  if(dashboardController.ivr==1 && astrologer.ivr==1 && dashboardController.video==1 && astrologer.video==1) {
+                    dashboardController.selectCallType(dashboardController, astrologer);
+                  }
+                  else {
+                    dashboardController.goto("/checkSession", arguments: {
+                      "astrologer": astrologer,
+                      "free": dashboardController.free && astrologer.free == 1,
+                      "controller": dashboardController,
+                      "category": "CALL",
+                      "call_type": (dashboardController.ivr==1 && astrologer.ivr==1) ? "IVR" : "VIDEO",
+                    });
+                  }
                 }
                 else {
                   Essential.showBasicDialog(

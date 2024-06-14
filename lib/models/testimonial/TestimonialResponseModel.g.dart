@@ -10,7 +10,7 @@ _$TestimonialResponseModelImpl _$$TestimonialResponseModelImplFromJson(
         Map<String, dynamic> json) =>
     _$TestimonialResponseModelImpl(
       status: json['status'] as String,
-      code: json['code'] as int,
+      code: (json['code'] as num).toInt(),
       message: json['message'] as String,
       data: json['data'] == null
           ? null

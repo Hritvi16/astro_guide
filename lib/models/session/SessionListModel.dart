@@ -17,7 +17,10 @@ class SessionListModel with _$SessionListModel {
     List<ChatModel>? data,
     AstrologerModel? astrologer,
     SessionHistoryModel? session_history,
-    double? wallet
+    double? wallet,
+    int? gift,
+    int? rose,
+    int? token_status,
   }) = _SessionListModel;
 
   factory SessionListModel.fromJson(JSON json) => _$SessionListModelFromJson(json);

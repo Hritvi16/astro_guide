@@ -8,12 +8,12 @@ part of 'PackageModel.dart';
 
 _$PackageModelImpl _$$PackageModelImplFromJson(Map<String, dynamic> json) =>
     _$PackageModelImpl(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       title: json['title'] as String,
       description: json['description'] as String,
-      discount: json['discount'] as int?,
+      discount: (json['discount'] as num?)?.toInt(),
       type: json['type'] as String?,
-      amount: json['amount'] as int,
+      amount: (json['amount'] as num).toInt(),
     );
 
 Map<String, dynamic> _$$PackageModelImplToJson(_$PackageModelImpl instance) =>

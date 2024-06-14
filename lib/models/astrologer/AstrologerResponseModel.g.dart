@@ -10,7 +10,7 @@ _$AstrologerResponseModelImpl _$$AstrologerResponseModelImplFromJson(
         Map<String, dynamic> json) =>
     _$AstrologerResponseModelImpl(
       status: json['status'] as String,
-      code: json['code'] as int,
+      code: (json['code'] as num).toInt(),
       message: json['message'] as String,
       astrologer: json['astrologer'] == null
           ? null
@@ -38,7 +38,9 @@ _$AstrologerResponseModelImpl _$$AstrologerResponseModelImplFromJson(
           ?.map((e) => AstrologerModel.fromJson(e as Map<String, dynamic>))
           .toList(),
       wallet: (json['wallet'] as num?)?.toDouble(),
-      free: json['free'] as int?,
+      free: (json['free'] as num?)?.toInt(),
+      ivr: (json['ivr'] as num?)?.toInt(),
+      video: (json['video'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$$AstrologerResponseModelImplToJson(
@@ -57,4 +59,6 @@ Map<String, dynamic> _$$AstrologerResponseModelImplToJson(
       'similar': instance.similar,
       'wallet': instance.wallet,
       'free': instance.free,
+      'ivr': instance.ivr,
+      'video': instance.video,
     };

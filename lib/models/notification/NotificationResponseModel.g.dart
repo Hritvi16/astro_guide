@@ -10,7 +10,7 @@ _$NotificationResponseModelImpl _$$NotificationResponseModelImplFromJson(
         Map<String, dynamic> json) =>
     _$NotificationResponseModelImpl(
       status: json['status'] as String,
-      code: json['code'] as int,
+      code: (json['code'] as num).toInt(),
       message: json['message'] as String,
       notification: NotificationModel.fromJson(
           json['notification'] as Map<String, dynamic>),

@@ -24,8 +24,7 @@ mixin _$NotificationListModel {
   String get status => throw _privateConstructorUsedError;
   int get code => throw _privateConstructorUsedError;
   String get message => throw _privateConstructorUsedError;
-  List<NotificationModel> get notifications =>
-      throw _privateConstructorUsedError;
+  List<NotificationModel>? get data => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -40,10 +39,7 @@ abstract class $NotificationListModelCopyWith<$Res> {
       _$NotificationListModelCopyWithImpl<$Res, NotificationListModel>;
   @useResult
   $Res call(
-      {String status,
-      int code,
-      String message,
-      List<NotificationModel> notifications});
+      {String status, int code, String message, List<NotificationModel>? data});
 }
 
 /// @nodoc
@@ -63,7 +59,7 @@ class _$NotificationListModelCopyWithImpl<$Res,
     Object? status = null,
     Object? code = null,
     Object? message = null,
-    Object? notifications = null,
+    Object? data = freezed,
   }) {
     return _then(_value.copyWith(
       status: null == status
@@ -78,10 +74,10 @@ class _$NotificationListModelCopyWithImpl<$Res,
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
-      notifications: null == notifications
-          ? _value.notifications
-          : notifications // ignore: cast_nullable_to_non_nullable
-              as List<NotificationModel>,
+      data: freezed == data
+          ? _value.data
+          : data // ignore: cast_nullable_to_non_nullable
+              as List<NotificationModel>?,
     ) as $Val);
   }
 }
@@ -96,10 +92,7 @@ abstract class _$$NotificationListModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String status,
-      int code,
-      String message,
-      List<NotificationModel> notifications});
+      {String status, int code, String message, List<NotificationModel>? data});
 }
 
 /// @nodoc
@@ -117,7 +110,7 @@ class __$$NotificationListModelImplCopyWithImpl<$Res>
     Object? status = null,
     Object? code = null,
     Object? message = null,
-    Object? notifications = null,
+    Object? data = freezed,
   }) {
     return _then(_$NotificationListModelImpl(
       status: null == status
@@ -132,10 +125,10 @@ class __$$NotificationListModelImplCopyWithImpl<$Res>
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
-      notifications: null == notifications
-          ? _value._notifications
-          : notifications // ignore: cast_nullable_to_non_nullable
-              as List<NotificationModel>,
+      data: freezed == data
+          ? _value._data
+          : data // ignore: cast_nullable_to_non_nullable
+              as List<NotificationModel>?,
     ));
   }
 }
@@ -147,8 +140,8 @@ class _$NotificationListModelImpl implements _NotificationListModel {
       {required this.status,
       required this.code,
       required this.message,
-      required final List<NotificationModel> notifications})
-      : _notifications = notifications;
+      final List<NotificationModel>? data})
+      : _data = data;
 
   factory _$NotificationListModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$NotificationListModelImplFromJson(json);
@@ -159,17 +152,19 @@ class _$NotificationListModelImpl implements _NotificationListModel {
   final int code;
   @override
   final String message;
-  final List<NotificationModel> _notifications;
+  final List<NotificationModel>? _data;
   @override
-  List<NotificationModel> get notifications {
-    if (_notifications is EqualUnmodifiableListView) return _notifications;
+  List<NotificationModel>? get data {
+    final value = _data;
+    if (value == null) return null;
+    if (_data is EqualUnmodifiableListView) return _data;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_notifications);
+    return EqualUnmodifiableListView(value);
   }
 
   @override
   String toString() {
-    return 'NotificationListModel(status: $status, code: $code, message: $message, notifications: $notifications)';
+    return 'NotificationListModel(status: $status, code: $code, message: $message, data: $data)';
   }
 
   @override
@@ -180,14 +175,13 @@ class _$NotificationListModelImpl implements _NotificationListModel {
             (identical(other.status, status) || other.status == status) &&
             (identical(other.code, code) || other.code == code) &&
             (identical(other.message, message) || other.message == message) &&
-            const DeepCollectionEquality()
-                .equals(other._notifications, _notifications));
+            const DeepCollectionEquality().equals(other._data, _data));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, status, code, message,
-      const DeepCollectionEquality().hash(_notifications));
+      const DeepCollectionEquality().hash(_data));
 
   @JsonKey(ignore: true)
   @override
@@ -206,11 +200,10 @@ class _$NotificationListModelImpl implements _NotificationListModel {
 
 abstract class _NotificationListModel implements NotificationListModel {
   factory _NotificationListModel(
-          {required final String status,
-          required final int code,
-          required final String message,
-          required final List<NotificationModel> notifications}) =
-      _$NotificationListModelImpl;
+      {required final String status,
+      required final int code,
+      required final String message,
+      final List<NotificationModel>? data}) = _$NotificationListModelImpl;
 
   factory _NotificationListModel.fromJson(Map<String, dynamic> json) =
       _$NotificationListModelImpl.fromJson;
@@ -222,7 +215,7 @@ abstract class _NotificationListModel implements NotificationListModel {
   @override
   String get message;
   @override
-  List<NotificationModel> get notifications;
+  List<NotificationModel>? get data;
   @override
   @JsonKey(ignore: true)
   _$$NotificationListModelImplCopyWith<_$NotificationListModelImpl>

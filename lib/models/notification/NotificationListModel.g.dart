@@ -10,10 +10,10 @@ _$NotificationListModelImpl _$$NotificationListModelImplFromJson(
         Map<String, dynamic> json) =>
     _$NotificationListModelImpl(
       status: json['status'] as String,
-      code: json['code'] as int,
+      code: (json['code'] as num).toInt(),
       message: json['message'] as String,
-      notifications: (json['notifications'] as List<dynamic>)
-          .map((e) => NotificationModel.fromJson(e as Map<String, dynamic>))
+      data: (json['data'] as List<dynamic>?)
+          ?.map((e) => NotificationModel.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
@@ -23,5 +23,5 @@ Map<String, dynamic> _$$NotificationListModelImplToJson(
       'status': instance.status,
       'code': instance.code,
       'message': instance.message,
-      'notifications': instance.notifications,
+      'data': instance.data,
     };

@@ -27,6 +27,9 @@ mixin _$SessionResponseModel {
   SessionHistoryModel? get session_history =>
       throw _privateConstructorUsedError;
   double? get wallet => throw _privateConstructorUsedError;
+  int? get gift => throw _privateConstructorUsedError;
+  int? get rose => throw _privateConstructorUsedError;
+  int? get token_status => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -46,7 +49,10 @@ abstract class $SessionResponseModelCopyWith<$Res> {
       String message,
       AstrologerModel? astrologer,
       SessionHistoryModel? session_history,
-      double? wallet});
+      double? wallet,
+      int? gift,
+      int? rose,
+      int? token_status});
 
   $AstrologerModelCopyWith<$Res>? get astrologer;
   $SessionHistoryModelCopyWith<$Res>? get session_history;
@@ -72,6 +78,9 @@ class _$SessionResponseModelCopyWithImpl<$Res,
     Object? astrologer = freezed,
     Object? session_history = freezed,
     Object? wallet = freezed,
+    Object? gift = freezed,
+    Object? rose = freezed,
+    Object? token_status = freezed,
   }) {
     return _then(_value.copyWith(
       status: null == status
@@ -98,6 +107,18 @@ class _$SessionResponseModelCopyWithImpl<$Res,
           ? _value.wallet
           : wallet // ignore: cast_nullable_to_non_nullable
               as double?,
+      gift: freezed == gift
+          ? _value.gift
+          : gift // ignore: cast_nullable_to_non_nullable
+              as int?,
+      rose: freezed == rose
+          ? _value.rose
+          : rose // ignore: cast_nullable_to_non_nullable
+              as int?,
+      token_status: freezed == token_status
+          ? _value.token_status
+          : token_status // ignore: cast_nullable_to_non_nullable
+              as int?,
     ) as $Val);
   }
 
@@ -140,7 +161,10 @@ abstract class _$$SessionResponseModelImplCopyWith<$Res>
       String message,
       AstrologerModel? astrologer,
       SessionHistoryModel? session_history,
-      double? wallet});
+      double? wallet,
+      int? gift,
+      int? rose,
+      int? token_status});
 
   @override
   $AstrologerModelCopyWith<$Res>? get astrologer;
@@ -165,6 +189,9 @@ class __$$SessionResponseModelImplCopyWithImpl<$Res>
     Object? astrologer = freezed,
     Object? session_history = freezed,
     Object? wallet = freezed,
+    Object? gift = freezed,
+    Object? rose = freezed,
+    Object? token_status = freezed,
   }) {
     return _then(_$SessionResponseModelImpl(
       status: null == status
@@ -191,6 +218,18 @@ class __$$SessionResponseModelImplCopyWithImpl<$Res>
           ? _value.wallet
           : wallet // ignore: cast_nullable_to_non_nullable
               as double?,
+      gift: freezed == gift
+          ? _value.gift
+          : gift // ignore: cast_nullable_to_non_nullable
+              as int?,
+      rose: freezed == rose
+          ? _value.rose
+          : rose // ignore: cast_nullable_to_non_nullable
+              as int?,
+      token_status: freezed == token_status
+          ? _value.token_status
+          : token_status // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -204,7 +243,10 @@ class _$SessionResponseModelImpl implements _SessionResponseModel {
       required this.message,
       this.astrologer,
       this.session_history,
-      this.wallet});
+      this.wallet,
+      this.gift,
+      this.rose,
+      this.token_status});
 
   factory _$SessionResponseModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$SessionResponseModelImplFromJson(json);
@@ -221,10 +263,16 @@ class _$SessionResponseModelImpl implements _SessionResponseModel {
   final SessionHistoryModel? session_history;
   @override
   final double? wallet;
+  @override
+  final int? gift;
+  @override
+  final int? rose;
+  @override
+  final int? token_status;
 
   @override
   String toString() {
-    return 'SessionResponseModel(status: $status, code: $code, message: $message, astrologer: $astrologer, session_history: $session_history, wallet: $wallet)';
+    return 'SessionResponseModel(status: $status, code: $code, message: $message, astrologer: $astrologer, session_history: $session_history, wallet: $wallet, gift: $gift, rose: $rose, token_status: $token_status)';
   }
 
   @override
@@ -239,13 +287,17 @@ class _$SessionResponseModelImpl implements _SessionResponseModel {
                 other.astrologer == astrologer) &&
             (identical(other.session_history, session_history) ||
                 other.session_history == session_history) &&
-            (identical(other.wallet, wallet) || other.wallet == wallet));
+            (identical(other.wallet, wallet) || other.wallet == wallet) &&
+            (identical(other.gift, gift) || other.gift == gift) &&
+            (identical(other.rose, rose) || other.rose == rose) &&
+            (identical(other.token_status, token_status) ||
+                other.token_status == token_status));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, status, code, message, astrologer, session_history, wallet);
+  int get hashCode => Object.hash(runtimeType, status, code, message,
+      astrologer, session_history, wallet, gift, rose, token_status);
 
   @JsonKey(ignore: true)
   @override
@@ -270,7 +322,10 @@ abstract class _SessionResponseModel implements SessionResponseModel {
       required final String message,
       final AstrologerModel? astrologer,
       final SessionHistoryModel? session_history,
-      final double? wallet}) = _$SessionResponseModelImpl;
+      final double? wallet,
+      final int? gift,
+      final int? rose,
+      final int? token_status}) = _$SessionResponseModelImpl;
 
   factory _SessionResponseModel.fromJson(Map<String, dynamic> json) =
       _$SessionResponseModelImpl.fromJson;
@@ -287,6 +342,12 @@ abstract class _SessionResponseModel implements SessionResponseModel {
   SessionHistoryModel? get session_history;
   @override
   double? get wallet;
+  @override
+  int? get gift;
+  @override
+  int? get rose;
+  @override
+  int? get token_status;
   @override
   @JsonKey(ignore: true)
   _$$SessionResponseModelImplCopyWith<_$SessionResponseModelImpl>

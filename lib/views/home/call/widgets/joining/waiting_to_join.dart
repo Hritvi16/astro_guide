@@ -9,7 +9,8 @@ class WaitingToJoin extends StatelessWidget {
   final String name, image;
   final String type, action;
   final dynamic cancel, accept, reject, back;
-  const WaitingToJoin(this.name, this.image,this.cancel, this.type,  this.action, this.accept,  this.reject, this.back,  {Key? key}) : super(key: key);
+  final int timeout;
+  const WaitingToJoin(this.timeout, this.name, this.image,this.cancel, this.type,  this.action, this.accept,  this.reject, this.back,  {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +21,7 @@ class WaitingToJoin extends StatelessWidget {
         padding: EdgeInsets.only(top: MySize.sizeh15(context), bottom: MySize.sizeh5(context)),
         decoration: BoxDecoration(
           image: Essential.getPlatform() ?
-            DecorationImage(
+            const DecorationImage(
               image: AssetImage("assets/essential/bg.png")
             ) : null
         ),
@@ -37,7 +38,7 @@ class WaitingToJoin extends StatelessWidget {
                     ApiConstants.astrologerUrl+image
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
                 Text(name,
@@ -47,25 +48,32 @@ class WaitingToJoin extends StatelessWidget {
                     fontWeight: FontWeight.w600
                   ),
                 ),
+                if(type=="ACTIVE")
+                  Text(
+                    "${Essential.getRemainingDuration(timeout)} remaining",
+                    style: GoogleFonts.manrope(
+                      fontSize: 18.0,
+                      color: MyColors.colorOff,
+                    ),
+                  ),
               ],
             ),
-            type=="WAITLISTED" || type=="REJECTED" ?
-            displayMessage(type=="WAITLISTED" ? "You have been added to waitlist" : "$name rejected your call request")
+            type=="WAITLISTED" || type=="REJECTED" || type=="ACTIVE" ?
+            displayMessage(type=="WAITLISTED" ? "You have been added to waitlist" : type=="REJECTED" ? "$name rejected your call request" : "Call is active")
                 : type=="REQUESTED" ?
             Column(
               children: [
-                Text("Connecting...",
+                Text("Connecting you in $timeout seconds",
                   style: GoogleFonts.manrope(
                     fontSize: 18.0,
                     color: MyColors.black,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
                 GestureDetector(
                   onTap: () {
-                    print("hdh");
                     cancel();
                   },
                   child: CircleAvatar(
@@ -82,7 +90,7 @@ class WaitingToJoin extends StatelessWidget {
                 )
               ],
             )
-                : Column(
+            : Column(
               children: [
                 Text("Incoming Call Request",
                   style: GoogleFonts.manrope(
@@ -90,7 +98,7 @@ class WaitingToJoin extends StatelessWidget {
                     color: MyColors.black,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
                 Row(
@@ -144,7 +152,7 @@ class WaitingToJoin extends StatelessWidget {
             color: MyColors.black,
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 30,
         ),
         GestureDetector(
@@ -152,7 +160,7 @@ class WaitingToJoin extends StatelessWidget {
             back();
           },
           child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
             decoration: BoxDecoration(
                 color: MyColors.colorButton,
                 borderRadius: BorderRadius.circular(20)

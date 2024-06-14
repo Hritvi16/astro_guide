@@ -8,7 +8,7 @@ part of 'VideoModel.dart';
 
 _$VideoModelImpl _$$VideoModelImplFromJson(Map<String, dynamic> json) =>
     _$VideoModelImpl(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       title: json['title'] as String,
       link: json['link'] as String,
       image: json['image'] as String,

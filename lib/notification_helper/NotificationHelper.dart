@@ -60,6 +60,7 @@ class NotificationHelper {
   static AwesomeNotifications awesomeNotifications = AwesomeNotifications();
   static final GlobalNotifier globalNotifier = Get.find();
 
+
   /// this function will initialize firebase and fcm instance
   static Future<void> initFcm() async {
     try {
@@ -164,31 +165,92 @@ class NotificationHelper {
   static Future<void> _fcmBackgroundHandler(RemoteMessage message) async {
     final storage = GetStorage();
     print("categoryyyyy backkk");
+    print("categoryyyyy backkk titleeee");
     print(message.notification?.title);
+    print(message.data);
     print(message.data['category']);
     print(message.data['category']=="call");
+    print(storage.read("status"));
 
     if(storage.read("status") == "logged in") {
-      if (message.data['category'] == "chat" ||
-          message.data['category'] == "call") {
+      if (message.data['category'] == "chat" || message.data['category'] == "call") {
 
       }
       else {
         globalNotifier.updateValue("session");
       }
-      var random = Random();
-      _showNotification(
-          id: random.nextInt(pow(2, 31).toInt() - 1),
-          title: message.notification?.title ?? message?.data['title'] ?? '',
-          body: message.notification?.body ?? message?.data['body'] ?? '',
-          payload: message.data.cast(),
-          notificationLayout: NotificationLayout.BigText,
-          category: message.data['category'] == "call" ||
-              message.data['category'] == "chat"
-              ? NotificationCategory.Call
-              : message.data['category'] == "cancelled" ? NotificationCategory
-              .MissedCall : null
-      );
+
+      if(message.data['category'] != "active") {
+        var random = Random();
+        _showNotification(
+        id: random.nextInt(pow(2, 31).toInt() - 1),
+        title: message.notification?.title ?? message?.data['title'] ?? '',
+        body: message.notification?.body ?? message?.data['body'] ?? '',
+        payload: message.data.cast(),
+        notificationLayout: NotificationLayout.BigText,
+        category: message.data['category'] == "call" ||
+        message.data['category'] == "chat"
+        ? NotificationCategory.Call
+            : message.data['category'] == "cancelled" ? NotificationCategory
+            .MissedCall : null
+        );
+      }
+      else {
+        print("globalNotifier.callController.value");
+        print(globalNotifier.callController.value);
+        if (globalNotifier.callController.value != null) {
+          CallController callController = globalNotifier.callController
+              .value!;
+          callController.getSessionHistory("NOTI ACTIVE");
+          globalNotifier.updateCallController(null);
+
+          if(message.data['category']=="ended" || message.data['category']=="rejected") {
+            await storage.write("ch_id", message.data['ch_id']);
+            AstrologerModel astrologer = AstrologerModel(
+                id: int.parse(message.data['astro_id'].toString()),
+                name: message.data['name'],
+                email: "", experience: "", profile: message.data['profile'], about: "");
+            await storage.write("astrologer", json.encode(astrologer.toJson()));
+            CallController callController = Get.put<CallController>(CallController());
+            await Future.delayed(const Duration(seconds: 3));
+            callController.endMeeting(message.data['category'] == "rejected"
+                ? "REJECTED"
+                : "COMPLETED");
+          }
+        }
+        else {
+          CallController callController = Get.put<CallController>(CallController());
+          callController.getSessionHistory("NOTI ACTIVE");
+        }
+      }
+    }
+    else {
+      if (message.data['category'] == "ended" || message.data['category'] == "rejected") {
+        if (globalNotifier.callController.value != null) {
+          CallController callController = globalNotifier.callController
+              .value!;
+          callController.stopTimer();
+          callController.getSessionHistory("NOTI ACTIVE");
+          globalNotifier.updateCallController(null);
+        }
+        else {
+          await storage.write("ch_id", message.data['ch_id']);
+          AstrologerModel astrologer = AstrologerModel(
+              id: int.parse(message.data['astro_id'].toString()),
+              name: message.data['name'],
+              email: "",
+              experience: "",
+              profile: message.data['profile'],
+              about: "");
+          await storage.write("astrologer", json.encode(astrologer.toJson()));
+          CallController callController = Get.put<CallController>(CallController());
+          callController.stopTimer();
+          await callController.getSessionHistory("NOTI ACTIVE");
+          callController.endMeeting(message.data['category'] == "rejected"
+              ? "REJECTED"
+              : "COMPLETED");
+        }
+      }
     }
   }
 
@@ -198,7 +260,9 @@ class NotificationHelper {
     print("categoryyyyy");
     print(message.data);
     print(message.data['category']);
+    print(message.data['category']);
     print(message.data['path']);
+    print(storage.read("status"));
     bool go = true;
 
     if(storage.read("status") == "logged in") {
@@ -235,8 +299,7 @@ class NotificationHelper {
         if (message.data['category'] == "waitlist") {
           print(globalNotifier.callController.value);
           if (globalNotifier.callController.value != null) {
-            CallController callController = globalNotifier.callController
-                .value!;
+            CallController callController = globalNotifier.callController.value!;
 
             if (callController.meeting != null) {
               callController.meeting?.end();
@@ -245,8 +308,15 @@ class NotificationHelper {
             callController.back();
             globalNotifier.updateCallController(null);
           }
+          else {
+            CallController callController = Get.put<CallController>(CallController());
+            if (callController.meeting != null) {
+              callController.meeting?.end();
+              callController.meeting?.leave();
+            }
+            callController.back();
+          }
         }
-
         else if (message.data['category'] == "cancelled") {
           print(globalNotifier.callController.value);
           if (globalNotifier.callController.value != null) {
@@ -260,8 +330,15 @@ class NotificationHelper {
             callController.back();
             globalNotifier.updateCallController(null);
           }
+          else {
+            CallController callController = Get.put<CallController>(CallController());
+            if (callController.meeting != null) {
+              callController.meeting?.end();
+              callController.meeting?.leave();
+            }
+            callController.back();
+          }
         }
-
         else if (message.data['category'] == "rejected" ||
             message.data['category'] == "ended") {
           print("globalNotifier.callController.value");
@@ -274,22 +351,54 @@ class NotificationHelper {
                 : "COMPLETED");
             globalNotifier.updateCallController(null);
           }
+          else {
+            await storage.write("ch_id", message.data['ch_id']);
+            AstrologerModel astrologer = AstrologerModel(
+                id: int.parse(message.data['astro_id'].toString()),
+                name: message.data['name'],
+                email: "", experience: "", profile: message.data['profile'], about: "");
+            await storage.write("astrologer", json.encode(astrologer.toJson()));
+            CallController callController = Get.put<CallController>(CallController());
+            await Future.delayed(const Duration(seconds: 1));
+            callController.endMeeting(message.data['category'] == "rejected"
+                ? "REJECTED"
+                : "COMPLETED");
+          }
         }
 
-        var random = Random();
-        _showNotification(
-            id: random.nextInt(pow(2, 31).toInt() - 1),
-            title: message.notification?.title ?? message?.data['title'] ?? '',
-            body: message.notification?.body ?? message?.data['body'] ?? '',
-            payload: message.data.cast(),
-            // pass payload to the notification card so you can use it (when user click on notification)
-            notificationLayout: NotificationLayout.BigText,
-            category: message.data['category'] == "call" ? NotificationCategory
-                .Call : message.data['category'] == "cancelled" ||
-                message.data['category'] == "rejected"
-                ? NotificationCategory.MissedCall
-                : null
-        );
+        if(message.data['category'] != "active") {
+          var random = Random();
+          _showNotification(
+              id: random.nextInt(pow(2, 31).toInt() - 1),
+              title: message.notification?.title ?? message?.data['title'] ??
+                  '',
+              body: message.notification?.body ?? message?.data['body'] ?? '',
+              payload: message.data.cast(),
+              // pass payload to the notification card so you can use it (when user click on notification)
+              notificationLayout: NotificationLayout.BigText,
+              category: message.data['category'] == "call"
+                  ? NotificationCategory
+                  .Call
+                  : message.data['category'] == "cancelled" ||
+                  message.data['category'] == "rejected"
+                  ? NotificationCategory.MissedCall
+                  : null
+          );
+        }
+        else {
+          print("globalNotifier.callController.value");
+          print(globalNotifier.callController.value);
+          if (globalNotifier.callController.value != null) {
+            CallController callController = globalNotifier.callController
+                .value!;
+            callController.getSessionHistory("NOTI ACTIVE");
+            globalNotifier.updateCallController(null);
+          }
+          else {
+            CallController callController = Get.put<CallController>(CallController());
+            callController.getSessionHistory("NOTI ACTIVE");
+          }
+        }
       }
     }
   }
@@ -302,7 +411,7 @@ class NotificationHelper {
         id: int.parse(data['astro_id'] ?? "-1"),
         name: data['name'] ?? "",
         profile: data['profile'] ?? "",
-        mobile: '', email: '', experience: '', about: '',
+        mobile: '', email: '', experience: '', about: '', ivr: 0, video: 0
       ),
       "ch_id": int.parse(data['ch_id'] ?? "-1"),
       "type": "RECONNECT",
@@ -418,6 +527,39 @@ class NotificationHelper {
             playSound: true,
             importance: NotificationImportance.Max,
             soundSource: 'resource://raw/notinoti',
+            defaultRingtoneType: DefaultRingtoneType.Ringtone,
+            icon: 'resource://drawable/app_icon',
+            // soundSource: 'asset://assets/audio/notification',
+          ),
+          NotificationChannel(
+            // channelGroupKey: NotificationChannels.broadcastChannelGroupKey,
+            channelKey: NotificationChannels.broadcastChannelKey,
+            channelName: NotificationChannels.broadcastChannelName,
+            channelDescription: 'Notification channel for broadcast notifications',
+            defaultColor: Colors.green,
+            ledColor: Colors.white,
+            channelShowBadge: true,
+            playSound: true,
+            importance: NotificationImportance.Max,
+            soundSource: 'resource://raw/notinoti',
+            defaultRingtoneType: DefaultRingtoneType.Ringtone,
+            icon: 'resource://drawable/app_icon',
+            // soundSource: 'asset://assets/audio/notification',
+          ),
+          NotificationChannel(
+            // channelGroupKey: NotificationChannels.broadcastChannelGroupKey,
+            channelKey: NotificationChannels.rechargeChannelKey,
+            channelName: NotificationChannels.rechargeChannelName,
+            channelDescription: 'Notification channel for recharge notifications',
+            defaultColor: Colors.green,
+            ledColor: Colors.white,
+            channelShowBadge: true,
+            playSound: true,
+            importance: NotificationImportance.Max,
+            soundSource: 'resource://raw/notinoti',
+            defaultRingtoneType: DefaultRingtoneType.Ringtone,
+            icon: 'resource://drawable/app_icon',
+            // soundSource: 'asset://assets/audio/notification',
           ),
         ],
         channelGroups: [
@@ -431,20 +573,21 @@ class NotificationHelper {
 
 class NotificationChannels {
   // chat channel (for messages only)
-  static String get chatChannelKey => "chat_channel";
-  static String get chatChannelName => "Chat channel";
-  static String get chatGroupKey => "chat group key";
-  static String get chatChannelGroupKey => "chat_channel_group";
-  static String get chatChannelGroupName => "Chat notifications channels";
-  static String get chatChannelDescription => "Chat notifications channels";
-
-  // general channel (for all other notifications)
-  static String get generalChannelKey => "fitness_channel";
-  static String get generalGroupKey => "basic group key";
+  static String get generalChannelKey => "basic_channel_id";
+  static String get generalChannelName => "Basic Notifications";
   static String get generalChannelGroupKey => "basic_channel_group";
-  static String get generalChannelGroupName => "Fitness public notifications channels";
-  static String get generalChannelName => "Fitness notifications channels";
-  static String get generalChannelDescription => "Notification channel for messages";
+  static String get generalChannelGroupName => "Basic group";
+
+  static String get generalGroupKey => "basic group key";
+  static String get generalChannelDescription => "This is the basic channel";
+
+  static String get broadcastChannelKey => "broadcast_channel_id";
+  static String get broadcastChannelName => "broadcast channel name";
+  static String get broadcastChannelGroupKey => "broadcast_channel_group";
+  static String get broadcastChannelGroupName => "broadcast channel group name";
+
+  static String get rechargeChannelKey => "recharge_channel_id";
+  static String get rechargeChannelName => "recharge channel name";
 }
 
 class NotificationController {
@@ -513,100 +656,130 @@ class NotificationController {
     print(receivedAction.buttonKeyPressed);
     print(receivedAction.payload);
 
-
-    Map<String, String?>? payload = receivedAction.payload;
-
-    if(receivedAction.buttonKeyPressed=="ACCEPT") {
-      print("payload");
-      print(receivedAction.payload);
-      print(payload?['category'] == "call" || payload?['path'] == "/call");
-      print(payload?['category'] == "chat" || payload?['path'] == "/chat");
-
-      if (payload?['category'] == "call" || payload?['path'] == "/call") {
-        print(payload?['path'] ?? "/splash");
-        print(payload);
-        print(SessionHistoryModel.fromJson(
-            json.decode(payload?['session_history'] ?? "{}")));
-        Get.toNamed(
-            "/call",
-            arguments: {
-              "astrologer": AstrologerModel(
-                id: int.parse(payload?['astro_id'] ?? "-1"),
-                name: payload?['name'] ?? "",
-                profile: payload?['profile'] ?? "",
-                mobile: '', email: '', experience: '', about: '',
-              ),
-              "ch_id": int.parse(payload?['ch_id'] ?? "-1"),
-              "chat_type": payload?['chat_type'] ?? "",
-              "meeting_id": payload?['meeting_id'] ?? "",
-              "session_id": payload?['session_id'] ?? "",
-              "wallet": double.parse(payload?['wallet'] ?? "0"),
-              "type": "RECONNECT",
-              "action": "ACCEPT",
-              "session_history": SessionHistoryModel.fromJson(
-                  json.decode(payload?['session_history'] ?? "{}")),
-            }
-        );
-      }
-      else if(payload?['category']=="chat" || payload?['path'] == "/chat") {
-        Get.toNamed(
-            payload?['path'] ?? "/splash",
-            arguments: {
-              "astrologer": AstrologerModel(
-                id: int.parse(payload?['astro_id'] ?? "-1"),
-                name: payload?['name'] ?? "",
-                profile: payload?['profile'] ?? "",
-                mobile: '', email: '', experience: '', about: '',
-              ),
-              "ch_id": int.parse(payload?['ch_id'] ?? "-1"),
-              "chat_type": payload?['chat_type'] ?? "",
-              "type": "RECONNECT",
-              "action": "ACCEPT",
-            }
-        );
-      }
+    if(receivedAction.channelKey==NotificationChannels.rechargeChannelKey) {
+      Get.toNamed("/wallet");
     }
     else {
-      if(payload?['category']=="call" || payload?['path'] == "/call") {
-        Get.toNamed(
-            "/call",
-            arguments:
-            {
-              "astrologer": AstrologerModel(
-                id: int.parse(payload?['astro_id'] ?? "-1"),
-                name: payload?['name'] ?? "",
-                profile: payload?['profile'] ?? "",
-                mobile: '', email: '', experience: '', about: '',
-              ),
-              "ch_id": int.parse(payload?['ch_id'] ?? "-1"),
-              "meet_id": payload?['meet_id'] ?? "",
-              "meeting_id": payload?['meeting_id'] ?? "",
-              "session_id": payload?['session_id'] ?? "",
-              "wallet": double.parse(payload?['wallet'] ?? "0"),
-              "type": "RECONNECT",
-              "chat_type": payload?['chat_type'] ?? "",
-              "action" : "NOT DECIDED",
-              "session_history": SessionHistoryModel.fromJson(
-                  json.decode(payload?['session_history'] ?? "{}")),
-            }
-        );
+      Map<String, String?>? payload = receivedAction.payload;
+
+      if (receivedAction.buttonKeyPressed == "ACCEPT") {
+        print("payload");
+        print(receivedAction.payload);
+        print(payload?['category'] == "call" || payload?['path'] == "/call");
+        print(payload?['category'] == "chat" || payload?['path'] == "/chat");
+
+        if (payload?['category'] == "call" || payload?['path'] == "/call") {
+          print(payload?['path'] ?? "/splash");
+          print(payload);
+          print(SessionHistoryModel.fromJson(
+              json.decode(payload?['session_history'] ?? "{}")));
+          Get.toNamed(
+              "/call",
+              arguments: {
+                "astrologer": AstrologerModel(
+                    id: int.parse(payload?['astro_id'] ?? "-1"),
+                    name: payload?['name'] ?? "",
+                    profile: payload?['profile'] ?? "",
+                    mobile: '',
+                    email: '',
+                    experience: '',
+                    about: '',
+                    ivr: 0,
+                    video: 0
+                ),
+                "ch_id": int.parse(payload?['ch_id'] ?? "-1"),
+                "chat_type": payload?['chat_type'] ?? "",
+                "meeting_id": payload?['meeting_id'] ?? "",
+                "session_id": payload?['session_id'] ?? "",
+                "wallet": double.parse(payload?['wallet'] ?? "0"),
+                "type": "RECONNECT",
+                "action": "ACCEPT",
+                "session_history": SessionHistoryModel.fromJson(
+                    json.decode(payload?['session_history'] ?? "{}")),
+              }
+          );
+        }
+        else
+        if (payload?['category'] == "chat" || payload?['path'] == "/chat") {
+          Get.toNamed(
+              payload?['path'] ?? "/splash",
+              arguments: {
+                "astrologer": AstrologerModel(
+                    id: int.parse(payload?['astro_id'] ?? "-1"),
+                    name: payload?['name'] ?? "",
+                    profile: payload?['profile'] ?? "",
+                    mobile: '',
+                    email: '',
+                    experience: '',
+                    about: '',
+                    ivr: 0,
+                    video: 0
+                ),
+                "ch_id": int.parse(payload?['ch_id'] ?? "-1"),
+                "chat_type": payload?['chat_type'] ?? "",
+                "type": "RECONNECT",
+                "action": "ACCEPT",
+              }
+          );
+        }
       }
-      else if(payload?['category']=="chat" || payload?['path'] == "/chat") {
-        Get.toNamed(
-            payload?['path'] ?? "/splash",
-            arguments: {
-              "astrologer": AstrologerModel(
-                id: int.parse(payload?['astro_id'] ?? "-1"),
-                name: payload?['name'] ?? "",
-                profile: payload?['profile'] ?? "",
-                mobile: '', email: '', experience: '', about: '',
-              ),
-              "ch_id": int.parse(payload?['ch_id'] ?? "-1"),
-              "chat_type": payload?['chat_type'] ?? "",
-              "type": "RECONNECT",
-              "action" : "NOT DECIDED"
-            }
-        );
+      else {
+        print("inside elseeee");
+        print(payload);
+
+        if (payload?['category'] == "call" || payload?['path'] == "/call") {
+          Get.toNamed(
+              "/call",
+              arguments:
+              {
+                "astrologer": AstrologerModel(
+                    id: int.parse(payload?['astro_id'] ?? "-1"),
+                    name: payload?['name'] ?? "",
+                    profile: payload?['profile'] ?? "",
+                    mobile: '',
+                    email: '',
+                    experience: '',
+                    about: '',
+                    ivr: 0,
+                    video: 0
+                ),
+                "ch_id": int.parse(payload?['ch_id'] ?? "-1"),
+                "meet_id": payload?['meet_id'] ?? "",
+                "meeting_id": payload?['meeting_id'] ?? "",
+                "session_id": payload?['session_id'] ?? "",
+                "wallet": double.parse(payload?['wallet'] ?? "0"),
+                "type": "RECONNECT",
+                "chat_type": payload?['chat_type'] ?? "",
+                "action": "NOT DECIDED",
+                "session_history": SessionHistoryModel.fromJson(
+                    json.decode(payload?['session_history'] ?? "{}")),
+              }
+          );
+        }
+        else
+        if (payload?['category'] == "chat" || payload?['path'] == "/chat") {
+          Get.toNamed(
+              "/chat",
+              // payload?['path'] ?? "/home",
+              arguments: {
+                "astrologer": AstrologerModel(
+                    id: int.parse(payload?['astro_id'] ?? "-1"),
+                    name: payload?['name'] ?? "",
+                    profile: payload?['profile'] ?? "",
+                    mobile: '',
+                    email: '',
+                    experience: '',
+                    about: '',
+                    ivr: 0,
+                    video: 0
+                ),
+                "ch_id": int.parse(payload?['ch_id'] ?? "-1"),
+                "chat_type": payload?['chat_type'] ?? "",
+                "type": "RECONNECT",
+                "action": "NOT DECIDED"
+              }
+          );
+        }
       }
     }
   }

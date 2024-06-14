@@ -423,6 +423,9 @@ class CallController extends GetxController {
           }
           joinRoom();
 
+          if(timer!=null) {
+            stopTimer();
+          }
           startTimer();
           load = true;
           update();
@@ -441,7 +444,13 @@ class CallController extends GetxController {
   }
 
   void startTimer() {
+    print("start timerrrr");
+    print(timer);
     try {
+      timer?.cancel();
+      stopTimer();
+      print("start timerrrr innn");
+      print(timer);
       var kolkata = tz.getLocation('GMT');
       Duration duration = tz.TZDateTime.now(kolkata).difference(started_at);
       seconds = duration.inSeconds;
@@ -457,8 +466,6 @@ class CallController extends GetxController {
   void setCountDown() {
     seconds+=1;
     update();
-    // print(max);
-    // print(seconds);
     if(max<=seconds) {
       print("ssweb: enddd");
       end(true);

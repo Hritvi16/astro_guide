@@ -87,9 +87,14 @@ class Talk extends StatelessWidget {
                           ),
                           Row(
                             children: [
-                              Image.asset(
-                                "assets/common/notification.png",
-                                height: 25,
+                              GestureDetector(
+                                onTap: () {
+                                  talkController.goto("/notifications");
+                                },
+                                child: Image.asset(
+                                  "assets/common/notification.png",
+                                  height: 25,
+                                ),
                               ),
                               const SizedBox(
                                 width: 15,
@@ -109,7 +114,6 @@ class Talk extends StatelessWidget {
                               GestureDetector(
                                 onTap: () {
                                   talkController.goto("/language");
-                                  // dashboardController.logout();
                                 },
                                 child: Image.asset(
                                   "assets/common/lang.png",
@@ -196,7 +200,7 @@ class Talk extends StatelessWidget {
               },
             ),
             child: SingleChildScrollView(
-              physics: AlwaysScrollableScrollPhysics(),
+              physics: const AlwaysScrollableScrollPhysics(),
               child: Column(
                 children: [
                   if(Essential.getPlatform())
@@ -217,7 +221,7 @@ class Talk extends StatelessWidget {
                         getAstrologerDesign(index, talkController.astrologers[index]);
                     },
                   )
-                  : SizedBox(
+                  : const SizedBox(
                     height: 100,
                   ),
                 ],
@@ -270,7 +274,7 @@ class Talk extends StatelessWidget {
               ApiConstants.specificationUrl+spec.icon,
               height: 16,
             ),
-            SizedBox(
+            const SizedBox(
               width: 8,
             ),
             Text(
@@ -305,7 +309,7 @@ class Talk extends StatelessWidget {
         child: Row(
           children: [
             getLeftSection(astrologer),
-            SizedBox(
+            const SizedBox(
               width: 8,
             ),
             getRightSection(index, astrologer),
@@ -323,7 +327,7 @@ class Talk extends StatelessWidget {
         unratedColor: MyColors.colorUnrated,
         allowHalfRating: true,
         itemCount: 5,
-        itemPadding: EdgeInsets.symmetric(horizontal: 1.0),
+        itemPadding: const EdgeInsets.symmetric(horizontal: 1.0),
         ignoreGestures: true,
         itemSize: 12,
         itemBuilder: (context, _) => Image.asset(
@@ -363,19 +367,28 @@ class Talk extends StatelessWidget {
               fit: BoxFit.fill,
             ),
           ),
+          // if(astrologer.certified==1)
+          //   Positioned(
+          //     top: 5,
+          //     right: 0,
+          //     child:  Image.asset(
+          //       "assets/common/verified.png",
+          //       height: 20,
+          //     ),
+          //   ),
           Positioned(
             bottom: 0,
             child: Container(
               height: standardAstroImageShadowH,
               width: standardAstroListImageW,
-              margin: EdgeInsets.symmetric(horizontal: 10),
+              margin: const EdgeInsets.symmetric(horizontal: 10),
               decoration: BoxDecoration(
                 boxShadow: [
                   BoxShadow(
                       color: Colors.black.withOpacity(0.6),
                       blurRadius: 10,
                       spreadRadius: 10,
-                      offset: Offset(0, 2)
+                      offset: const Offset(0, 2)
                   ),
                 ],
               ),
@@ -386,17 +399,17 @@ class Talk extends StatelessWidget {
             height: standardAstroImageShadowH,
             width: standardAstroListImageW,
             child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 2,),
+              padding: const EdgeInsets.symmetric(vertical: 2,),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Container(
                     width: standardAstroListImageW,
                     height: 13,
-                    padding: EdgeInsets.symmetric(horizontal: 10,),
+                    padding: const EdgeInsets.symmetric(horizontal: 10,),
                     child: getRatingDesign(astrologer.rating??0),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 3,
                   ),
                   Text(
@@ -436,28 +449,39 @@ class Talk extends StatelessWidget {
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: GoogleFonts.playfairDisplay(
-                                fontSize: 18.0,
+                                fontSize: 14.0,
                                 fontWeight: FontWeight.w700,
                                 color: MyColors.labelColor()
                             ),
                           ),
                         ),
-                        if(astrologer.online==1 || astrologer.conline==1)
                           Row(
                             children: [
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Image.asset(
-                                "assets/common/online.png",
-                                height: 11,
-                                width: 11,
-                              )
+                              if(astrologer.certified==1)
+                                Image.asset(
+                                  "assets/common/verified.png",
+                                  height: 14,
+                                  width: 14,
+                                ),
+                              if(astrologer.online==1 || astrologer.conline==1)
+                                Row(
+                                  children: [
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
+                                    Image.asset(
+                                      "assets/common/${(astrologer.active??0)==0 ? "online" : "engaged"}.png",
+                                      color: (astrologer.active??0)==0 ? null : MyColors.grad_orange_2,
+                                      height: 11,
+                                      width: 11,
+                                    )
+                                  ],
+                                ),
                             ],
-                          )
+                          ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 2,
                     ),
                     if(Essential.getPlatform())
@@ -486,7 +510,7 @@ class Talk extends StatelessWidget {
               )
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 7,
           ),
           Row(
@@ -496,7 +520,7 @@ class Talk extends StatelessWidget {
                 height: 16,
                 width: 16,
               ),
-              SizedBox(
+              const SizedBox(
                 width: 6,
               ),
               Flexible(
@@ -513,7 +537,7 @@ class Talk extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 16,
           ),
           getNewBottom(astrologer)
@@ -537,14 +561,19 @@ class Talk extends StatelessWidget {
               if(astrologer.conline==1) {
                 double min = Essential.getCalculatedAmount(
                     astrologer.p_call ?? 0, minutes: 5);
-                if ((talkController.free && astrologer.free == 1) ||
-                    (talkController.wallet >= min)) {
-                  talkController.goto("/checkSession", arguments: {
-                    "astrologer": astrologer,
-                    "free": talkController.free && astrologer.free == 1,
-                    "controller": talkController,
-                    "category": "CALL"
-                  });
+                if ((talkController.free && astrologer.free == 1) || (talkController.wallet >= min)) {
+                  if(talkController.ivr==1 && astrologer.ivr==1 && talkController.video==1 && astrologer.video==1) {
+                    talkController.selectCallType(talkController, astrologer);
+                  }
+                  else {
+                    talkController.goto("/checkSession", arguments: {
+                      "astrologer": astrologer,
+                      "free": talkController.free && astrologer.free == 1,
+                      "controller": talkController,
+                      "category": "CALL",
+                      "call_type": (talkController.ivr==1 && astrologer.ivr==1) ? "IVR" : "VIDEO",
+                    });
+                  }
                 }
                 else {
                   Essential.showBasicDialog(
@@ -565,7 +594,7 @@ class Talk extends StatelessWidget {
             child: Container(
                 alignment: Alignment.center,
                 height: standardShortButtonHeight,
-                padding: EdgeInsets.symmetric(horizontal: 5),
+                padding: const EdgeInsets.symmetric(horizontal: 5),
                 decoration: BoxDecoration(
                     color: call.withOpacity(0.3),
                     border: Border.all(
@@ -599,7 +628,7 @@ class Talk extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           width: 10,
         ),
         Flexible(
@@ -637,7 +666,7 @@ class Talk extends StatelessWidget {
             child: Container(
                 alignment: Alignment.center,
                 height: standardShortButtonHeight,
-                padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                 decoration: BoxDecoration(
                     color: chat.withOpacity(0.3),
                     border: Border.all(

@@ -26,7 +26,7 @@ class InfoDialog extends StatelessWidget {
               alignment: Alignment.bottomRight,
               child: TextButton(
                   onPressed: () {
-                    Navigator.pop(context);
+                    Navigator.pop(context, btn);
                   },
                   child: Text(btn,
                     style: GoogleFonts.manrope(

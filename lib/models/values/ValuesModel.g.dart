@@ -9,7 +9,7 @@ part of 'ValuesModel.dart';
 _$ValuesModelImpl _$$ValuesModelImplFromJson(Map<String, dynamic> json) =>
     _$ValuesModelImpl(
       status: json['status'] as String,
-      code: json['code'] as int,
+      code: (json['code'] as num).toInt(),
       message: json['message'] as String,
       countries: (json['countries'] as List<dynamic>?)
           ?.map((e) => CountryModel.fromJson(e as Map<String, dynamic>))
@@ -27,7 +27,9 @@ _$ValuesModelImpl _$$ValuesModelImplFromJson(Map<String, dynamic> json) =>
           ?.map((e) => LanguageModel.fromJson(e as Map<String, dynamic>))
           .toList(),
       wallet: (json['wallet'] as num?)?.toDouble(),
-      free: json['free'] as int?,
+      free: (json['free'] as num?)?.toInt(),
+      ivr: (json['ivr'] as num?)?.toInt(),
+      video: (json['video'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$$ValuesModelImplToJson(_$ValuesModelImpl instance) =>
@@ -42,4 +44,6 @@ Map<String, dynamic> _$$ValuesModelImplToJson(_$ValuesModelImpl instance) =>
       'languages': instance.languages,
       'wallet': instance.wallet,
       'free': instance.free,
+      'ivr': instance.ivr,
+      'video': instance.video,
     };

@@ -9,7 +9,7 @@ part of 'DashboardModel.dart';
 _$DashboardModelImpl _$$DashboardModelImplFromJson(Map<String, dynamic> json) =>
     _$DashboardModelImpl(
       status: json['status'] as String,
-      code: json['code'] as int,
+      code: (json['code'] as num).toInt(),
       message: json['message'] as String,
       banners: (json['banners'] as List<dynamic>?)
           ?.map((e) => BannerModel.fromJson(e as Map<String, dynamic>))

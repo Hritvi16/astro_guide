@@ -31,7 +31,7 @@ getTabTitle(String text, Color color, FontWeight fontWeight, theme) {
 getFilterTitle(String text, theme) {
   return Text(
     text,
-    style: theme.textTheme.bodyText1?.copyWith(
+    style: theme.textTheme.bodyLarge?.copyWith(
       fontWeight: FontWeight.w500,
       color: MyColors.white
     ),
@@ -171,7 +171,7 @@ getPrice(String price, String discount, theme) {
 getDescription(String text, theme) {
   return Text(
     text,
-    style: theme.textTheme.bodyText1
+    style: theme.textTheme.bodyLarge
   );
 }
 
@@ -187,7 +187,7 @@ getProductTitle(String text, theme) {
 getProductInfo(String text, theme) {
   return Text(
       text,
-      style: theme.textTheme.bodyText1?.copyWith(
+      style: theme.textTheme.bodyLarge?.copyWith(
           color: MyColors.white
       )
   );
@@ -196,7 +196,7 @@ getProductInfo(String text, theme) {
 getAlertInfo(String text, theme) {
   return Text(
       text,
-      style: theme.textTheme.bodyText1?.copyWith(
+      style: theme.textTheme.bodyLarge?.copyWith(
           color: Get.isDarkMode ? MyColors.black : MyColors.white
       )
   );

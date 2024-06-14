@@ -10,7 +10,7 @@ _$PaymentResponseModelImpl _$$PaymentResponseModelImplFromJson(
         Map<String, dynamic> json) =>
     _$PaymentResponseModelImpl(
       status: json['status'] as String,
-      code: json['code'] as int?,
+      code: (json['code'] as num?)?.toInt(),
       error: json['error'] == null
           ? null
           : ErrorModel.fromJson(json['error'] as Map<String, dynamic>),

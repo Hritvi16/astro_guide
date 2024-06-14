@@ -8,7 +8,7 @@ part of 'TypeModel.dart';
 
 _$TypeModelImpl _$$TypeModelImplFromJson(Map<String, dynamic> json) =>
     _$TypeModelImpl(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       type: json['type'] as String,
     );
 

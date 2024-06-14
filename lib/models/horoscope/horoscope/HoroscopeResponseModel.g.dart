@@ -10,11 +10,21 @@ _$HoroscopeResponseModelImpl _$$HoroscopeResponseModelImplFromJson(
         Map<String, dynamic> json) =>
     _$HoroscopeResponseModelImpl(
       status: json['status'] as String,
-      code: json['code'] as int,
+      code: (json['code'] as num).toInt(),
       message: json['message'] as String,
-      data: json['data'] == null
+      daily: json['daily'] == null
           ? null
-          : HoroscopeModel.fromJson(json['data'] as Map<String, dynamic>),
+          : HoroscopeTimeModel.fromJson(json['daily'] as Map<String, dynamic>),
+      weekly: json['weekly'] == null
+          ? null
+          : HoroscopeTimeModel.fromJson(json['weekly'] as Map<String, dynamic>),
+      monthly: json['monthly'] == null
+          ? null
+          : HoroscopeTimeModel.fromJson(
+              json['monthly'] as Map<String, dynamic>),
+      yearly: json['yearly'] == null
+          ? null
+          : HoroscopeTimeModel.fromJson(json['yearly'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$HoroscopeResponseModelImplToJson(
@@ -23,5 +33,8 @@ Map<String, dynamic> _$$HoroscopeResponseModelImplToJson(
       'status': instance.status,
       'code': instance.code,
       'message': instance.message,
-      'data': instance.data,
+      'daily': instance.daily,
+      'weekly': instance.weekly,
+      'monthly': instance.monthly,
+      'yearly': instance.yearly,
     };

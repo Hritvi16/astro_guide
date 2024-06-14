@@ -28,6 +28,9 @@ mixin _$EndSessionResponseModel {
   double? get amount => throw _privateConstructorUsedError;
   double? get wallet => throw _privateConstructorUsedError;
   String? get chat_type => throw _privateConstructorUsedError;
+  int? get gift => throw _privateConstructorUsedError;
+  int? get rose => throw _privateConstructorUsedError;
+  int? get token_status => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -48,7 +51,10 @@ abstract class $EndSessionResponseModelCopyWith<$Res> {
       int? seconds,
       double? amount,
       double? wallet,
-      String? chat_type});
+      String? chat_type,
+      int? gift,
+      int? rose,
+      int? token_status});
 }
 
 /// @nodoc
@@ -72,6 +78,9 @@ class _$EndSessionResponseModelCopyWithImpl<$Res,
     Object? amount = freezed,
     Object? wallet = freezed,
     Object? chat_type = freezed,
+    Object? gift = freezed,
+    Object? rose = freezed,
+    Object? token_status = freezed,
   }) {
     return _then(_value.copyWith(
       status: null == status
@@ -102,6 +111,18 @@ class _$EndSessionResponseModelCopyWithImpl<$Res,
           ? _value.chat_type
           : chat_type // ignore: cast_nullable_to_non_nullable
               as String?,
+      gift: freezed == gift
+          ? _value.gift
+          : gift // ignore: cast_nullable_to_non_nullable
+              as int?,
+      rose: freezed == rose
+          ? _value.rose
+          : rose // ignore: cast_nullable_to_non_nullable
+              as int?,
+      token_status: freezed == token_status
+          ? _value.token_status
+          : token_status // ignore: cast_nullable_to_non_nullable
+              as int?,
     ) as $Val);
   }
 }
@@ -122,7 +143,10 @@ abstract class _$$EndSessionResponseModelImplCopyWith<$Res>
       int? seconds,
       double? amount,
       double? wallet,
-      String? chat_type});
+      String? chat_type,
+      int? gift,
+      int? rose,
+      int? token_status});
 }
 
 /// @nodoc
@@ -145,6 +169,9 @@ class __$$EndSessionResponseModelImplCopyWithImpl<$Res>
     Object? amount = freezed,
     Object? wallet = freezed,
     Object? chat_type = freezed,
+    Object? gift = freezed,
+    Object? rose = freezed,
+    Object? token_status = freezed,
   }) {
     return _then(_$EndSessionResponseModelImpl(
       status: null == status
@@ -175,6 +202,18 @@ class __$$EndSessionResponseModelImplCopyWithImpl<$Res>
           ? _value.chat_type
           : chat_type // ignore: cast_nullable_to_non_nullable
               as String?,
+      gift: freezed == gift
+          ? _value.gift
+          : gift // ignore: cast_nullable_to_non_nullable
+              as int?,
+      rose: freezed == rose
+          ? _value.rose
+          : rose // ignore: cast_nullable_to_non_nullable
+              as int?,
+      token_status: freezed == token_status
+          ? _value.token_status
+          : token_status // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -189,7 +228,10 @@ class _$EndSessionResponseModelImpl implements _EndSessionResponseModel {
       this.seconds,
       this.amount,
       this.wallet,
-      this.chat_type});
+      this.chat_type,
+      this.gift,
+      this.rose,
+      this.token_status});
 
   factory _$EndSessionResponseModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$EndSessionResponseModelImplFromJson(json);
@@ -208,10 +250,16 @@ class _$EndSessionResponseModelImpl implements _EndSessionResponseModel {
   final double? wallet;
   @override
   final String? chat_type;
+  @override
+  final int? gift;
+  @override
+  final int? rose;
+  @override
+  final int? token_status;
 
   @override
   String toString() {
-    return 'EndSessionResponseModel(status: $status, code: $code, message: $message, seconds: $seconds, amount: $amount, wallet: $wallet, chat_type: $chat_type)';
+    return 'EndSessionResponseModel(status: $status, code: $code, message: $message, seconds: $seconds, amount: $amount, wallet: $wallet, chat_type: $chat_type, gift: $gift, rose: $rose, token_status: $token_status)';
   }
 
   @override
@@ -226,13 +274,17 @@ class _$EndSessionResponseModelImpl implements _EndSessionResponseModel {
             (identical(other.amount, amount) || other.amount == amount) &&
             (identical(other.wallet, wallet) || other.wallet == wallet) &&
             (identical(other.chat_type, chat_type) ||
-                other.chat_type == chat_type));
+                other.chat_type == chat_type) &&
+            (identical(other.gift, gift) || other.gift == gift) &&
+            (identical(other.rose, rose) || other.rose == rose) &&
+            (identical(other.token_status, token_status) ||
+                other.token_status == token_status));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, status, code, message, seconds, amount, wallet, chat_type);
+  int get hashCode => Object.hash(runtimeType, status, code, message, seconds,
+      amount, wallet, chat_type, gift, rose, token_status);
 
   @JsonKey(ignore: true)
   @override
@@ -257,7 +309,10 @@ abstract class _EndSessionResponseModel implements EndSessionResponseModel {
       final int? seconds,
       final double? amount,
       final double? wallet,
-      final String? chat_type}) = _$EndSessionResponseModelImpl;
+      final String? chat_type,
+      final int? gift,
+      final int? rose,
+      final int? token_status}) = _$EndSessionResponseModelImpl;
 
   factory _EndSessionResponseModel.fromJson(Map<String, dynamic> json) =
       _$EndSessionResponseModelImpl.fromJson;
@@ -276,6 +331,12 @@ abstract class _EndSessionResponseModel implements EndSessionResponseModel {
   double? get wallet;
   @override
   String? get chat_type;
+  @override
+  int? get gift;
+  @override
+  int? get rose;
+  @override
+  int? get token_status;
   @override
   @JsonKey(ignore: true)
   _$$EndSessionResponseModelImplCopyWith<_$EndSessionResponseModelImpl>

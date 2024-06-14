@@ -11,7 +11,9 @@ _$HoroscopeModelImpl _$$HoroscopeModelImplFromJson(Map<String, dynamic> json) =>
       sign: json['sign'] as String,
       prediction:
           PredictionModel.fromJson(json['prediction'] as Map<String, dynamic>),
-      special: SpecialModel.fromJson(json['special'] as Map<String, dynamic>),
+      special: json['special'] == null
+          ? null
+          : SpecialModel.fromJson(json['special'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$HoroscopeModelImplToJson(

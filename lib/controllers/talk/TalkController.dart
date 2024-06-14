@@ -1,8 +1,7 @@
 import 'dart:async';
-
-import 'package:astro_guide/constants/AstrologerConstants.dart';
 import 'package:astro_guide/constants/CommonConstants.dart';
-import 'package:astro_guide/constants/UserConstants.dart';
+import 'package:astro_guide/dialogs/BasicDialog.dart';
+import 'package:astro_guide/dialogs/IconConfirmDialog.dart';
 import 'package:astro_guide/essential/Essential.dart';
 import 'package:astro_guide/models/astrologer/AstrologerModel.dart';
 import 'package:astro_guide/models/country/CountryModel.dart';
@@ -59,6 +58,7 @@ class TalkController extends GetxController {
   late double wallet;
   late bool load;
   late String order_by;
+  late int ivr, video;
 
   @override
   void onInit() {
@@ -79,8 +79,9 @@ class TalkController extends GetxController {
     sgender = [];
 
     free = storage.read("free")??false;
-    print("gdgdgd${storage.read("wallet")}");
     wallet = double.parse((storage.read("wallet")??0.0).toString());
+    ivr = int.parse((storage.read("ivr")??0).toString());
+    video = int.parse((storage.read("video")??1).toString());
 
     if(Get.arguments!=null) {
       if (Get.arguments['title'] == "New Astrologers") {
@@ -128,16 +129,16 @@ class TalkController extends GetxController {
     astrologerProvider.fetchValues(storage.read("access"), ApiConstants.values).then((response) async {
       print("valuessss");
       print(response.toJson());
-      print(response.types);
-      print("response.wallet");
-      print(response.wallet);
-      print(response.free);
       if(response.code==1) {
         // countries = response.countries??[];
         wallet = response.wallet ?? wallet;
+        ivr = response.ivr ?? ivr;
+        video = response.video ?? video;
         free = (response.free ?? 1) == 0;
         await storage.write("free", free);
         await storage.write("wallet", wallet);
+        await storage.write("ivr", ivr);
+        await storage.write("video", video);
 
         countries = response.countries??[];
         types = response.types??[];
@@ -431,4 +432,27 @@ class TalkController extends GetxController {
     return "ORDER BY $query";
   }
 
+  void selectCallType(TalkController talkController, AstrologerModel astrologer) {
+    Get.dialog(
+      const IconConfirmDialog(
+        title: "Select Call Type",
+        text: "",
+        btn1: "Voice Call",
+        btn2: "Video Call",
+        icon1: Icons.call,
+        icon2: Icons.videocam_rounded,
+      ),
+      barrierDismissible: false,
+    ).then((value) {
+      if (value!=null) {
+        goto("/checkSession", arguments: {
+          "astrologer": astrologer,
+          "free": free && astrologer.free == 1,
+          "controller": talkController,
+          "category": "CALL",
+          "call_type": value=="Voice Call" ? "IVR" : "VIDEO",
+        });
+      }
+    });
+  }
 }

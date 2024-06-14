@@ -8,7 +8,7 @@ part of 'LanguageModel.dart';
 
 _$LanguageModelImpl _$$LanguageModelImplFromJson(Map<String, dynamic> json) =>
     _$LanguageModelImpl(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       lang: json['lang'] as String,
     );
 

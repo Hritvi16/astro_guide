@@ -516,12 +516,14 @@ class MyProfile extends StatelessWidget {
             child: TextFormField(
               onTap: () {
                 BottomPicker.date(
-                  title:  "Set your Date of Birth",
-                  titleStyle: GoogleFonts.manrope(
-                    fontSize: 16.0,
-                    color: MyColors.colorButton,
-                    letterSpacing: 0,
-                    fontWeight: FontWeight.w600,
+                  pickerTitle:  Text(
+                    "Set your Date of Birth",
+                    style: GoogleFonts.manrope(
+                      fontSize: 16.0,
+                      color: MyColors.colorButton,
+                      letterSpacing: 0,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                   backgroundColor: MyColors.cardColor(),
                   closeIconColor: MyColors.iconColor(),

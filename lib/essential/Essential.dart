@@ -5,6 +5,7 @@ import 'package:astro_guide/colors/MyColors.dart';
 import 'package:astro_guide/constants/CommonConstants.dart';
 import 'package:astro_guide/constants/TimezoneConstants.dart';
 import 'package:astro_guide/dialogs/InfoDialog.dart';
+import 'package:astro_guide/dialogs/TitleInfoDialog.dart';
 import 'package:astro_guide/models/session/SessionHistoryModel.dart';
 import 'package:astro_guide/providers/TokenProvider.dart';
 import 'package:astro_guide/repositories/TokenRepository.dart';
@@ -12,7 +13,6 @@ import 'package:astro_guide/services/networking/ApiConstants.dart';
 import 'package:astro_guide/services/networking/ApiService.dart';
 import 'package:astro_guide/views/loadingScreen/LoadingScreen.dart';
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
@@ -49,13 +49,24 @@ class Essential {
         ));
   }
 
-  static void showInfoDialog(String text, {String? btn}) {
-    Get.dialog(
+  static Future<dynamic> showInfoDialog(String text, {String? btn}) async {
+    return await Get.dialog(
       InfoDialog(
         text: text,
         btn: btn??"OK",
       ),
       barrierDismissible: false,
+    );
+  }
+
+  static Future<dynamic> showTitleInfoDialog(String title, String text, btn) async {
+    return await Get.dialog(
+      TitleInfoDialog(
+        title: title,
+        text: text,
+        btn: btn
+      ),
+      // barrierDismissible: false,
     );
   }
 
@@ -130,7 +141,7 @@ class Essential {
 
   static openwhatsapp(String mobile) async{
     var whatsapp ="+91$mobile";
-    var whatsappURl_android = "whatsapp://send?phone="+whatsapp+"&text=hello";
+    var whatsappURl_android = "whatsapp://send?phone=$whatsapp&text=hello";
     var whatappURL_ios ="https://wa.me/$whatsapp?text=${Uri.parse("hello")}";
     if(Platform.isIOS){
       // for iOS phone only
@@ -299,16 +310,18 @@ class Essential {
 
 
   static String getChatDuration(int? seconds, String started_at, String ended_at) {
-    if(ended_at.isNotEmpty) {
       if (seconds == null) {
-        tz.TZDateTime start = getGMTDate(started_at);
-        tz.TZDateTime end = getGMTDate(ended_at);
+        if(ended_at.isNotEmpty) {
+          tz.TZDateTime start = getGMTDate(started_at);
+          tz.TZDateTime end = getGMTDate(ended_at);
 
-        Duration dur = end.difference(start);
-        seconds = dur.inSeconds;
+          Duration dur = end.difference(start);
+          seconds = dur.inSeconds;
+        }
+        else {
+          return "Duration not available";
+        }
       }
-
-
       int hours = seconds ~/ 3600;
       int minutes = (seconds % 3600) ~/ 60;
       int remainingSeconds = seconds % 60;
@@ -328,9 +341,41 @@ class Essential {
             ? " "
             : ""}$remainingSeconds Second${remainingSeconds > 1 ? "s" : ""}";
       }
-      return duration;
+      return duration.isEmpty ? "-" : duration;
+  }
+
+  static String getRemainingDuration(int seconds) {
+
+      int hours = seconds ~/ 3600;
+      int minutes = (seconds % 3600) ~/ 60;
+      int remainingSeconds = seconds % 60;
+
+      String duration = "";
+      if (hours > 0) {
+        duration += "${hours>=10 ? hours : "0$hours"}:";
+      }
+      duration += "${minutes>=10 ? minutes : "0$minutes"}:";
+      duration += "${remainingSeconds>=10 ? remainingSeconds : "0$remainingSeconds"}";
+
+      return duration.isEmpty ? "-" : duration;
+  }
+
+  static int getSessionSeconds(double wallet, int rate) {
+    int max = 0;
+    int minutes = (wallet/rate).floor();
+    if(minutes>0) {
+      max = minutes * 60;
     }
-    return "Duration not available";
+    double rem = wallet%rate;
+
+    if(rem!=0) {
+      double perSecRate = (rate/60).toPrecision(2);
+      if(rem>=perSecRate) {
+        int secs = (rem/perSecRate).floor();
+        max+=secs;
+      }
+    }
+    return max;
   }
 
   static void back() {

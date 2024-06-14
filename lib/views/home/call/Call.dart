@@ -36,6 +36,8 @@ class Call extends StatelessWidget {
     final theme = Theme.of(context);
     final statusBarHeight = MediaQuery.of(context).padding.top;
     callController.storeCalling(callController);
+    print(callController.type);
+    print(callController.action);
     return PopScope(
       onPopInvoked: (value) {
         if(value==true) {
@@ -46,8 +48,8 @@ class Call extends StatelessWidget {
         builder: (controller) {
           return WillPopScope(
             onWillPop: callController.onWillPopScope,
-            child: callController.load ? callController.type!="ACTIVE" && callController.type!="COMPLETED" ?
-            WaitingToJoin(callController.astrologer.name, callController.astrologer.profile, callController.cancelMeeting, callController.type, callController.action, callController.accept,  callController.reject, callController.back)
+            child: callController.load ? (callController.type!="ACTIVE" || (callController.type=="ACTIVE" && callController.sessionHistory.call_type!="VIDEO")) && callController.type!="COMPLETED" ?
+            WaitingToJoin(callController.type=="ACTIVE" ? callController.max-callController.seconds : (callController.sessionHistory.call_type=="IVR" ? 120 : 60) + (callController.action=="REQUESTING" ? 5 : 0) - callController.ring, callController.astrologer.name, callController.astrologer.profile, callController.cancelMeeting, callController.type, callController.action, callController.accept,  callController.reject, callController.back)
             : Scaffold(
               body: callController.type=="COMPLETED" ? getCompletedDesign(context) : getActiveDesign(context),
               bottomNavigationBar: callController.type=="COMPLETED" ? getBottom(context) : null,
@@ -219,12 +221,49 @@ class Call extends StatelessWidget {
   }
 
   Widget getBottom(BuildContext context) {
+    print("hello bottom");
+    print(callController.sessionHistory.token_type);
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
+        if(callController.sessionHistory.token_type!=null)
+          getTokenSection(context),
         getReviewSection(context),
         getEndedBottom(context),
       ],
+    );
+  }
+
+  getTokenSection(BuildContext context) {
+    return Container(
+        width: MySize.size100(context),
+        margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+        decoration: BoxDecoration(
+          color: MyColors.colorLightPrimary,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Image.asset(
+              "assets/token/${callController.sessionHistory.token_type?.toLowerCase()}.png",
+              width: 30,
+            ),
+            SizedBox(width: 10,),
+            Flexible(
+              child: Text(
+                "You have given a token of appreciation to astrologer as a form of "
+                    "${callController.sessionHistory.token_type?.toLowerCase()} which costed you ${CommonConstants.rupee}${callController.sessionHistory.token_amount}.",
+                style: GoogleFonts.manrope(
+                    fontSize: 14,
+                    color: MyColors.black,
+                    fontWeight: FontWeight.w600
+                ),
+              ),
+            )
+          ],
+        )
     );
   }
 

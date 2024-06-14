@@ -37,8 +37,6 @@ class RatingController extends GetxController {
   }
 
   bool validate() {
-    print(sessionHistory.rating??0);
-    print((sessionHistory.rating??0)>0);
     return (sessionHistory.rating??0)>0;
   }
 

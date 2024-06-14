@@ -37,6 +37,7 @@ mixin _$AstrologerModel {
   int? get f_chat => throw _privateConstructorUsedError;
   int? get offer => throw _privateConstructorUsedError;
   int? get free => throw _privateConstructorUsedError;
+  int? get active => throw _privateConstructorUsedError;
   int? get online => throw _privateConstructorUsedError;
   int? get conline => throw _privateConstructorUsedError;
   double? get rating => throw _privateConstructorUsedError;
@@ -51,6 +52,9 @@ mixin _$AstrologerModel {
   double? get total_call_rating => throw _privateConstructorUsedError;
   String? get types => throw _privateConstructorUsedError;
   String? get languages => throw _privateConstructorUsedError;
+  int? get certified => throw _privateConstructorUsedError;
+  int? get ivr => throw _privateConstructorUsedError;
+  int? get video => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -82,6 +86,7 @@ abstract class $AstrologerModelCopyWith<$Res> {
       int? f_chat,
       int? offer,
       int? free,
+      int? active,
       int? online,
       int? conline,
       double? rating,
@@ -95,7 +100,10 @@ abstract class $AstrologerModelCopyWith<$Res> {
       double? total_chat_rating,
       double? total_call_rating,
       String? types,
-      String? languages});
+      String? languages,
+      int? certified,
+      int? ivr,
+      int? video});
 }
 
 /// @nodoc
@@ -128,6 +136,7 @@ class _$AstrologerModelCopyWithImpl<$Res, $Val extends AstrologerModel>
     Object? f_chat = freezed,
     Object? offer = freezed,
     Object? free = freezed,
+    Object? active = freezed,
     Object? online = freezed,
     Object? conline = freezed,
     Object? rating = freezed,
@@ -142,6 +151,9 @@ class _$AstrologerModelCopyWithImpl<$Res, $Val extends AstrologerModel>
     Object? total_call_rating = freezed,
     Object? types = freezed,
     Object? languages = freezed,
+    Object? certified = freezed,
+    Object? ivr = freezed,
+    Object? video = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -212,6 +224,10 @@ class _$AstrologerModelCopyWithImpl<$Res, $Val extends AstrologerModel>
           ? _value.free
           : free // ignore: cast_nullable_to_non_nullable
               as int?,
+      active: freezed == active
+          ? _value.active
+          : active // ignore: cast_nullable_to_non_nullable
+              as int?,
       online: freezed == online
           ? _value.online
           : online // ignore: cast_nullable_to_non_nullable
@@ -268,6 +284,18 @@ class _$AstrologerModelCopyWithImpl<$Res, $Val extends AstrologerModel>
           ? _value.languages
           : languages // ignore: cast_nullable_to_non_nullable
               as String?,
+      certified: freezed == certified
+          ? _value.certified
+          : certified // ignore: cast_nullable_to_non_nullable
+              as int?,
+      ivr: freezed == ivr
+          ? _value.ivr
+          : ivr // ignore: cast_nullable_to_non_nullable
+              as int?,
+      video: freezed == video
+          ? _value.video
+          : video // ignore: cast_nullable_to_non_nullable
+              as int?,
     ) as $Val);
   }
 }
@@ -298,6 +326,7 @@ abstract class _$$AstrologerModelImplCopyWith<$Res>
       int? f_chat,
       int? offer,
       int? free,
+      int? active,
       int? online,
       int? conline,
       double? rating,
@@ -311,7 +340,10 @@ abstract class _$$AstrologerModelImplCopyWith<$Res>
       double? total_chat_rating,
       double? total_call_rating,
       String? types,
-      String? languages});
+      String? languages,
+      int? certified,
+      int? ivr,
+      int? video});
 }
 
 /// @nodoc
@@ -342,6 +374,7 @@ class __$$AstrologerModelImplCopyWithImpl<$Res>
     Object? f_chat = freezed,
     Object? offer = freezed,
     Object? free = freezed,
+    Object? active = freezed,
     Object? online = freezed,
     Object? conline = freezed,
     Object? rating = freezed,
@@ -356,6 +389,9 @@ class __$$AstrologerModelImplCopyWithImpl<$Res>
     Object? total_call_rating = freezed,
     Object? types = freezed,
     Object? languages = freezed,
+    Object? certified = freezed,
+    Object? ivr = freezed,
+    Object? video = freezed,
   }) {
     return _then(_$AstrologerModelImpl(
       id: null == id
@@ -426,6 +462,10 @@ class __$$AstrologerModelImplCopyWithImpl<$Res>
           ? _value.free
           : free // ignore: cast_nullable_to_non_nullable
               as int?,
+      active: freezed == active
+          ? _value.active
+          : active // ignore: cast_nullable_to_non_nullable
+              as int?,
       online: freezed == online
           ? _value.online
           : online // ignore: cast_nullable_to_non_nullable
@@ -482,6 +522,18 @@ class __$$AstrologerModelImplCopyWithImpl<$Res>
           ? _value.languages
           : languages // ignore: cast_nullable_to_non_nullable
               as String?,
+      certified: freezed == certified
+          ? _value.certified
+          : certified // ignore: cast_nullable_to_non_nullable
+              as int?,
+      ivr: freezed == ivr
+          ? _value.ivr
+          : ivr // ignore: cast_nullable_to_non_nullable
+              as int?,
+      video: freezed == video
+          ? _value.video
+          : video // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -507,6 +559,7 @@ class _$AstrologerModelImpl implements _AstrologerModel {
       this.f_chat,
       this.offer,
       this.free,
+      this.active,
       this.online,
       this.conline,
       this.rating,
@@ -520,7 +573,10 @@ class _$AstrologerModelImpl implements _AstrologerModel {
       this.total_chat_rating,
       this.total_call_rating,
       this.types,
-      this.languages});
+      this.languages,
+      this.certified,
+      this.ivr,
+      this.video});
 
   factory _$AstrologerModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$AstrologerModelImplFromJson(json);
@@ -560,6 +616,8 @@ class _$AstrologerModelImpl implements _AstrologerModel {
   @override
   final int? free;
   @override
+  final int? active;
+  @override
   final int? online;
   @override
   final int? conline;
@@ -587,10 +645,16 @@ class _$AstrologerModelImpl implements _AstrologerModel {
   final String? types;
   @override
   final String? languages;
+  @override
+  final int? certified;
+  @override
+  final int? ivr;
+  @override
+  final int? video;
 
   @override
   String toString() {
-    return 'AstrologerModel(id: $id, name: $name, mobile: $mobile, email: $email, experience: $experience, profile: $profile, about: $about, fav: $fav, follow: $follow, followers: $followers, favourite: $favourite, p_call: $p_call, p_chat: $p_chat, f_call: $f_call, f_chat: $f_chat, offer: $offer, free: $free, online: $online, conline: $conline, rating: $rating, total_rating: $total_rating, reviews: $reviews, country: $country, state: $state, city: $city, total_chat_sec: $total_chat_sec, total_call_sec: $total_call_sec, total_chat_rating: $total_chat_rating, total_call_rating: $total_call_rating, types: $types, languages: $languages)';
+    return 'AstrologerModel(id: $id, name: $name, mobile: $mobile, email: $email, experience: $experience, profile: $profile, about: $about, fav: $fav, follow: $follow, followers: $followers, favourite: $favourite, p_call: $p_call, p_chat: $p_chat, f_call: $f_call, f_chat: $f_chat, offer: $offer, free: $free, active: $active, online: $online, conline: $conline, rating: $rating, total_rating: $total_rating, reviews: $reviews, country: $country, state: $state, city: $city, total_chat_sec: $total_chat_sec, total_call_sec: $total_call_sec, total_chat_rating: $total_chat_rating, total_call_rating: $total_call_rating, types: $types, languages: $languages, certified: $certified, ivr: $ivr, video: $video)';
   }
 
   @override
@@ -618,6 +682,7 @@ class _$AstrologerModelImpl implements _AstrologerModel {
             (identical(other.f_chat, f_chat) || other.f_chat == f_chat) &&
             (identical(other.offer, offer) || other.offer == offer) &&
             (identical(other.free, free) || other.free == free) &&
+            (identical(other.active, active) || other.active == active) &&
             (identical(other.online, online) || other.online == online) &&
             (identical(other.conline, conline) || other.conline == conline) &&
             (identical(other.rating, rating) || other.rating == rating) &&
@@ -637,7 +702,11 @@ class _$AstrologerModelImpl implements _AstrologerModel {
                 other.total_call_rating == total_call_rating) &&
             (identical(other.types, types) || other.types == types) &&
             (identical(other.languages, languages) ||
-                other.languages == languages));
+                other.languages == languages) &&
+            (identical(other.certified, certified) ||
+                other.certified == certified) &&
+            (identical(other.ivr, ivr) || other.ivr == ivr) &&
+            (identical(other.video, video) || other.video == video));
   }
 
   @JsonKey(ignore: true)
@@ -661,6 +730,7 @@ class _$AstrologerModelImpl implements _AstrologerModel {
         f_chat,
         offer,
         free,
+        active,
         online,
         conline,
         rating,
@@ -674,7 +744,10 @@ class _$AstrologerModelImpl implements _AstrologerModel {
         total_chat_rating,
         total_call_rating,
         types,
-        languages
+        languages,
+        certified,
+        ivr,
+        video
       ]);
 
   @JsonKey(ignore: true)
@@ -711,6 +784,7 @@ abstract class _AstrologerModel implements AstrologerModel {
       final int? f_chat,
       final int? offer,
       final int? free,
+      final int? active,
       final int? online,
       final int? conline,
       final double? rating,
@@ -724,7 +798,10 @@ abstract class _AstrologerModel implements AstrologerModel {
       final double? total_chat_rating,
       final double? total_call_rating,
       final String? types,
-      final String? languages}) = _$AstrologerModelImpl;
+      final String? languages,
+      final int? certified,
+      final int? ivr,
+      final int? video}) = _$AstrologerModelImpl;
 
   factory _AstrologerModel.fromJson(Map<String, dynamic> json) =
       _$AstrologerModelImpl.fromJson;
@@ -764,6 +841,8 @@ abstract class _AstrologerModel implements AstrologerModel {
   @override
   int? get free;
   @override
+  int? get active;
+  @override
   int? get online;
   @override
   int? get conline;
@@ -791,6 +870,12 @@ abstract class _AstrologerModel implements AstrologerModel {
   String? get types;
   @override
   String? get languages;
+  @override
+  int? get certified;
+  @override
+  int? get ivr;
+  @override
+  int? get video;
   @override
   @JsonKey(ignore: true)
   _$$AstrologerModelImplCopyWith<_$AstrologerModelImpl> get copyWith =>

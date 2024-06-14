@@ -44,6 +44,7 @@ class CommonConstants {
   static List<String> session_status = ['ALL', 'WAITLISTED', 'COMPLETED', 'ACTIVE', 'REQUESTED', 'RECONNECT','MISSED', 'REJECTED', 'CANCELLED'];
 
   static List<String> horoscope_day = ['Yesterday', 'Today', 'Tomorrow'];
+  static List<String> horoscope_time = ['Previous', 'Current', 'Next'];
   static List<String> zodiac_signs = ['Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo', 'Libra', 'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces'];
   static List<String> kundli = ['Basic', 'Charts', 'KP', 'Dasha'];
   static List<String> dasha = ['Vimshottari', 'Yogini'];

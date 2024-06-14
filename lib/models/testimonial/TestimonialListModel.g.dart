@@ -10,7 +10,7 @@ _$TestimonialListModelImpl _$$TestimonialListModelImplFromJson(
         Map<String, dynamic> json) =>
     _$TestimonialListModelImpl(
       status: json['status'] as String,
-      code: json['code'] as int,
+      code: (json['code'] as num).toInt(),
       message: json['message'] as String,
       data: (json['data'] as List<dynamic>?)
           ?.map((e) => TestimonialModel.fromJson(e as Map<String, dynamic>))

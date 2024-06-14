@@ -22,7 +22,7 @@ HoroscopeModel _$HoroscopeModelFromJson(Map<String, dynamic> json) {
 mixin _$HoroscopeModel {
   String get sign => throw _privateConstructorUsedError;
   PredictionModel get prediction => throw _privateConstructorUsedError;
-  SpecialModel get special => throw _privateConstructorUsedError;
+  SpecialModel? get special => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -36,10 +36,10 @@ abstract class $HoroscopeModelCopyWith<$Res> {
           HoroscopeModel value, $Res Function(HoroscopeModel) then) =
       _$HoroscopeModelCopyWithImpl<$Res, HoroscopeModel>;
   @useResult
-  $Res call({String sign, PredictionModel prediction, SpecialModel special});
+  $Res call({String sign, PredictionModel prediction, SpecialModel? special});
 
   $PredictionModelCopyWith<$Res> get prediction;
-  $SpecialModelCopyWith<$Res> get special;
+  $SpecialModelCopyWith<$Res>? get special;
 }
 
 /// @nodoc
@@ -57,7 +57,7 @@ class _$HoroscopeModelCopyWithImpl<$Res, $Val extends HoroscopeModel>
   $Res call({
     Object? sign = null,
     Object? prediction = null,
-    Object? special = null,
+    Object? special = freezed,
   }) {
     return _then(_value.copyWith(
       sign: null == sign
@@ -68,10 +68,10 @@ class _$HoroscopeModelCopyWithImpl<$Res, $Val extends HoroscopeModel>
           ? _value.prediction
           : prediction // ignore: cast_nullable_to_non_nullable
               as PredictionModel,
-      special: null == special
+      special: freezed == special
           ? _value.special
           : special // ignore: cast_nullable_to_non_nullable
-              as SpecialModel,
+              as SpecialModel?,
     ) as $Val);
   }
 
@@ -85,8 +85,12 @@ class _$HoroscopeModelCopyWithImpl<$Res, $Val extends HoroscopeModel>
 
   @override
   @pragma('vm:prefer-inline')
-  $SpecialModelCopyWith<$Res> get special {
-    return $SpecialModelCopyWith<$Res>(_value.special, (value) {
+  $SpecialModelCopyWith<$Res>? get special {
+    if (_value.special == null) {
+      return null;
+    }
+
+    return $SpecialModelCopyWith<$Res>(_value.special!, (value) {
       return _then(_value.copyWith(special: value) as $Val);
     });
   }
@@ -100,12 +104,12 @@ abstract class _$$HoroscopeModelImplCopyWith<$Res>
       __$$HoroscopeModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String sign, PredictionModel prediction, SpecialModel special});
+  $Res call({String sign, PredictionModel prediction, SpecialModel? special});
 
   @override
   $PredictionModelCopyWith<$Res> get prediction;
   @override
-  $SpecialModelCopyWith<$Res> get special;
+  $SpecialModelCopyWith<$Res>? get special;
 }
 
 /// @nodoc
@@ -121,7 +125,7 @@ class __$$HoroscopeModelImplCopyWithImpl<$Res>
   $Res call({
     Object? sign = null,
     Object? prediction = null,
-    Object? special = null,
+    Object? special = freezed,
   }) {
     return _then(_$HoroscopeModelImpl(
       sign: null == sign
@@ -132,10 +136,10 @@ class __$$HoroscopeModelImplCopyWithImpl<$Res>
           ? _value.prediction
           : prediction // ignore: cast_nullable_to_non_nullable
               as PredictionModel,
-      special: null == special
+      special: freezed == special
           ? _value.special
           : special // ignore: cast_nullable_to_non_nullable
-              as SpecialModel,
+              as SpecialModel?,
     ));
   }
 }
@@ -144,7 +148,7 @@ class __$$HoroscopeModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$HoroscopeModelImpl implements _HoroscopeModel {
   _$HoroscopeModelImpl(
-      {required this.sign, required this.prediction, required this.special});
+      {required this.sign, required this.prediction, this.special});
 
   factory _$HoroscopeModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$HoroscopeModelImplFromJson(json);
@@ -154,7 +158,7 @@ class _$HoroscopeModelImpl implements _HoroscopeModel {
   @override
   final PredictionModel prediction;
   @override
-  final SpecialModel special;
+  final SpecialModel? special;
 
   @override
   String toString() {
@@ -195,7 +199,7 @@ abstract class _HoroscopeModel implements HoroscopeModel {
   factory _HoroscopeModel(
       {required final String sign,
       required final PredictionModel prediction,
-      required final SpecialModel special}) = _$HoroscopeModelImpl;
+      final SpecialModel? special}) = _$HoroscopeModelImpl;
 
   factory _HoroscopeModel.fromJson(Map<String, dynamic> json) =
       _$HoroscopeModelImpl.fromJson;
@@ -205,7 +209,7 @@ abstract class _HoroscopeModel implements HoroscopeModel {
   @override
   PredictionModel get prediction;
   @override
-  SpecialModel get special;
+  SpecialModel? get special;
   @override
   @JsonKey(ignore: true)
   _$$HoroscopeModelImplCopyWith<_$HoroscopeModelImpl> get copyWith =>

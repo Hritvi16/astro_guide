@@ -9,7 +9,7 @@ part of 'CityListModel.dart';
 _$CityListModelImpl _$$CityListModelImplFromJson(Map<String, dynamic> json) =>
     _$CityListModelImpl(
       status: json['status'] as String,
-      code: json['code'] as int,
+      code: (json['code'] as num).toInt(),
       message: json['message'] as String,
       data: (json['data'] as List<dynamic>?)
           ?.map((e) => CityModel.fromJson(e as Map<String, dynamic>))

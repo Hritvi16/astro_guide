@@ -18,7 +18,7 @@ import 'package:astro_guide/size/MySize.dart';
 class RatingDialog extends StatelessWidget {
 
   RatingDialog({Key? key, required SessionHistoryModel sessionHistory, required AstrologerModel astrologer}) {
-    ratingController.sessionHistory = sessionHistory;
+    ratingController.sessionHistory = sessionHistory.copyWith(rating: sessionHistory.rating??5);
     ratingController.astrologer = astrologer;
     ratingController.review = TextEditingController(text: sessionHistory.review??"");
   }
@@ -219,7 +219,7 @@ class RatingDialog extends StatelessWidget {
 
   Widget ratingBar() {
     return RatingBar.builder(
-      initialRating: ratingController.sessionHistory.rating??0,
+      initialRating: (ratingController.sessionHistory.rating??0)==0 ? 5 : ratingController.sessionHistory.rating??5,
       direction: Axis.horizontal,
       allowHalfRating: true,
       unratedColor: MyColors.colorUnrated,

@@ -8,7 +8,7 @@ part of 'BannerModel.dart';
 
 _$BannerModelImpl _$$BannerModelImplFromJson(Map<String, dynamic> json) =>
     _$BannerModelImpl(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       image: json['image'] as String,
       start_date: json['start_date'] as String,
       end_date: json['end_date'] as String,

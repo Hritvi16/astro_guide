@@ -160,7 +160,7 @@ class Setting extends StatelessWidget {
                   SizedBox(
                     height: 16,
                   ),
-                  settingsTab('Notification'.tr, "assets/common/notification.png", '', MyColors.colorButton, theme, onTab: () => Get.toNamed("/aboutUs", )),
+                  settingsTab('Notification'.tr, "assets/common/notification.png", '', MyColors.colorButton, theme, onTab: () => Get.toNamed("/notifications", )),
                   SizedBox(
                     height: 16,
                   ),
@@ -356,11 +356,11 @@ class Setting extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Select a Theme", style: theme.textTheme.subtitle1,),
+              Text("Select a Theme", style: theme.textTheme.titleMedium,),
               const SizedBox(height: 32),
               ListTile(
                 leading: const Icon(Icons.brightness_5, color: Colors.blue,),
-                title: Text("Light", style: theme.textTheme.bodyText1),
+                title: Text("Light", style: theme.textTheme.bodyLarge),
                 onTap: () {
                   settingController.themesController.setTheme('light');
                   Get.back();
@@ -370,7 +370,7 @@ class Setting extends StatelessWidget {
               const SizedBox(height: 16),
               ListTile(
                 leading: const Icon(Icons.brightness_2, color: Colors.orange,),
-                title: Text("Dark", style: theme.textTheme.bodyText1),
+                title: Text("Dark", style: theme.textTheme.bodyLarge),
                 onTap: () {
                   settingController.themesController.setTheme('dark');
                   Get.back();
@@ -380,7 +380,7 @@ class Setting extends StatelessWidget {
               const SizedBox(height: 16),
               ListTile(
                 leading: const Icon(Icons.brightness_6, color: Colors.blueGrey,),
-                title: Text("System", style: theme.textTheme.bodyText1),
+                title: Text("System", style: theme.textTheme.bodyLarge),
                 onTap: () {
                   settingController.themesController.setTheme('system');
                   Get.back();

@@ -25,6 +25,7 @@ class AstrologerModel with _$AstrologerModel {
     int? f_chat,
     int? offer,
     int? free,
+    int? active,
     int? online,
     int? conline,
     double? rating,
@@ -39,6 +40,9 @@ class AstrologerModel with _$AstrologerModel {
     double? total_call_rating,
     String? types,
     String? languages,
+    int? certified,
+    int? ivr,
+    int? video
   }) = _AstrologerModel;
 
   factory AstrologerModel.fromJson(JSON json) => _$AstrologerModelFromJson(json);

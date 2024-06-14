@@ -19,6 +19,7 @@ class SplashController extends GetxController {
 
   @override
   void onInit() {
+    storage.write("popup", false);
     initDynamicLinks();
     taketo();
     super.onInit();

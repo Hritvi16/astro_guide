@@ -10,12 +10,12 @@ _$SupportChatResponseModelImpl _$$SupportChatResponseModelImplFromJson(
         Map<String, dynamic> json) =>
     _$SupportChatResponseModelImpl(
       status: json['status'] as String,
-      code: json['code'] as int,
+      code: (json['code'] as num).toInt(),
       message: json['message'] as String,
       data: json['data'] == null
           ? null
           : SupportChatModel.fromJson(json['data'] as Map<String, dynamic>),
-      m_id: json['m_id'] as int?,
+      m_id: (json['m_id'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$$SupportChatResponseModelImplToJson(

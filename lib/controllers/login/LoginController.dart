@@ -106,6 +106,7 @@ class LoginController extends GetxController {
   }
   // keytool -keystore /Users/hritvigajiwala/AstroGuideDocs/Customer/android/astroguide.jks -list -v
   Future<void> loginWithGoogle() async {
+    Essential.showLoadingDialog();
     try {
       print("googleUser11");
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
@@ -124,6 +125,7 @@ class LoginController extends GetxController {
         // Use the `credential` to authenticate with Firebase or your backend server
       }
     } on PlatformException catch (error) {
+      Get.back();
       print("PlatformException error");
       print(error);
       print(error.code);
@@ -194,6 +196,7 @@ class LoginController extends GetxController {
 
 
   Future<void> register(String name, String email, String jv, File? image) async {
+    Essential.showLoadingDialog();
     final FormData data = FormData({
       if(image!=null)
         ApiConstants.file : MultipartFile(File(image!.path), filename: image!.path),
@@ -212,6 +215,7 @@ class LoginController extends GetxController {
 
     userProvider.add(data, ApiConstants.add, storage.read("access")??CommonConstants.essential).then((response) {
 
+      Get.back();
       if(response.code==1) {
         goToHome(response);
       }
@@ -234,6 +238,7 @@ class LoginController extends GetxController {
 
     userProvider.login(data, storage.read("access"), ApiConstants.socialLogin).then((response) async {
       print(response.toJson());
+      Get.back();
       if(response.code==-3) {
         Essential.showSnackBar(response.message, code: response.code, time: 3);
       }

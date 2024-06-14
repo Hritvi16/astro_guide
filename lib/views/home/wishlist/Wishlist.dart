@@ -361,14 +361,19 @@ class Wishlist extends StatelessWidget {
                 print(wishlistController.wallet);
                 double min = Essential.getCalculatedAmount(
                     astrologer.p_call ?? 0, minutes: 5);
-                if ((wishlistController.free && astrologer.free == 1) ||
-                    (wishlistController.wallet >= min)) {
-                  wishlistController.goto("/checkSession", arguments: {
-                    "astrologer": astrologer,
-                    "free": wishlistController.free && astrologer.free == 1,
-                    "controller": wishlistController,
-                    "category": "CALL"
-                  });
+                if ((wishlistController.free && astrologer.free == 1) || (wishlistController.wallet >= min)) {
+                  if(wishlistController.ivr==1 && astrologer.ivr==1 && wishlistController.video==1 && astrologer.video==1) {
+                    wishlistController.selectCallType(wishlistController, astrologer);
+                  }
+                  else {
+                    wishlistController.goto("/checkSession", arguments: {
+                      "astrologer": astrologer,
+                      "free": wishlistController.free && astrologer.free == 1,
+                      "controller": wishlistController,
+                      "category": "CALL",
+                      "call_type": (wishlistController.ivr==1 && astrologer.ivr==1) ? "IVR" : "VIDEO",
+                    });
+                  }
                 }
                 else {
                   Essential.showBasicDialog(

@@ -22,7 +22,9 @@ class UserModel with _$UserModel {
     int? co_id,
     String? postal_code,
     required String joined_via,
-    double? amount
+    double? amount,
+    int? ivr,
+    int? video
   }) = _UserModel;
 
   factory UserModel.fromJson(JSON json) => _$UserModelFromJson(json);

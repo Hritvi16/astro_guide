@@ -8,13 +8,13 @@ part of 'LoginModel.dart';
 
 _$LoginModelImpl _$$LoginModelImplFromJson(Map<String, dynamic> json) =>
     _$LoginModelImpl(
-      code: json['code'] as int,
+      code: (json['code'] as num).toInt(),
       status: json['status'] as String,
       message: json['message'] as String,
       whatsapp_url: json['whatsapp_url'] as String?,
       access_token: json['access_token'] as String?,
       refresh_token: json['refresh_token'] as String?,
-      whatsapp: json['whatsapp'] as int?,
+      whatsapp: (json['whatsapp'] as num?)?.toInt(),
       email: json['email'] as String?,
     );
 

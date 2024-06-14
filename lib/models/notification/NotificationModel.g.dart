@@ -9,21 +9,21 @@ part of 'NotificationModel.dart';
 _$NotificationModelImpl _$$NotificationModelImplFromJson(
         Map<String, dynamic> json) =>
     _$NotificationModelImpl(
-      id: json['id'] as String,
+      id: (json['id'] as num).toInt(),
+      type: json['type'] as String,
       title: json['title'] as String,
-      noti: json['noti'] as String,
-      image: json['image'] as String,
-      noti_date: json['noti_date'] as String,
-      created_date: json['created_date'] as String,
+      description: json['description'] as String,
+      image: json['image'] as String?,
+      created_at: json['created_at'] as String,
     );
 
 Map<String, dynamic> _$$NotificationModelImplToJson(
         _$NotificationModelImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
+      'type': instance.type,
       'title': instance.title,
-      'noti': instance.noti,
+      'description': instance.description,
       'image': instance.image,
-      'noti_date': instance.noti_date,
-      'created_date': instance.created_date,
+      'created_at': instance.created_at,
     };

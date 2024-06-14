@@ -10,7 +10,7 @@ _$GalleryListModelImpl _$$GalleryListModelImplFromJson(
         Map<String, dynamic> json) =>
     _$GalleryListModelImpl(
       status: json['status'] as String,
-      code: json['code'] as int,
+      code: (json['code'] as num).toInt(),
       message: json['message'] as String,
       data: (json['data'] as List<dynamic>?)
           ?.map((e) => GalleryModel.fromJson(e as Map<String, dynamic>))

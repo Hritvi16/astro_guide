@@ -381,14 +381,20 @@ class Following extends StatelessWidget {
                 print(followingController.wallet);
                 double min = Essential.getCalculatedAmount(
                     astrologer.p_call ?? 0, minutes: 5);
-                if ((followingController.free && astrologer.free == 1) ||
-                    (followingController.wallet >= min)) {
-                  followingController.goto("/checkSession", arguments: {
-                    "astrologer": astrologer,
-                    "free": followingController.free && astrologer.free == 1,
-                    "controller": followingController,
-                    "category": "CALL"
-                  });
+                if ((followingController.free && astrologer.free == 1) || (followingController.wallet >= min)) {
+                  if(followingController.ivr==1 && astrologer.ivr==1 && followingController.video==1 && astrologer.video==1) {
+                    followingController.selectCallType(followingController, astrologer);
+                  }
+                  else {
+                    followingController.goto("/checkSession", arguments: {
+                      "astrologer": astrologer,
+                      "free": followingController.free && astrologer.free == 1,
+                      "controller": followingController,
+                      "category": "CALL",
+                      "call_type": (followingController.ivr==1 && astrologer.ivr==1) ? "IVR" : "VIDEO",
+
+                    });
+                  }
                 }
                 else {
                   Essential.showBasicDialog(

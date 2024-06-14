@@ -16,7 +16,10 @@ class SessionResponseModel with _$SessionResponseModel {
     required String message,
     AstrologerModel? astrologer,
     SessionHistoryModel? session_history,
-    double? wallet
+    double? wallet,
+    int? gift,
+    int? rose,
+    int? token_status,
   }) = _SessionResponseModel;
 
   factory SessionResponseModel.fromJson(JSON json) => _$SessionResponseModelFromJson(json);

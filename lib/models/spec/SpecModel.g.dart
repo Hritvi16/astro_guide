@@ -8,7 +8,7 @@ part of 'SpecModel.dart';
 
 _$SpecModelImpl _$$SpecModelImplFromJson(Map<String, dynamic> json) =>
     _$SpecModelImpl(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       spec: json['spec'] as String,
       icon: json['icon'] as String,
       imageFullUrl: json['imageFullUrl'] as String,

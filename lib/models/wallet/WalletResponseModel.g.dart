@@ -10,7 +10,7 @@ _$WalletResponseModelImpl _$$WalletResponseModelImplFromJson(
         Map<String, dynamic> json) =>
     _$WalletResponseModelImpl(
       status: json['status'] as String,
-      code: json['code'] as int,
+      code: (json['code'] as num).toInt(),
       message: json['message'] as String,
       amount: (json['amount'] as num?)?.toDouble(),
       data: (json['data'] as List<dynamic>?)

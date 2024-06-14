@@ -11,7 +11,8 @@ class Waiting extends StatelessWidget {
   final String name, image;
   final String type;
   final dynamic cancel, accept, reject, back;
-  const Waiting(this.name, this.image, this.cancel, this.type, this.back,  this.accept,  this.reject, {Key? key}) : super(key: key);
+  final int timeout;
+  const Waiting(this.timeout, this.name, this.image, this.cancel, this.type, this.back,  this.accept,  this.reject,  {Key? key,}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +61,7 @@ class Waiting extends StatelessWidget {
             : type=="REQUESTED" ?
               Column(
                 children: [
-                Text("Connecting...",
+                Text("Connecting you in ${timeout} seconds",
                   style: GoogleFonts.manrope(
                     fontSize: 18.0,
                     color: MyColors.black,

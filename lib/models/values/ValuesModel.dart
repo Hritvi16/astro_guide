@@ -22,7 +22,9 @@ class ValuesModel with _$ValuesModel {
     List<SpecModel>? specifications,
     List<LanguageModel>? languages,
     double? wallet,
-    int? free
+    int? free,
+    int? ivr,
+    int? video,
   }) = _ValuesModel;
 
   factory ValuesModel.fromJson(JSON json) => _$ValuesModelFromJson(json);

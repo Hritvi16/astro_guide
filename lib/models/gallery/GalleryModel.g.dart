@@ -8,8 +8,8 @@ part of 'GalleryModel.dart';
 
 _$GalleryModelImpl _$$GalleryModelImplFromJson(Map<String, dynamic> json) =>
     _$GalleryModelImpl(
-      id: json['id'] as int,
-      astro_id: json['astro_id'] as int,
+      id: (json['id'] as num).toInt(),
+      astro_id: (json['astro_id'] as num).toInt(),
       image: json['image'] as String,
     );
 

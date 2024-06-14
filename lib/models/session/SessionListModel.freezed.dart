@@ -28,6 +28,9 @@ mixin _$SessionListModel {
   SessionHistoryModel? get session_history =>
       throw _privateConstructorUsedError;
   double? get wallet => throw _privateConstructorUsedError;
+  int? get gift => throw _privateConstructorUsedError;
+  int? get rose => throw _privateConstructorUsedError;
+  int? get token_status => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -48,7 +51,10 @@ abstract class $SessionListModelCopyWith<$Res> {
       List<ChatModel>? data,
       AstrologerModel? astrologer,
       SessionHistoryModel? session_history,
-      double? wallet});
+      double? wallet,
+      int? gift,
+      int? rose,
+      int? token_status});
 
   $AstrologerModelCopyWith<$Res>? get astrologer;
   $SessionHistoryModelCopyWith<$Res>? get session_history;
@@ -74,6 +80,9 @@ class _$SessionListModelCopyWithImpl<$Res, $Val extends SessionListModel>
     Object? astrologer = freezed,
     Object? session_history = freezed,
     Object? wallet = freezed,
+    Object? gift = freezed,
+    Object? rose = freezed,
+    Object? token_status = freezed,
   }) {
     return _then(_value.copyWith(
       status: null == status
@@ -104,6 +113,18 @@ class _$SessionListModelCopyWithImpl<$Res, $Val extends SessionListModel>
           ? _value.wallet
           : wallet // ignore: cast_nullable_to_non_nullable
               as double?,
+      gift: freezed == gift
+          ? _value.gift
+          : gift // ignore: cast_nullable_to_non_nullable
+              as int?,
+      rose: freezed == rose
+          ? _value.rose
+          : rose // ignore: cast_nullable_to_non_nullable
+              as int?,
+      token_status: freezed == token_status
+          ? _value.token_status
+          : token_status // ignore: cast_nullable_to_non_nullable
+              as int?,
     ) as $Val);
   }
 
@@ -147,7 +168,10 @@ abstract class _$$SessionListModelImplCopyWith<$Res>
       List<ChatModel>? data,
       AstrologerModel? astrologer,
       SessionHistoryModel? session_history,
-      double? wallet});
+      double? wallet,
+      int? gift,
+      int? rose,
+      int? token_status});
 
   @override
   $AstrologerModelCopyWith<$Res>? get astrologer;
@@ -173,6 +197,9 @@ class __$$SessionListModelImplCopyWithImpl<$Res>
     Object? astrologer = freezed,
     Object? session_history = freezed,
     Object? wallet = freezed,
+    Object? gift = freezed,
+    Object? rose = freezed,
+    Object? token_status = freezed,
   }) {
     return _then(_$SessionListModelImpl(
       status: null == status
@@ -203,6 +230,18 @@ class __$$SessionListModelImplCopyWithImpl<$Res>
           ? _value.wallet
           : wallet // ignore: cast_nullable_to_non_nullable
               as double?,
+      gift: freezed == gift
+          ? _value.gift
+          : gift // ignore: cast_nullable_to_non_nullable
+              as int?,
+      rose: freezed == rose
+          ? _value.rose
+          : rose // ignore: cast_nullable_to_non_nullable
+              as int?,
+      token_status: freezed == token_status
+          ? _value.token_status
+          : token_status // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -217,7 +256,10 @@ class _$SessionListModelImpl implements _SessionListModel {
       final List<ChatModel>? data,
       this.astrologer,
       this.session_history,
-      this.wallet})
+      this.wallet,
+      this.gift,
+      this.rose,
+      this.token_status})
       : _data = data;
 
   factory _$SessionListModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -245,10 +287,16 @@ class _$SessionListModelImpl implements _SessionListModel {
   final SessionHistoryModel? session_history;
   @override
   final double? wallet;
+  @override
+  final int? gift;
+  @override
+  final int? rose;
+  @override
+  final int? token_status;
 
   @override
   String toString() {
-    return 'SessionListModel(status: $status, code: $code, message: $message, data: $data, astrologer: $astrologer, session_history: $session_history, wallet: $wallet)';
+    return 'SessionListModel(status: $status, code: $code, message: $message, data: $data, astrologer: $astrologer, session_history: $session_history, wallet: $wallet, gift: $gift, rose: $rose, token_status: $token_status)';
   }
 
   @override
@@ -264,7 +312,11 @@ class _$SessionListModelImpl implements _SessionListModel {
                 other.astrologer == astrologer) &&
             (identical(other.session_history, session_history) ||
                 other.session_history == session_history) &&
-            (identical(other.wallet, wallet) || other.wallet == wallet));
+            (identical(other.wallet, wallet) || other.wallet == wallet) &&
+            (identical(other.gift, gift) || other.gift == gift) &&
+            (identical(other.rose, rose) || other.rose == rose) &&
+            (identical(other.token_status, token_status) ||
+                other.token_status == token_status));
   }
 
   @JsonKey(ignore: true)
@@ -277,7 +329,10 @@ class _$SessionListModelImpl implements _SessionListModel {
       const DeepCollectionEquality().hash(_data),
       astrologer,
       session_history,
-      wallet);
+      wallet,
+      gift,
+      rose,
+      token_status);
 
   @JsonKey(ignore: true)
   @override
@@ -302,7 +357,10 @@ abstract class _SessionListModel implements SessionListModel {
       final List<ChatModel>? data,
       final AstrologerModel? astrologer,
       final SessionHistoryModel? session_history,
-      final double? wallet}) = _$SessionListModelImpl;
+      final double? wallet,
+      final int? gift,
+      final int? rose,
+      final int? token_status}) = _$SessionListModelImpl;
 
   factory _SessionListModel.fromJson(Map<String, dynamic> json) =
       _$SessionListModelImpl.fromJson;
@@ -321,6 +379,12 @@ abstract class _SessionListModel implements SessionListModel {
   SessionHistoryModel? get session_history;
   @override
   double? get wallet;
+  @override
+  int? get gift;
+  @override
+  int? get rose;
+  @override
+  int? get token_status;
   @override
   @JsonKey(ignore: true)
   _$$SessionListModelImplCopyWith<_$SessionListModelImpl> get copyWith =>

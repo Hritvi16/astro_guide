@@ -8,7 +8,7 @@ part of 'CountryModel.dart';
 
 _$CountryModelImpl _$$CountryModelImplFromJson(Map<String, dynamic> json) =>
     _$CountryModelImpl(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       name: json['name'] as String,
       nationality: json['nationality'] as String,
       icon: json['icon'] as String,

@@ -201,14 +201,16 @@ class Kundli extends StatelessWidget {
                       child: TextFormField(
                         onTap: () {
                           BottomPicker.date(
-                            title:  "Set your Date of Birth",
-                            initialDateTime: kundliController.date,
-                            titleStyle: GoogleFonts.manrope(
-                              fontSize: 16.0,
-                              color: MyColors.colorButton,
-                              letterSpacing: 0,
-                              fontWeight: FontWeight.w600,
+                            pickerTitle:  Text(
+                              "Set your Date of Birth",
+                              style: GoogleFonts.manrope(
+                                fontSize: 16.0,
+                                color: MyColors.colorButton,
+                                letterSpacing: 0,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
+                            initialDateTime: kundliController.date,
                             onSubmit: (value) {
                               kundliController.setDOB(value);
                             },
@@ -282,14 +284,16 @@ class Kundli extends StatelessWidget {
                         onTap: () {
                           print("hhello");
                           BottomPicker.time(
-                            title:  "Set your Time of Birth",
-                            initialTime: Time(hours: kundliController.date.hour, minutes: kundliController.date.minute),
-                            titleStyle: GoogleFonts.manrope(
-                              fontSize: 16.0,
-                              color: MyColors.colorButton,
-                              letterSpacing: 0,
-                              fontWeight: FontWeight.w600,
+                            pickerTitle:  Text(
+                              "Set your Time of Birth",
+                              style: GoogleFonts.manrope(
+                                fontSize: 16.0,
+                                color: MyColors.colorButton,
+                                letterSpacing: 0,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
+                            initialTime: Time(hours: kundliController.date.hour, minutes: kundliController.date.minute),
                             onChange: (value) {
                               print("valueeeee");
                               print(value);

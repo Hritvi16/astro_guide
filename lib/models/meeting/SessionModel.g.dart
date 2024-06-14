@@ -8,7 +8,7 @@ part of 'SessionModel.dart';
 
 _$SessionModelImpl _$$SessionModelImplFromJson(Map<String, dynamic> json) =>
     _$SessionModelImpl(
-      code: json['code'] as int,
+      code: (json['code'] as num).toInt(),
       status: json['status'] as String,
       message: json['message'] as String,
       data: json['data'] as String?,

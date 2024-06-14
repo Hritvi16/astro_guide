@@ -1,6 +1,6 @@
 import 'dart:async';
-import 'package:astro_guide/callview/widgets/common/stats/call_stats_bottom_sheet.dart';
 import 'package:astro_guide/views/home/call/constants/colors.dart';
+import 'package:astro_guide/views/home/call/widgets/stats/call_stats_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:videosdk/videosdk.dart';
 

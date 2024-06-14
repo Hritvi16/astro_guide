@@ -8,11 +8,11 @@ part of 'RatingModel.dart';
 
 _$RatingModelImpl _$$RatingModelImplFromJson(Map<String, dynamic> json) =>
     _$RatingModelImpl(
-      rating1: json['rating1'] as int,
-      rating2: json['rating2'] as int,
-      rating3: json['rating3'] as int,
-      rating4: json['rating4'] as int,
-      rating5: json['rating5'] as int,
+      rating1: (json['rating1'] as num).toInt(),
+      rating2: (json['rating2'] as num).toInt(),
+      rating3: (json['rating3'] as num).toInt(),
+      rating4: (json['rating4'] as num).toInt(),
+      rating5: (json['rating5'] as num).toInt(),
     );
 
 Map<String, dynamic> _$$RatingModelImplToJson(_$RatingModelImpl instance) =>

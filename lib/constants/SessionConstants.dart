@@ -29,4 +29,7 @@ class SessionConstants {
   static String seconds = "seconds";
   static String m_type = "m_type";
   static String ext = "ext";
+  static String token_type = "token_type";
+  static String token_amount = "token_amount";
+  static String call_type = "call_type";
 }

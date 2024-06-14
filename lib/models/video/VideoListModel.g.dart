@@ -9,7 +9,7 @@ part of 'VideoListModel.dart';
 _$VideoListModelImpl _$$VideoListModelImplFromJson(Map<String, dynamic> json) =>
     _$VideoListModelImpl(
       status: json['status'] as String,
-      code: json['code'] as int,
+      code: (json['code'] as num).toInt(),
       message: json['message'] as String,
       data: (json['data'] as List<dynamic>?)
           ?.map((e) => VideoModel.fromJson(e as Map<String, dynamic>))

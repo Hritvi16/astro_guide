@@ -24,7 +24,10 @@ mixin _$HoroscopeResponseModel {
   String get status => throw _privateConstructorUsedError;
   int get code => throw _privateConstructorUsedError;
   String get message => throw _privateConstructorUsedError;
-  HoroscopeModel? get data => throw _privateConstructorUsedError;
+  HoroscopeTimeModel? get daily => throw _privateConstructorUsedError;
+  HoroscopeTimeModel? get weekly => throw _privateConstructorUsedError;
+  HoroscopeTimeModel? get monthly => throw _privateConstructorUsedError;
+  HoroscopeTimeModel? get yearly => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -38,9 +41,19 @@ abstract class $HoroscopeResponseModelCopyWith<$Res> {
           $Res Function(HoroscopeResponseModel) then) =
       _$HoroscopeResponseModelCopyWithImpl<$Res, HoroscopeResponseModel>;
   @useResult
-  $Res call({String status, int code, String message, HoroscopeModel? data});
+  $Res call(
+      {String status,
+      int code,
+      String message,
+      HoroscopeTimeModel? daily,
+      HoroscopeTimeModel? weekly,
+      HoroscopeTimeModel? monthly,
+      HoroscopeTimeModel? yearly});
 
-  $HoroscopeModelCopyWith<$Res>? get data;
+  $HoroscopeTimeModelCopyWith<$Res>? get daily;
+  $HoroscopeTimeModelCopyWith<$Res>? get weekly;
+  $HoroscopeTimeModelCopyWith<$Res>? get monthly;
+  $HoroscopeTimeModelCopyWith<$Res>? get yearly;
 }
 
 /// @nodoc
@@ -60,7 +73,10 @@ class _$HoroscopeResponseModelCopyWithImpl<$Res,
     Object? status = null,
     Object? code = null,
     Object? message = null,
-    Object? data = freezed,
+    Object? daily = freezed,
+    Object? weekly = freezed,
+    Object? monthly = freezed,
+    Object? yearly = freezed,
   }) {
     return _then(_value.copyWith(
       status: null == status
@@ -75,22 +91,70 @@ class _$HoroscopeResponseModelCopyWithImpl<$Res,
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
-      data: freezed == data
-          ? _value.data
-          : data // ignore: cast_nullable_to_non_nullable
-              as HoroscopeModel?,
+      daily: freezed == daily
+          ? _value.daily
+          : daily // ignore: cast_nullable_to_non_nullable
+              as HoroscopeTimeModel?,
+      weekly: freezed == weekly
+          ? _value.weekly
+          : weekly // ignore: cast_nullable_to_non_nullable
+              as HoroscopeTimeModel?,
+      monthly: freezed == monthly
+          ? _value.monthly
+          : monthly // ignore: cast_nullable_to_non_nullable
+              as HoroscopeTimeModel?,
+      yearly: freezed == yearly
+          ? _value.yearly
+          : yearly // ignore: cast_nullable_to_non_nullable
+              as HoroscopeTimeModel?,
     ) as $Val);
   }
 
   @override
   @pragma('vm:prefer-inline')
-  $HoroscopeModelCopyWith<$Res>? get data {
-    if (_value.data == null) {
+  $HoroscopeTimeModelCopyWith<$Res>? get daily {
+    if (_value.daily == null) {
       return null;
     }
 
-    return $HoroscopeModelCopyWith<$Res>(_value.data!, (value) {
-      return _then(_value.copyWith(data: value) as $Val);
+    return $HoroscopeTimeModelCopyWith<$Res>(_value.daily!, (value) {
+      return _then(_value.copyWith(daily: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $HoroscopeTimeModelCopyWith<$Res>? get weekly {
+    if (_value.weekly == null) {
+      return null;
+    }
+
+    return $HoroscopeTimeModelCopyWith<$Res>(_value.weekly!, (value) {
+      return _then(_value.copyWith(weekly: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $HoroscopeTimeModelCopyWith<$Res>? get monthly {
+    if (_value.monthly == null) {
+      return null;
+    }
+
+    return $HoroscopeTimeModelCopyWith<$Res>(_value.monthly!, (value) {
+      return _then(_value.copyWith(monthly: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $HoroscopeTimeModelCopyWith<$Res>? get yearly {
+    if (_value.yearly == null) {
+      return null;
+    }
+
+    return $HoroscopeTimeModelCopyWith<$Res>(_value.yearly!, (value) {
+      return _then(_value.copyWith(yearly: value) as $Val);
     });
   }
 }
@@ -104,10 +168,23 @@ abstract class _$$HoroscopeResponseModelImplCopyWith<$Res>
       __$$HoroscopeResponseModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String status, int code, String message, HoroscopeModel? data});
+  $Res call(
+      {String status,
+      int code,
+      String message,
+      HoroscopeTimeModel? daily,
+      HoroscopeTimeModel? weekly,
+      HoroscopeTimeModel? monthly,
+      HoroscopeTimeModel? yearly});
 
   @override
-  $HoroscopeModelCopyWith<$Res>? get data;
+  $HoroscopeTimeModelCopyWith<$Res>? get daily;
+  @override
+  $HoroscopeTimeModelCopyWith<$Res>? get weekly;
+  @override
+  $HoroscopeTimeModelCopyWith<$Res>? get monthly;
+  @override
+  $HoroscopeTimeModelCopyWith<$Res>? get yearly;
 }
 
 /// @nodoc
@@ -126,7 +203,10 @@ class __$$HoroscopeResponseModelImplCopyWithImpl<$Res>
     Object? status = null,
     Object? code = null,
     Object? message = null,
-    Object? data = freezed,
+    Object? daily = freezed,
+    Object? weekly = freezed,
+    Object? monthly = freezed,
+    Object? yearly = freezed,
   }) {
     return _then(_$HoroscopeResponseModelImpl(
       status: null == status
@@ -141,10 +221,22 @@ class __$$HoroscopeResponseModelImplCopyWithImpl<$Res>
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
-      data: freezed == data
-          ? _value.data
-          : data // ignore: cast_nullable_to_non_nullable
-              as HoroscopeModel?,
+      daily: freezed == daily
+          ? _value.daily
+          : daily // ignore: cast_nullable_to_non_nullable
+              as HoroscopeTimeModel?,
+      weekly: freezed == weekly
+          ? _value.weekly
+          : weekly // ignore: cast_nullable_to_non_nullable
+              as HoroscopeTimeModel?,
+      monthly: freezed == monthly
+          ? _value.monthly
+          : monthly // ignore: cast_nullable_to_non_nullable
+              as HoroscopeTimeModel?,
+      yearly: freezed == yearly
+          ? _value.yearly
+          : yearly // ignore: cast_nullable_to_non_nullable
+              as HoroscopeTimeModel?,
     ));
   }
 }
@@ -156,7 +248,10 @@ class _$HoroscopeResponseModelImpl implements _HoroscopeResponseModel {
       {required this.status,
       required this.code,
       required this.message,
-      this.data});
+      this.daily,
+      this.weekly,
+      this.monthly,
+      this.yearly});
 
   factory _$HoroscopeResponseModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$HoroscopeResponseModelImplFromJson(json);
@@ -168,11 +263,17 @@ class _$HoroscopeResponseModelImpl implements _HoroscopeResponseModel {
   @override
   final String message;
   @override
-  final HoroscopeModel? data;
+  final HoroscopeTimeModel? daily;
+  @override
+  final HoroscopeTimeModel? weekly;
+  @override
+  final HoroscopeTimeModel? monthly;
+  @override
+  final HoroscopeTimeModel? yearly;
 
   @override
   String toString() {
-    return 'HoroscopeResponseModel(status: $status, code: $code, message: $message, data: $data)';
+    return 'HoroscopeResponseModel(status: $status, code: $code, message: $message, daily: $daily, weekly: $weekly, monthly: $monthly, yearly: $yearly)';
   }
 
   @override
@@ -183,12 +284,16 @@ class _$HoroscopeResponseModelImpl implements _HoroscopeResponseModel {
             (identical(other.status, status) || other.status == status) &&
             (identical(other.code, code) || other.code == code) &&
             (identical(other.message, message) || other.message == message) &&
-            (identical(other.data, data) || other.data == data));
+            (identical(other.daily, daily) || other.daily == daily) &&
+            (identical(other.weekly, weekly) || other.weekly == weekly) &&
+            (identical(other.monthly, monthly) || other.monthly == monthly) &&
+            (identical(other.yearly, yearly) || other.yearly == yearly));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, status, code, message, data);
+  int get hashCode => Object.hash(
+      runtimeType, status, code, message, daily, weekly, monthly, yearly);
 
   @JsonKey(ignore: true)
   @override
@@ -210,7 +315,10 @@ abstract class _HoroscopeResponseModel implements HoroscopeResponseModel {
       {required final String status,
       required final int code,
       required final String message,
-      final HoroscopeModel? data}) = _$HoroscopeResponseModelImpl;
+      final HoroscopeTimeModel? daily,
+      final HoroscopeTimeModel? weekly,
+      final HoroscopeTimeModel? monthly,
+      final HoroscopeTimeModel? yearly}) = _$HoroscopeResponseModelImpl;
 
   factory _HoroscopeResponseModel.fromJson(Map<String, dynamic> json) =
       _$HoroscopeResponseModelImpl.fromJson;
@@ -222,7 +330,13 @@ abstract class _HoroscopeResponseModel implements HoroscopeResponseModel {
   @override
   String get message;
   @override
-  HoroscopeModel? get data;
+  HoroscopeTimeModel? get daily;
+  @override
+  HoroscopeTimeModel? get weekly;
+  @override
+  HoroscopeTimeModel? get monthly;
+  @override
+  HoroscopeTimeModel? get yearly;
   @override
   @JsonKey(ignore: true)
   _$$HoroscopeResponseModelImplCopyWith<_$HoroscopeResponseModelImpl>

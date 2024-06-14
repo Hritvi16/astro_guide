@@ -8,13 +8,13 @@ part of 'CreateModel.dart';
 
 _$CreateModelImpl _$$CreateModelImplFromJson(Map<String, dynamic> json) =>
     _$CreateModelImpl(
-      code: json['code'] as int,
+      code: (json['code'] as num).toInt(),
       status: json['status'] as String,
       message: json['message'] as String,
       token: json['token'] as String?,
       meetingID: json['meetingID'] as String?,
       sessionID: json['sessionID'] as String?,
-      meet_id: json['meet_id'] as int?,
+      meet_id: (json['meet_id'] as num?)?.toInt(),
       data: json['data'] == null
           ? null
           : SessionHistoryModel.fromJson(json['data'] as Map<String, dynamic>),

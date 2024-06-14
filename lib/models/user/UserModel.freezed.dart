@@ -35,6 +35,8 @@ mixin _$UserModel {
   String? get postal_code => throw _privateConstructorUsedError;
   String get joined_via => throw _privateConstructorUsedError;
   double? get amount => throw _privateConstructorUsedError;
+  int? get ivr => throw _privateConstructorUsedError;
+  int? get video => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -62,7 +64,9 @@ abstract class $UserModelCopyWith<$Res> {
       int? co_id,
       String? postal_code,
       String joined_via,
-      double? amount});
+      double? amount,
+      int? ivr,
+      int? video});
 }
 
 /// @nodoc
@@ -93,6 +97,8 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
     Object? postal_code = freezed,
     Object? joined_via = null,
     Object? amount = freezed,
+    Object? ivr = freezed,
+    Object? video = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -155,6 +161,14 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
               as double?,
+      ivr: freezed == ivr
+          ? _value.ivr
+          : ivr // ignore: cast_nullable_to_non_nullable
+              as int?,
+      video: freezed == video
+          ? _value.video
+          : video // ignore: cast_nullable_to_non_nullable
+              as int?,
     ) as $Val);
   }
 }
@@ -182,7 +196,9 @@ abstract class _$$UserModelImplCopyWith<$Res>
       int? co_id,
       String? postal_code,
       String joined_via,
-      double? amount});
+      double? amount,
+      int? ivr,
+      int? video});
 }
 
 /// @nodoc
@@ -211,6 +227,8 @@ class __$$UserModelImplCopyWithImpl<$Res>
     Object? postal_code = freezed,
     Object? joined_via = null,
     Object? amount = freezed,
+    Object? ivr = freezed,
+    Object? video = freezed,
   }) {
     return _then(_$UserModelImpl(
       id: null == id
@@ -273,6 +291,14 @@ class __$$UserModelImplCopyWithImpl<$Res>
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
               as double?,
+      ivr: freezed == ivr
+          ? _value.ivr
+          : ivr // ignore: cast_nullable_to_non_nullable
+              as int?,
+      video: freezed == video
+          ? _value.video
+          : video // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -295,7 +321,9 @@ class _$UserModelImpl implements _UserModel {
       this.co_id,
       this.postal_code,
       required this.joined_via,
-      this.amount});
+      this.amount,
+      this.ivr,
+      this.video});
 
   factory _$UserModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserModelImplFromJson(json);
@@ -330,10 +358,14 @@ class _$UserModelImpl implements _UserModel {
   final String joined_via;
   @override
   final double? amount;
+  @override
+  final int? ivr;
+  @override
+  final int? video;
 
   @override
   String toString() {
-    return 'UserModel(id: $id, name: $name, mobile: $mobile, email: $email, gender: $gender, dob: $dob, profile: $profile, free: $free, nationality: $nationality, ci_id: $ci_id, st_id: $st_id, co_id: $co_id, postal_code: $postal_code, joined_via: $joined_via, amount: $amount)';
+    return 'UserModel(id: $id, name: $name, mobile: $mobile, email: $email, gender: $gender, dob: $dob, profile: $profile, free: $free, nationality: $nationality, ci_id: $ci_id, st_id: $st_id, co_id: $co_id, postal_code: $postal_code, joined_via: $joined_via, amount: $amount, ivr: $ivr, video: $video)';
   }
 
   @override
@@ -358,7 +390,9 @@ class _$UserModelImpl implements _UserModel {
                 other.postal_code == postal_code) &&
             (identical(other.joined_via, joined_via) ||
                 other.joined_via == joined_via) &&
-            (identical(other.amount, amount) || other.amount == amount));
+            (identical(other.amount, amount) || other.amount == amount) &&
+            (identical(other.ivr, ivr) || other.ivr == ivr) &&
+            (identical(other.video, video) || other.video == video));
   }
 
   @JsonKey(ignore: true)
@@ -379,7 +413,9 @@ class _$UserModelImpl implements _UserModel {
       co_id,
       postal_code,
       joined_via,
-      amount);
+      amount,
+      ivr,
+      video);
 
   @JsonKey(ignore: true)
   @override
@@ -411,7 +447,9 @@ abstract class _UserModel implements UserModel {
       final int? co_id,
       final String? postal_code,
       required final String joined_via,
-      final double? amount}) = _$UserModelImpl;
+      final double? amount,
+      final int? ivr,
+      final int? video}) = _$UserModelImpl;
 
   factory _UserModel.fromJson(Map<String, dynamic> json) =
       _$UserModelImpl.fromJson;
@@ -446,6 +484,10 @@ abstract class _UserModel implements UserModel {
   String get joined_via;
   @override
   double? get amount;
+  @override
+  int? get ivr;
+  @override
+  int? get video;
   @override
   @JsonKey(ignore: true)
   _$$UserModelImplCopyWith<_$UserModelImpl> get copyWith =>

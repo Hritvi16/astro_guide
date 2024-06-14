@@ -26,6 +26,8 @@ mixin _$AstrologerListModel {
   List<AstrologerModel>? get data => throw _privateConstructorUsedError;
   double? get wallet => throw _privateConstructorUsedError;
   int? get free => throw _privateConstructorUsedError;
+  int? get ivr => throw _privateConstructorUsedError;
+  int? get video => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -45,7 +47,9 @@ abstract class $AstrologerListModelCopyWith<$Res> {
       String message,
       List<AstrologerModel>? data,
       double? wallet,
-      int? free});
+      int? free,
+      int? ivr,
+      int? video});
 }
 
 /// @nodoc
@@ -67,6 +71,8 @@ class _$AstrologerListModelCopyWithImpl<$Res, $Val extends AstrologerListModel>
     Object? data = freezed,
     Object? wallet = freezed,
     Object? free = freezed,
+    Object? ivr = freezed,
+    Object? video = freezed,
   }) {
     return _then(_value.copyWith(
       status: null == status
@@ -93,6 +99,14 @@ class _$AstrologerListModelCopyWithImpl<$Res, $Val extends AstrologerListModel>
           ? _value.free
           : free // ignore: cast_nullable_to_non_nullable
               as int?,
+      ivr: freezed == ivr
+          ? _value.ivr
+          : ivr // ignore: cast_nullable_to_non_nullable
+              as int?,
+      video: freezed == video
+          ? _value.video
+          : video // ignore: cast_nullable_to_non_nullable
+              as int?,
     ) as $Val);
   }
 }
@@ -111,7 +125,9 @@ abstract class _$$AstrologerListModelImplCopyWith<$Res>
       String message,
       List<AstrologerModel>? data,
       double? wallet,
-      int? free});
+      int? free,
+      int? ivr,
+      int? video});
 }
 
 /// @nodoc
@@ -131,6 +147,8 @@ class __$$AstrologerListModelImplCopyWithImpl<$Res>
     Object? data = freezed,
     Object? wallet = freezed,
     Object? free = freezed,
+    Object? ivr = freezed,
+    Object? video = freezed,
   }) {
     return _then(_$AstrologerListModelImpl(
       status: null == status
@@ -157,6 +175,14 @@ class __$$AstrologerListModelImplCopyWithImpl<$Res>
           ? _value.free
           : free // ignore: cast_nullable_to_non_nullable
               as int?,
+      ivr: freezed == ivr
+          ? _value.ivr
+          : ivr // ignore: cast_nullable_to_non_nullable
+              as int?,
+      video: freezed == video
+          ? _value.video
+          : video // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -170,7 +196,9 @@ class _$AstrologerListModelImpl implements _AstrologerListModel {
       required this.message,
       final List<AstrologerModel>? data,
       this.wallet,
-      this.free})
+      this.free,
+      this.ivr,
+      this.video})
       : _data = data;
 
   factory _$AstrologerListModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -196,10 +224,14 @@ class _$AstrologerListModelImpl implements _AstrologerListModel {
   final double? wallet;
   @override
   final int? free;
+  @override
+  final int? ivr;
+  @override
+  final int? video;
 
   @override
   String toString() {
-    return 'AstrologerListModel(status: $status, code: $code, message: $message, data: $data, wallet: $wallet, free: $free)';
+    return 'AstrologerListModel(status: $status, code: $code, message: $message, data: $data, wallet: $wallet, free: $free, ivr: $ivr, video: $video)';
   }
 
   @override
@@ -212,13 +244,15 @@ class _$AstrologerListModelImpl implements _AstrologerListModel {
             (identical(other.message, message) || other.message == message) &&
             const DeepCollectionEquality().equals(other._data, _data) &&
             (identical(other.wallet, wallet) || other.wallet == wallet) &&
-            (identical(other.free, free) || other.free == free));
+            (identical(other.free, free) || other.free == free) &&
+            (identical(other.ivr, ivr) || other.ivr == ivr) &&
+            (identical(other.video, video) || other.video == video));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, status, code, message,
-      const DeepCollectionEquality().hash(_data), wallet, free);
+      const DeepCollectionEquality().hash(_data), wallet, free, ivr, video);
 
   @JsonKey(ignore: true)
   @override
@@ -242,7 +276,9 @@ abstract class _AstrologerListModel implements AstrologerListModel {
       required final String message,
       final List<AstrologerModel>? data,
       final double? wallet,
-      final int? free}) = _$AstrologerListModelImpl;
+      final int? free,
+      final int? ivr,
+      final int? video}) = _$AstrologerListModelImpl;
 
   factory _AstrologerListModel.fromJson(Map<String, dynamic> json) =
       _$AstrologerListModelImpl.fromJson;
@@ -259,6 +295,10 @@ abstract class _AstrologerListModel implements AstrologerListModel {
   double? get wallet;
   @override
   int? get free;
+  @override
+  int? get ivr;
+  @override
+  int? get video;
   @override
   @JsonKey(ignore: true)
   _$$AstrologerListModelImplCopyWith<_$AstrologerListModelImpl> get copyWith =>

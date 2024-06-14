@@ -62,6 +62,8 @@ class ApiConstants {
   static const packageAPI = "package/";
   static const chatAPI = "chat/";
   static const walletAPI = "wallet/";
+  static const tokenAPI = "token/";
+
   static const eventAPI = "manage-events.php";
   static const bannerAPI = "manage-banners.php";
   static const notificationAPI = "manage-notifications.php";

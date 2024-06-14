@@ -15,13 +15,14 @@ class Home extends StatelessWidget {
     final theme = Theme.of(context);
     return GetBuilder<HomeController>(
       builder: (controller) {
-        return WillPopScope(
-          onWillPop: () async {
-            if(homeController.current!=0) {
+        return PopScope(
+          canPop: homeController.current==0,
+          onPopInvoked: (value) async {
+            print("homeController.current");
+            print(homeController.current);
+            if (homeController.current != 0) {
               homeController.changeTab(0);
-              return false;
             }
-            return true;
           },
           child: Scaffold(
             bottomNavigationBar: BottomNavigation(

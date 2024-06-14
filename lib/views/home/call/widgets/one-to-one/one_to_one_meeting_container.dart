@@ -1,8 +1,8 @@
-import 'package:astro_guide/callview/widgets/one-to-one/participant_view.dart';
 import 'package:astro_guide/colors/MyColors.dart';
 import 'package:astro_guide/controllers/call/CallController.dart';
 import 'package:astro_guide/views/home/call/constants/colors.dart';
 import 'package:astro_guide/views/home/call/widgets/meeting_controls/meeting_action_bar.dart';
+import 'package:astro_guide/views/home/call/widgets/one-to-one/participant_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';

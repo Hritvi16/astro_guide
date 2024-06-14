@@ -9,7 +9,7 @@ part of 'TypeListModel.dart';
 _$TypeListModelImpl _$$TypeListModelImplFromJson(Map<String, dynamic> json) =>
     _$TypeListModelImpl(
       status: json['status'] as String,
-      code: json['code'] as int,
+      code: (json['code'] as num).toInt(),
       message: json['message'] as String,
       data: (json['data'] as List<dynamic>?)
           ?.map((e) => TypeModel.fromJson(e as Map<String, dynamic>))

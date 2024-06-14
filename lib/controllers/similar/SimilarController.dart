@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:astro_guide/constants/AstrologerConstants.dart';
 import 'package:astro_guide/constants/CommonConstants.dart';
 import 'package:astro_guide/constants/UserConstants.dart';
+import 'package:astro_guide/dialogs/BasicDialog.dart';
+import 'package:astro_guide/dialogs/IconConfirmDialog.dart';
 import 'package:astro_guide/essential/Essential.dart';
 import 'package:astro_guide/models/astrologer/AstrologerModel.dart';
 import 'package:astro_guide/models/spec/SpecModel.dart';
@@ -33,6 +35,7 @@ class SimilarController extends GetxController {
   late double wallet;
   late bool load;
   late String id;
+  late int ivr, video;
 
   @override
   void onInit() {
@@ -40,6 +43,8 @@ class SimilarController extends GetxController {
     print("init");
     free = storage.read("free")??false;
     wallet = double.parse((storage.read("wallet")??0.0).toString());
+    ivr = int.parse((storage.read("ivr")??0).toString());
+    video = int.parse((storage.read("video")??1).toString());
     load = false;
     id = Get.arguments['id']??"-1";
     astrologers = Get.arguments['astrologers']??[];
@@ -123,6 +128,30 @@ class SimilarController extends GetxController {
     Get.toNamed(page, arguments: arguments)?.then((value) {
       print("objecttt");
       onInit();
+    });
+  }
+
+  void selectCallType(SimilarController similarController, AstrologerModel astrologer)  {
+    Get.dialog(
+      const IconConfirmDialog(
+        title: "Select Call Type",
+        text: "",
+        btn1: "Voice Call",
+        btn2: "Video Call",
+        icon1: Icons.call,
+        icon2: Icons.videocam_rounded,
+      ),
+      barrierDismissible: false,
+    ).then((value) {
+      if (value!=null) {
+        goto("/checkSession", arguments: {
+          "astrologer": astrologer,
+          "free": free && astrologer.free == 1,
+          "controller": similarController,
+          "category": "CALL",
+          "call_type": value=="Voice Call" ? "IVR" : "VIDEO",
+        });
+      }
     });
   }
 }

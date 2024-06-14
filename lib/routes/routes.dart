@@ -13,6 +13,7 @@ import 'package:astro_guide/controllers/home/PreHomeBinding.dart';
 import 'package:astro_guide/controllers/information/InformationBinding.dart';
 import 'package:astro_guide/controllers/language/LanguageBinding.dart';
 import 'package:astro_guide/controllers/myProfile/MyProfileBinding.dart';
+import 'package:astro_guide/controllers/notifications/NotificationBinding.dart';
 import 'package:astro_guide/controllers/review/ReviewBinding.dart';
 import 'package:astro_guide/controllers/service/HoroscopeBinding.dart';
 import 'package:astro_guide/controllers/session/CheckSessionBinding.dart';
@@ -61,6 +62,8 @@ import 'package:astro_guide/views/home/dashboard/testimonial/Testimonial.dart';
 import 'package:astro_guide/views/home/dashboard/testimonial/Testimonials.dart';
 import 'package:astro_guide/views/home/dashboard/videos/Videos.dart';
 import 'package:astro_guide/views/home/following/Following.dart';
+import 'package:astro_guide/views/home/notifications/NotificationDetail.dart';
+import 'package:astro_guide/views/home/notifications/Notifications.dart';
 import 'package:astro_guide/views/home/review/Review.dart';
 import 'package:astro_guide/views/home/settings/ChangeMobile.dart';
 import 'package:astro_guide/views/home/settings/ContactUs.dart';
@@ -297,6 +300,16 @@ class Routes {
         name: '/contactUs',
         page: () => ContactUs(),
         binding: ContactUsBinding()
+    ),
+    GetPage(
+      name: '/notifications',
+      page: () => Notifications(),
+      binding: NotificationBinding(),
+    ),
+    GetPage(
+      name: '/notificationDetail',
+      page: () => NotificationDetail(),
+      binding: NotificationBinding(),
     ),
   ];
 }

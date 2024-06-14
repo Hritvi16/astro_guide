@@ -358,12 +358,18 @@ class Similar extends StatelessWidget {
               print(similarController.wallet);
               double min = Essential.getCalculatedAmount(astrologer.p_call??0, minutes: 5);
               if((similarController.free && astrologer.free==1) || (similarController.wallet>=min)) {
-                similarController.goto("/checkSession", arguments: {
-                  "astrologer": astrologer,
-                  "free": similarController.free && astrologer.free == 1,
-                  "controller" : similarController,
-                  "category" : "CALL"
-                });
+                if(similarController.ivr==1 && astrologer.ivr==1 && similarController.video==1 && astrologer.video==1) {
+                  similarController.selectCallType(similarController, astrologer);
+                }
+                else {
+                  similarController.goto("/checkSession", arguments: {
+                    "astrologer": astrologer,
+                    "free": similarController.free && astrologer.free == 1,
+                    "controller": similarController,
+                    "category": "CALL",
+                    "call_type": (similarController.ivr==1 && astrologer.ivr==1) ? "IVR" : "VIDEO",
+                  });
+                }
               }
               else {
                 Essential.showBasicDialog("You must have minimum of ${CommonConstants.rupee}${min.ceil()} balance in your wallet. Do you want to recharge?", "Recharge Now", "No, Thanks").then((value) {

@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:astro_guide/constants/AstrologerConstants.dart';
 import 'package:astro_guide/constants/CommonConstants.dart';
 import 'package:astro_guide/constants/UserConstants.dart';
+import 'package:astro_guide/dialogs/BasicDialog.dart';
+import 'package:astro_guide/dialogs/IconConfirmDialog.dart';
 import 'package:astro_guide/essential/Essential.dart';
 import 'package:astro_guide/models/astrologer/AstrologerModel.dart';
 import 'package:astro_guide/models/spec/SpecModel.dart';
@@ -31,6 +33,7 @@ class WishlistController extends GetxController {
   Timer? countdownTimer;
   late bool free;
   late double wallet;
+  late int ivr, video;
   late bool load;
 
   @override
@@ -39,6 +42,8 @@ class WishlistController extends GetxController {
     print("init");
     free = storage.read("free")??false;
     wallet = double.parse((storage.read("wallet")??0.0).toString());
+    ivr = int.parse((storage.read("ivr")??0).toString());
+    video = int.parse((storage.read("video")??1).toString());
     load = false;
     astrologers = [];
     start();
@@ -63,13 +68,15 @@ class WishlistController extends GetxController {
 
     await astrologerProvider.fetchByID(storage.read("access"), ApiConstants.favouriteAPI+ApiConstants.user, data).then((response) async {
       if(response.code==1) {
-        print("response.wallet");
-        print(response.wallet);
         print(response.free);
         wallet = response.wallet ?? wallet;
+        ivr = response.ivr ?? ivr;
+        video = response.video ?? video;
         free = (response.free ?? 1) == 0;
         await storage.write("free", free);
         await storage.write("wallet", wallet);
+        await storage.write("ivr", ivr);
+        await storage.write("video", video);
 
         astrologers = [];
         astrologers.addAll(response.data??[]);
@@ -146,6 +153,30 @@ class WishlistController extends GetxController {
     Get.toNamed(page, arguments: arguments)?.then((value) {
       print("objecttt");
       onInit();
+    });
+  }
+
+  void selectCallType(WishlistController wishlistController, AstrologerModel astrologer)  {
+    Get.dialog(
+      const IconConfirmDialog(
+        title: "Select Call Type",
+        text: "",
+        btn1: "Voice Call",
+        btn2: "Video Call",
+        icon1: Icons.call,
+        icon2: Icons.videocam_rounded,
+      ),
+      barrierDismissible: false,
+    ).then((value) {
+      if (value!=null) {
+        goto("/checkSession", arguments: {
+          "astrologer": astrologer,
+          "free": free && astrologer.free == 1,
+          "controller": wishlistController,
+          "category": "CALL",
+          "call_type": value=="Voice Call" ? "IVR" : "VIDEO",
+        });
+      }
     });
   }
 }

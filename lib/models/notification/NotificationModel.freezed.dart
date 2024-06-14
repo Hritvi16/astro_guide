@@ -20,12 +20,13 @@ NotificationModel _$NotificationModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$NotificationModel {
-  String get id => throw _privateConstructorUsedError;
+  int get id => throw _privateConstructorUsedError;
+  String get type => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
-  String get noti => throw _privateConstructorUsedError;
-  String get image => throw _privateConstructorUsedError;
-  String get noti_date => throw _privateConstructorUsedError;
-  String get created_date => throw _privateConstructorUsedError;
+  String get description => throw _privateConstructorUsedError;
+  String? get image =>
+      throw _privateConstructorUsedError; // required String noti_date,
+  String get created_at => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -40,12 +41,12 @@ abstract class $NotificationModelCopyWith<$Res> {
       _$NotificationModelCopyWithImpl<$Res, NotificationModel>;
   @useResult
   $Res call(
-      {String id,
+      {int id,
+      String type,
       String title,
-      String noti,
-      String image,
-      String noti_date,
-      String created_date});
+      String description,
+      String? image,
+      String created_at});
 }
 
 /// @nodoc
@@ -62,36 +63,36 @@ class _$NotificationModelCopyWithImpl<$Res, $Val extends NotificationModel>
   @override
   $Res call({
     Object? id = null,
+    Object? type = null,
     Object? title = null,
-    Object? noti = null,
-    Object? image = null,
-    Object? noti_date = null,
-    Object? created_date = null,
+    Object? description = null,
+    Object? image = freezed,
+    Object? created_at = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
               as String,
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      noti: null == noti
-          ? _value.noti
-          : noti // ignore: cast_nullable_to_non_nullable
+      description: null == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
               as String,
-      image: null == image
+      image: freezed == image
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
-              as String,
-      noti_date: null == noti_date
-          ? _value.noti_date
-          : noti_date // ignore: cast_nullable_to_non_nullable
-              as String,
-      created_date: null == created_date
-          ? _value.created_date
-          : created_date // ignore: cast_nullable_to_non_nullable
+              as String?,
+      created_at: null == created_at
+          ? _value.created_at
+          : created_at // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -106,12 +107,12 @@ abstract class _$$NotificationModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String id,
+      {int id,
+      String type,
       String title,
-      String noti,
-      String image,
-      String noti_date,
-      String created_date});
+      String description,
+      String? image,
+      String created_at});
 }
 
 /// @nodoc
@@ -126,36 +127,36 @@ class __$$NotificationModelImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
+    Object? type = null,
     Object? title = null,
-    Object? noti = null,
-    Object? image = null,
-    Object? noti_date = null,
-    Object? created_date = null,
+    Object? description = null,
+    Object? image = freezed,
+    Object? created_at = null,
   }) {
     return _then(_$NotificationModelImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
               as String,
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      noti: null == noti
-          ? _value.noti
-          : noti // ignore: cast_nullable_to_non_nullable
+      description: null == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
               as String,
-      image: null == image
+      image: freezed == image
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
-              as String,
-      noti_date: null == noti_date
-          ? _value.noti_date
-          : noti_date // ignore: cast_nullable_to_non_nullable
-              as String,
-      created_date: null == created_date
-          ? _value.created_date
-          : created_date // ignore: cast_nullable_to_non_nullable
+              as String?,
+      created_at: null == created_at
+          ? _value.created_at
+          : created_at // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -166,31 +167,32 @@ class __$$NotificationModelImplCopyWithImpl<$Res>
 class _$NotificationModelImpl implements _NotificationModel {
   _$NotificationModelImpl(
       {required this.id,
+      required this.type,
       required this.title,
-      required this.noti,
-      required this.image,
-      required this.noti_date,
-      required this.created_date});
+      required this.description,
+      this.image,
+      required this.created_at});
 
   factory _$NotificationModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$NotificationModelImplFromJson(json);
 
   @override
-  final String id;
+  final int id;
+  @override
+  final String type;
   @override
   final String title;
   @override
-  final String noti;
+  final String description;
   @override
-  final String image;
+  final String? image;
+// required String noti_date,
   @override
-  final String noti_date;
-  @override
-  final String created_date;
+  final String created_at;
 
   @override
   String toString() {
-    return 'NotificationModel(id: $id, title: $title, noti: $noti, image: $image, noti_date: $noti_date, created_date: $created_date)';
+    return 'NotificationModel(id: $id, type: $type, title: $title, description: $description, image: $image, created_at: $created_at)';
   }
 
   @override
@@ -199,19 +201,19 @@ class _$NotificationModelImpl implements _NotificationModel {
         (other.runtimeType == runtimeType &&
             other is _$NotificationModelImpl &&
             (identical(other.id, id) || other.id == id) &&
+            (identical(other.type, type) || other.type == type) &&
             (identical(other.title, title) || other.title == title) &&
-            (identical(other.noti, noti) || other.noti == noti) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
             (identical(other.image, image) || other.image == image) &&
-            (identical(other.noti_date, noti_date) ||
-                other.noti_date == noti_date) &&
-            (identical(other.created_date, created_date) ||
-                other.created_date == created_date));
+            (identical(other.created_at, created_at) ||
+                other.created_at == created_at));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, id, title, noti, image, noti_date, created_date);
+      Object.hash(runtimeType, id, type, title, description, image, created_at);
 
   @JsonKey(ignore: true)
   @override
@@ -230,28 +232,28 @@ class _$NotificationModelImpl implements _NotificationModel {
 
 abstract class _NotificationModel implements NotificationModel {
   factory _NotificationModel(
-      {required final String id,
+      {required final int id,
+      required final String type,
       required final String title,
-      required final String noti,
-      required final String image,
-      required final String noti_date,
-      required final String created_date}) = _$NotificationModelImpl;
+      required final String description,
+      final String? image,
+      required final String created_at}) = _$NotificationModelImpl;
 
   factory _NotificationModel.fromJson(Map<String, dynamic> json) =
       _$NotificationModelImpl.fromJson;
 
   @override
-  String get id;
+  int get id;
+  @override
+  String get type;
   @override
   String get title;
   @override
-  String get noti;
+  String get description;
   @override
-  String get image;
-  @override
-  String get noti_date;
-  @override
-  String get created_date;
+  String? get image;
+  @override // required String noti_date,
+  String get created_at;
   @override
   @JsonKey(ignore: true)
   _$$NotificationModelImplCopyWith<_$NotificationModelImpl> get copyWith =>

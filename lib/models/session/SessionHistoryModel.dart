@@ -16,6 +16,7 @@ class SessionHistoryModel with _$SessionHistoryModel {
     int? k_id,
     required String status,
     required String category,
+    String? call_type,
     String? reason,
     String? started_at,
     String? ended_at,
@@ -41,6 +42,8 @@ class SessionHistoryModel with _$SessionHistoryModel {
     String? user,
     String? user_profile,
     String? token,
+    String? token_type,
+    int? token_amount,
   }) = _SessionHistoryModel;
 
   factory SessionHistoryModel.fromJson(JSON json) => _$SessionHistoryModelFromJson(json);

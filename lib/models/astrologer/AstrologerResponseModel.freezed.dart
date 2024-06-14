@@ -34,6 +34,8 @@ mixin _$AstrologerResponseModel {
   List<AstrologerModel>? get similar => throw _privateConstructorUsedError;
   double? get wallet => throw _privateConstructorUsedError;
   int? get free => throw _privateConstructorUsedError;
+  int? get ivr => throw _privateConstructorUsedError;
+  int? get video => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -60,7 +62,9 @@ abstract class $AstrologerResponseModelCopyWith<$Res> {
       List<GalleryModel>? galleries,
       List<AstrologerModel>? similar,
       double? wallet,
-      int? free});
+      int? free,
+      int? ivr,
+      int? video});
 
   $AstrologerModelCopyWith<$Res>? get astrologer;
   $RatingModelCopyWith<$Res>? get rating;
@@ -93,6 +97,8 @@ class _$AstrologerResponseModelCopyWithImpl<$Res,
     Object? similar = freezed,
     Object? wallet = freezed,
     Object? free = freezed,
+    Object? ivr = freezed,
+    Object? video = freezed,
   }) {
     return _then(_value.copyWith(
       status: null == status
@@ -147,6 +153,14 @@ class _$AstrologerResponseModelCopyWithImpl<$Res,
           ? _value.free
           : free // ignore: cast_nullable_to_non_nullable
               as int?,
+      ivr: freezed == ivr
+          ? _value.ivr
+          : ivr // ignore: cast_nullable_to_non_nullable
+              as int?,
+      video: freezed == video
+          ? _value.video
+          : video // ignore: cast_nullable_to_non_nullable
+              as int?,
     ) as $Val);
   }
 
@@ -197,7 +211,9 @@ abstract class _$$AstrologerResponseModelImplCopyWith<$Res>
       List<GalleryModel>? galleries,
       List<AstrologerModel>? similar,
       double? wallet,
-      int? free});
+      int? free,
+      int? ivr,
+      int? video});
 
   @override
   $AstrologerModelCopyWith<$Res>? get astrologer;
@@ -231,6 +247,8 @@ class __$$AstrologerResponseModelImplCopyWithImpl<$Res>
     Object? similar = freezed,
     Object? wallet = freezed,
     Object? free = freezed,
+    Object? ivr = freezed,
+    Object? video = freezed,
   }) {
     return _then(_$AstrologerResponseModelImpl(
       status: null == status
@@ -285,6 +303,14 @@ class __$$AstrologerResponseModelImplCopyWithImpl<$Res>
           ? _value.free
           : free // ignore: cast_nullable_to_non_nullable
               as int?,
+      ivr: freezed == ivr
+          ? _value.ivr
+          : ivr // ignore: cast_nullable_to_non_nullable
+              as int?,
+      video: freezed == video
+          ? _value.video
+          : video // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -305,7 +331,9 @@ class _$AstrologerResponseModelImpl implements _AstrologerResponseModel {
       final List<GalleryModel>? galleries,
       final List<AstrologerModel>? similar,
       this.wallet,
-      this.free})
+      this.free,
+      this.ivr,
+      this.video})
       : _languages = languages,
         _specifications = specifications,
         _types = types,
@@ -390,10 +418,14 @@ class _$AstrologerResponseModelImpl implements _AstrologerResponseModel {
   final double? wallet;
   @override
   final int? free;
+  @override
+  final int? ivr;
+  @override
+  final int? video;
 
   @override
   String toString() {
-    return 'AstrologerResponseModel(status: $status, code: $code, message: $message, astrologer: $astrologer, rating: $rating, languages: $languages, specifications: $specifications, types: $types, reviews: $reviews, galleries: $galleries, similar: $similar, wallet: $wallet, free: $free)';
+    return 'AstrologerResponseModel(status: $status, code: $code, message: $message, astrologer: $astrologer, rating: $rating, languages: $languages, specifications: $specifications, types: $types, reviews: $reviews, galleries: $galleries, similar: $similar, wallet: $wallet, free: $free, ivr: $ivr, video: $video)';
   }
 
   @override
@@ -417,7 +449,9 @@ class _$AstrologerResponseModelImpl implements _AstrologerResponseModel {
                 .equals(other._galleries, _galleries) &&
             const DeepCollectionEquality().equals(other._similar, _similar) &&
             (identical(other.wallet, wallet) || other.wallet == wallet) &&
-            (identical(other.free, free) || other.free == free));
+            (identical(other.free, free) || other.free == free) &&
+            (identical(other.ivr, ivr) || other.ivr == ivr) &&
+            (identical(other.video, video) || other.video == video));
   }
 
   @JsonKey(ignore: true)
@@ -436,7 +470,9 @@ class _$AstrologerResponseModelImpl implements _AstrologerResponseModel {
       const DeepCollectionEquality().hash(_galleries),
       const DeepCollectionEquality().hash(_similar),
       wallet,
-      free);
+      free,
+      ivr,
+      video);
 
   @JsonKey(ignore: true)
   @override
@@ -467,7 +503,9 @@ abstract class _AstrologerResponseModel implements AstrologerResponseModel {
       final List<GalleryModel>? galleries,
       final List<AstrologerModel>? similar,
       final double? wallet,
-      final int? free}) = _$AstrologerResponseModelImpl;
+      final int? free,
+      final int? ivr,
+      final int? video}) = _$AstrologerResponseModelImpl;
 
   factory _AstrologerResponseModel.fromJson(Map<String, dynamic> json) =
       _$AstrologerResponseModelImpl.fromJson;
@@ -498,6 +536,10 @@ abstract class _AstrologerResponseModel implements AstrologerResponseModel {
   double? get wallet;
   @override
   int? get free;
+  @override
+  int? get ivr;
+  @override
+  int? get video;
   @override
   @JsonKey(ignore: true)
   _$$AstrologerResponseModelImplCopyWith<_$AstrologerResponseModelImpl>

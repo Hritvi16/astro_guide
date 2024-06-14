@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:astro_guide/colors/MyColors.dart';
 import 'package:astro_guide/constants/CommonConstants.dart';
 import 'package:astro_guide/controllers/service/HoroscopeController.dart';
@@ -12,7 +10,6 @@ import 'package:astro_guide/size/MySize.dart';
 import 'package:astro_guide/size/WidgetSize.dart';
 import 'package:astro_guide/views/loadingScreen/LoadingScreen.dart';
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -55,7 +52,7 @@ class Horoscope extends StatelessWidget {
                   ) : null
               ),
               child: SafeArea(
-                  child: CustomAppBar("Today's Horoscope".tr)
+                  child: CustomAppBar("Horoscope".tr)
               ),
             ),
           ),
@@ -73,8 +70,29 @@ class Horoscope extends StatelessWidget {
             ),
             child: Column(
                 children: [
-                  SizedBox(
+                  TabBar(
+                    controller: horoscopeController.tabController,
+                    tabs: [
+                      Tab(text: "Daily".tr),
+                      Tab(text: "Weekly".tr),
+                      Tab(text: "Monthly".tr),
+                      Tab(text: "Yearly".tr),
+                    ],
+                    labelColor: MyColors.labelColor(),
+                    labelStyle: GoogleFonts.manrope(
+                      fontSize: 14.0,
+                      color: MyColors.labelColor(),
+                      letterSpacing: 0,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    indicatorColor: MyColors.colorButton,
+                    onTap: (index) {
+                      horoscopeController.changeTab(index);
+                    },
+                  ),
+                  Container(
                     height: 100,
+                    margin: EdgeInsets.only(top: 20),
                     child: ListView.separated(
                       itemCount: CommonConstants.zodiac_signs.length,
                       shrinkWrap: true,
@@ -112,15 +130,15 @@ class Horoscope extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          getTabDesign(0, CommonConstants.horoscope_day[0].tr),
+          getTabDesign(0, horoscopeController.selectedTime==0 ? CommonConstants.horoscope_day[0].tr : CommonConstants.horoscope_time[0].tr),
           const SizedBox(
             width: 8,
           ),
-          getTabDesign(1, CommonConstants.horoscope_day[1].tr),
+          getTabDesign(1, horoscopeController.selectedTime==0 ? CommonConstants.horoscope_day[1].tr : CommonConstants.horoscope_time[1].tr),
           const SizedBox(
             width: 8,
           ),
-          getTabDesign(2, CommonConstants.horoscope_day[2].tr),
+          getTabDesign(2, horoscopeController.selectedTime==0 ? CommonConstants.horoscope_day[2].tr : CommonConstants.horoscope_time[2].tr),
         ],
       ),
     );
@@ -168,9 +186,11 @@ class Horoscope extends StatelessWidget {
   }
 
   Widget getTabBody(BuildContext context) {
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 28.0, horizontal: 20),
-      child: getView(horoscopeController.horoscopes[horoscopeController.selectedDay]),
+      child: getView(horoscopeController.getCurrentHoroscope()),
+      // child: getView(horoscopeController.horoscopes[horoscopeController.selectedDay]),
     );
   }
 
@@ -185,7 +205,7 @@ class Horoscope extends StatelessWidget {
           getLuckyCard(horoscope),
           SizedBox(height: 10),
           Text(
-            "Daily Horoscope",
+            "${horoscopeController.getTitle()} Horoscope",
             style: GoogleFonts.manrope(
               fontSize: 18,
               fontWeight: FontWeight.w500
@@ -327,10 +347,15 @@ class Horoscope extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    getLuckyColourDesign(horoscope.special.lucky_color_codes),
-                    SizedBox(
-                      height: 10,
-                    ),
+                    if(horoscope.special!=null)
+                      Column(
+                        children: [
+                          getLuckyColourDesign(horoscope.special!.lucky_color_codes),
+                          SizedBox(
+                            height: 10,
+                          ),
+                        ],
+                      ),
                     Row(
                       children: [
                         getLuckyItemDesign("Numbers", numbers),

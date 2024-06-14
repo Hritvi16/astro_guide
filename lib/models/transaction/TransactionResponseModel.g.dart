@@ -10,9 +10,9 @@ _$TransactionResponseModelImpl _$$TransactionResponseModelImplFromJson(
         Map<String, dynamic> json) =>
     _$TransactionResponseModelImpl(
       status: json['status'] as String,
-      code: json['code'] as int,
+      code: (json['code'] as num).toInt(),
       message: json['message'] as String,
-      id: json['id'] as int?,
+      id: (json['id'] as num?)?.toInt(),
       transaction_id: json['transaction_id'] as String?,
       body: json['body'] as String?,
       checksum: json['checksum'] as String?,

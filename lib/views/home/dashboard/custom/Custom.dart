@@ -78,9 +78,14 @@ class Custom extends StatelessWidget {
                           ),
                           Row(
                             children: [
-                              Image.asset(
-                                "assets/common/notification.png",
-                                height: 25,
+                              GestureDetector(
+                                onTap: () {
+                                  customController.goto("/notifications");
+                                },
+                                child: Image.asset(
+                                  "assets/common/notification.png",
+                                  height: 25,
+                                ),
                               ),
                               const SizedBox(
                                 width: 15,

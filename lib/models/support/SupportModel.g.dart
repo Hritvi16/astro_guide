@@ -8,12 +8,12 @@ part of 'SupportModel.dart';
 
 _$SupportModelImpl _$$SupportModelImplFromJson(Map<String, dynamic> json) =>
     _$SupportModelImpl(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       type: json['type'] as String,
       reason: json['reason'] as String,
-      user_id: json['user_id'] as int?,
-      astro_id: json['astro_id'] as int?,
-      admin_id: json['admin_id'] as int?,
+      user_id: (json['user_id'] as num?)?.toInt(),
+      astro_id: (json['astro_id'] as num?)?.toInt(),
+      admin_id: (json['admin_id'] as num?)?.toInt(),
       socket: json['socket'] as String?,
       ad_socket: json['ad_socket'] as String?,
       rating: (json['rating'] as num?)?.toDouble(),

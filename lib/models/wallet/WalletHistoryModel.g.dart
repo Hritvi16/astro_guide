@@ -9,13 +9,13 @@ part of 'WalletHistoryModel.dart';
 _$WalletHistoryModelImpl _$$WalletHistoryModelImplFromJson(
         Map<String, dynamic> json) =>
     _$WalletHistoryModelImpl(
-      id: json['id'] as int,
-      user_id: json['user_id'] as int?,
-      astro_id: json['astro_id'] as int?,
+      id: (json['id'] as num).toInt(),
+      user_id: (json['user_id'] as num?)?.toInt(),
+      astro_id: (json['astro_id'] as num?)?.toInt(),
       order_id: json['order_id'] as String?,
       invoice_id: json['invoice_id'] as String?,
       transaction_id: json['transaction_id'] as String?,
-      p_id: json['p_id'] as int?,
+      p_id: (json['p_id'] as num?)?.toInt(),
       amount: (json['amount'] as num).toDouble(),
       wallet_amount: (json['wallet_amount'] as num).toDouble(),
       type: json['type'] as String,
@@ -23,7 +23,7 @@ _$WalletHistoryModelImpl _$$WalletHistoryModelImplFromJson(
       description: json['description'] as String,
       created_at: json['created_at'] as String,
       updated_at: json['updated_at'] as String?,
-      status: json['status'] as int,
+      status: (json['status'] as num).toInt(),
     );
 
 Map<String, dynamic> _$$WalletHistoryModelImplToJson(

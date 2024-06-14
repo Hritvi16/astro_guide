@@ -1,6 +1,8 @@
 import 'package:astro_guide/constants/AstrologerConstants.dart';
 import 'package:astro_guide/constants/CommonConstants.dart';
 import 'package:astro_guide/controllers/connectivity/ConnectivityController.dart';
+import 'package:astro_guide/dialogs/BasicDialog.dart';
+import 'package:astro_guide/dialogs/IconConfirmDialog.dart';
 import 'package:astro_guide/essential/Essential.dart';
 import 'package:astro_guide/models/astrologer/AstrologerModel.dart';
 import 'package:astro_guide/models/banner/BannerModel.dart';
@@ -19,10 +21,11 @@ import 'package:astro_guide/repositories/DashboardRepository.dart';
 import 'package:astro_guide/repositories/SpecRepository.dart';
 import 'package:astro_guide/services/networking/ApiConstants.dart';
 import 'package:astro_guide/services/networking/ApiService.dart';
-import 'package:astro_guide/shared/widgets/bottomNavigation/BottomNavigation.dart';
+import 'package:just_audio/just_audio.dart' as p;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:just_audio/just_audio.dart';
 
 class DashboardController extends GetxController {
   DashboardController();
@@ -52,10 +55,12 @@ class DashboardController extends GetxController {
   List<VideoModel> videos = [];
   List<TestimonialModel> testimonials = [];
 
+
   TextEditingController search = TextEditingController();
 
   late bool free;
   late double wallet;
+  late int ivr, video;
   late UserModel user;
   SessionHistoryModel? session;
 
@@ -63,11 +68,12 @@ class DashboardController extends GetxController {
 
   final GlobalNotifier globalNotifier = Get.find();
 
+  final player = p.AudioPlayer();
+
   @override
   void onInit() {
     super.onInit();
     load = false;
-
     globalNotifier.showSession.listen((value) {
       updateDashboard(value);
     });
@@ -96,8 +102,21 @@ class DashboardController extends GetxController {
 
         await storage.write("free", (response.user?.free ?? 1) == 0);
         await storage.write("wallet", response.user?.amount ?? 0);
+        await storage.write("ivr", response.user?.ivr ?? 0);
+        await storage.write("video", response.user?.video ?? 1);
         free = (response.user?.free ?? 1) == 0;
+        if(free && storage.read("popup")!=true) {
+          storage.write("popup", true);
+          Essential.showTitleInfoDialog("Free Chat","Your first session with astrologer is free! Chat Now!", "Chat Now").then((value) {
+            print(value);
+            if(value=="Chat Now") {
+              gotoOff("/home", arguments: {"index" : 1, "title" : "Talk Astrologer"});
+            }
+          });
+        }
         wallet = response.user?.amount ?? 0;
+        ivr = response.user?.ivr ?? 0;
+        video = response.user?.video ?? 1;
         print(free);
         update();
         if (response.code == 1) {
@@ -110,6 +129,7 @@ class DashboardController extends GetxController {
           testimonials = response.testimonials ?? [];
           user = response.user!;
           session = response.session;
+          manageRing(response.session);
           await storage.write("user", user);
         }
         else if (response.code != -1) {
@@ -164,8 +184,6 @@ class DashboardController extends GetxController {
       };
 
       await dashboardProvider.fetchByID(storage.read("access"), ApiConstants.astrologerAPI + ApiConstants.specAPI, data).then((response) async {
-        print(response.toJson());
-
         if (response.code == 1) {
           live = response.live_astrologers ?? [];
           news = response.new_astrologers ?? [];
@@ -234,7 +252,7 @@ class DashboardController extends GetxController {
 
 
   Future<void> onRefresh() async{
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 1));
     await getDashboard();
     // await getSpecs();
   }
@@ -244,6 +262,9 @@ class DashboardController extends GetxController {
 
   void goto(String page, {dynamic arguments}) {
     print(page);
+    if(page.contains("chat") || page.contains("call")) {
+      manageRing(null);
+    }
     Get.toNamed(page, arguments: arguments)?.then((value) {
       getDashboard();
     });
@@ -279,5 +300,51 @@ class DashboardController extends GetxController {
       getDashboard();
       globalNotifier.updateValue("");
     }
+  }
+
+  void manageRing(SessionHistoryModel? session) {
+    if(session!=null && session?.status=="REQUESTED") {
+      player.setAsset("assets/audio/notification.mp3");
+      player.play();
+      player.processingStateStream.listen((processingState) {
+        if (processingState == ProcessingState.completed) {
+          player.seek(Duration.zero);
+          player.play();
+          update();
+          print("ringinggggg started");
+        }
+      });
+    }
+    else {
+      if(player.playing) {
+        player.stop();
+        update();
+        print("ringinggggg stopped");
+      }
+    }
+  }
+
+  void selectCallType(DashboardController dashboardController, AstrologerModel astrologer) {
+    Get.dialog(
+      const IconConfirmDialog(
+        title: "Select Call Type",
+        text: "",
+        btn1: "Voice Call",
+        btn2: "Video Call",
+        icon1: Icons.call,
+        icon2: Icons.videocam_rounded,
+      ),
+      barrierDismissible: false,
+    ).then((value) {
+      if (value!=null) {
+        goto("/checkSession", arguments: {
+          "astrologer": astrologer,
+          "free": free && astrologer.free == 1,
+          "controller": dashboardController,
+          "category": "CALL",
+          "call_type": value=="Voice Call" ? "IVR" : "VIDEO",
+        });
+      }
+    });
   }
 }

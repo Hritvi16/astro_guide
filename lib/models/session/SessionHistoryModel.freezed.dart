@@ -27,6 +27,7 @@ mixin _$SessionHistoryModel {
   int? get k_id => throw _privateConstructorUsedError;
   String get status => throw _privateConstructorUsedError;
   String get category => throw _privateConstructorUsedError;
+  String? get call_type => throw _privateConstructorUsedError;
   String? get reason => throw _privateConstructorUsedError;
   String? get started_at => throw _privateConstructorUsedError;
   String? get ended_at => throw _privateConstructorUsedError;
@@ -52,6 +53,8 @@ mixin _$SessionHistoryModel {
   String? get user => throw _privateConstructorUsedError;
   String? get user_profile => throw _privateConstructorUsedError;
   String? get token => throw _privateConstructorUsedError;
+  String? get token_type => throw _privateConstructorUsedError;
+  int? get token_amount => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -73,6 +76,7 @@ abstract class $SessionHistoryModelCopyWith<$Res> {
       int? k_id,
       String status,
       String category,
+      String? call_type,
       String? reason,
       String? started_at,
       String? ended_at,
@@ -97,7 +101,9 @@ abstract class $SessionHistoryModelCopyWith<$Res> {
       int? user_id,
       String? user,
       String? user_profile,
-      String? token});
+      String? token,
+      String? token_type,
+      int? token_amount});
 }
 
 /// @nodoc
@@ -120,6 +126,7 @@ class _$SessionHistoryModelCopyWithImpl<$Res, $Val extends SessionHistoryModel>
     Object? k_id = freezed,
     Object? status = null,
     Object? category = null,
+    Object? call_type = freezed,
     Object? reason = freezed,
     Object? started_at = freezed,
     Object? ended_at = freezed,
@@ -145,6 +152,8 @@ class _$SessionHistoryModelCopyWithImpl<$Res, $Val extends SessionHistoryModel>
     Object? user = freezed,
     Object? user_profile = freezed,
     Object? token = freezed,
+    Object? token_type = freezed,
+    Object? token_amount = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -175,6 +184,10 @@ class _$SessionHistoryModelCopyWithImpl<$Res, $Val extends SessionHistoryModel>
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
               as String,
+      call_type: freezed == call_type
+          ? _value.call_type
+          : call_type // ignore: cast_nullable_to_non_nullable
+              as String?,
       reason: freezed == reason
           ? _value.reason
           : reason // ignore: cast_nullable_to_non_nullable
@@ -275,6 +288,14 @@ class _$SessionHistoryModelCopyWithImpl<$Res, $Val extends SessionHistoryModel>
           ? _value.token
           : token // ignore: cast_nullable_to_non_nullable
               as String?,
+      token_type: freezed == token_type
+          ? _value.token_type
+          : token_type // ignore: cast_nullable_to_non_nullable
+              as String?,
+      token_amount: freezed == token_amount
+          ? _value.token_amount
+          : token_amount // ignore: cast_nullable_to_non_nullable
+              as int?,
     ) as $Val);
   }
 }
@@ -295,6 +316,7 @@ abstract class _$$SessionHistoryModelImplCopyWith<$Res>
       int? k_id,
       String status,
       String category,
+      String? call_type,
       String? reason,
       String? started_at,
       String? ended_at,
@@ -319,7 +341,9 @@ abstract class _$$SessionHistoryModelImplCopyWith<$Res>
       int? user_id,
       String? user,
       String? user_profile,
-      String? token});
+      String? token,
+      String? token_type,
+      int? token_amount});
 }
 
 /// @nodoc
@@ -340,6 +364,7 @@ class __$$SessionHistoryModelImplCopyWithImpl<$Res>
     Object? k_id = freezed,
     Object? status = null,
     Object? category = null,
+    Object? call_type = freezed,
     Object? reason = freezed,
     Object? started_at = freezed,
     Object? ended_at = freezed,
@@ -365,6 +390,8 @@ class __$$SessionHistoryModelImplCopyWithImpl<$Res>
     Object? user = freezed,
     Object? user_profile = freezed,
     Object? token = freezed,
+    Object? token_type = freezed,
+    Object? token_amount = freezed,
   }) {
     return _then(_$SessionHistoryModelImpl(
       id: null == id
@@ -395,6 +422,10 @@ class __$$SessionHistoryModelImplCopyWithImpl<$Res>
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
               as String,
+      call_type: freezed == call_type
+          ? _value.call_type
+          : call_type // ignore: cast_nullable_to_non_nullable
+              as String?,
       reason: freezed == reason
           ? _value.reason
           : reason // ignore: cast_nullable_to_non_nullable
@@ -495,6 +526,14 @@ class __$$SessionHistoryModelImplCopyWithImpl<$Res>
           ? _value.token
           : token // ignore: cast_nullable_to_non_nullable
               as String?,
+      token_type: freezed == token_type
+          ? _value.token_type
+          : token_type // ignore: cast_nullable_to_non_nullable
+              as String?,
+      token_amount: freezed == token_amount
+          ? _value.token_amount
+          : token_amount // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -510,6 +549,7 @@ class _$SessionHistoryModelImpl implements _SessionHistoryModel {
       this.k_id,
       required this.status,
       required this.category,
+      this.call_type,
       this.reason,
       this.started_at,
       this.ended_at,
@@ -534,7 +574,9 @@ class _$SessionHistoryModelImpl implements _SessionHistoryModel {
       this.user_id,
       this.user,
       this.user_profile,
-      this.token});
+      this.token,
+      this.token_type,
+      this.token_amount});
 
   factory _$SessionHistoryModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$SessionHistoryModelImplFromJson(json);
@@ -553,6 +595,8 @@ class _$SessionHistoryModelImpl implements _SessionHistoryModel {
   final String status;
   @override
   final String category;
+  @override
+  final String? call_type;
   @override
   final String? reason;
   @override
@@ -603,10 +647,14 @@ class _$SessionHistoryModelImpl implements _SessionHistoryModel {
   final String? user_profile;
   @override
   final String? token;
+  @override
+  final String? token_type;
+  @override
+  final int? token_amount;
 
   @override
   String toString() {
-    return 'SessionHistoryModel(id: $id, sess_id: $sess_id, session_id: $session_id, meeting_id: $meeting_id, k_id: $k_id, status: $status, category: $category, reason: $reason, started_at: $started_at, ended_at: $ended_at, rate: $rate, amount: $amount, commission: $commission, type: $type, rating: $rating, review: $review, reply: $reply, reviewed_at: $reviewed_at, anonymous: $anonymous, requested_at: $requested_at, waitlisted_at: $waitlisted_at, cancelled_at: $cancelled_at, reconnet_at: $reconnet_at, rejected_at: $rejected_at, updated_at: $updated_at, astro_id: $astro_id, astrologer: $astrologer, astro_profile: $astro_profile, user_id: $user_id, user: $user, user_profile: $user_profile, token: $token)';
+    return 'SessionHistoryModel(id: $id, sess_id: $sess_id, session_id: $session_id, meeting_id: $meeting_id, k_id: $k_id, status: $status, category: $category, call_type: $call_type, reason: $reason, started_at: $started_at, ended_at: $ended_at, rate: $rate, amount: $amount, commission: $commission, type: $type, rating: $rating, review: $review, reply: $reply, reviewed_at: $reviewed_at, anonymous: $anonymous, requested_at: $requested_at, waitlisted_at: $waitlisted_at, cancelled_at: $cancelled_at, reconnet_at: $reconnet_at, rejected_at: $rejected_at, updated_at: $updated_at, astro_id: $astro_id, astrologer: $astrologer, astro_profile: $astro_profile, user_id: $user_id, user: $user, user_profile: $user_profile, token: $token, token_type: $token_type, token_amount: $token_amount)';
   }
 
   @override
@@ -624,6 +672,8 @@ class _$SessionHistoryModelImpl implements _SessionHistoryModel {
             (identical(other.status, status) || other.status == status) &&
             (identical(other.category, category) ||
                 other.category == category) &&
+            (identical(other.call_type, call_type) ||
+                other.call_type == call_type) &&
             (identical(other.reason, reason) || other.reason == reason) &&
             (identical(other.started_at, started_at) ||
                 other.started_at == started_at) &&
@@ -663,7 +713,11 @@ class _$SessionHistoryModelImpl implements _SessionHistoryModel {
             (identical(other.user, user) || other.user == user) &&
             (identical(other.user_profile, user_profile) ||
                 other.user_profile == user_profile) &&
-            (identical(other.token, token) || other.token == token));
+            (identical(other.token, token) || other.token == token) &&
+            (identical(other.token_type, token_type) ||
+                other.token_type == token_type) &&
+            (identical(other.token_amount, token_amount) ||
+                other.token_amount == token_amount));
   }
 
   @JsonKey(ignore: true)
@@ -677,6 +731,7 @@ class _$SessionHistoryModelImpl implements _SessionHistoryModel {
         k_id,
         status,
         category,
+        call_type,
         reason,
         started_at,
         ended_at,
@@ -701,7 +756,9 @@ class _$SessionHistoryModelImpl implements _SessionHistoryModel {
         user_id,
         user,
         user_profile,
-        token
+        token,
+        token_type,
+        token_amount
       ]);
 
   @JsonKey(ignore: true)
@@ -728,6 +785,7 @@ abstract class _SessionHistoryModel implements SessionHistoryModel {
       final int? k_id,
       required final String status,
       required final String category,
+      final String? call_type,
       final String? reason,
       final String? started_at,
       final String? ended_at,
@@ -752,7 +810,9 @@ abstract class _SessionHistoryModel implements SessionHistoryModel {
       final int? user_id,
       final String? user,
       final String? user_profile,
-      final String? token}) = _$SessionHistoryModelImpl;
+      final String? token,
+      final String? token_type,
+      final int? token_amount}) = _$SessionHistoryModelImpl;
 
   factory _SessionHistoryModel.fromJson(Map<String, dynamic> json) =
       _$SessionHistoryModelImpl.fromJson;
@@ -771,6 +831,8 @@ abstract class _SessionHistoryModel implements SessionHistoryModel {
   String get status;
   @override
   String get category;
+  @override
+  String? get call_type;
   @override
   String? get reason;
   @override
@@ -821,6 +883,10 @@ abstract class _SessionHistoryModel implements SessionHistoryModel {
   String? get user_profile;
   @override
   String? get token;
+  @override
+  String? get token_type;
+  @override
+  int? get token_amount;
   @override
   @JsonKey(ignore: true)
   _$$SessionHistoryModelImplCopyWith<_$SessionHistoryModelImpl> get copyWith =>

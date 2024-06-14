@@ -10,11 +10,11 @@ _$CheckSessionResponseModelImpl _$$CheckSessionResponseModelImplFromJson(
         Map<String, dynamic> json) =>
     _$CheckSessionResponseModelImpl(
       status: json['status'] as String,
-      code: json['code'] as int,
+      code: (json['code'] as num).toInt(),
       message: json['message'] as String,
-      ch_id: json['ch_id'] as int?,
+      ch_id: (json['ch_id'] as num?)?.toInt(),
       started_at: json['started_at'] as String?,
-      rate: json['rate'] as int?,
+      rate: (json['rate'] as num?)?.toInt(),
       type: json['type'] as String?,
       data: json['data'] == null
           ? null
@@ -29,7 +29,7 @@ _$CheckSessionResponseModelImpl _$$CheckSessionResponseModelImplFromJson(
           ?.map((e) => RelationModel.fromJson(e as Map<String, dynamic>))
           .toList(),
       wallet: (json['wallet'] as num?)?.toDouble(),
-      sess_id: json['sess_id'] as int?,
+      sess_id: (json['sess_id'] as num?)?.toInt(),
       session_history: json['session_history'] == null
           ? null
           : SessionHistoryModel.fromJson(

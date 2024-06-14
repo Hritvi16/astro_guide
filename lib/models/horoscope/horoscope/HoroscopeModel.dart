@@ -12,7 +12,7 @@ class HoroscopeModel with _$HoroscopeModel {
   factory HoroscopeModel({
     required String sign,
     required PredictionModel prediction,
-    required SpecialModel special,
+    SpecialModel? special,
   }) = _HoroscopeModel;
 
   factory HoroscopeModel.fromJson(JSON json) => _$HoroscopeModelFromJson(json);

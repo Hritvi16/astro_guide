@@ -10,9 +10,9 @@ _$SupportResponseModelImpl _$$SupportResponseModelImplFromJson(
         Map<String, dynamic> json) =>
     _$SupportResponseModelImpl(
       status: json['status'] as String,
-      code: json['code'] as int,
+      code: (json['code'] as num).toInt(),
       message: json['message'] as String,
-      id: json['id'] as int?,
+      id: (json['id'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$$SupportResponseModelImplToJson(

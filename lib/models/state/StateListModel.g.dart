@@ -9,7 +9,7 @@ part of 'StateListModel.dart';
 _$StateListModelImpl _$$StateListModelImplFromJson(Map<String, dynamic> json) =>
     _$StateListModelImpl(
       status: json['status'] as String,
-      code: json['code'] as int,
+      code: (json['code'] as num).toInt(),
       message: json['message'] as String,
       data: (json['data'] as List<dynamic>)
           .map((e) => StateModel.fromJson(e as Map<String, dynamic>))

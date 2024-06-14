@@ -60,14 +60,24 @@ class CheckSessionController extends GetxController {
   late GlobalKey<FormState> formKey;
   late dynamic controller;
   late String category;
+  String? call_type;
+
+  final scrollController = ScrollController();
+  final tobKey = GlobalKey();
+  final pobKey = GlobalKey();
+  final genderKey = GlobalKey();
+
+  late int cnt;
 
   @override
   void onInit() {
     super.onInit();
+    cnt = 0;
     astrologer = Get.arguments['astrologer'];
     free = Get.arguments['free'];
     controller = Get.arguments['controller'];
     category = Get.arguments['category'];
+    call_type = Get.arguments['call_type'];
     gender = UserConstants.F;
     type =
     marital_status = "";
@@ -145,6 +155,7 @@ class CheckSessionController extends GetxController {
       SessionConstants.cstatus : sess_id==null ? "fresh" : "old",
       SessionConstants.chat_type : free ? "FREE" : "PAID",
       SessionConstants.category : category,
+      SessionConstants.call_type : call_type,
       if(sess_id!=null)
         SessionConstants.sess_id : sess_id.toString(),
     };
@@ -188,8 +199,9 @@ class CheckSessionController extends GetxController {
             "type": "REQUESTED",
             "action": "REQUESTING",
             "wallet" : wallet,
+            "call_type" : call_type,
             SessionConstants.chat_type : free ? "FREE" : "PAID",
-            "session_history" : response.session_history?.copyWith(token: response.token)
+            "session_history" : response.session_history?.copyWith(token: response.token, call_type: call_type)
           });
         }
         else if (response.code == 0) {
@@ -344,8 +356,13 @@ class CheckSessionController extends GetxController {
   }
 
   validate() async {
+    cnt = 0;
+    update();
     if(formKey.currentState!.validate()) {
       if(marital_status.isEmpty) {
+        if(cnt==0) {
+          scrollToRequiredField(genderKey);
+        }
         Essential.showSnackBar("Please select your marital status", time: 1);
       }
       else {
@@ -363,6 +380,26 @@ class CheckSessionController extends GetxController {
     }
   }
 
+  void updateCount() {
+    cnt++;
+    update();
+  }
+
+  void scrollToRequiredField(GlobalKey key) {
+    final requiredFieldContext = key.currentContext;
+    if (requiredFieldContext != null) {
+      final requiredFieldBox = requiredFieldContext.findRenderObject() as RenderBox;
+      final position = requiredFieldBox.localToGlobal(Offset.zero, ancestor: null);
+      if(requiredFieldContext!=null) {
+        scrollController.position.ensureVisible(
+          requiredFieldBox,
+          alignment: 0.5, // Align at the center of the viewport
+          duration: Duration(milliseconds: 500),
+          curve: Curves.easeInOut,
+        );
+      }
+    }
+  }
 
   @override
   void dispose() {

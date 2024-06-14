@@ -17,7 +17,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.8.0+353
+version: 1.9.1+359
 
 environment:
   sdk: '>=3.0.2 <4.0.0'
@@ -27,7 +27,7 @@ environment:
 # consider running `flutter pub upgrade --major-versions`. Alternatively,
 # dependencies can be manually updated by changing the version numbers below to
 # the latest version available on pub.dev. To see which dependencies have newer
-# versions available, run `flutter pub outdated`.
+# versions available, run `flutter pub outdatedxx`.
 dependencies:
   flutter:
     sdk: flutter
@@ -40,7 +40,7 @@ dependencies:
   carousel_slider: ^4.2.1
   google_fonts: ^6.1.0
   email_validator: ^2.1.17
-  intl: ^0.18.1
+  intl: ^0.19.0
   shimmer: ^3.0.0
 #  firebase_core: ^2.4.1
 #  firebase_auth: ^4.2.4
@@ -53,7 +53,8 @@ dependencies:
 #  flutter_local_notifications: ^14.1.1
 #  awesome_notifications: ^0.7.5-dev.2+1
 #  awesome_notifications: ^0.7.4+1
-  awesome_notifications: ^0.8.2
+#  awesome_notifications: ^0.8.2
+  awesome_notifications: ^0.9.3+1
   url_launcher: ^6.1.7
   share_plus: ^7.2.2
   html_unescape: ^2.0.0
@@ -97,10 +98,12 @@ dependencies:
   flutter_swipe_action_cell: ^3.1.2
   firebase_dynamic_links: ^5.3.5
   in_app_update: ^4.2.1
-  syncfusion_flutter_gauges: ^23.2.4
+#  syncfusion_flutter_gauges: ^23.2.4
+  syncfusion_flutter_gauges: ^25.2.3
   phonepe_payment_sdk: ^2.0.1
   image_cropping: ^0.0.14
   flutter_internet_signal: ^0.0.30
+  android_alarm_manager_plus: ^4.0.3
 
 #  libphonenumber: ^2.0.2
 #  intl_phone_number_input: ^0.7.2
@@ -173,6 +176,7 @@ flutter:
     - assets/contact_us/
     - assets/ca/
     - assets/payment_methods/
+    - assets/token/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

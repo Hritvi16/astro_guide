@@ -14,7 +14,10 @@ class EndSessionResponseModel with _$EndSessionResponseModel {
     int? seconds,
     double? amount,
     double? wallet,
-    String? chat_type
+    String? chat_type,
+    int? gift,
+    int? rose,
+    int? token_status
   }) = _EndSessionResponseModel;
 
   factory EndSessionResponseModel.fromJson(JSON json) => _$EndSessionResponseModelFromJson(json);

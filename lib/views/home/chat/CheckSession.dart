@@ -12,6 +12,7 @@ import 'package:astro_guide/shared/widgets/button/Button.dart';
 import 'package:astro_guide/shared/widgets/customAppBar/CustomAppBar.dart';
 import 'package:astro_guide/shared/widgets/label/Label.dart';
 import 'package:astro_guide/size/MySize.dart';
+import 'package:astro_guide/size/Spacing.dart';
 import 'package:astro_guide/size/WidgetSize.dart';
 import 'package:astro_guide/views/loadingScreen/LoadingScreen.dart';
 import 'package:bottom_picker/bottom_picker.dart';
@@ -69,12 +70,43 @@ class CheckSession extends StatelessWidget {
         ),
         Flexible(
           child: SingleChildScrollView(
+            controller: checkSessionController.scrollController,
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: standardHorizontalPagePadding, vertical: 16),
               child: Form(
                 key: checkSessionController.formKey,
                 child: Column(
                   children: [
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 10, vertical: standardVTBS),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(
+                          color: MyColors.colorButton
+                        )
+                      ),
+                      child: RichText(
+                        text: TextSpan(
+                          text: "Talk Time: ",
+                          style: GoogleFonts.manrope(
+                            fontSize: 16.0,
+                            letterSpacing: 0,
+                            fontWeight: FontWeight.w600,
+                            color: MyColors.colorOn
+                          ),
+                          children: [
+                            TextSpan(
+                              text: checkSessionController.free ? "10 minutes" :
+                              Essential.getChatDuration(
+                                  Essential.getSessionSeconds(checkSessionController.wallet, checkSessionController.category.toLowerCase()=="chat" ? checkSessionController.astrologer.p_chat??0: checkSessionController.astrologer.p_call??0), "", "-"),
+                              style: GoogleFonts.manrope(
+                                color: MyColors.colorOff
+                              ),
+                            )
+                          ]
+                        ),
+                      ),
+                    ),
                     standardTFLabel(text: 'Type', optional: '*', optionalColor: MyColors.red, optionalFontSize: 16),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 10),
@@ -133,6 +165,7 @@ class CheckSession extends StatelessWidget {
                                 },
                                 validator: (value) {
                                   if (value==null) {
+                                    checkSessionController.updateCount();
                                     return "* Required";
                                   }  else {
                                     return null;
@@ -187,6 +220,10 @@ class CheckSession extends StatelessWidget {
                           },
                           validator: (value) {
                             if (value==null) {
+                              if(checkSessionController.cnt==0) {
+
+                              }
+                              checkSessionController.updateCount();
                               return "* Required";
                             }  else {
                               return null;
@@ -226,6 +263,10 @@ class CheckSession extends StatelessWidget {
                         ),
                         validator: (value) {
                           if ((value??"").isEmpty) {
+                            if(checkSessionController.cnt==0) {
+
+                            }
+                            checkSessionController.updateCount();
                             return "* Required";
                           }  else {
                             return null;
@@ -269,14 +310,16 @@ class CheckSession extends StatelessWidget {
                       child: TextFormField(
                         onTap: () {
                           BottomPicker.date(
-                            title:  "Set your Date of Birth",
-                            initialDateTime: checkSessionController.date,
-                            titleStyle: GoogleFonts.manrope(
-                              fontSize: 16.0,
-                              color: MyColors.colorButton,
-                              letterSpacing: 0,
-                              fontWeight: FontWeight.w600,
+                            pickerTitle:  Text(
+                              "Set your Date of Birth",
+                              style: GoogleFonts.manrope(
+                                fontSize: 16.0,
+                                color: MyColors.colorButton,
+                                letterSpacing: 0,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
+                            initialDateTime: checkSessionController.date,
                             onSubmit: (value) {
                               checkSessionController.setDOB(value);
                             },
@@ -336,6 +379,10 @@ class CheckSession extends StatelessWidget {
                         ),
                         validator: (value) {
                           if ((value??"").isEmpty) {
+                            if(checkSessionController.cnt==0) {
+
+                            }
+                            checkSessionController.updateCount();
                             return "* Required";
                           }  else {
                             return null;
@@ -347,16 +394,19 @@ class CheckSession extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 5),
                       child: TextFormField(
+                        key: checkSessionController.tobKey,
                         onTap: () {
                           BottomPicker.time(
-                            title:  "Set your Time of Birth",
-                            initialTime: Time(hours: checkSessionController.date.hour, minutes: checkSessionController.date.minute),
-                            titleStyle: GoogleFonts.manrope(
-                              fontSize: 16.0,
-                              color: MyColors.colorButton,
-                              letterSpacing: 0,
-                              fontWeight: FontWeight.w600,
+                            pickerTitle:  Text(
+                              "Set your Time of Birth",
+                              style: GoogleFonts.manrope(
+                                fontSize: 16.0,
+                                color: MyColors.colorButton,
+                                letterSpacing: 0,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
+                            initialTime: Time(hours: checkSessionController.date.hour, minutes: checkSessionController.date.minute),
                             onChange: (value) {
                               print(value);
                               checkSessionController.setTOB(value);
@@ -387,7 +437,7 @@ class CheckSession extends StatelessWidget {
                           ).show(context);
                         },
                         controller: checkSessionController.tob,
-                        readOnly: true,
+                        // readOnly: true,
                         keyboardType: TextInputType.datetime,
                         style: GoogleFonts.manrope(
                           fontSize: 16.0,
@@ -421,6 +471,10 @@ class CheckSession extends StatelessWidget {
                         ),
                         validator: (value) {
                           if ((value??"").isEmpty) {
+                            if(checkSessionController.cnt==0) {
+                              checkSessionController.scrollToRequiredField(checkSessionController.tobKey);
+                            }
+                            checkSessionController.updateCount();
                             return "* Required";
                           }  else {
                             return null;
@@ -432,6 +486,7 @@ class CheckSession extends StatelessWidget {
                     Padding(
                         padding: const EdgeInsets.symmetric(vertical: 5),
                         child: DropdownSearch<CityModel>(
+                          key: checkSessionController.pobKey,
                           popupProps:  const PopupProps.menu(
                               showSearchBox: true,
                               searchFieldProps: TextFieldProps(
@@ -471,6 +526,10 @@ class CheckSession extends StatelessWidget {
                           ),
                           validator: (value) {
                             if (value==null) {
+                              if(checkSessionController.cnt==0) {
+                                checkSessionController.scrollToRequiredField(checkSessionController.pobKey);
+                              }
+                              checkSessionController.updateCount();
                               return "* Required";
                             }  else {
                               return null;
@@ -485,6 +544,7 @@ class CheckSession extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 10),
                       child: Row(
+                        key: checkSessionController.genderKey,
                         children: [
                           GestureDetector(
                             onTap: () {
@@ -556,7 +616,7 @@ class CheckSession extends StatelessWidget {
       child: Container(
         height: standardBottomBarHeight,
         width: standardBottomBarWidth,
-        padding: EdgeInsets.symmetric(horizontal: 24),
+        padding: const EdgeInsets.symmetric(horizontal: 24),
         decoration: BoxDecoration(
           color: MyColors.cardColor(),
           borderRadius: BorderRadius.only(

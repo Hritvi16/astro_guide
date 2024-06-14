@@ -8,21 +8,23 @@ part of 'UserModel.dart';
 
 _$UserModelImpl _$$UserModelImplFromJson(Map<String, dynamic> json) =>
     _$UserModelImpl(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       name: json['name'] as String,
       mobile: json['mobile'] as String?,
       email: json['email'] as String?,
       gender: json['gender'] as String?,
       dob: json['dob'] as String?,
       profile: json['profile'] as String?,
-      free: json['free'] as int?,
-      nationality: json['nationality'] as int?,
-      ci_id: json['ci_id'] as int?,
-      st_id: json['st_id'] as int?,
-      co_id: json['co_id'] as int?,
+      free: (json['free'] as num?)?.toInt(),
+      nationality: (json['nationality'] as num?)?.toInt(),
+      ci_id: (json['ci_id'] as num?)?.toInt(),
+      st_id: (json['st_id'] as num?)?.toInt(),
+      co_id: (json['co_id'] as num?)?.toInt(),
       postal_code: json['postal_code'] as String?,
       joined_via: json['joined_via'] as String,
       amount: (json['amount'] as num?)?.toDouble(),
+      ivr: (json['ivr'] as num?)?.toInt(),
+      video: (json['video'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$$UserModelImplToJson(_$UserModelImpl instance) =>
@@ -42,4 +44,6 @@ Map<String, dynamic> _$$UserModelImplToJson(_$UserModelImpl instance) =>
       'postal_code': instance.postal_code,
       'joined_via': instance.joined_via,
       'amount': instance.amount,
+      'ivr': instance.ivr,
+      'video': instance.video,
     };

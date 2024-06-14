@@ -6,6 +6,7 @@ import 'package:astro_guide/constants/SessionConstants.dart';
 import 'package:astro_guide/constants/CommonConstants.dart';
 import 'package:astro_guide/dialogs/BasicDialog.dart';
 import 'package:astro_guide/dialogs/RatingDialog.dart';
+import 'package:astro_guide/dialogs/TokenDialog.dart';
 import 'package:astro_guide/essential/Essential.dart';
 import 'package:astro_guide/models/astrologer/AstrologerModel.dart';
 import 'package:astro_guide/models/session/SessionHistoryModel.dart';
@@ -97,10 +98,13 @@ class ChatController extends GetxController {
   late String playerUrl;
   final GlobalNotifier globalNotifier = Get.find();
 
+  late int gift, rose, token_status;
+
   @override
   void onInit() {
     super.onInit();
     initAudio();
+    gift = rose = token_status = 0;
     seconds = 0;
     cancel = false;
     reject = false;
@@ -126,7 +130,7 @@ class ChatController extends GetxController {
       sessionHistory = Get.arguments['session_history'];
       ch_id = sessionHistory.id;
       print("viewwww");
-      astrologer = AstrologerModel(id: Get.arguments['astro_id'], name: "", mobile: "", email: "", experience: '', profile: "", about: "");
+      astrologer = AstrologerModel(id: Get.arguments['astro_id'], ivr: 0, video: 0, name: "", mobile: "", email: "", experience: '', profile: "", about: "");
 
     }
     else {
@@ -268,12 +272,19 @@ class ChatController extends GetxController {
 
     await chatProvider.fetchByID(storage.read("access"), ApiConstants.id, data).then((response) async {
       print("response.session_history?.toJson()");
-      print(response.session_history?.toJson());
+      print(response.wallet);
+      print(response.gift);
+      print(response.rose);
       if(response.code==1) {
         chats.addAll(response.data ?? []);
         astrologer = response.astrologer ?? astrologer;
         sessionHistory = response.session_history ?? sessionHistory;
         wallet = response.wallet ?? 0;
+        gift = response.gift ?? 0;
+        rose = response.rose ?? 0;
+        token_status = response.token_status ?? 0;
+
+        await storage.write("wallet", response.wallet??0);
 
         cnt = 0;
         print(sessionHistory.started_at);
@@ -288,7 +299,7 @@ class ChatController extends GetxController {
             type = "COMPLETED";
             action = "COMPLETED";
             update();
-            manageRating();
+            manageRating(true);
           }
           else {
             if (chat_type == "FREE") {
@@ -541,16 +552,23 @@ class ChatController extends GetxController {
       'end', (data) async {
         EndSessionResponseModel endSessionResponse = EndSessionResponseModel.fromJson(json.decode(data));
 
+        print("endSessionResponse");
+        print(endSessionResponse.toJson());
 
         if(endSessionResponse.code==1) {
           cnt = 0;
           type = "COMPLETED";
           action = "COMPLETED";
           amount = endSessionResponse.amount??0;
-          await storage.write("wallet", endSessionResponse.wallet??storage.read(("wallet")));
+          wallet = endSessionResponse.wallet??0;
+          gift = endSessionResponse.gift ?? 0;
+          rose = endSessionResponse.rose ?? 0;
+          token_status = endSessionResponse.token_status ?? 0;
+
+          await storage.write("wallet", endSessionResponse.wallet??0);
 
           stopTimer(true);
-          manageRating();
+          manageRating(true);
         }
         else if(endSessionResponse.code!=-1) {
           cnt = 0;
@@ -891,6 +909,8 @@ class ChatController extends GetxController {
   }
 
   void setCountDown() {
+    print(max);
+    print(seconds);
     seconds+=1;
     update();
     if(max<=seconds) {
@@ -1015,7 +1035,7 @@ class ChatController extends GetxController {
     socket.emit('waitlist', data);
   }
 
-  void manageRating() {
+  void manageRating(bool auto) {
     Get.dialog(
       RatingDialog(
         sessionHistory: sessionHistory,
@@ -1027,6 +1047,32 @@ class ChatController extends GetxController {
         sessionHistory = value;
         update();
         Essential.showSnackBar("Thank you for your feedback");
+      }
+
+      print(token_status);
+      // if(auto) {
+      if(token_status==1 && (sessionHistory.token_type??"").isEmpty) {
+          manageToken();
+        }
+      // }
+    });
+  }
+
+  void manageToken() {
+    Get.dialog(
+      TokenDialog(
+        sessionHistory: sessionHistory,
+        astrologer: astrologer,
+        token_amount: {"GIFT" : gift.toString(), "ROSE" : rose.toString(), "CUSTOM" : ""}
+      ),
+      barrierDismissible: true,
+    ).then((value) {
+        print("valueeeee");
+        print(value);
+      if(value!=null) {
+        sessionHistory = value;
+        update();
+        Essential.showSnackBar("Thank you for giving appreciation token");
       }
     });
   }
@@ -1085,21 +1131,21 @@ class ChatController extends GetxController {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ListTile(
-                title: Text("Camera", style: theme.textTheme.bodyText1),
+                title: Text("Camera", style: theme.textTheme.bodyLarge),
                 onTap: () {
                   sendImage(ImageSource.camera);
                   // back();
                 },
               ),
               ListTile(
-                title: Text("Photo Gallery", style: theme.textTheme.bodyText1),
+                title: Text("Photo Gallery", style: theme.textTheme.bodyLarge),
                 onTap: () {
                   sendImage(ImageSource.gallery);
                   // back();
                 },
               ),
               ListTile(
-                title: Text("Document", style: theme.textTheme.bodyText1),
+                title: Text("Document", style: theme.textTheme.bodyLarge),
                 onTap: () {
                   sendDocument();
                   // back();
@@ -1198,6 +1244,9 @@ class ChatController extends GetxController {
     }
   }
   Future<void> stopRecording(bool send) async {
+    recording = false;
+    update();
+
     final path = await audioRecorder.stop();
 
     if(send) {

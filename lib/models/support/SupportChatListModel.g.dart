@@ -10,7 +10,7 @@ _$SupportChatListModelImpl _$$SupportChatListModelImplFromJson(
         Map<String, dynamic> json) =>
     _$SupportChatListModelImpl(
       status: json['status'] as String,
-      code: json['code'] as int,
+      code: (json['code'] as num).toInt(),
       message: json['message'] as String,
       data: (json['data'] as List<dynamic>?)
           ?.map((e) => SupportChatModel.fromJson(e as Map<String, dynamic>))

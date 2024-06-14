@@ -30,6 +30,8 @@ mixin _$ValuesModel {
   List<LanguageModel>? get languages => throw _privateConstructorUsedError;
   double? get wallet => throw _privateConstructorUsedError;
   int? get free => throw _privateConstructorUsedError;
+  int? get ivr => throw _privateConstructorUsedError;
+  int? get video => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -53,7 +55,9 @@ abstract class $ValuesModelCopyWith<$Res> {
       List<SpecModel>? specifications,
       List<LanguageModel>? languages,
       double? wallet,
-      int? free});
+      int? free,
+      int? ivr,
+      int? video});
 }
 
 /// @nodoc
@@ -79,6 +83,8 @@ class _$ValuesModelCopyWithImpl<$Res, $Val extends ValuesModel>
     Object? languages = freezed,
     Object? wallet = freezed,
     Object? free = freezed,
+    Object? ivr = freezed,
+    Object? video = freezed,
   }) {
     return _then(_value.copyWith(
       status: null == status
@@ -121,6 +127,14 @@ class _$ValuesModelCopyWithImpl<$Res, $Val extends ValuesModel>
           ? _value.free
           : free // ignore: cast_nullable_to_non_nullable
               as int?,
+      ivr: freezed == ivr
+          ? _value.ivr
+          : ivr // ignore: cast_nullable_to_non_nullable
+              as int?,
+      video: freezed == video
+          ? _value.video
+          : video // ignore: cast_nullable_to_non_nullable
+              as int?,
     ) as $Val);
   }
 }
@@ -143,7 +157,9 @@ abstract class _$$ValuesModelImplCopyWith<$Res>
       List<SpecModel>? specifications,
       List<LanguageModel>? languages,
       double? wallet,
-      int? free});
+      int? free,
+      int? ivr,
+      int? video});
 }
 
 /// @nodoc
@@ -167,6 +183,8 @@ class __$$ValuesModelImplCopyWithImpl<$Res>
     Object? languages = freezed,
     Object? wallet = freezed,
     Object? free = freezed,
+    Object? ivr = freezed,
+    Object? video = freezed,
   }) {
     return _then(_$ValuesModelImpl(
       status: null == status
@@ -209,6 +227,14 @@ class __$$ValuesModelImplCopyWithImpl<$Res>
           ? _value.free
           : free // ignore: cast_nullable_to_non_nullable
               as int?,
+      ivr: freezed == ivr
+          ? _value.ivr
+          : ivr // ignore: cast_nullable_to_non_nullable
+              as int?,
+      video: freezed == video
+          ? _value.video
+          : video // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -226,7 +252,9 @@ class _$ValuesModelImpl implements _ValuesModel {
       final List<SpecModel>? specifications,
       final List<LanguageModel>? languages,
       this.wallet,
-      this.free})
+      this.free,
+      this.ivr,
+      this.video})
       : _countries = countries,
         _cities = cities,
         _types = types,
@@ -296,10 +324,14 @@ class _$ValuesModelImpl implements _ValuesModel {
   final double? wallet;
   @override
   final int? free;
+  @override
+  final int? ivr;
+  @override
+  final int? video;
 
   @override
   String toString() {
-    return 'ValuesModel(status: $status, code: $code, message: $message, countries: $countries, cities: $cities, types: $types, specifications: $specifications, languages: $languages, wallet: $wallet, free: $free)';
+    return 'ValuesModel(status: $status, code: $code, message: $message, countries: $countries, cities: $cities, types: $types, specifications: $specifications, languages: $languages, wallet: $wallet, free: $free, ivr: $ivr, video: $video)';
   }
 
   @override
@@ -319,7 +351,9 @@ class _$ValuesModelImpl implements _ValuesModel {
             const DeepCollectionEquality()
                 .equals(other._languages, _languages) &&
             (identical(other.wallet, wallet) || other.wallet == wallet) &&
-            (identical(other.free, free) || other.free == free));
+            (identical(other.free, free) || other.free == free) &&
+            (identical(other.ivr, ivr) || other.ivr == ivr) &&
+            (identical(other.video, video) || other.video == video));
   }
 
   @JsonKey(ignore: true)
@@ -335,7 +369,9 @@ class _$ValuesModelImpl implements _ValuesModel {
       const DeepCollectionEquality().hash(_specifications),
       const DeepCollectionEquality().hash(_languages),
       wallet,
-      free);
+      free,
+      ivr,
+      video);
 
   @JsonKey(ignore: true)
   @override
@@ -362,7 +398,9 @@ abstract class _ValuesModel implements ValuesModel {
       final List<SpecModel>? specifications,
       final List<LanguageModel>? languages,
       final double? wallet,
-      final int? free}) = _$ValuesModelImpl;
+      final int? free,
+      final int? ivr,
+      final int? video}) = _$ValuesModelImpl;
 
   factory _ValuesModel.fromJson(Map<String, dynamic> json) =
       _$ValuesModelImpl.fromJson;
@@ -387,6 +425,10 @@ abstract class _ValuesModel implements ValuesModel {
   double? get wallet;
   @override
   int? get free;
+  @override
+  int? get ivr;
+  @override
+  int? get video;
   @override
   @JsonKey(ignore: true)
   _$$ValuesModelImplCopyWith<_$ValuesModelImpl> get copyWith =>

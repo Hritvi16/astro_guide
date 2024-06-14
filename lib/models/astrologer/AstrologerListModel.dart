@@ -14,7 +14,9 @@ class AstrologerListModel with _$AstrologerListModel {
     required String message,
     List<AstrologerModel>? data,
     double? wallet,
-    int? free
+    int? free,
+    int? ivr,
+    int? video
   }) = _AstrologerListModel;
 
   factory AstrologerListModel.fromJson(JSON json) => _$AstrologerListModelFromJson(json);

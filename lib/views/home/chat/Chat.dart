@@ -5,6 +5,7 @@ import 'package:astro_guide/chat_ui/send_image_screen.dart';
 import 'package:astro_guide/chat_ui/send_message_screen.dart';
 import 'package:astro_guide/chat_ui/send_voice_screen.dart';
 import 'package:astro_guide/colors/MyColors.dart';
+import 'package:astro_guide/constants/CommonConstants.dart';
 import 'package:astro_guide/constants/SessionConstants.dart';
 import 'package:astro_guide/controllers/chat/ChatController.dart';
 import 'package:astro_guide/essential/Essential.dart';
@@ -38,7 +39,7 @@ class Chat extends StatelessWidget {
       child: GetBuilder<ChatController>(
         builder: (controller) {
           return chatController.load ? chatController.type!="ACTIVE" && chatController.type!="COMPLETED" ?
-          Waiting(chatController.astrologer.name, chatController.astrologer.profile, chatController.cancelChat, chatController.type, chatController.back, chatController.initiateChat, chatController.rejectChat)
+          Waiting(chatController.ring, chatController.astrologer.name, chatController.astrologer.profile, chatController.cancelChat, chatController.type, chatController.back, chatController.initiateChat, chatController.rejectChat)
           : Scaffold(
             resizeToAvoidBottomInset: true,
             appBar: AppBar(
@@ -259,15 +260,15 @@ class Chat extends StatelessWidget {
               ),
             ) :
             GestureDetector(
-              // onLongPressStart: (details) {
-              //   chatController.startRecording();
-              // },
-              // onLongPressEnd: (details) {
-              //   chatController.stopRecording(true);
-              // },
-              onTap: () {
-                chatController.recordingAction();
+              onLongPressStart: (details) {
+                chatController.startRecording();
               },
+              onLongPressEnd: (details) {
+                chatController.stopRecording(true);
+              },
+              // onTap: () {
+              //   chatController.recordingAction();
+              // },
               child: CircleAvatar(
                 backgroundColor: MyColors.colorButton,
                 child: chatController.recording ?
@@ -348,9 +349,44 @@ class Chat extends StatelessWidget {
   Widget getBottom(BuildContext context) {
     return Column(
       children: [
+        if(chatController.sessionHistory.token_type!=null)
+          getTokenSection(context),
         getReviewSection(context),
         getEndedBottom(context),
       ],
+    );
+  }
+
+  getTokenSection(BuildContext context) {
+    return Container(
+      width: MySize.size100(context),
+      margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+      decoration: BoxDecoration(
+        color: MyColors.colorLightPrimary,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Image.asset(
+            "assets/token/${chatController.sessionHistory.token_type?.toLowerCase()}.png",
+            width: 30,
+          ),
+          SizedBox(width: 10,),
+          Flexible(
+            child: Text(
+              "You have given a token of appreciation to astrologer as a form of "
+                  "${chatController.sessionHistory.token_type?.toLowerCase()} which costed you ${CommonConstants.rupee}${chatController.sessionHistory.token_amount}.",
+              style: GoogleFonts.manrope(
+                  fontSize: 14,
+                  color: MyColors.black,
+                  fontWeight: FontWeight.w600
+              ),
+            ),
+          )
+        ],
+      )
     );
   }
 
@@ -472,7 +508,7 @@ class Chat extends StatelessWidget {
   Widget askRating() {
     return GestureDetector(
       onTap: () {
-        chatController.manageRating();
+        chatController.manageRating(false);
       },
       child: RatingBar.builder(
         initialRating: 5,
@@ -633,7 +669,7 @@ class Chat extends StatelessWidget {
       if (itemSelected == null) return;
 
       if(itemSelected == "1") {
-        chatController.manageRating();
+        chatController.manageRating(false);
       }
       else if(itemSelected == "2"){
         chatController.confirmDelete();
